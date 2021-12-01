@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=11">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!--/* INICIO - CSS */-->
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		
+		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/formulario.css}">
+		<!--/* FIN - CSS */-->
+		
+		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
+	</head>
+	<body class="bg-white">
+
+		<div class="container-fluid">
+		
+			<!--/* INICIO - Cabecera */-->
+			<div th:replace="fragments/cabecera :: cabecera"></div>
+			<!--/* FIN - Cabecera */-->
+			
+			<!--/* INICIO - Contenido */-->
+			<div class="row">
+				<div class="offset-sm-1 col-auto">
+				
+					<!--/* INICIO - Menú */-->
+					<div th:replace="fragments/menu :: menu"></div>
+					<!--/* FIN - Menú */-->
+				
+				</div>
+				<div class="col-sm-8">
+				
+					<!--/* INICIO - Migas de pan */-->
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
+					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.tipo}"></a></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" class="breadcrumb-a" th:text="#{html.menu.tiposRecursoOperativo}"></a></li>
+					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.tipo}"></li>
+					  	</ol>
+					</nav>
+					<!--/* FIN - Migas de pan */-->
+		
+					<form action="#" th:action="@{${action}}" th:object="${tipoRecursoOperativo}" method="post" novalidate>
+						<input type="hidden" th:field="*{id}">
+								
+						<div id="accordionFormulario" class="accordionFormulario">
+						
+							<!--/* INICIO - Información general */-->
+							<div class="card">
+								<div id="headingInformacionGeneral" class="card-header">
+									<button id="idInformacionGeneral" type="button" class="btn" data-toggle="collapse" data-target="#collapseInformacionGeneral"  
+									aria-expanded="true" aria-controls="collapseInformacionGeneral">
+										<div style="display:flex;">
+											<div class="text-tab-accordion" ><span th:text="#{html.label.informacionGeneral}"></span></div  >
+											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
+										</div >
+									</button>
+								</div>							
+								<div id="collapseInformacionGeneral" class="collapse show" aria-labelledby="headingInformacionGeneral" data-parent="#accordionFormulario">
+									<div class="card-body formulario-padding">
+										<div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
+									        <div class="col-sm-6">
+									            <input id="nombre" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+									        </div>										        	
+		       							 </div>
+									</div>
+								</div>
+							</div>
+							<!--/* FIN - Información general */-->
+							
+						</div>
+						
+						<br>
+
+						<!--/* INICIO - Botonera */-->
+						<div align="right">						
+							<!--/* Botón Volver */-->
+							<a role="button" class="btn btn-primary" 
+								th:text="#{html.boton.volver}" th:href="@{${volver}}"></a>
+
+							<!--/* Botón Cancelar */-->							
+							<a role="button" class="btn btn-secondary" data-toggle="modal" data-target="#popupCancelar" href="#"
+								th:text="#{html.boton.cancelar}" th:hidden="${estaBotonCancelarActivo} ? 'false' : 'true'"></a>
+
+							<!--/* Botón Aceptar */-->							
+							<input type="submit" class="btn btn-primary" 
+								th:value="#{html.boton.aceptar}" th:hidden="${estaBotonAceptarActivo} ? 'false' : 'true'">
+
+							<!--/* Botón Eliminar */-->							
+							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
+								th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+						</div>
+						<!--/* FIN - Botonera */-->
+						
+						<!--/* INICIO - Popup de cancelar */-->
+						<div th:replace="fragments/popups/popupCancelar :: popupCancelar"></div>
+						<!--/* FIN - Popup de cancelar */-->
+						
+						<!--/* INICIO - Popup de eliminación */-->
+						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
+						<!--/* FIN - Popup de eliminación */-->
+			
+					</form>
+				</div>
+			</div>
+			<!--/* FIN - Contenido */-->
+			
+			<!--/* INICIO - Pie de página */-->
+			<div th:replace="fragments/pie :: pie"></div>
+			<!--/* FIN - Pie de página */-->	
+			
+		</div>
+
+		<!--/* INICIO - JS */-->
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		
+		<!--/* INICIO - Apertura del menú */-->
+		<script th:inline="javascript">
+			$('#collapseTipos, #collapseGestionBBDD').collapse('show', { "animation": false });
+		</script>
+		<!--/* FIN - Apertura del menú */-->
+		<!--/* FIN - JS */-->
+	
+	</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=11"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">     	      	
+      	<title th:text="#{error.descripcion}"></title>
+
+      	<!--/* INICIO - CSS */-->
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+      	<!--/* FIN - CSS */-->
+		
+      	<link rel='shortcut icon' type='image/png' th:href="@{/images/anagrama_inventa.png}">
+   	</head>
+	<body>
+	
+		<div class="container-fluid">
+			
+			<!--/* INICIO - Cabecera */-->
+			<div th:replace="fragments/cabecera :: cabecera"></div>
+			<!--/* FIN - Cabecera */-->
+		
+			<!--/* INICIO - Contenido */-->
+			<div class="row">
+				<div class="col-sm-2">
+				
+					<!--/* INICIO - Menú */-->
+					<div th:replace="fragments/menu :: menu"></div>
+					<!--/* FIN - Menú */-->
+				
+				</div>
+				<div class="col-sm-10">		
+			
+					<div class="alert alert-danger" role="alert">
+					  <h4 class="alert-heading" th:text="#{error.descripcion}"></h4>
+					  <div th:text="${mensaje}"></div>		  
+					</div>
+			
+				</div>
+			</div>
+			
+			<!--/* INICIO - Pie de página */-->
+			<div th:replace="fragments/pie :: pie"></div>
+			<!--/* FIN - Pie de página */-->
+			
+		</div>
+		
+		<!--/* INICIO - JS */-->
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<!--/* FIN - JS */-->
+		
+	</body>
+</html>

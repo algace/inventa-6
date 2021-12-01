@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=11">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!--/* INICIO - CSS */-->
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		
+		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
+		<!--/* FIN - CSS */-->
+		
+		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
+		
+		<!--/* INICIO - JS */-->
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<!--/* FIN - JS */-->
+
+	</head>
+	
+	<body class="bg-white">
+		
+		<div class="container-fluid">
+		
+			<!--/* INICIO - Cabecera */-->
+			<div th:include="fragments/cabecera :: cabecera"></div>
+			<!--/* FIN - Cabecera */-->
+			
+			<!--/* INICIO - Contenido */-->
+			<div class="row">
+				<div class="offset-sm-1 col-sm-3">
+				
+					<!--/* INICIO - Menú */-->
+					<div th:include="fragments/menu :: menu"></div>
+					<!--/* FIN - Menú */-->
+				
+				</div>
+				<div class="col-sm-8">
+											 
+				</div>
+			</div>
+			<!--/* FIN - Contenido */-->
+			
+			<!--/* INICIO - Pie de página */-->
+			<div th:include="fragments/pie :: pie"></div>
+			<!--/* FIN - Pie de página */-->
+
+		</div>
+	</body>
+</html>

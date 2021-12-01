@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+/* INICIO - Color de fondo para campos obligatorios */
+.campo-obligatorio {
+    background-color: #FFFFEC !important;
+}
+/* FIN - Color de fondo para campos obligatorios */
+
+.accordionFormulario .card .card-header{
+	padding: 0px 5px 0px 10px;
+	background-color: #007bff;
+}
+
+.accordionFormulario .card .card-header .btn{
+	width: 100%;
+    font-size: 15px;
+    color: white;
+    text-align: left;
+    margin: 3px 0px 2px 0px;
+}
+
+.accordionFormulario .card .card-body{
+	padding: 0px;
+}
+
+.accordionFormulario .card .card-body .row {
+	padding: 5px;
+	font-size: 12px;
+    font-weight: bold;
+    color: #495057;
+}
+
+.accordionFormulario .card .card-body .row input{
+	padding: 4px 10px;
+	height: calc(1em + 0.75rem + 2px);
+}
+
+.formulario-padding{
+	padding: 4px 12px !important;
+}
+
+.text-tab-accordion {
+	width:97%;
+	padding-top: 5px;
+}
+
+.icon-tab-accordion {
+	width:3%;
+	font-size:20px;
+}

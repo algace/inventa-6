@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=11">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	</head>
+	<body>
+		<div th:fragment="popupEliminar" class="align-items-center">
+		
+			<!--/* INICIO - Popup de eliminación */-->
+			<div id="popupEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEliminarTitulo" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+					        <h5 id="modalEliminarTitulo" class="modal-title" th:text="#{html.label.eliminar}"></h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
+					        </button>
+					    </div>
+					    <div class="modal-body">
+					    	<h6 id="mensajeModalEliminarAviso" class="modal-title" 
+					    		th:hidden="${null == popupEliminarAviso} ? 'hidden'" th:text="${popupEliminarAviso}"></h6>	
+					    	<h6 id="mensajeModalEliminarPregunta" class="modal-title" 
+					    		th:hidden="${null == popupEliminarPregunta} ? 'hidden'" th:text="${popupEliminarPregunta}"></h6>	
+					    </div>
+					    <div class="modal-footer">
+					        <button type="submit" class="btn btn-primary" th:text="#{html.boton.aceptar}"></button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{html.boton.cancelar}"></button>
+					    </div>
+					</div>
+				</div>
+			</div>
+			<!--/* FIN - Popup de eliminación */-->
+			
+	    </div>
+	</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=11">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!--/* INICIO - CSS */-->
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
+		
+		<link rel="stylesheet" type="text/css" th:href="@{/css/equipamiento.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/formulario.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/botoneraTabla.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/dataTable.css}">
+		<!--/* FIN - CSS */-->
+		
+		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
+	</head>
+	<body class="bg-white">
+
+		<div class="container-fluid">
+		
+			<!--/* INICIO - Cabecera */-->
+			<div th:replace="fragments/cabecera :: cabecera"></div>
+			<!--/* FIN - Cabecera */-->
+			
+			<!--/* INICIO - Contenido */-->
+			<div class="row">
+				<div class="offset-sm-1 col-auto">
+				
+					<!--/* INICIO - Menú */-->
+					<div th:replace="fragments/menu :: menu"></div>
+					<!--/* FIN - Menú */-->
+				
+				</div>
+				<div class="col-sm-8">
+				
+					<!--/* INICIO - Migas de pan */-->
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" class="breadcrumb-a" th:text="#{html.menu.equipamiento}"></a></li>
+					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.equipo}"></li>
+					  	</ol>
+					</nav>
+					<!--/* FIN - Migas de pan */-->
+		
+					<form action="#" th:action="@{${action}}" th:object="${equipamiento}" method="post" novalidate>
+						<input type="hidden" th:field="*{id}">
+								
+						<div id="accordionFormulario" class="accordionFormulario">
+						
+							<!--/* INICIO - Información general */-->
+							<div class="card">
+								<div id="headingInformacionGeneral" class="card-header">
+									<button id="idInformacionGeneral" type="button" class="btn" data-toggle="collapse" data-target="#collapseInformacionGeneral"  
+									aria-expanded="true" aria-controls="collapseInformacionGeneral">
+										<div style="display:flex;">
+											<div class="text-tab-accordion" ><span th:text="#{html.label.informacionGeneral}"></span></div  >
+											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
+										</div >
+									</button>
+								</div>				
+
+								<div id="collapseInformacionGeneral" class="collapse show" aria-labelledby="headingInformacionGeneral" data-parent="#accordionFormulario">
+									<div class="card-body formulario-padding">
+										<div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
+									        <div class="col-sm-6">
+									            <input id="nombre" type="text"  
+									          	  	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
+									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+									        </div>										        	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.sistema}"></div> 
+									        <div class="col-sm-6">
+									            <input id="sistema" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
+									            	th:field="*{sistema}" th:disabled="${esCampoSoloLectura} ? 'true'">
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('sistema')}" th:errors="*{sistema}"></div>
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.subsistema}"></div> 
+									        <div class="col-sm-6">
+									            <input id="subsistema" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
+									            	th:field="*{subsistema}" th:disabled="${esCampoSoloLectura} ? 'true'">
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('subsistema')}" th:errors="*{subsistema}"></div>
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.marca}"></div> 
+									        <div class="col-sm-6">
+									            <input id="marca" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
+									            	th:field="*{marca}" th:disabled="${esCampoSoloLectura} ? 'true'">
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></div>
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.modelo}"></div> 
+									        <div class="col-sm-6">
+									            <input id="modelo" type="text" class="form-control" th:field="*{modelo}" th:disabled="${esCampoSoloLectura} ? 'true'">
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.caracteristicas}"></div> 
+									        <div class="col-sm-6">
+									        <textarea id="caracteristicas" class="form-control" rows="3" style="resize: none;"
+									        		th:field="*{caracteristicas}" th:disabled="${esCampoSoloLectura} ? 'true'"></textarea>
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.numeroEntradas}"></div> 
+									        <div class="col-sm-6">
+									            <input id="entradas" type="text" class="form-control" pattern="\d*" maxlength="3"
+									            	th:field="*{entradas}" th:disabled="${esCampoSoloLectura} ? 'true'" >
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.numeroSalidas}"></div> 
+									        <div class="col-sm-6">
+									            <input id="salidas" type="text" class="form-control" pattern="\d*" maxlength="3"
+									            	th:field="*{salidas}" th:disabled="${esCampoSoloLectura} ? 'true'">
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.ganancia}"></div> 
+									        <div class="col-sm-6">
+									            <input id="ganancia" type="text" maxlength="10"
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{ganancia}" th:disabled="${esCampoSoloLectura} ? 'true'">
+  									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('ganancia')}" th:errors="*{ganancia}"></div>
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.perdida}"></div> 
+									        <div class="col-sm-6">
+									            <input id="perdida" type="text" maxlength="10"
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{perdida}" th:disabled="${esCampoSoloLectura} ? 'true'">
+  									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('perdida')}" th:errors="*{perdida}"></div>
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.numeroPuertos}"></div> 
+									        <div class="col-sm-6">
+									            <input id="numeroPuertos" type="text" class="form-control" pattern="\d*" maxlength="3"
+									            	th:field="*{numeroPuertos}" th:disabled="${esCampoSoloLectura} ? 'true'">
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.apertura}"></div> 
+									        <div class="col-sm-6">
+									            <input id="apertura" type="text" maxlength="10"
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{apertura}" th:disabled="${esCampoSoloLectura} ? 'true'">
+  									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('apertura')}" th:errors="*{apertura}"></div>
+									        </div>	
+		       							 </div>
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.diametro}"></div> 
+									        <div class="col-sm-6">
+									            <input id="diametro" type="text" maxlength="10"
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{diametro}" th:disabled="${esCampoSoloLectura} ? 'true'">
+  									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('diametro')}" th:errors="*{diametro}"></div>
+									        </div>	
+		       							 </div>
+		       							 
+		       							 <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div> 
+									        <div class="col-sm-6">
+									            <textarea id="descripcion" class="form-control" rows="3" style="resize: none;"
+									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"></textarea>
+									        </div>	
+		       							 </div>	
+									</div>
+								</div>
+							</div>
+							<!--/* FIN - Información general */-->
+							
+							<!--/* INICIO - Fotografías */-->	
+							<div class="card">
+								<div id="headingFotografias" class="card-header">
+									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseFotografias" aria-expanded="false"
+										aria-controls="collapseFotografias">
+										<div style="display:flex;">
+											<div class="text-tab-accordion" ><span th:text="#{html.label.fotografias}"></span></div  >
+											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
+										</div >
+									</button>
+								</div>
+								<div id="collapseFotografias" class="collapse" aria-labelledby="headingFotografias" data-parent="#accordionFormulario">
+									<div class="card-body">
+										<!--<div align="left" th:hidden="${esCampoSoloLectura} ? 'true'">	
+											
+											<a id="enlaceAgnadirDocumento" role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupSubirDocumento" href="#"
+												th:text="#{html.boton.agnadirDocumento}"></a>	
+								
+											<button id="botonBorrarDocumento" type="button" class="btn btn-primary" disabled
+												th:text="#{html.boton.borrarDocumento}"></button>	
+											
+										</div>
+										
+										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
+										
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirFotografia')"></div>
+										
+										<table id="tablaFotografias" class="table table-striped table-bordered no-margin-top" style="width: 100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="fotografia, item : *{fotografias}">
+													<td>
+														<a th:href="|@{${download}}/| + ${fotografia.id}" th:text="${fotografia.nombre}"></a>
+													</td>
+													<td th:text="${fotografia.descripcion}"></td>
+													<input type="hidden" th:field="*{fotografias[__${item.index}__].id}"> 
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!--/* FIN - Fotografías */-->	
+							
+							<!--/* INICIO - Documentos */-->	
+							<div class="card">
+								<div id="headingDocumentos" class="card-header">
+									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseDocumentos" aria-expanded="false"
+										aria-controls="collapseDocumentos">
+										<div style="display:flex;">
+											<div class="text-tab-accordion" ><span th:text="#{html.label.documentos}"></span></div  >
+											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
+										</div >
+									</button>
+								</div>
+								<div id="collapseDocumentos" class="collapse" aria-labelledby="headingDocumentos" data-parent="#accordionFormulario">
+									<div class="card-body">
+										<!--<div align="left" th:hidden="${esCampoSoloLectura} ? 'true'">	
+											
+											<a id="enlaceAgnadirDocumento" role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupSubirDocumento" href="#"
+												th:text="#{html.boton.agnadirDocumento}"></a>	
+								
+											<button id="botonBorrarDocumento" type="button" class="btn btn-primary" disabled
+												th:text="#{html.boton.borrarDocumento}"></button>	
+											
+										</div>
+										
+										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
+										
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirDocumento')"></div>
+										
+										<table id="tablaDocumentos" class="table table-striped table-bordered no-margin-top" style="width: 100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="documento, item : *{documentos}">
+													<td>
+														<a th:href="|@{${download}}/| + ${documento.id}" th:text="${documento.nombre}"></a>
+													</td>
+													<td th:text="${documento.descripcion}"></td>
+													<input type="hidden" th:field="*{documentos[__${item.index}__].id}"> 
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!--/* FIN - Documentos */-->	
+						</div>
+						
+						<br>
+						
+						<!--/* INICIO - Botonera */-->
+						<div align="right">						
+							<!--/* Botón Volver */-->
+							<a role="button" class="btn btn-primary" 
+								th:text="#{html.boton.volver}" th:href="@{${volver}}"></a>
+
+							<!--/* Botón Cancelar */-->							
+							<a role="button" class="btn btn-secondary" data-toggle="modal" data-target="#popupCancelar" href="#"
+								th:text="#{html.boton.cancelar}" th:hidden="${estaBotonCancelarActivo} ? 'false' : 'true'"></a>
+
+							<!--/* Botón Aceptar */-->							
+							<input type="submit" class="btn btn-primary" 
+								th:value="#{html.boton.aceptar}" th:hidden="${estaBotonAceptarActivo} ? 'false' : 'true'">
+
+							<!--/* Botón Eliminar */-->							
+							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
+								th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+						</div>
+						<!--/* FIN - Botonera */-->
+						
+						<!--/* INICIO - Popup de cancelar */-->
+						<div th:replace="fragments/popups/popupCancelar :: popupCancelar"></div>
+						<!--/* FIN - Popup de cancelar */-->
+
+						<!--/* INICIO - Popup de eliminación */-->
+						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
+						<!--/* FIN - Popup de eliminación */-->
+			
+					</form>
+				</div>
+			</div>
+			<!--/* FIN - Contenido */-->
+			
+			<!--/* INICIO - Popup de subir Fotografias */-->
+			<div id="popupSubirFotografia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSubirTitulo" aria-hidden="true">
+				<form id="formSubirFotografia" th:action="@{${upload}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
+					<input type="hidden" th:field="*{id}">
+					
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+						        <h5 id="modalSubirTitulo" class="modal-title" th:text="#{html.label.subirFotografia}"></h5>
+						        <button id="botonAspaPopupSubirFotografia" type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
+						        </button>
+						    </div>
+						    <div class="modal-body">
+          					
+						    	<!--/* INICIO - Fichero */-->
+								<div class="row align-items-center text-sm-left text-sm-1">
+									<div class="col-sm-2" th:text="#{html.label.fichero}"></div>
+									<div class="col-sm-10" >
+							       		<div class="custom-file">
+											<input class="custom-file-input" type="file" id="fichero"
+												name="fichero" accept=".png,.jpg"
+												lang="es"
+												th:onchange="|validarTamagnoFichero(${ficheroTamagnoMax});|">
+											<label class="custom-file-label" for="fichero"></label>
+										</div>
+										<div id="errorFicheroNoSeleccionado" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.notNull}"></div>
+										<div id="errorFicheroTamagnoMax" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.file.sizeMax}"></div>
+										<div id="errorFicheroVacio" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.file.notEmpty}"></div>
+							        </div>										        	
+       							 </div>
+								<!--/* FIN - Fichero */-->	
+								
+					       		<!--/* INICIO - Descripción */-->
+								<div class="row align-items-center text-sm-left text-sm-1">
+									<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
+							        <div class="col-sm-10" >
+							       		<textarea id="descripcionFotografia" class="form-control" rows="3" style="resize: none;"
+									            	th:field="*{descripcionFotografia}"></textarea>
+									    <div id="errorDescripcionFotografia" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.min1max250}"></div>
+							        </div>										        	
+       							 </div>
+					       		<!--/* FIN - Descripción */-->
+					       		
+					       		<!--/* INICIO - Texto tamaño */-->
+					       		<div class="row align-items-center text-sm-right text-sm-1">
+					       			<div class="col-sm-12" th:text="#{html.label.ficheroTamagnoMaximo}"></div>
+					       		</div>
+					       		<!--/* FIN - Texto tamaño */-->
+						    	
+						    	<!--/* INICIO - Barra de progreso */-->
+								<div id="barraProgreso" class="progress" hidden="hidden">
+								    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+								    	role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+								</div>
+						    	<!--/* FIN - Barra de progreso */-->
+						    </div>
+						    <div class="modal-footer">
+						        <button id="botonAceptarPopupSubirFotografia" type="submit" class="btn btn-primary" 
+						        	th:onclick="|return validarPopupFotografia();|" th:text="#{html.boton.aceptar}"></button>
+						        <button id="botonCancelarPopupSubirFotografia" type="button" class="btn btn-secondary" data-dismiss="modal" 
+						        	th:text="#{html.boton.cancelar}"></button>
+						    </div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!--/* FIN - Popup de subir Fotografias */-->
+			
+			<!--/* INICIO - Popup de subir documentos */-->
+			<div id="popupSubirDocumento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSubirTitulo" aria-hidden="true">
+				<form id="formSubirDocumento" th:action="@{${upload}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
+					<input type="hidden" th:field="*{id}">
+					
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+						        <h5 id="modalSubirTitulo" class="modal-title" th:text="#{html.label.subirDocumento}"></h5>
+						        <button id="botonAspaPopupSubirDocumento" type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
+						        </button>
+						    </div>
+						    <div class="modal-body">
+          					
+						    	<!--/* INICIO - Fichero */-->
+								<div class="row align-items-center text-sm-left text-sm-1">
+									<div class="col-sm-2" th:text="#{html.label.fichero}"></div>
+									<div class="col-sm-10" >
+							       		<div class="custom-file">
+											<input class="custom-file-input" type="file" id="fichero"
+												name="fichero" accept=".doc,.docx,.ods,.odt,.pdf,.xls,.xlsx"
+												lang="es"
+												th:onchange="|validarTamagnoFichero(${ficheroTamagnoMax});|">
+											<label class="custom-file-label" for="fichero"></label>
+										</div>
+										<div id="errorFicheroNoSeleccionado" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.notNull}"></div>
+										<div id="errorFicheroTamagnoMax" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.file.sizeMax}"></div>
+										<div id="errorFicheroVacio" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.file.notEmpty}"></div>
+							        </div>										        	
+       							 </div>
+								<!--/* FIN - Fichero */-->	
+								
+								<!--/* INICIO - Tipo */-->
+								<div class="row align-items-center text-sm-left text-sm-1">
+									<div class="col-sm-2" th:text="#{html.label.tipo}"></div>
+							        <div class="col-sm-10" >
+							       		<select id="tipoDocumento" class="form-control" th:field="*{idTipoDocumento}">
+											<option value=""></option>
+											<option th:each="tipoDocumento : ${tiposDocumento}" 
+									 		   	th:value="${tipoDocumento.id}" 
+									  		    th:text="${tipoDocumento.nombre}"></option>
+										</select>
+										<div id="errorTipoDocumento" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.notNull}"></div>
+							        </div>										        	
+       							 </div>
+					       		<!--/* FIN - Tipo */-->
+					       		
+					       		<!--/* INICIO - Descripción */-->
+								<div class="row align-items-center text-sm-left text-sm-1">
+									<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
+							        <div class="col-sm-10" >
+							       		<textarea id="descripcionDocumento" class="form-control" rows="3" style="resize: none;"
+									            	th:field="*{descripcionDocumento}"></textarea>
+									    <div id="errorDescripcionDocumento" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
+											th:text="#{validation.min1max250}"></div>
+							        </div>										        	
+       							 </div>
+					       		<!--/* FIN - Descripción */-->
+					       		
+					       		<!--/* INICIO - Texto tamaño */-->
+					       		<div class="row align-items-center text-sm-right text-sm-1">
+					       			<div class="col-sm-12" th:text="#{html.label.ficheroTamagnoMaximo}"></div>
+					       		</div>
+					       		<!--/* FIN - Texto tamaño */-->
+						    	
+						    	<!--/* INICIO - Barra de progreso */-->
+								<div id="barraProgreso" class="progress" hidden="hidden">
+								    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+								    	role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+								</div>
+						    	<!--/* FIN - Barra de progreso */-->
+						    </div>
+						    <div class="modal-footer">
+						        <button id="botonAceptarPopupSubirDocumento" type="submit" class="btn btn-primary" 
+						        	th:onclick="|return validarPopupDocumento();|" th:text="#{html.boton.aceptar}"></button>
+						        <button id="botonCancelarPopupSubirDocumento" type="button" class="btn btn-secondary" data-dismiss="modal" 
+						        	th:text="#{html.boton.cancelar}"></button>
+						    </div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!--/* FIN - Popup de subir documentos */-->
+			
+			<!--/* INICIO - Pie de página */-->
+			<div th:replace="fragments/pie :: pie"></div>
+			<!--/* FIN - Pie de página */-->	
+			
+		</div>
+
+		<!--/* INICIO - JS */-->
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>			
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/jquery-mask-plugin/1.14.15/dist/jquery.mask.js}"></script>
+		<script type="text/javascript" th:src="@{/js/equipamiento.js}"></script>
+		
+		<!--/* INICIO - Apertura del menú */-->
+		<script th:inline="javascript">
+			$('#collapseGestionBBDD').collapse('show', { "animation": false });
+		</script>
+		<!--/* FIN - Apertura del menú */-->
+		<!--/* FIN - JS */-->
+	
+	</body>
+</html>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.12.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.dbcom.app</groupId>
+	<artifactId>Inventa</artifactId>
+	<version>6.0.0</version>
+	<packaging>war</packaging>
+	<name>INVENTA</name>
+	<description>Inventario del equipamiento de comunicaciones Tierra/Aire y Tierra/Tierra instalado en todo el territorio español</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>        
+		<modelmapper.version>2.3.0</modelmapper.version>
+        
+        <!-- Librerías JS -->
+        <jquery.version>3.4.1</jquery.version>
+        <bootstrap.version>4.4.1</bootstrap.version>	
+	    <dist-datatables.version>1.10.20</dist-datatables.version>
+	    <dist-datatables-bootstrap4.version>1.10.20</dist-datatables-bootstrap4.version>
+	    <dist-datatables-buttons-bootstrap4.version>1.6.1</dist-datatables-buttons-bootstrap4.version>
+	    <dist-datatables-select-bootstrap4.version>1.3.1</dist-datatables-select-bootstrap4.version>		
+	    <dist-datatables-buttons.version>1.6.1</dist-datatables-buttons.version>
+	    <dist-datatables-rowgroup.version>1.1.1</dist-datatables-rowgroup.version>	
+	    <dist-datatables-select.version>1.3.1</dist-datatables-select.version>
+		<font-awesome.version>5.13.0</font-awesome.version>
+	    <jquery-mask-plugin.version>1.14.15</jquery-mask-plugin.version>    
+        <popper.version>2.0.2</popper.version>
+		<tempusdominus-bootstrap-4.version>5.1.2</tempusdominus-bootstrap-4.version>
+		<minify-maven-plugin.version>1.7.6</minify-maven-plugin.version>
+		<momentjs.version>2.24.0</momentjs.version>        
+    </properties>
+
+    <dependencies>
+    
+		<!-- Herramientas para el desarrollador  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Operaciones -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Motor de plantillas -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		
+		<!-- Mapeo de DTOs en Entidades y viceversa -->
+	    <dependency>
+	  		<groupId>org.modelmapper</groupId>
+	  		<artifactId>modelmapper</artifactId>
+	  		<version>${modelmapper.version}</version>
+		</dependency>
+		
+		<!-- Seguridad -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-data-ldap</artifactId> -->
+<!-- 		</dependency> -->
+		
+		<!-- Persistencia -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- Web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Pruebas -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		    
+		<!-- JQuery -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>jquery</artifactId>
+		    <version>${jquery.version}</version>
+		</dependency>
+
+	    <!-- Bootstrap -->
+	    <dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>bootstrap</artifactId>
+		    <version>${bootstrap.version}</version>
+		</dependency>
+
+		<!-- Datetimepicker -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>tempusdominus-bootstrap-4</artifactId>
+		    <version>${tempusdominus-bootstrap-4.version}</version>
+		</dependency>
+		
+		<!-- Necesario por tempusdominus para los locales -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>momentjs</artifactId>
+		    <version>${momentjs.version}</version>
+		</dependency>
+		
+		<!-- Iconos -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>font-awesome</artifactId>
+		    <version>${font-awesome.version}</version>
+		</dependency>
+		
+		<!-- Popper -->
+        <dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>popper.js</artifactId>
+		    <version>${popper.version}</version>
+		</dependency>
+		   
+	    <!-- Tablas dinámicas -->
+		<dependency>
+		    <groupId>org.webjars.bowergithub.datatables</groupId>
+		    <artifactId>dist-datatables</artifactId>
+		    <version>${dist-datatables.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars.bowergithub.datatables</groupId>
+		    <artifactId>dist-datatables-bootstrap4</artifactId>
+		    <version>${dist-datatables-bootstrap4.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars.bowergithub.datatables</groupId>
+		    <artifactId>dist-datatables-select</artifactId>
+		    <version>${dist-datatables-select.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bowergithub.datatables</groupId>
+			<artifactId>dist-datatables-select-bootstrap4</artifactId>
+			<version>${dist-datatables-select-bootstrap4.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars.bowergithub.datatables</groupId>
+		    <artifactId>dist-datatables-rowgroup</artifactId>
+		    <version>${dist-datatables-rowgroup.version}</version>
+		</dependency>
+		
+		<!-- Máscaras con javascript -->
+		<dependency>
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>jquery-mask-plugin</artifactId>
+		    <version>${jquery-mask-plugin.version}</version>
+		</dependency>
+		
+		<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			
+			<!-- Permite compactar los ficheros JS y CSS -->
+			<plugin>
+			 	<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>${minify-maven-plugin.version}</version>			  
+				<executions>
+					<execution>
+						<id>default-minify</id>
+				    	<phase>prepare-package</phase>
+				      	<goals>
+				        	<goal>minify</goal>
+				      	</goals>
+				      	<configuration>
+				      		<charset>${project.build.sourceEncoding}</charset>
+				      		<skipMerge>true</skipMerge>
+				        	<nosuffix>true</nosuffix>
+				        	<webappSourceDir>${project.basedir}/src/main/resources/static</webappSourceDir>	 	
+				        	<webappTargetDir>${project.build.outputDirectory}/static</webappTargetDir>
+				        	<cssSourceIncludes>
+                            	<cssSourceInclude>*.css</cssSourceInclude>
+                            </cssSourceIncludes>
+                            <jsSourceIncludes>
+                                <jsSourceInclude>*.js</jsSourceInclude>
+                            </jsSourceIncludes> 		
+				   			<cssEngine>YUI</cssEngine>				        
+				        	<jsEngine>CLOSURE</jsEngine>
+				        	<closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>		     	    
+				    	</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+	    <profile>
+	        <id>local</id>
+	        <activation>
+		   		<activeByDefault>true</activeByDefault>
+		    </activation>
+	        <properties>
+	            <spring.profiles.active>local</spring.profiles.active>
+	        </properties>
+	    </profile>
+	    <profile>
+	        <id>des</id>
+	        <properties>
+	            <spring.profiles.active>des</spring.profiles.active>
+	        </properties>
+	        <build>
+				<finalName>${project.artifactId}-${project.version}</finalName>
+			</build>	      
+	    </profile>
+	    <profile>
+	        <id>pre</id>
+	        <properties>
+	            <spring.profiles.active>pre</spring.profiles.active>
+	        </properties>
+	        <build>
+				<finalName>${project.artifactId}-${project.version}</finalName>								
+			</build>      
+	    </profile>
+	    <profile>
+	        <id>pro</id>
+	        <properties>
+	            <spring.profiles.active>pro</spring.profiles.active>
+	        </properties>
+	        <build>
+				<finalName>${project.artifactId}-${project.version}</finalName>
+			</build>
+	    </profile>
+	</profiles>
+</project>

@@ -1,0 +1,11 @@
+<div th:fragment="pie" style="padding-top: 10px;">	
+	<div class="row">
+		<div class="col-sm-12  bg-primary text-white text-sm-center">
+			&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}"></span>
+			
+			<!--/* Obtenemos los textos del application.properties */-->
+			<span th:text="${@environment.getProperty('info.app.name')}"></span>        			
+			<span th:text="${@environment.getProperty('info.app.version')}"></span>        			
+		</div>
+	</div>
+</div>

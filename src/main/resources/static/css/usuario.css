@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+/* INICIO - Texto del botón de seleccionar archivos */
+.custom-file-input ~ .custom-file-label::after {
+    content: "Seleccionar";
+}
+
+/* FIN - Texto del botón de seleccionar archivos */

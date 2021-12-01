@@ -1,0 +1,40 @@
+<div class="botonera" th:fragment="botoneraTablaFormulario">
+	
+		<!--/* Obtenemos las urls de los botones desde el controlador para insertarlos en el JS */-->	
+		<a id="uriLeer" hidden="true" th:href="@{${leer}}"></a>	
+		<a id="uriModificar" hidden="true" th:href="@{${modificar}}"></a>	
+		<a id="uriBorrar" hidden="true" th:href="@{${borrar}}"></a>	
+		
+			<div class="botonera-crud" align="left">
+				<a id="enlaceAgnadir" class="button-crud" data-toggle="modal" th:attr="data-target=${popupTarget}">
+					<div>
+						<i class="far fa-plus-square icono-crud"></i>
+						<span class="text-crud" th:text="#{html.boton.agnadir}"/>
+					</div>
+				</a>
+					
+				<a id="botonBorrar" class="button-crud" th:href="@{${borrar}}" href="">
+					<div>
+						<i class="far fa-times-circle icono-crud"></i>
+						<span class="text-crud" th:text="#{html.boton.eliminar}"/>
+					</div>
+				</a>
+			</div >
+			<div align="right" class="sercher-group">
+				<select class="custom-select-form" id="selectItem">
+					<option selected>Selecciona</option>
+				    <option value="1">One</option>
+				    <option value="2">Two</option>
+				    <option value="3">Three</option>
+				</select>
+				<div class="input-group search-div">
+				  <div class="input-group-prepend">
+				    <div class="input-group-text">
+				   	 	<i class="fas fa-search icon-search-input"></i>
+				    </div>
+				  </div>
+				  <input id="search" type="text" class="custom-form-control">
+				</div>
+				<i class="far fa-arrow-alt-circle-right icon-search"></i>
+			</div > 
+	</div>
