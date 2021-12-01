@@ -100,4 +100,7 @@ public final class EquipamientoDto implements Serializable {
 	private Long idTipoDocumento;
 	private String descripcionDocumento;
 	
+	// Atributos de las fotografias
+	private String descripcionFotografia;
+	
 }
