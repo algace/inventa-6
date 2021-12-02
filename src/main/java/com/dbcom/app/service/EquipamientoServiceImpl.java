@@ -48,7 +48,6 @@ public final class EquipamientoServiceImpl implements EquipamientoService {
 	public EquipamientoDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return EquipamientoDto.builder().tiposDocumento(tipoDocumentoService.readAll()).build();
-		//return new EquipamientoDto();
 	}
 
 	/**

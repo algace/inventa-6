@@ -324,7 +324,7 @@
 			
 			<!--/* INICIO - Popup de subir Fotografias */-->
 			<div id="popupSubirFotografia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSubirTitulo" aria-hidden="true">
-				<form id="formSubirFotografia" th:action="@{${upload}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
+				<form id="formSubirFotografia" th:action="@{${uploadFotografia}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
 					<input type="hidden" th:field="*{id}">
 					
 					<div class="modal-dialog modal-dialog-centered" role="document">
@@ -346,7 +346,7 @@
 												name="fotografia" accept=".png,.jpg"
 												lang="es"
 												th:onchange="|validarTamagnoFichero(${ficheroTamagnoMax});|">
-											<label class="custom-file-label" for="fichero"></label>
+											<label class="custom-file-label" for="fotografia"></label>
 										</div>
 										<div id="errorFotografiaNoSeleccionado" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
 											th:text="#{validation.notNull}"></div>
@@ -397,7 +397,7 @@
 			
 			<!--/* INICIO - Popup de subir documentos */-->
 			<div id="popupSubirDocumento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSubirTitulo" aria-hidden="true">
-				<form id="formSubirDocumento" th:action="@{${upload}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
+				<form id="formSubirDocumento" th:action="@{${uploadDocumento}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
 					<input type="hidden" th:field="*{id}">
 					
 					<div class="modal-dialog modal-dialog-centered" role="document">

@@ -33,6 +33,8 @@ public final class ControllerConstants {
 	public static final String ATTRIBUTE_FICHERO_TAMAGNO_MAX = "ficheroTamagnoMax";
 	public static final String ATTRIBUTE_TIPOS_DOCUMENTO = "tiposDocumento";
 	public static final String ATTRIBUTE_UPLOAD = "upload";
+	public static final String ATTRIBUTE_UPLOAD_DOCUMENTO = "uploadDocumento";
+	public static final String ATTRIBUTE_UPLOAD_FOTOGRAFIA = "uploadFotografia";
 	
 	// Atributos para visualización
 	public static final String ATTRIBUTE_ES_CAMPO_SOLO_LECTURA = "esCampoSoloLectura";

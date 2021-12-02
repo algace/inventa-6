@@ -181,7 +181,9 @@ public final class EquipamientoController {
 	public String updateGET(@PathVariable("id") final Long id, final Model model) {
 		
 		// Subida/descarga de Ficheros
-		model.addAttribute(ControllerConstants.ATTRIBUTE_UPLOAD, DocumentoController.MAP_UPLOAD_DOCUMENTO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_UPLOAD_DOCUMENTO, DocumentoController.MAP_UPLOAD_DOCUMENTO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_UPLOAD_FOTOGRAFIA, FotografiaController.MAP_UPLOAD_FOTOGRAFIA);
+		
 		model.addAttribute(ControllerConstants.ATTRIBUTE_DOWNLOAD, DocumentoController.MAP_DOWNLOAD_DOCUMENTO);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_FICHERO_TAMAGNO_MAX, MessagesConstants.FILE_MAX_SIZE);
 	
@@ -220,7 +222,8 @@ public final class EquipamientoController {
 		if (bindingResult.hasErrors()) {	
 			
 			// Subida/descarga de Ficheros
-			model.addAttribute(ControllerConstants.ATTRIBUTE_UPLOAD, DocumentoController.MAP_UPLOAD_DOCUMENTO);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_UPLOAD_DOCUMENTO, DocumentoController.MAP_UPLOAD_DOCUMENTO);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_UPLOAD_FOTOGRAFIA, FotografiaController.MAP_UPLOAD_FOTOGRAFIA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_DOWNLOAD, DocumentoController.MAP_DOWNLOAD_DOCUMENTO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_FICHERO_TAMAGNO_MAX, MessagesConstants.FILE_MAX_SIZE);
 

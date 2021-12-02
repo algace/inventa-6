@@ -28,13 +28,16 @@ import lombok.extern.slf4j.Slf4j;
 public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	
 	private final AplicacionSWRepository aplicacionSWRepository;
+	private final EquipamientoService equipamientosService;
 	private final VersionSWService versionSWService;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public AplicacionSWServiceImpl(AplicacionSWRepository aplicacionSWRepository, 
-			VersionSWService versionSWService, ModelMapperUtils modelMapper) {
+			EquipamientoService equipamientosService, VersionSWService versionSWService,
+			ModelMapperUtils modelMapper) {
 		this.aplicacionSWRepository = aplicacionSWRepository;
+		this.equipamientosService = equipamientosService;
 		this.versionSWService = versionSWService;
 		this.modelMapperUtils = modelMapper;
 	}
@@ -44,7 +47,10 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	 */
 	public AplicacionSWDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return AplicacionSWDto.builder().versionesSWNoIncluidas(versionSWService.readAll()).build();
+		return AplicacionSWDto.builder()
+				              .versionesSWNoIncluidas(versionSWService.readAll())
+				              .equipamientosNoIncluidos(equipamientosService.readAll())
+				              .build();
 	}
 
 	/**
@@ -90,8 +96,9 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	
 		final AplicacionSWDto result = this.modelMapperUtils.map(aplicacionSW, AplicacionSWDto.class);
 		
-		// Insertamos las versiones que no tiene por si las quiere añadir
+		// Insertamos los equipamientos y las versiones que no tiene por si las quiere añadir
 		result.setVersionesSWNoIncluidas(this.versionSWService.readNotContains(id));
+		result.setEquipamientosNoIncluidos(this.equipamientoService.readNotContains(id));
 		
 		log.info(LoggerConstants.LOG_READ);		
 
