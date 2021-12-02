@@ -14,6 +14,7 @@ const ID_TABLA_FOTOGRAFIAS = '#tablaFotografias';
 
 var rowNode;
 
+
 // Reset de los campos del formulario del popup de subir fotografia
 function resetFormPopupSubirFotografia() {
 	$('.custom-file-label').html('');
@@ -168,6 +169,7 @@ function validarPopupFotografia() {
 	// Mostramos la barra de progreso
 	if (contador == 0) {
 		$(ID_BARRA_PROGRESO_FOTOGRAFIA).removeAttr("hidden");
+		/*equipamiento.fotografias.push({'id':1, 'nombre': $(ID_FOTOGRAFIA_FOTO)[0].files[0], 'descripcion': 'description'});*/
 	} else {
 		$(ID_BARRA_PROGRESO_FOTOGRAFIA).attr("hidden", "hidden");
 	}

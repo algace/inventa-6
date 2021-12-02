@@ -346,7 +346,7 @@
 												name="fotografia" accept=".png,.jpg"
 												lang="es"
 												th:onchange="|validarTamagnoFichero(${ficheroTamagnoMax});|">
-											<label class="custom-file-label" for="fichero"></label>
+											<label class="custom-file-label" for="fotografia"></label>
 										</div>
 										<div id="errorFotografiaNoSeleccionado" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
 											th:text="#{validation.notNull}"></div>
@@ -384,7 +384,7 @@
 						    	<!--/* FIN - Barra de progreso */-->
 						    </div>
 						    <div class="modal-footer">
-						        <button id="botonAceptarPopupSubirFotografia" type="submit" class="btn btn-primary" 
+						        <button id="botonAceptarPopupSubirFotografia" class="btn btn-primary" 
 						        	th:onclick="|return validarPopupFotografia();|" th:text="#{html.boton.aceptar}"></button>
 						        <button id="botonCancelarPopupSubirFotografia" type="button" class="btn btn-secondary" data-dismiss="modal" 
 						        	th:text="#{html.boton.cancelar}"></button>
@@ -502,7 +502,7 @@
 		<script type="text/javascript" th:src="@{/js/fotografia.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
-		<script th:inline="javascript">
+		<script th:inline="javascript" th:object="${equipamiento}">
 			$('#collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->
