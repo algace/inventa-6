@@ -5,8 +5,8 @@
 const ID_BOTON_ACEPTAR_POPUP_SUBIR_DOCUMENTO = '#botonAceptarPopupSubirDocumento';
 const ID_BOTON_ASPA_POPUP_SUBIR_DOCUMENTO = '#botonAspaPopupSubirDocumento';
 const ID_BOTON_CANCELAR_POPUP_SUBIR_DOCUMENTO = '#botonCancelarPopupSubirDocumento';
-const ID_BOTON_BORRAR_DOCUMENTO = '#botonBorrarDocumento';
-const ID_BARRA_PROGRESO = '#barraProgreso';
+const ID_BOTON_BORRAR_DOCUMENTO = '#botonBorrarDocumento'; /********************************** */
+const ID_BARRA_PROGRESO_DOC = '#barraProgresoDocumento';
 const ID_DESCRIPCION_DOCUMENTO = '#descripcionDocumento';
 const ID_ERROR_DESCRIPCION_DOCUMENTO = '#errorDescripcionDocumento';
 const ID_ERROR_FICHERO_NO_SELECCIONADO = '#errorFicheroNoSeleccionado';
@@ -205,9 +205,9 @@ function validarPopupDocumento() {
 	
 	// Mostramos la barra de progreso
 	if (contador == 0) {
-		$(ID_BARRA_PROGRESO).removeAttr("hidden");
+		$(ID_BARRA_PROGRESO_DOC).removeAttr("hidden");
 	} else {
-		$(ID_BARRA_PROGRESO).attr("hidden", "hidden");
+		$(ID_BARRA_PROGRESO_DOC).attr("hidden", "hidden");
 	}
 		
 	return ((contador == 0) ? true : false);
@@ -243,7 +243,7 @@ $(ID_FORM_SUBIR_DOCUMENTO).on('submit', function(e) {
         processData:false,
         beforeSend: function() {
             $('.progress-bar').width('0%');           
-            $(ID_BARRA_PROGRESO).removeAttr("hidden");           
+            $(ID_BARRA_PROGRESO_DOC).removeAttr("hidden");           
         },
         success: function(response) {      
         	// Recargamos la página ya que desde el backoffice no la recarga 
@@ -254,3 +254,6 @@ $(ID_FORM_SUBIR_DOCUMENTO).on('submit', function(e) {
         }
     });
 });
+
+
+
