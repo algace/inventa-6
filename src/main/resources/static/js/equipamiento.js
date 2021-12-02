@@ -13,7 +13,7 @@ const ID_ERROR_FICHERO_NO_SELECCIONADO = '#errorFicheroNoSeleccionado';
 const ID_ERROR_FICHERO_TAMAGNO_MAX = '#errorFicheroTamagnoMax';
 const ID_ERROR_FICHERO_VACIO = '#errorFicheroVacio';
 const ID_ERROR_TIPO_DOCUMENTO = '#errorTipoDocumento';
-const ID_FICHERO = '#fichero';
+const ID_FICHERO_DOC = '#fichero';
 const ID_FORM_SUBIR_DOCUMENTO = '#formSubirDocumento';
 const ID_TIPO_DOCUMENTO = '#tipoDocumento';
 const ID_TABLA_DOCUMENTOS = '#tablaDocumentos';
@@ -124,13 +124,13 @@ $(ID_BOTON_BORRAR_DOCUMENTO).on('click', function () {
 //INICIO - Validaciones subir fichero
 function validarTamagnoFichero(tamagnoMaximo) {	
 	
-	if ($(ID_FICHERO)[0].files[0].size > tamagnoMaximo) {
+	if ($(ID_FICHERO_DOC)[0].files[0].size > tamagnoMaximo) {
 		$(ID_ERROR_FICHERO_VACIO).attr("hidden", "hidden");
 		$(ID_ERROR_FICHERO_TAMAGNO_MAX).removeAttr("hidden");
 		$(ID_ERROR_FICHERO_NO_SELECCIONADO).attr("hidden", "hidden");	
 		$(ID_BOTON_ACEPTAR_POPUP_SUBIR_DOCUMENTO).attr("disabled", "disabled");
 	
-	} else if ($(ID_FICHERO)[0].files[0].size == 0) {
+	} else if ($(ID_FICHERO_DOC)[0].files[0].size == 0) {
 		$(ID_ERROR_FICHERO_TAMAGNO_MAX).attr("hidden", "hidden");
 		$(ID_ERROR_FICHERO_VACIO).removeAttr("hidden");
 		$(ID_ERROR_FICHERO_NO_SELECCIONADO).attr("hidden", "hidden");
@@ -147,7 +147,7 @@ function validarTamagnoFichero(tamagnoMaximo) {
 function validarFicheroNoSeleccionado() {
 	var resultado;
 
-	if (null == $(ID_FICHERO)[0].files[0]) {
+	if (null == $(ID_FICHERO_DOC)[0].files[0]) {
 		$(ID_ERROR_FICHERO_NO_SELECCIONADO).removeAttr("hidden");
 		resultado = false;
 	} else {

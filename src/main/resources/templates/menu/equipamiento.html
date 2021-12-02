@@ -437,7 +437,7 @@
 							        <div class="col-sm-10" >
 							       		<select id="tipoDocumento" class="form-control" th:field="*{idTipoDocumento}">
 											<option value=""></option>
-											<option th:each="tipoDocumento : ${tiposDocumento}" 
+											<option th:each="tipoDocumento : *{tiposDocumento}" 
 									 		   	th:value="${tipoDocumento.id}" 
 									  		    th:text="${tipoDocumento.nombre}"></option>
 										</select>
