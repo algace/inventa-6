@@ -3,8 +3,9 @@
  */
 
 const ID_BOTON_BORRAR_VERSION = '#botonBorrarVersion';
+const ID_BOTON_BORRAR_EQUIPAMIENTO = '#botonBorrarEquipamiento';
 const ID_BOTON_ACEPTAR_SELECCIONAR_VERSION = '#botonAceptarSeleccionarVersion';
-const ID_TABLA_EQUIPAMIENTO = '#tablaEquipamiento';
+const ID_TABLA_EQUIPAMIENTOS = '#tablaEquipamiento';
 const ID_TABLA_VERSIONES = '#tablaVersiones';
 const ID_TABLA_SELECCIONAR_VERSION = '#tablaSeleccionarVersion';
 const ID_DATETIMEPICKER_FECHA = '#datetimepickerFecha';
@@ -32,7 +33,7 @@ $(ID_DATETIMEPICKER_HORA).datetimepicker({
 // FIN - Configuración para los campos de fecha y hora
 
 // INICIO - Configuración de la tabla Equipamiento
-var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTO).DataTable({
+var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTOS).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ifpl><"clear">',
 	searching:  false,
@@ -63,7 +64,17 @@ var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTO).DataTable({
             rows: ''
         }
 	}
- });
+ }) 
+ .on('select', function() {
+     $(ID_BOTON_BORRAR_VERSION).removeAttr('disabled');
+ })
+ .on('deselect', function() {
+     $(ID_BOTON_BORRAR_VERSION).attr('disabled', 'disabled');
+ })
+ .on('click', 'tr', function() {
+	 rowNode = this;
+	 idRow = this;
+});
 
 //Campo para el filtro
 $('#tablaEquipamiento tfoot th').each(function() {
@@ -223,4 +234,96 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).on('click', function () {
 	
 	// 4. Deshabilitamos el botón aceptar
 	$(ID_TABLA_SELECCIONAR_VERSION).attr('disabled', 'disabled');
+});
+
+
+const ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO = '#botonAceptarSeleccionarEquipamiento';
+const ID_TABLA_SELECCIONAR_EQUIPAMIENTO = '#tablaSeleccionarEquipamientos';
+
+// Configuración de la tabla del popup para seleccionar Versiones
+$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable({
+	select: 'single',
+	dom: '<"top">rt<"bottom"ifpl><"clear">',
+	searching:  false,
+	language: {
+	    'sProcessing':     'Procesando...',
+	    'sLengthMenu':     'Mostrar _MENU_ registros',
+	    'sZeroRecords':    'No se encontraron resultados',
+	    'sEmptyTable':     'Ningún dato disponible en esta tabla',
+	    'sInfo':           'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+	    'sInfoEmpty':      'Mostrando registros del 0 al 0 de un total de 0 registros',
+	    'sInfoFiltered':   '(filtrado de un total de _MAX_ registros)',
+	    'sInfoPostFix':    '',
+	    'sSearch':         'Buscar:',
+	    'sUrl':            '',
+	    'sInfoThousands':  ',',
+	    'sLoadingRecords': 'Cargando...',
+	    'oPaginate': {
+	        'sFirst':    '<<',
+	        'sLast':     '>>',
+	        'sNext':     '>',
+	        'sPrevious': '<'
+	    },
+	    'oAria': {
+	        'sSortAscending':  ': Activar para ordenar la columna de manera ascendente',
+	        'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+	    },
+	    select: {
+            rows: ''
+        }
+	}
+ })
+ .on('select', function() {
+     $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).removeAttr('disabled');
+ })
+ .on('deselect', function() {
+     $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
+ }) 
+ .on('click', 'tr', function() {
+	 rowNode = this;
+	 idRow = this
+});
+
+// Botón Borrar
+$(ID_BOTON_BORRAR_EQUIPAMIENTO).on('click', function () {
+	
+	// 1. Eliminamos la fila de la tabla de versiones
+	$(ID_TABLA_EQUIPAMIENTOS).DataTable()
+		.row(idRow)
+		.remove()
+		.draw();
+	
+	// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable()
+		.row
+		.add(rowNode)
+		.draw();
+	
+	// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable().rows().deselect();
+	
+	// 4. Deshabilitamos el botón borrar
+	$(ID_BOTON_BORRAR_EQUIPAMIENTO).attr('disabled', 'disabled');
+});
+
+// Botón Aceptar del popup
+$(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
+
+	// 1. Eliminamos la fila de la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable()
+		.row(idRow)
+		.remove()
+		.draw();
+
+	// 2. Insertamos la fila eliminada, en la tabla de versiones
+	$(ID_TABLA_EQUIPAMIENTOS).DataTable()
+		.row
+		.add(rowNode)
+		.draw();
+	
+	// 3. Deseleccionamos todas las filas de la tabla de versiones
+	$(ID_TABLA_EQUIPAMIENTOS).DataTable().rows().deselect();
+	
+	// 4. Deshabilitamos el botón aceptar
+	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
 });
