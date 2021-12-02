@@ -303,20 +303,20 @@
 													<td th:text="${#numbers.formatDecimal(equipamientoNoIncluido.ganancia, 0, 'POINT', 2, 'COMMA')}"></td>
 													<td th:text="${#numbers.formatDecimal(equipamientoNoIncluido.perdida, 0, 'POINT', 2, 'COMMA')}"></td>
 													
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].id}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].nombre}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].marca}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].modelo}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].entradas}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].salidas}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].ganancia}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].perdida}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].id}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].nombre}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].marca}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].modelo}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].entradas}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].salidas}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].ganancia}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].perdida}"> 
 
 													<!--/* Campos obligatorios de Equipamiento */-->
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].sistema}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].subsistema}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].apertura}"> 
-													<input type="hidden" th:field="*{equipamientoNoIncluido[__${item.index}__].diametro}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].sistema}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].subsistema}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].apertura}"> 
+													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].diametro}"> 
 												</tr>
 											</tbody>
 										</table>
