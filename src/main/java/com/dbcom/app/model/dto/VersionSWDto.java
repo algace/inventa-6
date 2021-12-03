@@ -41,4 +41,7 @@ public final class VersionSWDto implements Serializable {
 	@Builder.Default
 	private List<AplicacionSWDto> aplicacionesSW = new ArrayList<>();
 	
+	@Builder.Default
+	private List<AplicacionSWDto> aplicacionesSWNoIncluidas = new ArrayList<>();
+	
 }

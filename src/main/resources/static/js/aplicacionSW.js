@@ -3,7 +3,6 @@
  */
 
 const ID_BOTON_BORRAR_VERSION = '#botonBorrarVersion';
-const ID_BOTON_BORRAR_EQUIPAMIENTO = '#botonBorrarEquipamiento';
 const ID_BOTON_ACEPTAR_SELECCIONAR_VERSION = '#botonAceptarSeleccionarVersion';
 const ID_TABLA_EQUIPAMIENTOS = '#tablaEquipamiento';
 const ID_TABLA_VERSIONES = '#tablaVersiones';
@@ -242,19 +241,20 @@ function addElementVersionSWToRow(){
 	
 	var versionesSW = $("[name='versionesSW[]']");
 	var tamList = versionesSW.length;
-	var idversioneSW = rowNode.children[7].value;
+	var idversioneSW = rowNode.children[tamList -1].value;
 	var input = document.createElement("input");
 	input.setAttribute("type", "hidden");
 	input.setAttribute("id", "versionesSW" + tamList + ".id");
 	input.setAttribute("name", "versionesSW[" + tamList + "].id");
 	input.setAttribute("value", idversioneSW);
 	
-	rowNode.children[7].remove();
+	rowNode.children[tamList -1].remove();
 	rowNode.append(input);
 };
 
 
 const ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO = '#botonAceptarSeleccionarEquipamiento';
+const ID_BOTON_BORRAR_EQUIPAMIENTO = '#botonBorrarEquipamiento';
 const ID_TABLA_SELECCIONAR_EQUIPAMIENTO = '#tablaSeleccionarEquipamientos';
 
 // Configuración de la tabla del popup para seleccionar Versiones
@@ -353,13 +353,13 @@ function addElementEquipamientoToRow(){
 	
 	var equipamientos = $("[name='equipamientos[]']");
 	var tamList = equipamientos.length;
-	var idEquipamiento = rowNode.children[7].value;
+	var idEquipamiento = rowNode.children[tamList -1].value;
 	var input = document.createElement("input");
 	input.setAttribute("type", "hidden");
 	input.setAttribute("id", "equipamientos" + tamList + ".id");
 	input.setAttribute("name", "equipamientos[" + tamList + "].id");
 	input.setAttribute("value", idEquipamiento);
 	
-	rowNode.children[7].remove();
+	rowNode.children[tamList -1].remove();
 	rowNode.append(input);
 };
