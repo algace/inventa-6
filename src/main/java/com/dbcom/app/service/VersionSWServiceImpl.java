@@ -11,7 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.VersionSWRepository;
-import com.dbcom.app.model.dto.AplicacionSWDto;
+import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 import com.dbcom.app.model.dto.VersionSWDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.VersionSW;
@@ -33,7 +33,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
-	public VersionSWServiceImpl(AplicacionSWRepository aplicacionSWRepository, 
+	public VersionSWServiceImpl(AplicacionSWRepository aplicacionSWRepository,
 			VersionSWRepository versionSWRepository, ModelMapperUtils modelMapper) {
 		this.aplicacionSWRepository = aplicacionSWRepository;
 		this.versionSWRepository = versionSWRepository;
@@ -43,20 +43,14 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
-	/*public VersionSWDto create() {		
-		log.info(LoggerConstants.LOG_CREATE);
-		return new VersionSWDto();
-	}*/
-	
 	public VersionSWDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
-
-		List<AplicacionSW> listAplicacionSW = aplicacionSWRepository.findAll();
-
-		final List<AplicacionSWDto> listAplicacionSWDTO = new ArrayList<>();
-
-		listAplicacionSW.forEach(aplicacionSW -> listAplicacionSWDTO.add(this.modelMapperUtils.map(aplicacionSW, AplicacionSWDto.class)));
-		return VersionSWDto.builder().aplicacionesSW(listAplicacionSWDTO).build();
+		final List<AplicacionSW> aplicacionesSW = this.aplicacionSWRepository.findAll();
+		final List<AplicacionSWLiteDto> aplicacionesSWLiteDto = new ArrayList<>(aplicacionesSW.size());		
+		aplicacionesSW.forEach(aplicacionSW -> aplicacionesSWLiteDto.add(this.modelMapperUtils.map(aplicacionSW, AplicacionSWLiteDto.class)));
+		return VersionSWDto.builder()
+	              .aplicacionesSWNoIncluidas(aplicacionesSWLiteDto)
+	              .build();
 		}
 
 	/**
