@@ -355,8 +355,7 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
 
 function addElementEquipamientoToRow(){
 	
-	var equipamientos = $("[name='equipamientos[]']");
-	var tamList = equipamientos.length;
+	var tamList = tabla_equipamiento.data().length;
 	var numChildren = rowNode.children.length;
 	var idEquipamiento = rowNode.children[numChildren-1].value;
 	var input = document.createElement("input");
@@ -364,7 +363,6 @@ function addElementEquipamientoToRow(){
 	input.setAttribute("id", "equipamientos" + tamList + ".id");
 	input.setAttribute("name", "equipamientos[" + tamList + "].id");
 	input.setAttribute("value", idEquipamiento);
-	
 	rowNode.children[numChildren-1].remove();
 	rowNode.append(input);
 };
