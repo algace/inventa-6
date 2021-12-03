@@ -13,7 +13,7 @@
 					</div>
 				</a>
 					
-				<a id="botonBorrar" class="button-crud" th:href="@{${borrar}}" href="">
+				<a class="button-crud" th:attr="id=${idButtonBorrar}">
 					<div>
 						<i class="far fa-times-circle icono-crud"></i>
 						<span class="text-crud" th:text="#{html.boton.eliminar}"/>

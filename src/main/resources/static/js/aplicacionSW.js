@@ -222,7 +222,9 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).on('click', function () {
 		.row(idRow)
 		.remove()
 		.draw();
-
+	
+	addElementVersionSWToRow();
+	
 	// 2. Insertamos la fila eliminada, en la tabla de versiones
 	$(ID_TABLA_VERSIONES).DataTable()
 		.row
@@ -235,6 +237,21 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).on('click', function () {
 	// 4. Deshabilitamos el botón aceptar
 	$(ID_TABLA_SELECCIONAR_VERSION).attr('disabled', 'disabled');
 });
+
+function addElementVersionSWToRow(){
+	
+	var versionesSW = $("[name='versionesSW[]']");
+	var tamList = versionesSW.length;
+	var idversioneSW = rowNode.children[7].value;
+	var input = document.createElement("input");
+	input.setAttribute("type", "hidden");
+	input.setAttribute("id", "versionesSW" + tamList + ".id");
+	input.setAttribute("name", "versionesSW[" + tamList + "].id");
+	input.setAttribute("value", idversioneSW);
+	
+	rowNode.children[7].remove();
+	rowNode.append(input);
+};
 
 
 const ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO = '#botonAceptarSeleccionarEquipamiento';
@@ -298,6 +315,7 @@ $(ID_BOTON_BORRAR_EQUIPAMIENTO).on('click', function () {
 		.row
 		.add(rowNode)
 		.draw();
+		
 	
 	// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
 	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable().rows().deselect();
@@ -314,6 +332,9 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
 		.row(idRow)
 		.remove()
 		.draw();
+		
+	
+	addElementEquipamientoToRow();
 
 	// 2. Insertamos la fila eliminada, en la tabla de versiones
 	$(ID_TABLA_EQUIPAMIENTOS).DataTable()
@@ -327,3 +348,18 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
 	// 4. Deshabilitamos el botón aceptar
 	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
 });
+
+function addElementEquipamientoToRow(){
+	
+	var equipamientos = $("[name='equipamientos[]']");
+	var tamList = equipamientos.length;
+	var idEquipamiento = rowNode.children[7].value;
+	var input = document.createElement("input");
+	input.setAttribute("type", "hidden");
+	input.setAttribute("id", "equipamientos" + tamList + ".id");
+	input.setAttribute("name", "equipamientos[" + tamList + "].id");
+	input.setAttribute("value", idEquipamiento);
+	
+	rowNode.children[7].remove();
+	rowNode.append(input);
+};

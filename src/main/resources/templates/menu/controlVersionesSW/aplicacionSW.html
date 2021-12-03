@@ -142,7 +142,7 @@
 										</div>-->	
 										
 										<!--<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
-										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento')"></div>
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', idButtonBorrar='botonBorrarEquipamiento')"></div>
 										
 										<table id="tablaEquipamiento" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
@@ -165,21 +165,8 @@
 													<td th:text="${equipamiento.salidas}"></td>
 													<td th:text="${#numbers.formatDecimal(equipamiento.ganancia, 0, 'POINT', 2, 'COMMA')}"></td>
 													<td th:text="${#numbers.formatDecimal(equipamiento.perdida, 0, 'POINT', 2, 'COMMA')}"></td>
+													<input type="hidden" th:field="*{equipamientos[__${item.index}__].id}">
 													
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].id}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].nombre}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].marca}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].modelo}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].entradas}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].salidas}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].ganancia}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].perdida}"> 
-
-													<!--/* Campos obligatorios de Equipamiento */-->
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].sistema}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].subsistema}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].apertura}"> 
-													<input type="hidden" th:field="*{equipamientos[__${item.index}__].diametro}"> 
 												</tr>
 											</tbody>
 										</table>
@@ -213,7 +200,7 @@
 											
 										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
 										
-										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarVersion')"></div>
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarVersion', idButtonBorrar='botonBorrarVersion')"></div>
 										
 										<table id="tablaVersiones" class="table table-striped table-bordered no-margin-top" style="width:100%">
 											<thead>
@@ -227,8 +214,6 @@
 													<td th:text="${versionSW.nombre}"></td>
 													<td th:text="${versionSW.descripcion}"></td>
 													<input type="hidden" th:field="*{versionesSW[__${item.index}__].id}"> 
-													<input type="hidden" th:field="*{versionesSW[__${item.index}__].nombre}"> 
-													<input type="hidden" th:field="*{versionesSW[__${item.index}__].descripcion}"> 
 												</tr>
 											</tbody>
 										</table>
@@ -302,21 +287,7 @@
 													<td th:text="${equipamientoNoIncluido.salidas}"></td>
 													<td th:text="${#numbers.formatDecimal(equipamientoNoIncluido.ganancia, 0, 'POINT', 2, 'COMMA')}"></td>
 													<td th:text="${#numbers.formatDecimal(equipamientoNoIncluido.perdida, 0, 'POINT', 2, 'COMMA')}"></td>
-													
 													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].id}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].nombre}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].marca}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].modelo}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].entradas}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].salidas}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].ganancia}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].perdida}"> 
-
-													<!--/* Campos obligatorios de Equipamiento */-->
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].sistema}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].subsistema}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].apertura}"> 
-													<input type="hidden" th:field="*{equipamientosNoIncluidos[__${item.index}__].diametro}"> 
 												</tr>
 											</tbody>
 										</table>
@@ -356,8 +327,6 @@
 													<td th:text="${versionSWNoIncluida.nombre}"></td>
 													<td th:text="${versionSWNoIncluida.descripcion}"></td>
 													<input type="hidden" th:field="*{versionesSWNoIncluidas[__${item.index}__].id}"> 
-													<input type="hidden" th:field="*{versionesSWNoIncluidas[__${item.index}__].nombre}"> 
-													<input type="hidden" th:field="*{versionesSWNoIncluidas[__${item.index}__].descripcion}"> 
 												</tr>
 											</tbody>
 										</table>
