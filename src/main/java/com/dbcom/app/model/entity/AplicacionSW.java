@@ -65,16 +65,14 @@ public class AplicacionSW implements Serializable {
 	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime hora;
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "aplicacionSW_versionSW",
 			  joinColumns = @JoinColumn(name = "id_aplicacionSW", referencedColumnName = "id"), 
 			  inverseJoinColumns = @JoinColumn(name = "id_versionSW", referencedColumnName = "id"))
 	@Builder.Default
 	private Set<VersionSW> versionesSW = new HashSet<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "aplicacionSW_equipamiento",
 			  joinColumns = @JoinColumn(name = "id_aplicacionSW", referencedColumnName = "id"), 
 			  inverseJoinColumns = @JoinColumn(name = "id_equipamiento", referencedColumnName = "id"))
