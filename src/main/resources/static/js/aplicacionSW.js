@@ -194,23 +194,26 @@ $(ID_TABLA_SELECCIONAR_VERSION).DataTable({
 // Botón Borrar
 $(ID_BOTON_BORRAR_VERSION).on('click', function () {
 	
-	// 1. Eliminamos la fila de la tabla de versiones
-	$(ID_TABLA_VERSIONES).DataTable()
+	if (idRow!=0) {
+		// 1. Eliminamos la fila de la tabla de versiones
+		$(ID_TABLA_VERSIONES).DataTable()
 		.row(idRow)
 		.remove()
 		.draw();
 	
-	// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
-	$(ID_TABLA_SELECCIONAR_VERSION).DataTable()
-		.row
-		.add(rowNode)
-		.draw();
+		// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
+		$(ID_TABLA_SELECCIONAR_VERSION).DataTable()
+			.row
+			.add(rowNode)
+			.draw();
+		
+		// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
+		$(ID_TABLA_SELECCIONAR_VERSION).DataTable().rows().deselect();
+	}else{
+		return false;
+	}
 	
-	// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
-	$(ID_TABLA_SELECCIONAR_VERSION).DataTable().rows().deselect();
 	
-	// 4. Deshabilitamos el botón borrar
-	$(ID_BOTON_BORRAR_VERSION).attr('disabled', 'disabled');
 });
 
 // Botón Aceptar del popup
@@ -241,14 +244,15 @@ function addElementVersionSWToRow(){
 	
 	var versionesSW = $("[name='versionesSW[]']");
 	var tamList = versionesSW.length;
-	var idversioneSW = rowNode.children[tamList -1].value;
+	var numChildren = rowNode.children.length;
+	var idversioneSW = rowNode.children[numChildren -1].value;
 	var input = document.createElement("input");
 	input.setAttribute("type", "hidden");
 	input.setAttribute("id", "versionesSW" + tamList + ".id");
 	input.setAttribute("name", "versionesSW[" + tamList + "].id");
 	input.setAttribute("value", idversioneSW);
 	
-	rowNode.children[tamList -1].remove();
+	rowNode.children[numChildren -1].remove();
 	rowNode.append(input);
 };
 
@@ -353,13 +357,14 @@ function addElementEquipamientoToRow(){
 	
 	var equipamientos = $("[name='equipamientos[]']");
 	var tamList = equipamientos.length;
-	var idEquipamiento = rowNode.children[tamList -1].value;
+	var numChildren = rowNode.children.length;
+	var idEquipamiento = rowNode.children[numChildren-1].value;
 	var input = document.createElement("input");
 	input.setAttribute("type", "hidden");
 	input.setAttribute("id", "equipamientos" + tamList + ".id");
 	input.setAttribute("name", "equipamientos[" + tamList + "].id");
 	input.setAttribute("value", idEquipamiento);
 	
-	rowNode.children[tamList -1].remove();
+	rowNode.children[numChildren-1].remove();
 	rowNode.append(input);
 };

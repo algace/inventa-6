@@ -152,13 +152,14 @@ function addElementAplicacionToRow(){
 	
 	var equipamientos = $("[name='aplicacionesSW[]']");
 	var tamList = equipamientos.length;
-	var idAplicacion = rowNode.children[tamList -1].value;
+	var numChildren = rowNode.children.length;
+	var idAplicacion = rowNode.children[numChildren-1].value;
 	var input = document.createElement("input");
 	input.setAttribute("type", "hidden");
 	input.setAttribute("id", "aplicacionesSW" + tamList + ".id");
 	input.setAttribute("name", "aplicacionesSW[" + tamList + "].id");
 	input.setAttribute("value", idAplicacion);
 	
-	rowNode.children[tamList -1].remove();
+	rowNode.children[numChildren-1].remove();
 	rowNode.append(input);
 };
