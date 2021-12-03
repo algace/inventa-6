@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.EquipamientoDto;
+import com.dbcom.app.model.dto.VersionSWDto;
 
 
 /**
@@ -36,6 +37,13 @@ public interface EquipamientoService extends GenericService<EquipamientoDto, Lon
 	 * @return Equipamiento
 	 */
 	EquipamientoDto read(final Long id);
+	
+	/**
+	 * Obtenemos los equipamientos que no tiene la aplicación pasada como parámetro
+	 * @param id Identificador de la aplicación
+	 * @return Equipamientos
+	 */
+	List<EquipamientoDto> readNotContains(final Long id);
 	
 	/**
 	 * Persistimos el equipamiento pasado como parámetro

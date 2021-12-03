@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
+import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.EquipamientoRepository;
 import com.dbcom.app.model.dto.DocumentoDto;
 import com.dbcom.app.model.dto.EquipamientoDto;
+import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.Documento;
 import com.dbcom.app.model.entity.Equipamiento;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -29,15 +31,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class EquipamientoServiceImpl implements EquipamientoService {
 	
+	private final AplicacionSWRepository aplicacionSWRepository;
 	private EquipamientoRepository equipamientoRepository;
 	private final ModelMapperUtils  modelMapperUtils;
 	private final TipoDocumentoService tipoDocumentoService;
 
 	@Autowired
 	public EquipamientoServiceImpl(ModelMapperUtils modelMapper,
+			AplicacionSWRepository aplicacionSWRepository,
 			EquipamientoRepository equipamientoRepository,
 			TipoDocumentoService tipoDocumentoService) {
 		this.modelMapperUtils = modelMapper;
+		this.aplicacionSWRepository = aplicacionSWRepository;
 		this.equipamientoRepository = equipamientoRepository;
 		this.tipoDocumentoService = tipoDocumentoService;
 	}
@@ -57,10 +62,7 @@ public final class EquipamientoServiceImpl implements EquipamientoService {
 		
 		final Equipamiento equipamientoBBDD = this.equipamientoRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Eliminamos el equipamiento de las aplicaciones que lo contengan
-		equipamientoBBDD.getAplicacionesSW().forEach(aplicacion -> aplicacion.getEquipamientos().remove(equipamientoBBDD));
-		
+			
 		this.equipamientoRepository.delete(equipamientoBBDD);		
 
 		log.info(LoggerConstants.LOG_DELETE, id);
@@ -96,6 +98,22 @@ public final class EquipamientoServiceImpl implements EquipamientoService {
 
 		return result; 		
 		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<EquipamientoDto> readNotContains(Long id) {
+
+		final AplicacionSW aplicacionSW = this.aplicacionSWRepository.findById(id)
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+	
+		log.info(LoggerConstants.LOG_READ);		
+
+		final List<Equipamiento> equipamiento = this.equipamientoRepository.findAll();
+		equipamiento.removeAll(aplicacionSW.getEquipamientos());
+		
+		return this.modelMapperUtils.mapAll2List(equipamiento, EquipamientoDto.class);
 	}
 	
 	/**
