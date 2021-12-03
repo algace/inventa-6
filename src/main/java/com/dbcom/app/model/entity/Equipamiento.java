@@ -101,12 +101,6 @@ public class Equipamiento implements Serializable {
 	@NotEmpty(message = "{validation.notNull}")
 	private String subsistema;
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, 
-				mappedBy = "equipamientos")
-	@Builder.Default
-	private Set<AplicacionSW> aplicacionesSW = new HashSet<>();
-	
 	@OneToMany(fetch = FetchType.LAZY,
 			   cascade = CascadeType.ALL, 
 			   orphanRemoval = true,
