@@ -11,6 +11,8 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dto.AplicacionSWDto;
+import com.dbcom.app.model.dto.AplicacionSWLiteDto;
+import com.dbcom.app.model.dto.VersionSWDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.Equipamiento;
 import com.dbcom.app.model.entity.VersionSW;
@@ -28,16 +30,16 @@ import lombok.extern.slf4j.Slf4j;
 public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	
 	private final AplicacionSWRepository aplicacionSWRepository;
-	private final EquipamientoService equipamientosService;
+	private final EquipamientoService equipamientoService;
 	private final VersionSWService versionSWService;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public AplicacionSWServiceImpl(AplicacionSWRepository aplicacionSWRepository, 
-			EquipamientoService equipamientosService, VersionSWService versionSWService,
+			EquipamientoService equipamientoService, VersionSWService versionSWService,
 			ModelMapperUtils modelMapper) {
 		this.aplicacionSWRepository = aplicacionSWRepository;
-		this.equipamientosService = equipamientosService;
+		this.equipamientoService = equipamientoService;
 		this.versionSWService = versionSWService;
 		this.modelMapperUtils = modelMapper;
 	}
@@ -49,7 +51,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		log.info(LoggerConstants.LOG_CREATE);
 		return AplicacionSWDto.builder()
 				              .versionesSWNoIncluidas(versionSWService.readAll())
-				              .equipamientosNoIncluidos(equipamientosService.readAll())
+				              .equipamientosNoIncluidos(equipamientoService.readAll())
 				              .build();
 	}
 
@@ -61,8 +63,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		final AplicacionSW aplicacionSWBBDD = this.aplicacionSWRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
-		// Eliminamos la aplicación de los equipamientos y versiones que la contengan
-		aplicacionSWBBDD.getEquipamientos().forEach(equipamiento -> equipamiento.getAplicacionesSW().remove(aplicacionSWBBDD));
+		// Eliminamos la aplicación de las versiones que la contengan
 		aplicacionSWBBDD.getVersionesSW().forEach(versionSW -> versionSW.getAplicacionesSW().remove(aplicacionSWBBDD));
 		
 		this.aplicacionSWRepository.deleteById(id);
@@ -74,16 +75,16 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<AplicacionSWDto> readAll() {
+	public List<AplicacionSWLiteDto> readAll() {
 		
 		final List<AplicacionSW> aplicacionesSW = this.aplicacionSWRepository.findAll();
 		
-		final List<AplicacionSWDto> aplicacionesSWDto = new ArrayList<>(aplicacionesSW.size());		
-		aplicacionesSW.forEach(aplicacionSW -> aplicacionesSWDto.add(this.modelMapperUtils.map(aplicacionSW, AplicacionSWDto.class)));
+		final List<AplicacionSWLiteDto> aplicacionesSWLiteDto = new ArrayList<>(aplicacionesSW.size());		
+		aplicacionesSW.forEach(aplicacionSW -> aplicacionesSWLiteDto.add(this.modelMapperUtils.map(aplicacionSW, AplicacionSWLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
-		
-		return aplicacionesSWDto;
+
+		return aplicacionesSWLiteDto;
 	}
 	
 	/**
@@ -99,7 +100,6 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		// Insertamos los equipamientos y las versiones que no tiene por si las quiere añadir
 		result.setVersionesSWNoIncluidas(this.versionSWService.readNotContains(id));
 		result.setEquipamientosNoIncluidos(this.equipamientoService.readNotContains(id));
-		
 		log.info(LoggerConstants.LOG_READ);		
 
 		return result; 
@@ -112,7 +112,6 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	public AplicacionSWDto save(final AplicacionSWDto aplicacionSWDto) {		
 		
 		AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);
-	    
 		aplicacionSW = this.aplicacionSWRepository.save(aplicacionSW);	
 		
 		log.info(LoggerConstants.LOG_CREATE, aplicacionSW.getNombre());		
@@ -124,7 +123,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	 * {@inheritDoc}
 	 */
 	public AplicacionSWDto update(final AplicacionSWDto aplicacionSWDto) {		
-		
+
 		final AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);
 		
 		AplicacionSW aplicacionSWBBDD = this.aplicacionSWRepository.findById(aplicacionSW.getId())

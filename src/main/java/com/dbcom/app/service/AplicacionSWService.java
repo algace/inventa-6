@@ -3,13 +3,14 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.AplicacionSWDto;
+import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 
 /**
  * Lógica para aplicaciones
  * 
  * @author jose.vallve
  */
-public interface AplicacionSWService extends GenericService<AplicacionSWDto, Long> {
+public interface AplicacionSWService {
 
 	/**
 	 * Creamos una aplicación sin persistencia
@@ -27,7 +28,7 @@ public interface AplicacionSWService extends GenericService<AplicacionSWDto, Lon
 	 * Obtenemos un listado de las aplicaciones
 	 * @return Listado
 	 */
-	List<AplicacionSWDto> readAll();
+	List<AplicacionSWLiteDto> readAll();
 	
 	/**
 	 * Obtenemos la aplicación con el id facilitado
