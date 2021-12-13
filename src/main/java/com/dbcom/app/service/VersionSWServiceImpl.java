@@ -61,9 +61,6 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		final VersionSW versionSWBBDD = this.versionSWRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
-		// Eliminamos la versión de las aplicaciones que la contengan
-		versionSWBBDD.getAplicacionesSW().forEach(aplicacionSW -> aplicacionSW.getVersionesSW().remove(versionSWBBDD));
-		
 		this.versionSWRepository.delete(versionSWBBDD);		
 
 		log.info(LoggerConstants.LOG_DELETE, id);

@@ -2,6 +2,8 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,6 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dto.AplicacionSWDto;
 import com.dbcom.app.model.dto.AplicacionSWLiteDto;
-import com.dbcom.app.model.dto.VersionSWDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.Equipamiento;
 import com.dbcom.app.model.entity.VersionSW;
@@ -59,12 +60,6 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	 * {@inheritDoc}
 	 */
 	public void delete(final Long id) {			
-		
-		final AplicacionSW aplicacionSWBBDD = this.aplicacionSWRepository.findById(id)
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Eliminamos la aplicación de las versiones que la contengan
-		aplicacionSWBBDD.getVersionesSW().forEach(versionSW -> versionSW.getAplicacionesSW().remove(aplicacionSWBBDD));
 		
 		this.aplicacionSWRepository.deleteById(id);
 		
@@ -134,7 +129,13 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		aplicacionSWBBDD.setArchivo(aplicacionSWDto.getArchivo());
 		aplicacionSWBBDD.setFecha(aplicacionSWDto.getFecha());
 		aplicacionSWBBDD.setHora(aplicacionSWDto.getHora());
+		aplicacionSWDto.setEquipamientos(aplicacionSWDto.getEquipamientos().stream()
+                                                        .filter(equipamiento -> !Objects.isNull(equipamiento.getId()))
+                                                        .collect(Collectors.toList()));
 		aplicacionSWBBDD.setEquipamientos(this.modelMapperUtils.mapAll2Set(aplicacionSWDto.getEquipamientos(), Equipamiento.class));
+		aplicacionSWDto.setVersionesSW(aplicacionSWDto.getVersionesSW().stream()
+                                                                       .filter(version -> !Objects.isNull(version.getId()))
+                                                                       .collect(Collectors.toList()));
 		aplicacionSWBBDD.setVersionesSW(this.modelMapperUtils.mapAll2Set(aplicacionSWDto.getVersionesSW(), VersionSW.class));
 		aplicacionSWBBDD = this.aplicacionSWRepository.save(aplicacionSWBBDD);		
 		

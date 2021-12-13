@@ -1,23 +1,17 @@
 package com.dbcom.app.model.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -28,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 // Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "aplicacionesSW")
+//@EqualsAndHashCode(exclude = "aplicacionesSW")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,10 +44,11 @@ public class VersionSW implements Serializable {
 	@Size(min = 1, max = 250, message = "{validation.min1max250}")
 	private String descripcion;
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
-				mappedBy = "versionesSW")
+/*	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "aplicacionSW_versionSW",
+	  joinColumns = @JoinColumn(name = "id_versionSW", referencedColumnName = "id"), 
+	  inverseJoinColumns = @JoinColumn(name = "id_aplicacionSW", referencedColumnName = "id"))
 	@Builder.Default
-	private Set<AplicacionSW> aplicacionesSW = new HashSet<>();
+	private Set<AplicacionSW> aplicacionesSW = new HashSet<>(); */
 	
 }
