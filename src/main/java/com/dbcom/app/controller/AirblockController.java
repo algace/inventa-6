@@ -33,6 +33,7 @@ public final class AirblockController {
 	// Vistas	
 	private static final String VIEW_AIRBLOCK = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + ATTRIBUTE_AIRBLOCK;
 	private static final String VIEW_AIRBLOCKS = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + "airblocks";
+	
 
 	// Mapeo de las acciones
 	public static final String MAP_CREATE_AIRBLOCK =  ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCK 
