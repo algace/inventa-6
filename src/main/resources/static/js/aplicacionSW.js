@@ -149,10 +149,10 @@ var tabla_seleccionar_versiones =  $(ID_TABLA_SELECCIONAR_VERSION).DataTable({
 	}
  })
  .on('select', function() {
-     $(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).removeAttr('disabled');
+
  })
  .on('deselect', function() {
-     $(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).attr('disabled', 'disabled');
+
  }) 
  .on('click', 'tr', function() {
 	 rowNode = this;
