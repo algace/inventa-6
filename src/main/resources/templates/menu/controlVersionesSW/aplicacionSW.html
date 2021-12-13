@@ -193,17 +193,11 @@
 										<table id="tablaVersiones" class="table table-striped table-bordered no-margin-top" style="width:100%">
 											<thead>
 												<tr>
+													<th class="th-sm" th:text="id"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr th:each="versionSW, item : *{versionesSW}">
-													<td th:text="${versionSW.nombre}"></td>
-													<td th:text="${versionSW.descripcion}"></td>
-													<input type="hidden" th:field="*{versionesSW[__${item.index}__].id}"> 
-												</tr>
-											</tbody>
 										</table>
 									</div>
 								</div>
@@ -305,17 +299,16 @@
 								    	<table id="tablaSeleccionarVersion" class="table table-striped table-bordered" style="width:100%">
 											<thead>
 												<tr>
-													<!-- <th class="th-sm"></th> -->
+													<th class="th-sm" th:text="id"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr th:each="versionSWNoIncluida, item : *{versionesSWNoIncluidas}">
-													<!-- <td th:text="${versionNoIncluida.id}"></td> -->
+													<td th:text="${versionSWNoIncluida.id}"></td>
 													<td th:text="${versionSWNoIncluida.nombre}"></td>
 													<td th:text="${versionSWNoIncluida.descripcion}"></td>
-													<input type="hidden" th:field="*{versionesSWNoIncluidas[__${item.index}__].id}"> 
 												</tr>
 											</tbody>
 										</table>
@@ -357,6 +350,8 @@
 			/*<![CDATA[*/
 			var equipamientos = [[${aplicacionSW.equipamientos}]];
 			var equipamientosJson = JSON.stringify(equipamientos);
+			var versionesSW = [[${aplicacionSW.versionesSW}]];
+			var versionesSWJson = JSON.stringify(versionesSW);
 			/*]]>*/
 			$('#collapseControlVersionesSW, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>

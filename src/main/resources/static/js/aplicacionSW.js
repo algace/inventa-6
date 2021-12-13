@@ -10,7 +10,8 @@ const ID_TABLA_SELECCIONAR_VERSION = '#tablaSeleccionarVersion';
 const ID_DATETIMEPICKER_FECHA = '#datetimepickerFecha';
 const ID_DATETIMEPICKER_HORA = '#datetimepickerHora';
 
-var idRow = 0;
+var rowElement = null;
+var idElement  = null;
 var rowNode = null;
 
 // INICIO - Configuración para los campos de fecha y hora
@@ -36,6 +37,26 @@ var tabla_versiones = $(ID_TABLA_VERSIONES).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ifpl><"clear">',
 	searching:  false,
+	data: JSON.parse(versionesSWJson),
+	columnDefs: [{ 
+		targets: 0,
+		visible: false
+    },{ 
+		targets: 1,
+        render: function(data, type, full, meta){
+		   if (type == "display"){
+			   var valueId = idElement != null ? idElement : full.id;
+	           return data + '<input type="hidden" id="versionesSW' + valueId +'.id" name="versionesSW['+ valueId + '].id" value="' + valueId + '">';
+           }else{
+			   return data;
+		   }
+        }
+    }],
+	columns: [
+	  {data: "id"},
+	  {data: "nombre", name: "nombre", title: "Nombre"}, 
+	  {data: "descripcion", name: "descripcion", title: "Descripción"}
+	],
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',
@@ -72,7 +93,8 @@ var tabla_versiones = $(ID_TABLA_VERSIONES).DataTable({
  })
  .on('click', 'tr', function() {
 	 rowNode = this;
-	 idRow = this;
+	 rowElement = tabla_versiones.row(this).data();
+	 idElement = tabla_versiones.row(this).data()[0]
 });
 
 // Campo para el filtro
@@ -90,10 +112,14 @@ $("#tablaVersiones tfoot input").on('keyup change', function() {
 // FIN - Configuración de la tabla Versiones
  
 // Configuración de la tabla del popup para seleccionar Versiones
-$(ID_TABLA_SELECCIONAR_VERSION).DataTable({
+var tabla_seleccionar_versiones =  $(ID_TABLA_SELECCIONAR_VERSION).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ifpl><"clear">',
 	searching:  false,
+	columnDefs: [{ 
+		targets: 0,
+		visible: false
+    }],
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',
@@ -130,31 +156,30 @@ $(ID_TABLA_SELECCIONAR_VERSION).DataTable({
  }) 
  .on('click', 'tr', function() {
 	 rowNode = this;
-	 idRow = this
+	 rowElement = tabla_seleccionar_versiones.row(this).data();
+	 idElement = tabla_seleccionar_versiones.row(this).data()[0];
 });
 
 // Botón Borrar
 $(ID_BOTON_BORRAR_VERSION).on('click', function () {
 	
-	if (idRow!=0) {
-		// 1. Eliminamos la fila de la tabla de versiones
-		$(ID_TABLA_VERSIONES).DataTable()
-		.row(idRow)
-		.remove()
+	// 1. Eliminamos la fila de la tabla de versiones
+	$(ID_TABLA_VERSIONES).DataTable()
+	.row(rowNode)
+	.remove()
+	.draw();
+
+	// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_VERSION).DataTable()
+		.row
+		.add([rowElement.id, 
+		  	  rowElement.nombre, 
+		  	  rowElement.descripcion
+		])
 		.draw();
 	
-		// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
-		$(ID_TABLA_SELECCIONAR_VERSION).DataTable()
-			.row
-			.add(rowNode)
-			.draw();
-		
-		// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
-		$(ID_TABLA_SELECCIONAR_VERSION).DataTable().rows().deselect();
-	}else{
-		return false;
-	}
-	
+	// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_VERSION).DataTable().rows().deselect();
 	
 });
 
@@ -163,16 +188,16 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).on('click', function () {
 
 	// 1. Eliminamos la fila de la tabla de versiones del popup
 	$(ID_TABLA_SELECCIONAR_VERSION).DataTable()
-		.row(idRow)
+		.row(rowNode)
 		.remove()
 		.draw();
-	
-	addElementVersionSWToRow();
 	
 	// 2. Insertamos la fila eliminada, en la tabla de versiones
 	$(ID_TABLA_VERSIONES).DataTable()
 		.row
-		.add(rowNode)
+		.add({id: rowElement[0], 
+			nombre: rowElement[1], 
+			descripcion: rowElement[2]})
 		.draw();
 	
 	// 3. Deseleccionamos todas las filas de la tabla de versiones
@@ -182,26 +207,7 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).on('click', function () {
 	$(ID_TABLA_SELECCIONAR_VERSION).attr('disabled', 'disabled');
 });
 
-function addElementVersionSWToRow(){
-	
-	var versionesSW = $("[name='versionesSW[]']");
-	var tamList = versionesSW.length;
-	var numChildren = rowNode.children.length;
-	var idversioneSW = rowNode.children[numChildren -1].value;
-	var input = document.createElement("input");
-	input.setAttribute("type", "hidden");
-	input.setAttribute("id", "versionesSW" + tamList + ".id");
-	input.setAttribute("name", "versionesSW[" + tamList + "].id");
-	input.setAttribute("value", idversioneSW);
-	
-	rowNode.children[numChildren -1].remove();
-	rowNode.append(input);
-};
-
 // INICIO - Configuración de la tabla Equipamiento
-var rowEquipamiento = null;
-var idEquipamiento  = null;
-
 var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTOS).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ifpl><"clear">',
@@ -214,7 +220,7 @@ var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTOS).DataTable({
 		targets: 1,
         render: function(data, type, full, meta){
 		   if (type == "display"){
-			   var valueId = idEquipamiento != null ? idEquipamiento : full.id;
+			   var valueId = idElement != null ? idElement : full.id;
 	           return data + '<input type="hidden" id="equipamientos' + valueId +'.id" name="equipamientos['+ valueId + '].id" value="' + valueId + '">';
            }else{
 			   return data;
@@ -266,8 +272,8 @@ var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTOS).DataTable({
  })
  .on('click', 'tr', function() {
 	 rowNode = this;
-	 rowEquipamiento = tabla_equipamiento.row(this).data();
-	 idEquipamiento = tabla_equipamiento.row(this).data()[0];
+	 rowElement = tabla_equipamiento.row(this).data();
+	 idElement = tabla_equipamiento.row(this).data()[0];
 	 
 });
 
@@ -334,8 +340,8 @@ var tabla_seleccionar_equipamiento = $(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTa
  }) 
  .on('click', 'tr', function() {
 	 rowNode = this;
-	 rowEquipamiento = tabla_seleccionar_equipamiento.row(this).data();
-	 idEquipamiento = tabla_seleccionar_equipamiento.row(this).data()[0];
+	 rowElement = tabla_seleccionar_equipamiento.row(this).data();
+	 idElement = tabla_seleccionar_equipamiento.row(this).data()[0];
 });
 
 // Botón Borrar
@@ -350,14 +356,14 @@ $(ID_BOTON_BORRAR_EQUIPAMIENTO).on('click', function () {
 	// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
 	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable()
 		.row
-		.add([rowEquipamiento.id, 
-			  rowEquipamiento.nombre, 
-			  rowEquipamiento.marca,
-			  rowEquipamiento.modelo,
-			  rowEquipamiento.entradas,
-			  rowEquipamiento.salidas,
-			  rowEquipamiento.ganancia,
-			  rowEquipamiento.perdida 
+		.add([rowElement.id, 
+			  rowElement.nombre, 
+			  rowElement.marca,
+			  rowElement.modelo,
+			  rowElement.entradas,
+			  rowElement.salidas,
+			  rowElement.ganancia,
+			  rowElement.perdida 
 		])
 		.draw();
 		
@@ -382,14 +388,14 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
 	// 2. Insertamos la fila eliminada, en la tabla de versiones
 	$(ID_TABLA_EQUIPAMIENTOS).DataTable()
 		.row
-		.add({id: rowEquipamiento[0], 
-			nombre: rowEquipamiento[1], 
-			marca: rowEquipamiento[2], 
-			modelo: rowEquipamiento[3], 
-			entradas: rowEquipamiento[4],
-			salidas: rowEquipamiento[5],
-			ganancia: rowEquipamiento[6],
-			perdida: rowEquipamiento[7]})
+		.add({id: rowElement[0], 
+			nombre: rowElement[1], 
+			marca: rowElement[2], 
+			modelo: rowElement[3], 
+			entradas: rowElement[4],
+			salidas: rowElement[5],
+			ganancia: rowElement[6],
+			perdida: rowElement[7]})
 		.draw();
 	
 	// 3. Deseleccionamos todas las filas de la tabla de versiones
