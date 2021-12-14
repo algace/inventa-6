@@ -10,15 +10,20 @@ const ID_URI_MODIFICAR = '#uriModificar';
 const ID_URI_LEER = '#uriLeer';
 
 var idRow = 0;
+var botonModificarEliminarEnable = false;
 
 // Creación de la URI para modificar la fila seleccionada
 $(ID_BOTON_MODIFICAR).on('click', function () {
-	location.href = $(ID_URI_MODIFICAR).attr('href').concat('/').concat(idRow);
+	if(botonModificarEliminarEnable){
+		location.href = $(ID_URI_MODIFICAR).attr('href').concat('/').concat(idRow);
+	}
 });
 
 // Creación de la URI para eliminar la fila seleccionada
 $(ID_BOTON_BORRAR).on('click', function () {
-	location.href = $(ID_URI_BORRAR).attr('href').concat('/').concat(idRow);
+	if(botonModificarEliminarEnable){
+		location.href = $(ID_URI_BORRAR).attr('href').concat('/').concat(idRow);
+	}
 });
 
 // INICIO - Configuración de la tabla
@@ -55,12 +60,10 @@ var table = $(ID_TABLA_RESULTADOS).DataTable( {
 	}
  })
  .on('select', function() {
-     $(ID_BOTON_MODIFICAR).removeAttr('disabled');
-     $(ID_BOTON_BORRAR).removeAttr('disabled');
+     botonModificarEliminarEnable = true;
  })
  .on('deselect', function() {
-     $(ID_BOTON_MODIFICAR).attr('disabled', 'disabled');
-     $(ID_BOTON_BORRAR).attr('disabled', 'disabled');
+    botonModificarEliminarEnable = false;
  })
  .on('click', 'tr', function() {
 	 idRow = this.id;

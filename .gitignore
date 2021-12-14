@@ -6,3 +6,5 @@ mvnw
 HELP.md
 .settings/
 target/
+.dbeaver/credentials-config.json
+.dbeaver/data-sources.json
