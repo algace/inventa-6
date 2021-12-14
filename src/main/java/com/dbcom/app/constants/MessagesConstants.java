@@ -28,10 +28,12 @@ public final class MessagesConstants {
 	
 	// Mensajes para los popups
 	public static String POPUP_ELIMINAR_APLICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_CHASIS_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CONFICURACIONRADIOENLACE_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CONFICURACIONTIRADA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_DEPENDENCIA_PREGUNTA;
@@ -75,6 +77,11 @@ public final class MessagesConstants {
 	public void setMessagePopupEliminarEquipamientoPregunta(final String texto) {
 		POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA = texto;
 	}
+	
+	@Value("${html.label.eliminar.chasisPasarela.pregunta}")
+	public void setMessagePopupEliminarPasarelaPregunta(final String texto) {
+		POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA = texto;
+	}
 
 	@Value("${html.label.eliminar.tipoDocumento.aviso}")
 	public void setMessagePopupEliminarTipoDocumentoAviso(final String texto) {
@@ -94,6 +101,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.tipoCapacidadEnlaceTT.pregunta}")
 	public void setMessagePopupEliminarTipoCapacidadEnlaceTTPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.tipoChasis.pregunta}")
+	public void setMessagePopupEliminarTipoChasisregunta(final String texto) {
+		POPUP_ELIMINAR_TIPO_CHASIS_PREGUNTA = texto;
 	}
 
 	@Value("${html.label.eliminar.tipoConfiguracionRadioenlace.pregunta}")

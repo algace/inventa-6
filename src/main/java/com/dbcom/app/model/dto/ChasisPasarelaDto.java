@@ -1,0 +1,31 @@
+package com.dbcom.app.model.dto;
+
+import java.util.List;
+
+import javax.validation.constraints.Size;
+
+import com.dbcom.app.model.entity.TipoChasis;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ChasisPasarelaDto {
+	
+	private Short id;
+	
+	@Size(min = 1, max = 50, message = "{validation.min1max50}")
+	private String nombre;
+	
+	private TipoChasis tipoChasis;
+	
+	private Integer indiceCargaLimite;
+	
+	private List<TipoChasis> listaChasis;
+
+}
