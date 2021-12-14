@@ -41,6 +41,8 @@ public final class ControllerConstants {
 	public static final String ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO = "estaBotonAceptarActivo";
 	public static final String ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO = "estaBotonCancelarActivo";
 	public static final String ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO = "estaBotonEliminarActivo";
+	public static final String ATTRIBUTE_APLICACIONES_VISIBLE = "applicacionesVisible";
+	
 
 	// Acciones para mapas
 	public static final String MAP_ACTION_SLASH = "/";
