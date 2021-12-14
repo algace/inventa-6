@@ -6,6 +6,7 @@ const ID_BOTON_BORRAR_APLICACION = '#botonBorrarAplicacion';
 const ID_BOTON_ACEPTAR_SELECCIONAR_APLICACION = '#botonAceptarSeleccionarAplicacion';
 const ID_TABLA_APLICACIONES = '#tablaAplicaciones';
 const ID_TABLA_SELECCIONAR_APLICACION = '#tablaSeleccionarAplicaciones';
+const ID_MODAL_APLICACION = "#popupSeleccionarAplicacionesSW";
 
 var rowElement = null;
 var idElement  = null;
@@ -64,12 +65,6 @@ var tabla_aplicaciones = $(ID_TABLA_APLICACIONES).DataTable({
             rows: ''
         }
 	}
- })
- .on('select', function() {
-     
- })
- .on('deselect', function() {
-     
  })
  .on('click', 'tr', function() {
 	 rowNode = this;
@@ -130,8 +125,10 @@ var tabla_seleccionar_aplicaciones = $(ID_TABLA_SELECCIONAR_APLICACION).DataTabl
 	}
  })
  .on('select', function() {
+	$(ID_BOTON_ACEPTAR_SELECCIONAR_APLICACION).removeAttr('disabled');
  })
  .on('deselect', function() {
+	$(ID_BOTON_ACEPTAR_SELECCIONAR_APLICACION).attr('disabled', 'disabled');
  }) 
  .on('click', 'tr', function() {
 	 rowNode = this;
@@ -142,29 +139,31 @@ var tabla_seleccionar_aplicaciones = $(ID_TABLA_SELECCIONAR_APLICACION).DataTabl
 // Botón Borrar
 $(ID_BOTON_BORRAR_APLICACION).on('click', function () {
 	
-	// 1. Eliminamos la fila de la tabla de versiones
-	$(ID_TABLA_APLICACIONES).DataTable()
-		.row(rowNode)
-		.remove()
-		.draw();
-	
-	// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
-	$(ID_TABLA_SELECCIONAR_APLICACION).DataTable()
-		.row
-		.add([rowElement.id, 
-		  	  rowElement.nombre, 
-		  	  rowElement.archivo,
-		  	  rowElement.fecha,
-		  	  rowElement.hora
-		])
-		.draw();
+	if(tabla_aplicaciones.rows('.selected').any()){
+		// 1. Eliminamos la fila de la tabla de versiones
+		$(ID_TABLA_APLICACIONES).DataTable()
+			.row(rowNode)
+			.remove()
+			.draw();
 		
-	
-	// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
-	$(ID_TABLA_SELECCIONAR_APLICACION).DataTable().rows().deselect();
-	
-	// 4. Deshabilitamos el botón borrar
-	$(ID_BOTON_BORRAR_APLICACION).attr('disabled', 'disabled');
+		// 2. Insertamos la fila eliminada, en la tabla de versiones del popup
+		$(ID_TABLA_SELECCIONAR_APLICACION).DataTable()
+			.row
+			.add([rowElement.id, 
+			  	  rowElement.nombre, 
+			  	  rowElement.archivo,
+			  	  rowElement.fecha,
+			  	  rowElement.hora
+			])
+			.draw();
+			
+		
+		// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
+		$(ID_TABLA_SELECCIONAR_APLICACION).DataTable().rows().deselect();
+		
+		// 4. Deshabilitamos el botón borrar
+		$(ID_BOTON_BORRAR_APLICACION).attr('disabled', 'disabled');
+	}
 });
 
 // Botón Aceptar del popup
@@ -191,4 +190,8 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_APLICACION).on('click', function () {
 	
 	// 4. Deshabilitamos el botón aceptar
 	$(ID_TABLA_SELECCIONAR_APLICACION).attr('disabled', 'disabled');
+});
+
+$(ID_MODAL_APLICACION).on('show.bs.modal', function () {
+	$(ID_BOTON_ACEPTAR_SELECCIONAR_APLICACION).attr('disabled', 'disabled');
 });
