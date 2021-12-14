@@ -14,6 +14,8 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dto.AplicacionSWDto;
 import com.dbcom.app.model.dto.AplicacionSWLiteDto;
+import com.dbcom.app.model.dto.EquipamientoDto;
+import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.Equipamiento;
 import com.dbcom.app.model.entity.VersionSW;
@@ -51,7 +53,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	public AplicacionSWDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return AplicacionSWDto.builder()
-				              .versionesSWNoIncluidas(versionSWService.readAll())
+				              .versionesSWNoIncluidas(this.modelMapperUtils.mapAll2List(versionSWService.readAll(),VersionSWLiteDto.class))
 				              .equipamientosNoIncluidos(equipamientoService.readAll())
 				              .build();
 	}
@@ -93,7 +95,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		final AplicacionSWDto result = this.modelMapperUtils.map(aplicacionSW, AplicacionSWDto.class);
 		
 		// Insertamos los equipamientos y las versiones que no tiene por si las quiere añadir
-		result.setVersionesSWNoIncluidas(this.versionSWService.readNotContains(id));
+		result.setVersionesSWNoIncluidas(this.modelMapperUtils.mapAll2List(this.versionSWService.readNotContains(id),VersionSWLiteDto.class));
 		result.setEquipamientosNoIncluidos(this.equipamientoService.readNotContains(id));
 		log.info(LoggerConstants.LOG_READ);		
 
@@ -106,6 +108,8 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	 */
 	public AplicacionSWDto save(final AplicacionSWDto aplicacionSWDto) {		
 		
+		aplicacionSWDto.setEquipamientos(filterListEquipamientos(aplicacionSWDto.getEquipamientos()));
+		aplicacionSWDto.setVersionesSW(filterListVersionesSW(aplicacionSWDto.getVersionesSW()));
 		AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);
 		aplicacionSW = this.aplicacionSWRepository.save(aplicacionSW);	
 		
@@ -129,14 +133,12 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		aplicacionSWBBDD.setArchivo(aplicacionSWDto.getArchivo());
 		aplicacionSWBBDD.setFecha(aplicacionSWDto.getFecha());
 		aplicacionSWBBDD.setHora(aplicacionSWDto.getHora());
-		aplicacionSWDto.setEquipamientos(aplicacionSWDto.getEquipamientos().stream()
-                                                        .filter(equipamiento -> !Objects.isNull(equipamiento.getId()))
-                                                        .collect(Collectors.toList()));
+		
+		aplicacionSWDto.setEquipamientos(filterListEquipamientos(aplicacionSWDto.getEquipamientos()));
+		aplicacionSWDto.setVersionesSW(filterListVersionesSW(aplicacionSWDto.getVersionesSW()));
 		aplicacionSWBBDD.setEquipamientos(this.modelMapperUtils.mapAll2Set(aplicacionSWDto.getEquipamientos(), Equipamiento.class));
-		aplicacionSWDto.setVersionesSW(aplicacionSWDto.getVersionesSW().stream()
-                                                                       .filter(version -> !Objects.isNull(version.getId()))
-                                                                       .collect(Collectors.toList()));
 		aplicacionSWBBDD.setVersionesSW(this.modelMapperUtils.mapAll2Set(aplicacionSWDto.getVersionesSW(), VersionSW.class));
+
 		aplicacionSWBBDD = this.aplicacionSWRepository.save(aplicacionSWBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, aplicacionSWBBDD.getId());
@@ -144,4 +146,18 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		return this.modelMapperUtils.map(aplicacionSWBBDD, AplicacionSWDto.class);
 	}
 	
+	
+	private List<VersionSWLiteDto> filterListVersionesSW(List<VersionSWLiteDto> listVersiones) {
+	
+		return listVersiones.stream()
+                            .filter(version -> !Objects.isNull(version.getId()))
+                            .collect(Collectors.toList());
+	}
+	
+	private List<EquipamientoDto> filterListEquipamientos(List<EquipamientoDto> listEquipamientos) {
+		
+		return listEquipamientos.stream()
+                            .filter(equipamiento -> !Objects.isNull(equipamiento.getId()))
+                            .collect(Collectors.toList());
+	}
 }

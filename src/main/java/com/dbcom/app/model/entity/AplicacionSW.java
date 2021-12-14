@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -64,7 +65,7 @@ public class AplicacionSW implements Serializable {
 	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime hora;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinTable(name = "aplicacionSW_versionSW",
 			  joinColumns = @JoinColumn(name = "id_aplicacionSW", referencedColumnName = "id"), 
 			  inverseJoinColumns = @JoinColumn(name = "id_versionSW", referencedColumnName = "id"))

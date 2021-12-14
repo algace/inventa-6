@@ -44,11 +44,4 @@ public class VersionSW implements Serializable {
 	@Size(min = 1, max = 250, message = "{validation.min1max250}")
 	private String descripcion;
 	
-/*	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "aplicacionSW_versionSW",
-	  joinColumns = @JoinColumn(name = "id_versionSW", referencedColumnName = "id"), 
-	  inverseJoinColumns = @JoinColumn(name = "id_aplicacionSW", referencedColumnName = "id"))
-	@Builder.Default
-	private Set<AplicacionSW> aplicacionesSW = new HashSet<>(); */
-	
 }

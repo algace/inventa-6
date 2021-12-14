@@ -1,30 +1,18 @@
 package com.dbcom.app.model.dto;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * DTO con el que evitamos exponer la entidad en la vista
- * 
- * @author jose.vallve
- */
 @Data
-// Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "aplicacionesSW")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class VersionSWDto implements Serializable {
-	
+public class VersionSWLiteDto {
+
 	/**
 	 * 
 	 */
@@ -37,8 +25,4 @@ public final class VersionSWDto implements Serializable {
 	 
 	@Size(min = 1, max = 250, message = "{validation.min1max250}")
 	private String descripcion;
-
-	@Builder.Default
-	private List<AplicacionSWLiteDto> aplicacionesSW = new ArrayList<>();
-	
 }

@@ -52,7 +52,7 @@ public final class AplicacionSWDto implements Serializable {
 	private LocalTime hora;
 	
 	@Builder.Default
-	private List<VersionSWDto> versionesSW = new ArrayList<>();
+	private List<VersionSWLiteDto> versionesSW = new ArrayList<>();
 	
 	@Builder.Default	
 	private List<EquipamientoDto> equipamientos = new ArrayList<>();
@@ -61,7 +61,7 @@ public final class AplicacionSWDto implements Serializable {
 	 * Versiones que no posee la aplicación
 	 */
 	@Builder.Default	
-	private List<VersionSWDto> versionesSWNoIncluidas = new ArrayList<>();
+	private List<VersionSWLiteDto> versionesSWNoIncluidas = new ArrayList<>();
 	
 	@Builder.Default	
 	private List<EquipamientoDto> equipamientosNoIncluidos = new ArrayList<>();

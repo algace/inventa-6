@@ -2,6 +2,8 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,13 +47,8 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	 */
 	public VersionSWDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
-		final List<AplicacionSW> aplicacionesSW = this.aplicacionSWRepository.findAll();
-		final List<AplicacionSWLiteDto> aplicacionesSWLiteDto = new ArrayList<>(aplicacionesSW.size());		
-		aplicacionesSW.forEach(aplicacionSW -> aplicacionesSWLiteDto.add(this.modelMapperUtils.map(aplicacionSW, AplicacionSWLiteDto.class)));
-		return VersionSWDto.builder()
-	              .aplicacionesSWNoIncluidas(aplicacionesSWLiteDto)
-	              .build();
-		}
+		return new VersionSWDto();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -89,9 +86,15 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		final VersionSW versionSW = this.versionSWRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 	
-		log.info(LoggerConstants.LOG_READ);		
-
-		return this.modelMapperUtils.map(versionSW, VersionSWDto.class); 
+		log.info(LoggerConstants.LOG_READ);
+		
+		final VersionSWDto result = this.modelMapperUtils.map(versionSW, VersionSWDto.class);
+		
+		// Insertamos las aplicaciones que tienen asociada esta versión
+		final List<AplicacionSW> aplicacionesSWAsociadas = this.versionSWRepository.findAplicacionesWithVersion(id);
+		result.setAplicacionesSW(this.modelMapperUtils.mapAll2List(aplicacionesSWAsociadas, AplicacionSWLiteDto.class));
+		
+		return result;
 
 	}
 	
@@ -140,6 +143,9 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		// Actualizamos el registro de bbdd
 		versionSWBBDD.setNombre(versionSWDto.getNombre());
 		versionSWBBDD.setDescripcion(versionSWDto.getDescripcion());
+		versionSWDto.setAplicacionesSW(versionSWDto.getAplicacionesSW().stream()
+                                                                       .filter(aplicacion -> !Objects.isNull(aplicacion.getId()))
+                                                                       .collect(Collectors.toList()));
 		versionSWBBDD = this.versionSWRepository.save(versionSWBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, versionSWBBDD.getId());
