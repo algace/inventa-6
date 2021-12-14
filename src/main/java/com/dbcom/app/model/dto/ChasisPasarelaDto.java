@@ -1,5 +1,6 @@
 package com.dbcom.app.model.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.Size;
@@ -9,9 +10,11 @@ import com.dbcom.app.model.entity.TipoChasis;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
+@EqualsAndHashCode(exclude = "tiposChasis")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +29,7 @@ public class ChasisPasarelaDto {
 	
 	private Integer indiceCargaLimite;
 	
-	private List<TipoChasis> listaChasis;
+	@Builder.Default
+	private List<TipoChasisDto> tiposChasis = new ArrayList();;
 
 }

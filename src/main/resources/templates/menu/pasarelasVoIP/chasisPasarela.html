@@ -67,7 +67,7 @@
 											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
 									        <div class="col-sm-6">
 									            <input id="nombre" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
 									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 									        </div>	
@@ -75,17 +75,23 @@
 									    <div class="row align-items-center">
 									        <div class="col-sm-2" th:text="#{html.label.tipoChasis}"></div>
 									        <div class="col-sm-6">
-									            <input id="tipoChasis" type="text" 
+											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoChasis}">
+											    	<option th:value="0"></option>
+											    	<option th:each="chasis : *{tiposChasis}" th:value="${chasis.id}" th:text="${chasis.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoChasis')}" th:errors="*{tipoChasis}"></div>
+									            <!--<input id="tipoChasis" type="text" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{tipoChasis}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoChasis')}" th:errors="*{tipoChasis}"></div>
+									            	th:field="*{tipoChasis}" th:disabled="${esCampoSoloLectura} ? 'true'"> -->
+									           
 									        </div>
 									     </div> 
 									     <div class="row align-items-center">  
 									        <div class="col-sm-2" th:text="#{html.label.indiceCargaLimite}"></div>
 									        <div class="col-sm-6">
 									            <input id="indiceCargaLimite" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
 									            	th:field="*{indiceCargaLimite}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('indiceCargaLimite')}" th:errors="*{indiceCargaLimite}"></div>
 									        </div>	

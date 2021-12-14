@@ -22,12 +22,14 @@ public class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	
 	private final ModelMapperUtils modelMapperUtils;
 	private final ChasisPasarelaRepository chasisPasarelaRepository;
+	private final TipoChasisService tipoChasisService;
 	
 	@Autowired
-	public ChasisPasarelaServiceImpl(ModelMapperUtils modelMapper,
-									   ChasisPasarelaRepository chasisPasarelaRepository) {
+	public ChasisPasarelaServiceImpl(ModelMapperUtils modelMapper, ChasisPasarelaRepository chasisPasarelaRepository,
+			TipoChasisService tipoChasisService) {
 		this.modelMapperUtils = modelMapper;
 		this.chasisPasarelaRepository = chasisPasarelaRepository;
+		this.tipoChasisService = tipoChasisService;
 	}
 	
 	/**
@@ -35,7 +37,7 @@ public class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	 */
 	public ChasisPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return new ChasisPasarelaDto();
+		return ChasisPasarelaDto.builder().tiposChasis(tipoChasisService.readAll()).build();
 	}
 	
 	/**
@@ -75,8 +77,11 @@ public class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 
 		final ChasisPasarela chasisPasarela = this.chasisPasarelaRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		ChasisPasarelaDto chasis = this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaDto.class);
+		chasis.setTiposChasis(tipoChasisService.readAll());
 
-		return this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaDto.class); 
+		return chasis; 
 
 	}
 			
