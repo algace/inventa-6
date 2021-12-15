@@ -221,9 +221,6 @@ public class ChasisPasarelaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 			
-			chasisPasarelaDto.setTiposChasis(tipoChasisService.readAll());
-			model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
-			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
