@@ -30,6 +30,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_APLICACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
+	public static String POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
@@ -81,6 +82,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.chasisPasarela.pregunta}")
 	public void setMessagePopupEliminarPasarelaPregunta(final String texto) {
 		POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.funcionPasarela.pregunta}")
+	public void setMessagePopupEliminarFuncionPasarelaPregunta(final String texto) {
+		POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA = texto;
 	}
 
 	@Value("${html.label.eliminar.tipoDocumento.aviso}")
