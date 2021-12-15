@@ -1,5 +1,7 @@
 package com.dbcom.app.model.dto;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -11,13 +13,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class VersionSWLiteDto {
+public class VersionSWLiteDto implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 500758903917083656L;
+	private static final long serialVersionUID = 2917337836663885658L;
 
+	/**
+	 * 
+	 */
 	private Long id;
 	
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")

@@ -1,5 +1,6 @@
 package com.dbcom.app.model.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -17,13 +18,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AplicacionSWLiteDto {
+public class AplicacionSWLiteDto implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4263045492135704248L;
+	private static final long serialVersionUID = 9015189174725412684L;
 
+	/**
+	 * 
+	 */
 	private Long id;
 	
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")

@@ -97,6 +97,7 @@ public class Equipamiento implements Serializable {
 	
 	@NotEmpty(message = "{validation.notNull}")
 	private String sistema;
+	
 	@NotEmpty(message = "{validation.notNull}")
 	private String subsistema;
 	
