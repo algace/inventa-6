@@ -17,6 +17,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.ChasisPasarelaDto;
 import com.dbcom.app.service.ChasisPasarelaService;
+import com.dbcom.app.service.TipoChasisService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,10 +45,12 @@ public class ChasisPasarelaController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
 	private final ChasisPasarelaService chasisPasarelaService;
+	private final TipoChasisService tipoChasisService;
 	
 	@Autowired
-	public ChasisPasarelaController(ChasisPasarelaService chasisPasarelaService) {
+	public ChasisPasarelaController(ChasisPasarelaService chasisPasarelaService, TipoChasisService tipoChasisService) {
 		this.chasisPasarelaService = chasisPasarelaService;
+		this.tipoChasisService = tipoChasisService;
 	}
 	
 	/**
@@ -122,6 +125,9 @@ public class ChasisPasarelaController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+			
+			chasisPasarelaDto.setTiposChasis(tipoChasisService.readAll());
+			model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
 		
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
@@ -214,7 +220,10 @@ public class ChasisPasarelaController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
-		
+			
+			chasisPasarelaDto.setTiposChasis(tipoChasisService.readAll());
+			model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
+			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
