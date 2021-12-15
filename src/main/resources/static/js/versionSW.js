@@ -5,12 +5,6 @@
 const ID_BOTON_BORRAR_APLICACION = '#botonBorrarAplicacion';
 const ID_BOTON_ACEPTAR_SELECCIONAR_APLICACION = '#botonAceptarSeleccionarAplicacion';
 const ID_TABLA_APLICACIONES = '#tablaAplicaciones';
-const ID_TABLA_SELECCIONAR_APLICACION = '#tablaSeleccionarAplicaciones';
-const ID_MODAL_APLICACION = "#popupSeleccionarAplicacionesSW";
-
-var rowElement = null;
-var idElement  = null;
-var rowNode = null;
 
 // INICIO - Configuración de la tabla Aplicacion
 var tabla_aplicaciones = $(ID_TABLA_APLICACIONES).DataTable({
