@@ -55,7 +55,7 @@ public final class AplicacionSWDto implements Serializable {
 	private List<VersionSWLiteDto> versionesSW = new ArrayList<>();
 	
 	@Builder.Default	
-	private List<EquipamientoDto> equipamientos = new ArrayList<>();
+	private List<EquipamientoLiteDto> equipamientos = new ArrayList<>();
 	
 	/**
 	 * Versiones que no posee la aplicación
@@ -64,6 +64,6 @@ public final class AplicacionSWDto implements Serializable {
 	private List<VersionSWLiteDto> versionesSWNoIncluidas = new ArrayList<>();
 	
 	@Builder.Default	
-	private List<EquipamientoDto> equipamientosNoIncluidos = new ArrayList<>();
+	private List<EquipamientoLiteDto> equipamientosNoIncluidos = new ArrayList<>();
 
 }

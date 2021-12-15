@@ -14,7 +14,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dto.AplicacionSWDto;
 import com.dbcom.app.model.dto.AplicacionSWLiteDto;
-import com.dbcom.app.model.dto.EquipamientoDto;
+import com.dbcom.app.model.dto.EquipamientoLiteDto;
 import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.Equipamiento;
@@ -54,7 +54,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		log.info(LoggerConstants.LOG_CREATE);
 		return AplicacionSWDto.builder()
 				              .versionesSWNoIncluidas(this.modelMapperUtils.mapAll2List(versionSWService.readAll(),VersionSWLiteDto.class))
-				              .equipamientosNoIncluidos(equipamientoService.readAll())
+				              .equipamientosNoIncluidos(this.modelMapperUtils.mapAll2List(equipamientoService.readAll(),EquipamientoLiteDto.class))
 				              .build();
 	}
 
@@ -96,7 +96,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		
 		// Insertamos los equipamientos y las versiones que no tiene por si las quiere añadir
 		result.setVersionesSWNoIncluidas(this.modelMapperUtils.mapAll2List(this.versionSWService.readNotContains(id),VersionSWLiteDto.class));
-		result.setEquipamientosNoIncluidos(this.equipamientoService.readNotContains(id));
+		result.setEquipamientosNoIncluidos(this.modelMapperUtils.mapAll2List(this.equipamientoService.readNotContains(id),EquipamientoLiteDto.class));
 		log.info(LoggerConstants.LOG_READ);		
 
 		return result; 
@@ -146,7 +146,12 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		return this.modelMapperUtils.map(aplicacionSWBBDD, AplicacionSWDto.class);
 	}
 	
-	
+	/**
+	 * Procesa una lista de objetos VersionSWLiteDto proveniente del front y elimina de esta lista los 
+	 * objetos que tienen un id null
+     * @param lista de objetos VersionSWLiteDto provenientes del front 
+     * @return lista de objetos VersionSWLiteDto filtrada 
+	 */
 	private List<VersionSWLiteDto> filterListVersionesSW(List<VersionSWLiteDto> listVersiones) {
 	
 		return listVersiones.stream()
@@ -154,7 +159,13 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
                             .collect(Collectors.toList());
 	}
 	
-	private List<EquipamientoDto> filterListEquipamientos(List<EquipamientoDto> listEquipamientos) {
+	/**
+	 * Procesa una lista de objetos EquipamientoLiteDto proveniente del front y elimina de esta lista los 
+	 * objetos que tienen un id null
+     * @param lista de objetos EquipamientoLiteDto provenientes del front 
+     * @return lista de objetos EquipamientoLiteDto filtrada 
+	 */
+	private List<EquipamientoLiteDto> filterListEquipamientos(List<EquipamientoLiteDto> listEquipamientos) {
 		
 		return listEquipamientos.stream()
                             .filter(equipamiento -> !Objects.isNull(equipamiento.getId()))

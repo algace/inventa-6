@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -68,14 +69,14 @@ public class AplicacionSW implements Serializable {
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinTable(name = "aplicacionSW_versionSW",
 			  joinColumns = @JoinColumn(name = "id_aplicacionSW", referencedColumnName = "id"), 
-			  inverseJoinColumns = @JoinColumn(name = "id_versionSW", referencedColumnName = "id"))
+			  inverseJoinColumns = @JoinColumn(name = "id_versionSW", referencedColumnName = "id", foreignKey = @ForeignKey(name="none")))
 	@Builder.Default
 	private Set<VersionSW> versionesSW = new HashSet<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinTable(name = "aplicacionSW_equipamiento",
 			  joinColumns = @JoinColumn(name = "id_aplicacionSW", referencedColumnName = "id"), 
-			  inverseJoinColumns = @JoinColumn(name = "id_equipamiento", referencedColumnName = "id"))
+			  inverseJoinColumns = @JoinColumn(name = "id_equipamiento", referencedColumnName = "id", foreignKey = @ForeignKey(name="none")))
 	@Builder.Default
 	private Set<Equipamiento> equipamientos = new HashSet<>();
 	
