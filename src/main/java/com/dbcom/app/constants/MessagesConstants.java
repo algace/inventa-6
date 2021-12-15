@@ -28,6 +28,7 @@ public final class MessagesConstants {
 	
 	// Mensajes para los popups
 	public static String POPUP_ELIMINAR_APLICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA;
@@ -68,6 +69,11 @@ public final class MessagesConstants {
     public void setValidationException(final Long tamagno) {
     	FILE_MAX_SIZE = tamagno;
     }
+    
+    @Value("${html.label.eliminar.ambitoRecurso.pregunta}")
+	public void setMessagePopupEliminarAmbitoRecursoPregunta(final String texto) {
+    	POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA = texto;
+	}
 	
 	@Value("${html.label.eliminar.equipamiento.pregunta}")
 	public void setMessagePopupEliminarAplicacionPregunta(final String texto) {
