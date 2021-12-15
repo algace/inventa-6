@@ -29,8 +29,8 @@ $(ID_BOTON_BORRAR).on('click', function () {
 // INICIO - Configuración de la tabla
 var table = $(ID_TABLA_RESULTADOS).DataTable( {
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',
@@ -77,7 +77,7 @@ var table = $(ID_TABLA_RESULTADOS).DataTable( {
 // Campo para el filtro
 $('#tablaResultados tfoot th').each(function() {
     var foot = $('#tablaResultados tfoot th').eq($(this).index()).text();
-    $(this).html('<input type="text" class="form-control" placeholder="Filtrar por ' + foot + '" />');
+    $(this).html('<input type="text" class="form-control form-control-sm" placeholder="Filtrar por ' + foot + '" />');
 });
   
 // Funcionalidad del filtro
@@ -86,4 +86,13 @@ $("#tablaResultados tfoot input").on('keyup change', function() {
     	.search(this.value)
         .draw();
 });
+
+$("#search").on('keyup change', function() {
+    table.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
 // FIN - Configuración de la tabla
+ 
+
