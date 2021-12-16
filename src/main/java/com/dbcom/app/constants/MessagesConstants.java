@@ -58,6 +58,8 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_RECURSOOPERATIVO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_RECURSORADIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_SISTEMA_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_SUBSISTEMA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMALOCAL_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_TIRADA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_TOPOLOGIA_PREGUNTA;
@@ -226,6 +228,16 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoSistema.pregunta}")
+	public void setMessagePopupEliminarTipoSistemaPregunta(final String texto) {
+		POPUP_ELIMINAR_TIPO_SISTEMA_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.tipoSubsistema.pregunta}")
+	public void setMessagePopupEliminarTipoSubsistemaPregunta(final String texto) {
+		POPUP_ELIMINAR_TIPO_SUBSISTEMA_PREGUNTA = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoSistemaLocal.pregunta}")
 	public void setMessagePopupEliminarTipoSistemaLocalPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_SISTEMALOCAL_PREGUNTA = texto;
