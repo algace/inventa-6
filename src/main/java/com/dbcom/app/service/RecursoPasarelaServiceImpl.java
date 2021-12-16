@@ -115,6 +115,10 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 		
 		// Actualizamos el registro de bbdd
 		recursoPasarelaBBDD.setNombre(recursoPasarelaDto.getNombre());
+		recursoPasarelaBBDD.setTipoChasis(recursoPasarelaDto.getTipoChasis());
+		recursoPasarelaBBDD.setFuncionPasarela(recursoPasarelaDto.getFuncionPasarela());
+		recursoPasarelaBBDD.setIndiceCarga(recursoPasarelaDto.getIndiceCarga());
+		
 		recursoPasarelaBBDD = this.recursoPasarelaRepository.save(recursoPasarelaBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, recursoPasarelaBBDD.getId());

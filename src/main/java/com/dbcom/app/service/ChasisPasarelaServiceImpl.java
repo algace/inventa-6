@@ -111,6 +111,9 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 		
 		// Actualizamos el registro de bbdd
 		chasisPasarelaBBDD.setNombre(chasisPasarelaDto.getNombre());
+		chasisPasarelaBBDD.setTipoChasis(chasisPasarelaDto.getTipoChasis());
+		chasisPasarelaBBDD.setIndiceCargaLimite(chasisPasarelaDto.getIndiceCargaLimite());
+		
 		chasisPasarelaBBDD = this.chasisPasarelaRepository.save(chasisPasarelaBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, chasisPasarelaBBDD.getId());

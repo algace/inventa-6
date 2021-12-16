@@ -111,6 +111,8 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 		
 		// Actualizamos el registro de bbdd
 		ambitoRecursoBBDD.setNombre(ambitoRecursoDto.getNombre());
+		ambitoRecursoBBDD.setFuncionPasarela(ambitoRecursoDto.getFuncionPasarela());
+		
 		ambitoRecursoBBDD = this.ambitoRecursoRepository.save(ambitoRecursoBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, ambitoRecursoBBDD.getId());
