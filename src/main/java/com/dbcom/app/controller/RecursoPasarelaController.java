@@ -15,21 +15,23 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.AmbitoRecursoDto;
-import com.dbcom.app.service.AmbitoRecursoService;
+import com.dbcom.app.model.dto.RecursoPasarelaDto;
+import com.dbcom.app.service.FuncionPasarelaService;
+import com.dbcom.app.service.RecursoPasarelaService;
+import com.dbcom.app.service.TipoChasisService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AmbitoRecursoController {
-
+public class RecursoPasarelaController {
+	
 	// Atributos de la vista
-		private static final String ATTRIBUTE_TIPO = "ambitoRecurso";
+		private static final String ATTRIBUTE_TIPO = "recursoPasarela";
 
 		// Vistas	
 		private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + ATTRIBUTE_TIPO;
-		private static final String VIEW_TIPOS = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + "ambitosRecurso";		
+		private static final String VIEW_TIPOS = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + "recursosPasarela";		
 
 		// Mapeo de las acciones
 		public static final String MAP_CREATE_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO 
@@ -43,15 +45,20 @@ public class AmbitoRecursoController {
 		public static final String MAP_READ_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO;
 		public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
-		private final AmbitoRecursoService ambitoRecursoService;
+		private final RecursoPasarelaService recursoPasarelaService;
+		private final TipoChasisService tipoChasisService;
+		private final FuncionPasarelaService funcionPasarelaService;
 		
 		@Autowired
-		public AmbitoRecursoController(AmbitoRecursoService ambitoRecursoService) {
-			this.ambitoRecursoService = ambitoRecursoService;
+		public RecursoPasarelaController(RecursoPasarelaService recursoPasarelaService
+				, TipoChasisService tipoChasisService, FuncionPasarelaService funcionPasarelaService) {
+			this.recursoPasarelaService = recursoPasarelaService;
+			this.tipoChasisService = tipoChasisService;
+			this.funcionPasarelaService = funcionPasarelaService;
 		}
 		
 		/**
-		 * Obtenemos un listado de ámbitos
+		 * Obtenemos un listado de recursos
 		 * @param model Modelo
 		 * @return Vista
 		 */
@@ -59,7 +66,7 @@ public class AmbitoRecursoController {
 		public String readAll(final Model model) {
 			
 			// Contenido
-			model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.ambitoRecursoService.readAll());		
+			model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.recursoPasarelaService.readAll());		
 
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_LEER, MAP_READ_TIPO);
@@ -74,7 +81,7 @@ public class AmbitoRecursoController {
 		}
 		
 		/**
-		 * Creamos un ámbito sin persistencia
+		 * Creamos un recurso sin persistencia
 		 * @param model modelo
 		 * @return Vista
 		 */
@@ -82,7 +89,7 @@ public class AmbitoRecursoController {
 		public String create(final Model model) {
 
 			// Creamos el registro
-			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.create());
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.create());
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -100,14 +107,14 @@ public class AmbitoRecursoController {
 		}
 		
 		/**
-		 * Persistimos el ámbito pasado como parámetro
-		 * @param ambitoRecursoDto Ámbito a persistir
+		 * Persistimos el recurso pasado como parámetro
+		 * @param recursoPasarelaDto Recurso a persistir
 		 * @param bindingResult Validaciones
 		 * @param model Modelo
 		 * @return Vista
 		 */
 		@PostMapping(MAP_SAVE_TIPO)
-		public String save(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final AmbitoRecursoDto ambitoRecursoDto, 
+		public String save(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final RecursoPasarelaDto recursoPasarelaDto, 
 				final BindingResult bindingResult, final Model model) {	
 			
 			final String vista;
@@ -122,21 +129,25 @@ public class AmbitoRecursoController {
 				// Botones
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+				
+				recursoPasarelaDto.setTiposChasis(tipoChasisService.readAll());
+				recursoPasarelaDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				model.addAttribute(ATTRIBUTE_TIPO, recursoPasarelaDto);
 			
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 			
 			} else {		
-				this.ambitoRecursoService.save(ambitoRecursoDto);
+				this.recursoPasarelaService.save(recursoPasarelaDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
-				log.info(LoggerConstants.LOG_SAVE, ambitoRecursoDto.getId());
+				log.info(LoggerConstants.LOG_SAVE, recursoPasarelaDto.getId());
 			}
 			
 			return vista;
 		}
 		
 		/**
-		 * Obtenemos el ámbito con el id facilitado
+		 * Obtenemos el recurso con el id facilitado
 		 * @param id Identificador
 		 * @param model Modelo
 		 * @return Vista
@@ -145,7 +156,7 @@ public class AmbitoRecursoController {
 		public String read(@PathVariable("id") final Short id, final Model model) {
 			
 			// Contenido
-			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.read(id));
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -164,7 +175,7 @@ public class AmbitoRecursoController {
 		}
 		
 		/**
-		 * Preparamos la vista para la actualización del ámbito pasado como parámetro
+		 * Preparamos la vista para la actualización del recurso pasado como parámetro
 		 * @param id Identificador
 		 * @param model Modelo
 		 * @return Vista
@@ -173,7 +184,7 @@ public class AmbitoRecursoController {
 		public String updateGET(@PathVariable("id") final Short id, final Model model) {
 			
 			// Contenido
-			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.read(id));
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -192,14 +203,14 @@ public class AmbitoRecursoController {
 		}
 		
 		/**
-		 * Actualizamos el ámbito pasado como parámetro
-		 * @param ambitoRecursoDto pasarela a actualizar
+		 * Actualizamos el recurso pasado como parámetro
+		 * @param recursoPasarelaDto pasarela a actualizar
 		 * @param bindingResult Validaciones
 		 * @param model Modelo
 		 * @return Vista
 		 */
 		@PostMapping(MAP_UPDATE_TIPO)
-		public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final AmbitoRecursoDto ambitoRecursoDto, 
+		public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final RecursoPasarelaDto recursoPasarelaDto, 
 				final BindingResult bindingResult, final Model model) {		
 			
 			final String vista;
@@ -214,21 +225,24 @@ public class AmbitoRecursoController {
 				// Botones
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
-			
+				
+				recursoPasarelaDto.setTiposChasis(tipoChasisService.readAll());
+				recursoPasarelaDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 			
 			} else {
-				this.ambitoRecursoService.update(ambitoRecursoDto);
+				this.recursoPasarelaService.update(recursoPasarelaDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
-				log.info(LoggerConstants.LOG_UPDATE, ambitoRecursoDto.getId());			
+				log.info(LoggerConstants.LOG_UPDATE, recursoPasarelaDto.getId());			
 			}
 
 			return vista;		
 		}
 		
 		/**
-		 * Preparamos la vista para la eliminación del ámbito pasado como parámetro
+		 * Preparamos la vista para la eliminación del recurso pasado como parámetro
 		 * @param id Identificador
 		 * @param model Modelo
 		 * @return Vista
@@ -237,9 +251,9 @@ public class AmbitoRecursoController {
 		public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 			
 			// Contenido
-			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.read(id));
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
 			model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
-					MessagesConstants.POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA);
+					MessagesConstants.POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA);
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -258,14 +272,15 @@ public class AmbitoRecursoController {
 		}
 		
 		/**
-		 * Eliminación del ámbito pasado como parámetro
+		 * Eliminación del recurso pasado como parámetro
 		 * @param id Identificador
 		 * @return Vista
 		 */
 		@PostMapping(MAP_DELETE_TIPO + "/{id}")
 		public String deletePOST(@PathVariable("id") final Short id) {		
-			this.ambitoRecursoService.delete(id);					
+			this.recursoPasarelaService.delete(id);					
 			log.info(LoggerConstants.LOG_DELETE);		
 			return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 		}
+
 }
