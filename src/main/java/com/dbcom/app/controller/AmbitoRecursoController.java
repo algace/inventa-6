@@ -17,6 +17,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.AmbitoRecursoDto;
 import com.dbcom.app.service.AmbitoRecursoService;
+import com.dbcom.app.service.FuncionPasarelaService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,10 +45,12 @@ public class AmbitoRecursoController {
 		public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
 		private final AmbitoRecursoService ambitoRecursoService;
+		private final FuncionPasarelaService funcionPasarelaService;
 		
 		@Autowired
-		public AmbitoRecursoController(AmbitoRecursoService ambitoRecursoService) {
+		public AmbitoRecursoController(AmbitoRecursoService ambitoRecursoService, FuncionPasarelaService funcionPasarelaService) {
 			this.ambitoRecursoService = ambitoRecursoService;
+			this.funcionPasarelaService = funcionPasarelaService;
 		}
 		
 		/**
@@ -123,6 +126,9 @@ public class AmbitoRecursoController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 			
+				ambitoRecursoDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				model.addAttribute(ATTRIBUTE_TIPO, ambitoRecursoDto);
+				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 			
@@ -215,6 +221,9 @@ public class AmbitoRecursoController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 			
+				ambitoRecursoDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				model.addAttribute(ATTRIBUTE_TIPO, ambitoRecursoDto);
+				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 			
