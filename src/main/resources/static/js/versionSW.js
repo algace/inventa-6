@@ -9,7 +9,7 @@ const ID_TABLA_APLICACIONES = '#tablaAplicaciones';
 // INICIO - Configuración de la tabla Aplicacion
 var tabla_aplicaciones = $(ID_TABLA_APLICACIONES).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
+	dom: '<"top">rt<"bottom"ipl><"clear">',
 	searching:  false,
 	language: {
 	    'sProcessing':     'Procesando...',
@@ -54,3 +54,9 @@ $("#tablaAplicaciones tfoot input").on('keyup change', function() {
 });
 // FIN - Configuración de la tabla Aplicacion
 
+$("#search").on('keyup change', function() {
+    tabla_aplicaciones.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
