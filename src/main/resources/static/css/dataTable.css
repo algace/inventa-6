@@ -5,23 +5,26 @@
 	font-size: 12px;
 }
 
-#tablaResultados_length{
-	width: 20%
-}
-
 #tablaResultados_paginate{
-	width: 33%;
-	text-align: 
-	center !important;
+	width: 40%
 }
 
 #tablaResultados_info{
 	width: 40%;	
-	padding-top: 0px;
+	padding-top: 5px;
+}
+
+#tablaResultados_length {
+    width: 20%;
+    text-align: right;
 }
 
 .table.dataTable {
 	margin-top: 0px !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin: 0px 0;
 }
 
 
