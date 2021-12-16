@@ -28,6 +28,7 @@ public final class MessagesConstants {
 	
 	// Mensajes para los popups
 	public static String POPUP_ELIMINAR_APLICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_AIRBLOCK_PREGUNTA;
 	public static String POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
@@ -75,6 +76,11 @@ public final class MessagesConstants {
 	public void setMessagePopupEliminarAmbitoRecursoPregunta(final String texto) {
     	POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA = texto;
 	}
+    
+    @Value("${html.label.eliminar.airblock.pregunta}")
+   	public void setMessagePopupEliminarAirblockPregunta(final String texto) {
+       	POPUP_ELIMINAR_AIRBLOCK_PREGUNTA = texto;
+   	}
 	
 	@Value("${html.label.eliminar.equipamiento.pregunta}")
 	public void setMessagePopupEliminarAplicacionPregunta(final String texto) {

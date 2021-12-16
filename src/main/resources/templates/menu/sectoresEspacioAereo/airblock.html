@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=11">
@@ -9,8 +8,6 @@
 		<!--/* INICIO - CSS */-->
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
-		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
-		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
 		
 		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
@@ -19,9 +16,8 @@
 		
 		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
 	</head>
-	
 	<body class="bg-white">
-		
+
 		<div class="container-fluid">
 		
 			<!--/* INICIO - Cabecera */-->
@@ -44,12 +40,11 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
 					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.sectoresEspacioAereo}"></a></li>
-					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" class="breadcrumb-a" th:text="#{html.menu.airblocks}"></a></li>
-					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.sectoresEspacioAereo}"></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.airblocks}"></a></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
-				
+		
 					<form action="#" th:action="@{${action}}" th:object="${airblock}" method="post" novalidate>
 						<input type="hidden" th:field="*{id}">
 								
@@ -65,53 +60,67 @@
 											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
 										</div >
 									</button>
-								</div>				
-
+								</div>							
 								<div id="collapseInformacionGeneral" class="collapse show" aria-labelledby="headingInformacionGeneral" data-parent="#accordionFormulario">
 									<div class="card-body formulario-padding">
 										<div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
 									        <div class="col-sm-6">
-									            <input id="usuario" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
+									            <input id="nombre" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 									        </div>										        	
 		       							 </div>
+		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.flmin}"></div> 
+											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
 									        <div class="col-sm-6">
-									            <input id="local" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
+									            <input id="flMin" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{flMin}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMin')}" th:errors="*{flMin}"></div>
+									        </div>										        	
 		       							 </div>
+		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.flmax}"></div> 
+											<div class="col-sm-2" th:text="#{html.label.flmax}"></div>
 									        <div class="col-sm-6">
-									            <input id="contrasegna" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
+									            <input id="flMax" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{flMax}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMax')}" th:errors="*{flMax}"></div>
+									        </div>										        	
 		       							 </div>
+		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.coordenadas}"></div> 
+											<div class="col-sm-2" th:text="#{html.label.coordenadas}"></div>
 									        <div class="col-sm-6">
-									            <input id="repetirContrasegna" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
+									            <input id="coordenadas" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{coordenadas}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('coordenadas')}" th:errors="*{coordenadas}"></div>
+									        </div>										        	
 		       							 </div>
+		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.sectoresATC}"></div> 
+											<div class="col-sm-2" th:text="#{html.label.sectoresATC}"></div>
 									        <div class="col-sm-6">
-									            <input id="apellidos" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
+									            <input id="sectoresATC" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{sectoresATC}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('sectoresATC')}" th:errors="*{sectoresATC}"></div>
+									        </div>										        	
 		       							 </div>
 									</div>
 								</div>
 							</div>
 							<!--/* FIN - Información general */-->
+							
 						</div>
 						
 						<br>
-						
+
 						<!--/* INICIO - Botonera */-->
 						<div align="right">						
 							<!--/* Botón Volver */-->
@@ -126,38 +135,34 @@
 							<input type="submit" class="btn btn-primary" 
 								th:value="#{html.boton.aceptar}" th:hidden="${estaBotonAceptarActivo} ? 'false' : 'true'">
 
+							<!--/* Botón Eliminar */-->							
+							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
+								th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 						</div>
 						<!--/* FIN - Botonera */-->
 						
 						<!--/* INICIO - Popup de cancelar */-->
 						<div th:replace="fragments/popups/popupCancelar :: popupCancelar"></div>
 						<!--/* FIN - Popup de cancelar */-->
-
+						
 						<!--/* INICIO - Popup de eliminación */-->
 						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
 						<!--/* FIN - Popup de eliminación */-->
 			
 					</form>
-										
-			
 				</div>
 			</div>
 			<!--/* FIN - Contenido */-->
 			
 			<!--/* INICIO - Pie de página */-->
 			<div th:replace="fragments/pie :: pie"></div>
-			<!--/* FIN - Pie de página */-->
+			<!--/* FIN - Pie de página */-->	
+			
 		</div>
-		
+
 		<!--/* INICIO - JS */-->
 		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>			
-		<script type="text/javascript" th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/jquery-mask-plugin/1.14.15/dist/jquery.mask.js}"></script>
-		<script type="text/javascript" th:src="@{/js/airblock.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
@@ -165,6 +170,6 @@
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
-				
+	
 	</body>
 </html>

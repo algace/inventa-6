@@ -242,7 +242,7 @@ public final class AirblockController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
-				MessagesConstants.POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA);
+				MessagesConstants.POPUP_ELIMINAR_AIRBLOCK_PREGUNTA);
 
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
