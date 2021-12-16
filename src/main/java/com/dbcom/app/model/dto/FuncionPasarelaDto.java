@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuncionPasarelaDto implements Serializable{
+public final class FuncionPasarelaDto implements Serializable{
 
 	/**
 	 * 

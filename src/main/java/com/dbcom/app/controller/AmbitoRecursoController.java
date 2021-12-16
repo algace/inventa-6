@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AmbitoRecursoController {
+public final class AmbitoRecursoController {
 
 	// Atributos de la vista
 		private static final String ATTRIBUTE_TIPO = "ambitoRecurso";

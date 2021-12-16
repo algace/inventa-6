@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
+public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 
 	private final ModelMapperUtils modelMapperUtils;
 	private final FuncionPasarelaRepository funcionPasarelaRepository;

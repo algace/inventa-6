@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecursoPasarelaDto implements Serializable{
+public final class RecursoPasarelaDto implements Serializable{
 	
 	/**
 	 * 
@@ -38,6 +38,7 @@ public class RecursoPasarelaDto implements Serializable{
 	private FuncionPasarela funcionPasarela;
 	
 	@Max(999)
+	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCarga;
 	
 	private List<TipoChasisDto> tiposChasis;

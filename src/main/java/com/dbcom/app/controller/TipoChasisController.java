@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class TipoChasisController {
+public final class TipoChasisController {
 
 		// Atributos de la vista
 		private static final String ATTRIBUTE_TIPO = "tipoChasis";

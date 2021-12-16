@@ -1,5 +1,6 @@
 package com.dbcom.app.model.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.Max;
@@ -17,8 +18,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChasisPasarelaDto {
+public final class ChasisPasarelaDto implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Short id;
 	
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
@@ -28,6 +34,7 @@ public class ChasisPasarelaDto {
 	private TipoChasis tipoChasis;
 	
 	@Max(999)
+	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCargaLimite;
 	
 	private List<TipoChasisDto> tiposChasis;

@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
+public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	
 	private final ModelMapperUtils modelMapperUtils;
 	private final RecursoPasarelaRepository recursoPasarelaRepository;
