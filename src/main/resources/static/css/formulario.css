@@ -49,3 +49,7 @@
 	width:3%;
 	font-size:20px;
 }
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+	width: 20rem;
+}
