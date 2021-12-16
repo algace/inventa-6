@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -41,6 +43,8 @@ public class ChasisPasarela implements Serializable{
 			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
 	private TipoChasis tipoChasis;
 	
+	@Max(999)
+	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCargaLimite;
 
 }

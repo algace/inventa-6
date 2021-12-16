@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
+public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	
 	private final ModelMapperUtils modelMapperUtils;
 	private final ChasisPasarelaRepository chasisPasarelaRepository;

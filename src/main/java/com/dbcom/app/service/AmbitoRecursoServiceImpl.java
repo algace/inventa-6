@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
+public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	
 	private final ModelMapperUtils modelMapperUtils;
 	private final AmbitoRecursoRepository ambitoRecursoRepository;

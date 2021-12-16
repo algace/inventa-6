@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class TipoChasisServiceImpl implements TipoChasisService {
+public final class TipoChasisServiceImpl implements TipoChasisService {
 
 	private final ModelMapperUtils modelMapperUtils;
 	private final TipoChasisRepository tipoChasisRepository;
