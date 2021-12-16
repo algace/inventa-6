@@ -142,7 +142,8 @@
 										</div>-->	
 										
 										<!--<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
-										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', idButtonBorrar='botonBorrarEquipamiento')"></div>
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', 
+											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchEquipamientos', visible='true')"></div>
 										
 										<table id="tablaEquipamiento" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
@@ -188,7 +189,8 @@
 											
 										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
 										
-										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarVersion', idButtonBorrar='botonBorrarVersion')"></div>
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarVersion', 
+										idButtonBorrar='botonBorrarVersion', idInputSearch='searchVersiones', visible='true')"></div>
 										
 										<table id="tablaVersiones" class="table table-striped table-bordered no-margin-top" style="width:100%">
 											<thead>
@@ -247,6 +249,8 @@
 								        </button>
 								    </div>
 								    <div class="modal-body">
+								    	<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', 
+											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchSeleccionarEquipamientos', visible='false')"></div>
 								    	<table id="tablaSeleccionarEquipamientos" class="table table-striped table-bordered" style="width:100%">
 											<thead>
 												<tr>
@@ -296,6 +300,8 @@
 								        </button>
 								    </div>
 								    <div class="modal-body">
+								    	<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', 
+											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchSeleccionarVersiones', visible='false')"></div>
 								    	<table id="tablaSeleccionarVersion" class="table table-striped table-bordered" style="width:100%">
 											<thead>
 												<tr>

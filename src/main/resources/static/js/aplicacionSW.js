@@ -14,6 +14,12 @@ const ID_BOTON_BORRAR_EQUIPAMIENTO = '#botonBorrarEquipamiento';
 const ID_TABLA_SELECCIONAR_EQUIPAMIENTO = '#tablaSeleccionarEquipamientos';
 const ID_MODAL_VERSION = "#popupSeleccionarVersion";
 const ID_MODAL_EQUIPAMIENTO = "#popupSeleccionarEquipamiento";
+const ID_INPUT_SEARCH_VERSIONES = "#searchVersiones";
+const ID_INPUT_SEARCH_EQUIPAMIENTOS = "#searchEquipamientos";
+const ID_INPUT_SEARCH_SELECCIONAR_VERSIONES = "#searchSeleccionarVersiones";
+const ID_INPUT_SEARCH_SELECCIONAR_EQUIPAMIENTOS = "#searchSeleccionarEquipamientos";
+
+
 
 var rowElement = null;
 var idElement  = null;
@@ -406,4 +412,39 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
 
 $(ID_MODAL_EQUIPAMIENTO).on('show.bs.modal', function () {
 	$(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
+});
+
+$("#search").on('keyup change', function() {
+    table.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
+
+$(ID_INPUT_SEARCH_EQUIPAMIENTOS).on('keyup change', function() {
+    tabla_equipamiento.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
+
+$(ID_INPUT_SEARCH_VERSIONES).on('keyup change', function() {
+    tabla_versiones.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
+
+$(ID_INPUT_SEARCH_SELECCIONAR_EQUIPAMIENTOS).on('keyup change', function() {
+    tabla_seleccionar_equipamiento.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
+
+$(ID_INPUT_SEARCH_SELECCIONAR_VERSIONES).on('keyup change', function() {
+    tabla_seleccionar_versiones.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
 });
