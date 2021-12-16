@@ -45,7 +45,7 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
 					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.pasarelasVoIP}"></a></li>
-					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.funciones}"></a></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.recursos}"></a></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
@@ -56,19 +56,28 @@
 						<thead>
 					    	<tr>
 					      		<th class="th-sm"  hidden="true">
-					    		<th class="th-sm" style="width: 100%" th:text="#{html.tabla.cabecera.nombre}"></th>
+					    		<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+					    		<th class="th-sm" th:text="#{html.tabla.cabecera.tipoChasis}"></th>
+					    		<th class="th-sm" th:text="#{html.tabla.cabecera.funcionPasarela}"></th>
+					    		<th class="th-sm" th:text="#{html.tabla.cabecera.indiceCarga}"></th>
 					    	</tr>
 					  	</thead>
 					  	<tbody>			 
-						  	<tr th:each="funcionPasarela : ${lista}" th:id="${funcionPasarela.id}">
-						  		<td hidden="true" th:text="${funcionPasarela.id}"></td>
-						  		<td th:text="${funcionPasarela.nombre}"></td>
+						  	<tr th:each="recursoPasarela : ${lista}" th:id="${recursoPasarela.id}">
+						  		<td hidden="true" th:text="${recursoPasarela.id}"></td>
+						  		<td th:text="${recursoPasarela.nombre}"></td>
+						  		<td th:text="${recursoPasarela.tipoChasis.nombre}"></td>
+						  		<td th:text="${recursoPasarela.funcionPasarela.nombre}"></td>
+						  		<td th:text="${recursoPasarela.indiceCarga}"></td>
 						  	</tr>			
 						</tbody>
 						<tfoot>
 							<tr>
 					      		<th hidden="true">
 					    		<th th:text="#{html.tabla.pie.nombre}"></th>
+					    		<th th:text="#{html.tabla.pie.tipoChasis}"></th>
+					    		<th th:text="#{html.tabla.pie.funcionPasarela}"></th>
+					    		<th th:text="#{html.tabla.pie.indiceCarga}"></th>
 					    	</tr>
 						</tfoot>
 					</table>

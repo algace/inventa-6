@@ -6,7 +6,7 @@
 
 .botonera-crud {
 	display:flex;
-	width:55%;
+	width:75%;
 }
 
 .button-crud div{
@@ -91,7 +91,7 @@
 
 .sercher-group{
 	display: flex;
-	width: 44%;
+	width: 25%;
 }
 
 .search-div{

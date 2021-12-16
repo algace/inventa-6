@@ -17,12 +17,13 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.AmbitoRecursoDto;
 import com.dbcom.app.service.AmbitoRecursoService;
+import com.dbcom.app.service.FuncionPasarelaService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AmbitoRecursoController {
+public final class AmbitoRecursoController {
 
 	// Atributos de la vista
 		private static final String ATTRIBUTE_TIPO = "ambitoRecurso";
@@ -44,10 +45,12 @@ public class AmbitoRecursoController {
 		public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
 		private final AmbitoRecursoService ambitoRecursoService;
+		private final FuncionPasarelaService funcionPasarelaService;
 		
 		@Autowired
-		public AmbitoRecursoController(AmbitoRecursoService ambitoRecursoService) {
+		public AmbitoRecursoController(AmbitoRecursoService ambitoRecursoService, FuncionPasarelaService funcionPasarelaService) {
 			this.ambitoRecursoService = ambitoRecursoService;
+			this.funcionPasarelaService = funcionPasarelaService;
 		}
 		
 		/**
@@ -123,6 +126,9 @@ public class AmbitoRecursoController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 			
+				ambitoRecursoDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				model.addAttribute(ATTRIBUTE_TIPO, ambitoRecursoDto);
+				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 			
@@ -215,6 +221,9 @@ public class AmbitoRecursoController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 			
+				ambitoRecursoDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				model.addAttribute(ATTRIBUTE_TIPO, ambitoRecursoDto);
+				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 			
@@ -239,7 +248,7 @@ public class AmbitoRecursoController {
 			// Contenido
 			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.read(id));
 			model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
-					MessagesConstants.POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA);
+					MessagesConstants.POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA);
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

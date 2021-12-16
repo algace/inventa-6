@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoChasisDto implements Serializable {
+public final class TipoChasisDto implements Serializable {
 	
 
 	/**

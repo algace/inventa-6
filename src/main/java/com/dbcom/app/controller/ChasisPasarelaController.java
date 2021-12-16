@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class ChasisPasarelaController {
+public final class ChasisPasarelaController {
 	
 	// Atributos de la vista
 	private static final String ATTRIBUTE_TIPO = "chasisPasarela";
@@ -220,6 +220,10 @@ public class ChasisPasarelaController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+			
+			chasisPasarelaDto.setTiposChasis(tipoChasisService.readAll());
+			model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
+		
 			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		

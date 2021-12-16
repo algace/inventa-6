@@ -24,15 +24,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChasisPasarela implements Serializable{
+public class RecursoPasarela implements Serializable{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHASISPASARELA_SEQ")
-	@SequenceGenerator(sequenceName = "chasispasarela_seq", initialValue = 1, allocationSize = 1 , name = "CHASISPASARELA_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RECURSOPASARELA_SEQ")
+	@SequenceGenerator(sequenceName = "recursopasarela_seq", initialValue = 1, allocationSize = 1 , name = "RECURSOPASARELA_SEQ")
 	private Short id;
 	
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
@@ -43,8 +44,11 @@ public class ChasisPasarela implements Serializable{
 			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
 	private TipoChasis tipoChasis;
 	
+	@ManyToOne(fetch = FetchType.EAGER,
+			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
+	private FuncionPasarela funcionPasarela;
+	
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")
-	private Integer indiceCargaLimite;
-
+	private Integer indiceCarga;
 }

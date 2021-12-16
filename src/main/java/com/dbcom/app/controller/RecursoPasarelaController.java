@@ -15,21 +15,23 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.TipoChasisDto;
+import com.dbcom.app.model.dto.RecursoPasarelaDto;
+import com.dbcom.app.service.FuncionPasarelaService;
+import com.dbcom.app.service.RecursoPasarelaService;
 import com.dbcom.app.service.TipoChasisService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public final class TipoChasisController {
-
-		// Atributos de la vista
-		private static final String ATTRIBUTE_TIPO = "tipoChasis";
+public final class RecursoPasarelaController {
+	
+	// Atributos de la vista
+		private static final String ATTRIBUTE_TIPO = "recursoPasarela";
 
 		// Vistas	
 		private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + ATTRIBUTE_TIPO;
-		private static final String VIEW_TIPOS = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + "tiposChasis";		
+		private static final String VIEW_TIPOS = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + "recursosPasarela";		
 
 		// Mapeo de las acciones
 		public static final String MAP_CREATE_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO 
@@ -43,15 +45,20 @@ public final class TipoChasisController {
 		public static final String MAP_READ_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO;
 		public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
+		private final RecursoPasarelaService recursoPasarelaService;
 		private final TipoChasisService tipoChasisService;
+		private final FuncionPasarelaService funcionPasarelaService;
 		
 		@Autowired
-		public TipoChasisController(TipoChasisService tipoChasisService) {
+		public RecursoPasarelaController(RecursoPasarelaService recursoPasarelaService
+				, TipoChasisService tipoChasisService, FuncionPasarelaService funcionPasarelaService) {
+			this.recursoPasarelaService = recursoPasarelaService;
 			this.tipoChasisService = tipoChasisService;
+			this.funcionPasarelaService = funcionPasarelaService;
 		}
 		
 		/**
-		 * Obtenemos un listado de los tipos de chasis
+		 * Obtenemos un listado de recursos
 		 * @param model Modelo
 		 * @return Vista
 		 */
@@ -59,7 +66,7 @@ public final class TipoChasisController {
 		public String readAll(final Model model) {
 			
 			// Contenido
-			model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.tipoChasisService.readAll());		
+			model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.recursoPasarelaService.readAll());		
 
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_LEER, MAP_READ_TIPO);
@@ -74,7 +81,7 @@ public final class TipoChasisController {
 		}
 		
 		/**
-		 * Creamos un tipo de chasis sin persistencia
+		 * Creamos un recurso sin persistencia
 		 * @param model modelo
 		 * @return Vista
 		 */
@@ -82,7 +89,7 @@ public final class TipoChasisController {
 		public String create(final Model model) {
 
 			// Creamos el registro
-			model.addAttribute(ATTRIBUTE_TIPO, this.tipoChasisService.create());
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.create());
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -100,14 +107,14 @@ public final class TipoChasisController {
 		}
 		
 		/**
-		 * Persistimos el tipo de chasis pasado como parámetro
-		 * @param tipoChasisDto Tipo de chasis a persistir
+		 * Persistimos el recurso pasado como parámetro
+		 * @param recursoPasarelaDto Recurso a persistir
 		 * @param bindingResult Validaciones
 		 * @param model Modelo
 		 * @return Vista
 		 */
 		@PostMapping(MAP_SAVE_TIPO)
-		public String save(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final TipoChasisDto tipoChasisDto, 
+		public String save(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final RecursoPasarelaDto recursoPasarelaDto, 
 				final BindingResult bindingResult, final Model model) {	
 			
 			final String vista;
@@ -122,21 +129,25 @@ public final class TipoChasisController {
 				// Botones
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+				
+				recursoPasarelaDto.setTiposChasis(tipoChasisService.readAll());
+				recursoPasarelaDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				model.addAttribute(ATTRIBUTE_TIPO, recursoPasarelaDto);
 			
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 			
 			} else {		
-				this.tipoChasisService.save(tipoChasisDto);
+				this.recursoPasarelaService.save(recursoPasarelaDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
-				log.info(LoggerConstants.LOG_SAVE, tipoChasisDto.getId());
+				log.info(LoggerConstants.LOG_SAVE, recursoPasarelaDto.getId());
 			}
 			
 			return vista;
 		}
 		
 		/**
-		 * Obtenemos el tipo de chasis con el id facilitado
+		 * Obtenemos el recurso con el id facilitado
 		 * @param id Identificador
 		 * @param model Modelo
 		 * @return Vista
@@ -145,7 +156,7 @@ public final class TipoChasisController {
 		public String read(@PathVariable("id") final Short id, final Model model) {
 			
 			// Contenido
-			model.addAttribute(ATTRIBUTE_TIPO, this.tipoChasisService.read(id));
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -164,7 +175,7 @@ public final class TipoChasisController {
 		}
 		
 		/**
-		 * Preparamos la vista para la actulización del tipo de chasis pasado como parámetro
+		 * Preparamos la vista para la actualización del recurso pasado como parámetro
 		 * @param id Identificador
 		 * @param model Modelo
 		 * @return Vista
@@ -173,7 +184,7 @@ public final class TipoChasisController {
 		public String updateGET(@PathVariable("id") final Short id, final Model model) {
 			
 			// Contenido
-			model.addAttribute(ATTRIBUTE_TIPO, this.tipoChasisService.read(id));
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -192,14 +203,14 @@ public final class TipoChasisController {
 		}
 		
 		/**
-		 * Actualizamos el tipo de chasis pasado como parámetro
-		 * @param tipoChasisDto Tipo de chasis a actualizar
+		 * Actualizamos el recurso pasado como parámetro
+		 * @param recursoPasarelaDto pasarela a actualizar
 		 * @param bindingResult Validaciones
 		 * @param model Modelo
 		 * @return Vista
 		 */
 		@PostMapping(MAP_UPDATE_TIPO)
-		public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final TipoChasisDto tipoChasisDto, 
+		public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final RecursoPasarelaDto recursoPasarelaDto, 
 				final BindingResult bindingResult, final Model model) {		
 			
 			final String vista;
@@ -214,21 +225,24 @@ public final class TipoChasisController {
 				// Botones
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
-			
+				
+				recursoPasarelaDto.setTiposChasis(tipoChasisService.readAll());
+				recursoPasarelaDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 			
 			} else {
-				this.tipoChasisService.update(tipoChasisDto);
+				this.recursoPasarelaService.update(recursoPasarelaDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
-				log.info(LoggerConstants.LOG_UPDATE, tipoChasisDto.getId());			
+				log.info(LoggerConstants.LOG_UPDATE, recursoPasarelaDto.getId());			
 			}
 
 			return vista;		
 		}
 		
 		/**
-		 * Preparamos la vista para la eliminación del tipo de chasis pasado como parámetro
+		 * Preparamos la vista para la eliminación del recurso pasado como parámetro
 		 * @param id Identificador
 		 * @param model Modelo
 		 * @return Vista
@@ -237,9 +251,9 @@ public final class TipoChasisController {
 		public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 			
 			// Contenido
-			model.addAttribute(ATTRIBUTE_TIPO, this.tipoChasisService.read(id));
+			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
 			model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
-					MessagesConstants.POPUP_ELIMINAR_TIPO_CHASIS_PREGUNTA);
+					MessagesConstants.POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA);
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -258,14 +272,15 @@ public final class TipoChasisController {
 		}
 		
 		/**
-		 * Eliminación del tipo de chasis pasado como parámetro
+		 * Eliminación del recurso pasado como parámetro
 		 * @param id Identificador
 		 * @return Vista
 		 */
 		@PostMapping(MAP_DELETE_TIPO + "/{id}")
 		public String deletePOST(@PathVariable("id") final Short id) {		
-			this.tipoChasisService.delete(id);					
+			this.recursoPasarelaService.delete(id);					
 			log.info(LoggerConstants.LOG_DELETE);		
 			return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 		}
+
 }
