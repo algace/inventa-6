@@ -5,7 +5,7 @@ import java.util.List;
 import com.dbcom.app.model.dto.RegionMantenimientoDto;
 
 /**
- * Lógica para tipos de subsistemas
+ * Lógica para regiones de mantenimiento
  * 
  * @author jgm
  */
@@ -13,7 +13,7 @@ public interface RegionMantenimientoService {
 
 	/**
 	 * Creamos una región de mantenimiento sin persistencia
-	 * @return Nuevo tipo de subsistema
+	 * @return Nueva región de mantenimiento
 	 */
 	RegionMantenimientoDto create();
 	
@@ -24,7 +24,7 @@ public interface RegionMantenimientoService {
 	void delete(final Long id);
 	
 	/**
-	 * Obtenemos un listado de laS regiones de mantenimiento
+	 * Obtenemos un listado de las regiones de mantenimiento
 	 * @return Listado
 	 */
 	List<RegionMantenimientoDto> readAll();
