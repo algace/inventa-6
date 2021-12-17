@@ -85,6 +85,7 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 		log.info(LoggerConstants.LOG_READ);
 		
 		final TipoSubsistemaDto result = this.modelMapperUtils.map(tipoSubsistema, TipoSubsistemaDto.class);
+		result.setTiposSistemasDisponibles(tiposSistemasService.readAll());
 		
 		return result;
 	}
@@ -96,11 +97,7 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 	public TipoSubsistemaDto save(TipoSubsistemaDto tipoSubsistemaDto) {
 
 		TipoSubsistema tipoSubsistema = this.modelMapperUtils.map(tipoSubsistemaDto, TipoSubsistema.class);
-	    
-		//La siguiente sentencia se comenta y se sustituye por otra sentencia temporal hasta que
-		//nos llegue desde el front el sistema al que está asociado el subsistema
-		//tipoSubsistema.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(), TipoSistema.class));
-		tipoSubsistema.setTipoSistema(this.modelMapperUtils.map(tiposSistemasService.read((long)1),TipoSistema.class));
+	    tipoSubsistema.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(), TipoSistema.class));
 		
 		tipoSubsistema = this.tipoSubsistemasRepository.save(tipoSubsistema);	
 		
@@ -124,11 +121,7 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 		tipoSubsistemaBBDD.setNombre(tipoSubsistemaDto.getNombre());
 		tipoSubsistemaBBDD.setDescripcion(tipoSubsistemaDto.getDescripcion());
 		tipoSubsistemaBBDD.setInterfazOperacion(tipoSubsistemaDto.getInterfazOperacion());
-		//La siguiente sentencia se comenta y se sustituye por 2 sentencias temporales hasta que
-		//nos llegue desde el front el sistema al que está asociado el subsistema
-		//tipoSubsistemaBBDD.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(),TipoSistema.class));
-		TipoSistema tipoSistemaBBDD = this.modelMapperUtils.map(tiposSistemasService.read((long)1),TipoSistema.class);
-		tipoSubsistemaBBDD.setTipoSistema(tipoSistemaBBDD);
+		tipoSubsistemaBBDD.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(),TipoSistema.class));
 		tipoSubsistemaBBDD = this.tipoSubsistemasRepository.save(tipoSubsistemaBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, tipoSubsistemaBBDD.getId());
