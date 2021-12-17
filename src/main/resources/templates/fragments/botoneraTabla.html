@@ -1,10 +1,10 @@
 <div class="botonera" th:fragment="botoneraTabla">
+
+        <a id="uriLeer" hidden="true" th:href="@{${leer}}"></a>    
+        <a id="uriModificar" hidden="true" th:href="@{${modificar}}"></a>    
+        <a id="uriBorrar" hidden="true" th:href="@{${borrar}}"></a>    
 	
 		<!--/* Obtenemos las urls de los botones desde el controlador para insertarlos en el JS */-->	
-		<a id="uriLeer" hidden="true" th:href="@{${leer}}"></a>	
-		<a id="uriModificar" hidden="true" th:href="@{${modificar}}"></a>	
-		<a id="uriBorrar" hidden="true" th:href="@{${borrar}}"></a>	
-		
 			<div class="botonera-crud" align="left">
 				<a id="enlaceAgnadir" class="button-crud" th:href="@{${agnadir}}">
 					<div>
@@ -13,14 +13,14 @@
 					</div>
 				</a>
 					
-				<a id="botonModificar" class="button-crud" disabled>
+				<a id="botonModificar" class="button-crud" >
 					<div>
 						<i class="far fa-edit icono-crud"></i>
 						<span class="text-crud" th:text="#{html.boton.modificar}"/>
 					</div >
 				</a>
 				
-				<a id="botonBorrar" class="button-crud" disabled>
+				<a id="botonBorrar" class="button-crud">
 					<div>
 						<i class="far fa-times-circle icono-crud"></i>
 						<span class="text-crud" th:text="#{html.boton.eliminar}"/>
