@@ -10,7 +10,6 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TiposSubsistemasRepository;
-import com.dbcom.app.model.dto.TipoSistemaDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
 import com.dbcom.app.model.entity.TipoSistema;
 import com.dbcom.app.model.entity.TipoSubsistema;
@@ -54,7 +53,7 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
 		this.tipoSubsistemasRepository.delete(tipoSubsistemaBBDD);		
-
+		
 		log.info(LoggerConstants.LOG_DELETE, id);
 	}
 	
@@ -67,15 +66,7 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 		final List<TipoSubsistema> tiposSubsistemas = this.tipoSubsistemasRepository.findAll();
 		
 		final List<TipoSubsistemaDto> tiposSubsistemasDto = new ArrayList<>(tiposSubsistemas.size());
-		//Cada subsistema se pasa a su correspondiente Dto
-		//A su vez, cada sistema contenido en un subsistema se pasa a su correspondiente Dto y 
-		//este Dto de tipo sistema se le debe asignar al Dto de tipo subsistema
-		for (TipoSubsistema tipoSubsistema : tiposSubsistemas) {
-			TipoSistemaDto tipoSistemaDto = this.modelMapperUtils.map(tipoSubsistema.getTipoSistema(), TipoSistemaDto.class);
-			TipoSubsistemaDto tipoSubsistemaDto = this.modelMapperUtils.map(tipoSubsistema, TipoSubsistemaDto.class);
-			tipoSubsistemaDto.setTipoSistemaDto(tipoSistemaDto);
-			tiposSubsistemasDto.add(tipoSubsistemaDto);
-		}
+		tiposSubsistemas.forEach(tiposSubsistema -> tiposSubsistemasDto.add(this.modelMapperUtils.map(tiposSubsistema, TipoSubsistemaDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 
@@ -95,11 +86,6 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 		
 		final TipoSubsistemaDto result = this.modelMapperUtils.map(tipoSubsistema, TipoSubsistemaDto.class);
 		
-		//Se obtiene el Dto para el tipo de sistema asociado al tipo de subsistema 
-		//y se asocia al dto del tipo de subsistema
-		TipoSistema tipoSistema = tipoSubsistema.getTipoSistema();
-		result.setTipoSistemaDto(this.modelMapperUtils.map(tipoSistema, TipoSistemaDto.class));
-		
 		return result;
 	}
 
@@ -111,7 +97,9 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 
 		TipoSubsistema tipoSubsistema = this.modelMapperUtils.map(tipoSubsistemaDto, TipoSubsistema.class);
 	    
-		//Esta sentencia es temporal hasta que se implemente la asociación de un subsistema a un sistema en el front
+		//La siguiente sentencia se comenta y se sustituye por otra sentencia temporal hasta que
+		//nos llegue desde el front el sistema al que está asociado el subsistema
+		//tipoSubsistema.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(), TipoSistema.class));
 		tipoSubsistema.setTipoSistema(this.modelMapperUtils.map(tiposSistemasService.read((long)1),TipoSistema.class));
 		
 		tipoSubsistema = this.tipoSubsistemasRepository.save(tipoSubsistema);	
@@ -136,10 +124,9 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 		tipoSubsistemaBBDD.setNombre(tipoSubsistemaDto.getNombre());
 		tipoSubsistemaBBDD.setDescripcion(tipoSubsistemaDto.getDescripcion());
 		tipoSubsistemaBBDD.setInterfazOperacion(tipoSubsistemaDto.getInterfazOperacion());
-		//Las siguientes lineas se comentan y se sustituye por otra sentencia temporal hasta que
-		//nos llegue desde el front el subsistema asociado a un sistema
-		//final TipoSistema tipoSistema = this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistemaDto(), TipoSistema.class);
-		//TipoSistema tipoSistemaBBDD = this.modelMapperUtils.map(this.tiposSistemasService.read(tipoSistema.getId()), TipoSistema.class);
+		//La siguiente sentencia se comenta y se sustituye por 2 sentencias temporales hasta que
+		//nos llegue desde el front el sistema al que está asociado el subsistema
+		//tipoSubsistemaBBDD.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(),TipoSistema.class));
 		TipoSistema tipoSistemaBBDD = this.modelMapperUtils.map(tiposSistemasService.read((long)1),TipoSistema.class);
 		tipoSubsistemaBBDD.setTipoSistema(tipoSistemaBBDD);
 		tipoSubsistemaBBDD = this.tipoSubsistemasRepository.save(tipoSubsistemaBBDD);		

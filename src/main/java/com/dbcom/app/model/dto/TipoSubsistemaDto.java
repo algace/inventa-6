@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = {"tipoSistemaDto", "tiposSistemasDisponibles"})
+@EqualsAndHashCode(exclude = {"tipoSistema", "tiposSistemasDisponibles"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,8 +39,8 @@ public class TipoSubsistemaDto implements Serializable {
 	
 	private String interfazOperacion;
 	
-	@NotNull
-	private TipoSistemaDto tipoSistemaDto;
+	@NotNull(message = "{validation.notNull}")
+	private TipoSistemaDto tipoSistema;
 	
 	@Builder.Default
 	private List<TipoSistemaDto> tiposSistemasDisponibles = new ArrayList<>();

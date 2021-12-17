@@ -82,9 +82,9 @@
 											<div class="col-sm-2" th:text="#{html.label.sistema}"></div> 
 									        <div class="col-sm-6">
 									            <input id="archivo" type="text" 
-									            	th:field="*{tipoSistemaDto.nombre}" th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
+									            	th:field="*{tipoSistema.nombre}" th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
 									            	th:disabled="${esCampoSoloLectura} ? 'true'">
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistemaDto.nombre')}" th:errors="*{tipoSistemaDto.nombre}"></div>
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistema.nombre')}" th:errors="*{tipoSistema.nombre}"></div>
 									        </div>	
 		       							 </div>
 		       							 <div class="row  align-items-center">

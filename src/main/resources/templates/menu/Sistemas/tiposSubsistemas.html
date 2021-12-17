@@ -65,7 +65,7 @@
 						  	<tr th:each="tipoSubsistema : ${lista}" th:id="${tipoSubsistema.id}">
 						  		<td hidden="true" th:text="${tipoSubsistema.id}"></td>
 						  		<td th:text="${tipoSubsistema.nombre}"></td>
-						  		<td th:text="${tipoSubsistema.tipoSistemaDto.nombre}"></td>
+						  		<td th:text="${tipoSubsistema.tipoSistema.nombre}"></td>
 						  		<td th:text="${tipoSubsistema.descripcion}"></td>
 						  	</tr>			
 						</tbody>
