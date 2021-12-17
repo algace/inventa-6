@@ -15,8 +15,6 @@ import lombok.NoArgsConstructor;
  * @author jgm
  */
 @Data
-//Evitamos referencias circulares
-//@EqualsAndHashCode(exclude = "equipamientos")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
