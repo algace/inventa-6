@@ -1,10 +1,6 @@
 <div class="botonera" th:fragment="botoneraTablaFormulario">
 	
 		<!--/* Obtenemos las urls de los botones desde el controlador para insertarlos en el JS */-->	
-		<a id="uriLeer" hidden="true" th:href="@{${leer}}"></a>	
-		<a id="uriModificar" hidden="true" th:href="@{${modificar}}"></a>	
-		<a id="uriBorrar" hidden="true" th:href="@{${borrar}}"></a>	
-		
 			<div class="botonera-crud" align="left">
 				<a id="enlaceAgnadir" th:if="${visible}" class="button-crud" data-toggle="modal" th:attr="data-target=${popupTarget}">
 					<div>

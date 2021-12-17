@@ -2,12 +2,12 @@
  * Funciones propias de version.html
  */
 
-const ID_TABLA_APLICACIONES = '#tablaAplicaciones';
+const ID_TABLA_TIPOS_SUBSISTEMAS = '#tablaTiposSubsistemas';
 
 // INICIO - Configuración de la tabla Aplicacion
-var tabla_aplicaciones = $(ID_TABLA_APLICACIONES).DataTable({
+var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ipl><"clear">',
+	dom: '<"top">rt<"bottom"ifpl><"clear">',
 	searching:  false,
 	language: {
 	    'sProcessing':     'Procesando...',
@@ -38,23 +38,3 @@ var tabla_aplicaciones = $(ID_TABLA_APLICACIONES).DataTable({
 	}
  });
 
-//Campo para el filtro
-$('#tablaAplicaciones tfoot th').each(function() {
-    var foot = $('#tablaAplicaciones tfoot th').eq($(this).index()).text();
-    $(this).html('<input type="text" class="form-control" placeholder="Filtrar por ' + foot + '" />');
-});
-  
-// Funcionalidad del filtro
-$("#tablaAplicaciones tfoot input").on('keyup change', function() {
-	tabla_aplicaciones.column($(this).parent().index() + ':visible')
-    	.search(this.value)
-        .draw();
-});
-// FIN - Configuración de la tabla Aplicacion
-
-$("#search").on('keyup change', function() {
-    tabla_aplicaciones.columns()
-    	.data()
-    	.search(this.value)
-        .draw();
-});
