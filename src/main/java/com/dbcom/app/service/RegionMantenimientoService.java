@@ -12,19 +12,25 @@ import com.dbcom.app.model.dto.RegionMantenimientoDto;
 public interface RegionMantenimientoService {
 
 	/**
-	 * Creamos un tipo de subsistema sin persistencia
+	 * Creamos una región de mantenimiento sin persistencia
 	 * @return Nuevo tipo de subsistema
 	 */
 	RegionMantenimientoDto create();
 	
 	/**
-	 * Obtenemos un listado de los tipos de subsistemas
+	 * Borrado de la región de mantenimiento con el id facilitado
+	 * @param id Identificador
+	 */
+	void delete(final Long id);
+	
+	/**
+	 * Obtenemos un listado de laS regiones de mantenimiento
 	 * @return Listado
 	 */
 	List<RegionMantenimientoDto> readAll();
 	
 	/**
-	 * Obtenemos el tipo de subsistema con el id facilitado
+	 * Obtenemos la región de mantenimiento con el id facilitado
 	 * @param id Identificador
 	 * @return Versión
 	 */
@@ -36,4 +42,11 @@ public interface RegionMantenimientoService {
 	 * @return Region de mantenimiento persistida
 	 */
 	RegionMantenimientoDto save(final RegionMantenimientoDto regionMantenimientoDto);
+	
+	/**
+	 * Actualizamos la región de mantenimiento pasada como parámetro
+	 * @param regionMantenimientoDto Región de mantenimiento a actualizar
+	 * @return Región de mantenimiento actualizada
+	 */
+	RegionMantenimientoDto update(final RegionMantenimientoDto regionMantenimientoDto);
 }
