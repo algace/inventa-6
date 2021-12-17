@@ -120,7 +120,6 @@ public class RegionMantenimientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-			//model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.FALSE);
 			
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_REGION_MANTENIMIENTO);
@@ -155,7 +154,6 @@ public class RegionMantenimientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-		//model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.TRUE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_REGIONES_MANTENIMIENTO);
