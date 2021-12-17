@@ -38,17 +38,3 @@ var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
 	}
  });
 
-//Campo para el filtro
-$('#tablaTiposSubsistemas tfoot th').each(function() {
-    var foot = $('#tablaTiposSubsistemas tfoot th').eq($(this).index()).text();
-    $(this).html('<input type="text" class="form-control" placeholder="Filtrar por ' + foot + '" />');
-});
-  
-// Funcionalidad del filtro
-$("#tablaTiposSubsistemas tfoot input").on('keyup change', function() {
-	tabla_tipos_subsistemas.column($(this).parent().index() + ':visible')
-    	.search(this.value)
-        .draw();
-});
-// FIN - Configuración de la tabla Aplicacion
-

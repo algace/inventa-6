@@ -213,8 +213,8 @@
 										
 										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
 										
-										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirFotografia')"></div>
-										
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirFotografia', 
+											idButtonBorrar='botonBorrarFotografia', idInputSearch='searchFotografia', visible='true')"></div>
 										<table id="tablaFotografias" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
 												<tr>
@@ -262,8 +262,8 @@
 										
 										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
 										
-										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirDocumento')"></div>
-										
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirDocumento', 
+											idButtonBorrar='botonBorrarDocumento', idInputSearch='searchDocumento', visible='true')"></div>
 										<table id="tablaDocumentos" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
 												<tr>

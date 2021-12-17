@@ -38,7 +38,7 @@ public class TipoSubsistemaDto implements Serializable {
 	
 	private String interfazOperacion;
 	
-	@NotNull
+	@NotNull(message = "{validation.notNull}")
 	private TipoSistemaDto tipoSistemaDto;
 	
 	@Builder.Default
