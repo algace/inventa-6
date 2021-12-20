@@ -72,7 +72,7 @@
 										<div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
 									        <div class="col-sm-6">
-									            <input id="nombre" type="text"
+									            <input type="text"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
@@ -108,7 +108,7 @@
 		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
-									            <input id="descripcion" type="text"
+									            <input type="text"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
@@ -117,7 +117,7 @@
 		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.interfazOperacion}"></div>
 									        <div class="col-sm-6">
-									            <input id="interfazOperacion" type="text"
+									            <input type="text"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{interfazOperacion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('interfazOperacion')}" th:errors="*{interfazOperacion}"></div>
