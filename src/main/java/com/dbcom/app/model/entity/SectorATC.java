@@ -2,19 +2,21 @@ package com.dbcom.app.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
-import com.dbcom.app.model.dto.TipoSectorATCDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +44,9 @@ public final class SectorATC implements Serializable{
 	private String nombre;
 	
 	//FALTA REGION OPERATIVA!!!!!!!!!!
-	//many to one
+
+	@ManyToOne(fetch = FetchType.EAGER,
+			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
 	@NotNull(message = "{validation.notNull}")
 	private TipoSectorATC tipoSectorATC;
 	
@@ -51,7 +55,8 @@ public final class SectorATC implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaPublicacion;
 	
-	//many to one
+	@ManyToOne(fetch = FetchType.EAGER,
+			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
 	@NotNull(message = "{validation.notNull}")
 	private TipoFuenteInformacion tipoFuenteInformacion;
 	
@@ -64,6 +69,6 @@ public final class SectorATC implements Serializable{
 	@Size(min = 1, max = 70, message = "{validation.min1max70}")
 	private String descripcion;
 	
-	
-	//private Set<AirblockDto> airblockDto = new HashSet<>(); 
+	@Builder.Default
+	private Set<Airblock> airblock = new HashSet<>(); 
 }

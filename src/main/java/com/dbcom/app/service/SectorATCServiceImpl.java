@@ -10,6 +10,7 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
+import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.entity.SectorATC;
@@ -29,16 +30,19 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	private final SectorATCRepository sectorATCRepository;
 	private final TipoSectorATCService tipoSectorATCService;
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
+	private final AirblockService airblockService;
 	
 	@Autowired
 	public SectorATCServiceImpl(ModelMapperUtils modelMapper,
 									   SectorATCRepository sectorATCRepository,
 									   TipoSectorATCService tipoSectorATCService,
-									   TipoFuenteInformacionService tipoFuenteInformacionService) {
+									   TipoFuenteInformacionService tipoFuenteInformacionService,
+									   AirblockService airblockService) {
 		this.modelMapperUtils = modelMapper;
 		this.sectorATCRepository = sectorATCRepository;
 		this.tipoSectorATCService = tipoSectorATCService;
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
+		this.airblockService = airblockService;
 	}
 
 	@Override
@@ -47,6 +51,7 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		return  SectorATCDto.builder()
 				.tiposSectorATC(tipoSectorATCService.readAll())
 				.tiposFuenteInformacion(tipoFuenteInformacionService.readAll())
+				.airblockNoIncluidos(this.modelMapperUtils.mapAll2List(airblockService.readAll(), AirblockDto.class))
 				.build();
 	}
 

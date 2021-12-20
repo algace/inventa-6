@@ -2,6 +2,7 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -59,8 +60,9 @@ public final class SectorATCDto implements Serializable{
 	
 	private List<TipoFuenteInformacionDto> tiposFuenteInformacion;
 	
-	//@Builder.Default	
-	//private List<AirblockDto> airblockDto = new ArrayList<>(); 
+	@Builder.Default	
+	private List<AirblockDto> airblock = new ArrayList<>(); 
 	
-	
+	@Builder.Default	
+	private List<AirblockDto> airblockNoIncluidos = new ArrayList<>(); 
 }
