@@ -11,7 +11,9 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.RecursoPasarelaRepository;
 import com.dbcom.app.model.dto.RecursoPasarelaDto;
+import com.dbcom.app.model.entity.FuncionPasarela;
 import com.dbcom.app.model.entity.RecursoPasarela;
+import com.dbcom.app.model.entity.TipoChasis;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -115,8 +117,8 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 		
 		// Actualizamos el registro de bbdd
 		recursoPasarelaBBDD.setNombre(recursoPasarelaDto.getNombre());
-		recursoPasarelaBBDD.setTipoChasis(recursoPasarelaDto.getTipoChasis());
-		recursoPasarelaBBDD.setFuncionPasarela(recursoPasarelaDto.getFuncionPasarela());
+		recursoPasarelaBBDD.setTipoChasis(this.modelMapperUtils.map(recursoPasarelaDto.getTipoChasis(), TipoChasis.class));
+		recursoPasarelaBBDD.setFuncionPasarela(this.modelMapperUtils.map(recursoPasarelaDto.getFuncionPasarela(), FuncionPasarela.class));
 		recursoPasarelaBBDD.setIndiceCarga(recursoPasarelaDto.getIndiceCarga());
 		
 		recursoPasarelaBBDD = this.recursoPasarelaRepository.save(recursoPasarelaBBDD);		
