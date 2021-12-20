@@ -1,11 +1,15 @@
 package com.dbcom.app.model.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
@@ -40,5 +44,8 @@ public class RegionMantenimiento implements Serializable {
 	private String nombre;
 	
 	private String descripcion;
+	
+	@OneToMany(mappedBy="regionMantenimiento", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private Set<SectorMantenimiento> sectoresMantenimiento;
 
 }
