@@ -76,7 +76,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
 									        <div class="col-sm-6">
-									            <input id="flMin" type="text" 
+									            <input id="flMin" type="number" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{flMin}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMin')}" th:errors="*{flMin}"></div>
@@ -86,7 +86,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmax}"></div>
 									        <div class="col-sm-6">
-									            <input id="flMax" type="text" 
+									            <input id="flMax" type="number" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{flMax}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMax')}" th:errors="*{flMax}"></div>
