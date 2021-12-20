@@ -17,7 +17,8 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.service.SectorATCService;
-import com.dbcom.app.service.FuncionPasarelaService;
+import com.dbcom.app.service.TipoFuenteInformacionService;
+import com.dbcom.app.service.TipoSectorATCService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,10 +45,18 @@ public class SectorATCController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
 	private final SectorATCService sectorATCService;
+	private final TipoFuenteInformacionService tipoFuenteInformacionService;
+	private final TipoSectorATCService tipoSectorATCService;
+	
 	
 	@Autowired
-	public SectorATCController(SectorATCService sectorATCService) {
+	public SectorATCController(SectorATCService sectorATCService,
+			TipoFuenteInformacionService tipoFuenteInformacionService,
+			TipoSectorATCService tipoSectorATCService) {
 		this.sectorATCService = sectorATCService;
+		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
+		this.tipoSectorATCService = tipoSectorATCService;
+		
 	}
 	
 	/**
@@ -123,6 +132,9 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
+			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
+			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
+			
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
 			vista = VIEW_TIPO;
@@ -217,6 +229,9 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
+			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
+			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
+			
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
 			vista = VIEW_TIPO;

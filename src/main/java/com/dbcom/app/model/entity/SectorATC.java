@@ -41,18 +41,19 @@ public final class SectorATC implements Serializable{
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
 	
-	//FALTA REGION OPERATIVA y tipo sector!!!!!!!!!!
-	
+	//FALTA REGION OPERATIVA!!!!!!!!!!
+	//many to one
 	@NotNull(message = "{validation.notNull}")
-	private TipoSectorATCDto tipoSectorATCDto;
+	private TipoSectorATC tipoSectorATC;
 	
 	
 	@NotNull(message = "{validation.notNull}")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaPublicacion;
 	
+	//many to one
 	@NotNull(message = "{validation.notNull}")
-	private TipoFuenteInformacionDto tipoFuenteInformacionDto;
+	private TipoFuenteInformacion tipoFuenteInformacion;
 	
 	@Size(min = 1, max = 50, message = "{validation.min1max70}")
 	private String flMin;

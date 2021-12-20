@@ -69,9 +69,9 @@
 						  	<tr th:each="sectorATC : ${lista}" th:id="${sectorATC.id}">
 						  		<td hidden="true" th:text="${sectorATC.id}"></td>
 						  		<td th:text="${sectorATC.nombre}"></td>
-						  		<td th:text="${sectorATC.tipoFuenteInformacionDto.nombre}"></td>
+						  		<td th:text="${sectorATC.tipoFuenteInformacion.nombre}"></td>
 						  		<td th:text="${sectorATC.fechaPublicacion}"></td>
-						  		<td th:text="${sectorATC.tipoSectorATCDto.nombre}"></td>
+						  		<td th:text="${sectorATC.tipoSectorATC.nombre}"></td>
 						  		<td th:text="${sectorATC.flMax}"></td>
 						  		<td th:text="${sectorATC.flMin}"></td>
 						  		<td th:text="${sectorATC.descripcion}"></td>

@@ -6,12 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
+import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
-import com.dbcom.app.model.dto.FuncionPasarelaDto;
 import com.dbcom.app.model.dto.SectorATCDto;
-import com.dbcom.app.model.entity.FuncionPasarela;
+import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.entity.SectorATC;
+import com.dbcom.app.model.entity.SectorATC;
+import com.dbcom.app.model.entity.TipoChasis;
+import com.dbcom.app.model.entity.TipoFuenteInformacion;
+import com.dbcom.app.model.entity.TipoSectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,14 +45,20 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	public SectorATCDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
 		return  SectorATCDto.builder()
-				.tiposSectorATCDto(tipoSectorATCService.readAll())
-				.tiposFuenteInformacionDto(tipoFuenteInformacionService.readAll())
+				.tiposSectorATC(tipoSectorATCService.readAll())
+				.tiposFuenteInformacion(tipoFuenteInformacionService.readAll())
 				.build();
 	}
 
 	@Override
 	public void delete(Short id) {
-		// TODO Auto-generated method stub
+		
+		final SectorATC sectorATCBBDD = this.sectorATCRepository.findById(id)
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		this.sectorATCRepository.delete(sectorATCBBDD);		
+
+		log.info(LoggerConstants.LOG_DELETE, id);
 		
 	}
 
@@ -66,21 +77,54 @@ public final class SectorATCServiceImpl implements SectorATCService{
 
 	@Override
 	public SectorATCDto read(Short id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		log.info(LoggerConstants.LOG_READ);		
+
+		final SectorATC sectorATC = this.sectorATCRepository.findById(id)
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		SectorATCDto sector = this.modelMapperUtils.map(sectorATC, SectorATCDto.class);
+		sector.setTiposSectorATC(tipoSectorATCService.readAll());
+		sector.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
+
+		return sector; 
 	}
 
 	@Override
 	public SectorATCDto save(SectorATCDto sectorATCDto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		SectorATC sectorATC = this.modelMapperUtils.map(sectorATCDto, SectorATC.class);
+	    
+		sectorATC = this.sectorATCRepository.save(sectorATC);	
+		
+		log.info(LoggerConstants.LOG_CREATE, sectorATC.getNombre());		
+		
+		return this.modelMapperUtils.map(sectorATC, SectorATCDto.class);
 	}
 
 	@Override
 	public SectorATCDto update(SectorATCDto sectorATCDto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		final SectorATC sectorATC = this.modelMapperUtils.map(sectorATCDto, SectorATC.class);
+		
+		SectorATC sectorATCBBDD = this.sectorATCRepository.findById(sectorATC.getId())
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		
+		// Actualizamos el registro de bbdd
+		sectorATCBBDD.setNombre(sectorATCDto.getNombre());
+		sectorATCBBDD.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTipoFuenteInformacion(), TipoFuenteInformacion.class));
+		sectorATCBBDD.setFechaPublicacion(sectorATCDto.getFechaPublicacion());
+		sectorATCBBDD.setTipoSectorATC(this.modelMapperUtils.map(sectorATCDto.getTipoSectorATC(), TipoSectorATC.class));
+		sectorATCBBDD.setFlMax(sectorATCDto.getFlMax());
+		sectorATCBBDD.setFlMin(sectorATCDto.getFlMin());
+		sectorATCBBDD.setDescripcion(sectorATCDto.getDescripcion());
+		
+		sectorATCBBDD = this.sectorATCRepository.save(sectorATCBBDD);		
+		
+		log.info(LoggerConstants.LOG_UPDATE, sectorATCBBDD.getId());
+		
+		return this.modelMapperUtils.map(sectorATCBBDD, SectorATCDto.class);
 	}
 	
-
 }

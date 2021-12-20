@@ -1,4 +1,4 @@
-const ID_DATETIMEPICKER_FECHA = '#datetimepickerFechaPublicacion';
+const ID_DATETIMEPICKER_FECHA = '#datetimepickerFecha';
 
 
 // INICIO - Configuración para los campos de fecha y hora

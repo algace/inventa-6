@@ -8,10 +8,15 @@
 		<!--/* INICIO - CSS */-->
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
 		
 		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/formulario.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/botoneraTabla.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/dataTable.css}">
 		<!--/* FIN - CSS */-->
 		
 		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
@@ -77,11 +82,11 @@
 									        <div class="col-sm-2" th:text="#{html.label.tiposSectoresATC}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoSectorATCDto}">
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoSectorATC}">
 											    	<option th:value="0"></option>
-											    	<option th:each="tipoSectorATCDto : *{tiposSectorATCDto}" th:value="${tipoSectorATCDto.id}" th:text="${tipoSectorATCDto.nombre}"></option>
+											    	<option th:each="tipoSectorATC : *{tiposSectorATC}" th:value="${tipoSectorATC.id}" th:text="${tipoSectorATC.nombre}"></option>
 											    </select>
-											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSectorATCDto')}" th:errors="*{tipoSectorATCDto}"></div>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSectorATC')}" th:errors="*{tipoSectorATC}"></div>
 									        </div>
 									     </div> 
 									     
@@ -104,11 +109,11 @@
 									        <div class="col-sm-2" th:text="#{html.label.tipoFuenteInformacion}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoFuenteInformacionDto}">
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoFuenteInformacion}">
 											    	<option th:value="0"></option>
-											    	<option th:each="tipoFuenteInformacionDto : *{tiposFuenteInformacionDto}" th:value="${tipoFuenteInformacionDto.id}" th:text="${tipoFuenteInformacionDto.nombre}"></option>
+											    	<option th:each="tipoFuenteInformacion : *{tiposFuenteInformacion}" th:value="${tipoFuenteInformacion.id}" th:text="${tipoFuenteInformacion.nombre}"></option>
 											    </select>
-											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoFuenteInformacionDto')}" th:errors="*{tipoFuenteInformacionDto}"></div>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoFuenteInformacion')}" th:errors="*{tipoFuenteInformacion}"></div>
 									        </div>
 									     </div> 
 		       							 
@@ -133,7 +138,7 @@
 		       							 </div>
 		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.coordenadas}"></div>
+											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
 									            <input id="descripcion" type="text" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
@@ -192,6 +197,12 @@
 		<!--/* INICIO - JS */-->
 		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/momentjs/2.24.0/min/moment-with-locales.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js}"></script>	
+		<script type="text/javascript" th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>			
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
@@ -199,6 +210,6 @@
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
-	
+		<script type="text/javascript" th:src="@{/js/sectorATC.js}"></script>
 	</body>
 </html>
