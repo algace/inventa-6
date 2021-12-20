@@ -6,15 +6,15 @@ const ID_TABLA_TIPOS_SISTEMAS = '#tablaTiposSistemas';
 const ID_BOTON_BORRAR_SISTEMA = '#enlaceBorrarSistema';
 const ID_BOTON_ACEPTAR_SELECCIONAR_SISTEMA = '#botonAceptarSeleccionarSistema';
 const ID_MODAL_SISTEMAS = '#popupSeleccionarSistema';
-const ID_INPUT_HIDDEN_ID_SISTEMA = 'tipoSistemaDto.id';
-const ID_INPUT_NOMBRE_SISTEMA = 'tipoSistemaDto.nombre';
+const ID_INPUT_HIDDEN_ID_SISTEMA = 'tipoSistema.id';
+const ID_INPUT_NOMBRE_SISTEMA = 'tipoSistema.nombre';
 
 var rowElement = null;
 var idElement  = null;
 var rowNode = null;
 
 // INICIO - Configuración de la tabla Aplicacion
-var tabla_tipos_sistemas = $(ID_TABLA_TIPOS_SISTEMAS).DataTable({
+var tabla_tipos_sistemas = $(ID_TABLA_TIPOS_SISTEMAS).DataTable({ 
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
 	searching:  false,

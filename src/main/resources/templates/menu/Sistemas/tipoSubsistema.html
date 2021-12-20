@@ -82,10 +82,10 @@
 											<div class="col-sm-2" th:text="#{html.label.sistema}"></div> 
 									        <div class="col-sm-6">
 									            <input type="text" 
-									            	th:field="*{tipoSistemaDto.nombre}" th:class="'form-control'" 
+									            	th:field="*{tipoSistema.nombre}" th:class="'form-control'" 
 									            	th:disabled="'true'">
-									            <input type="hidden" th:field="*{tipoSistemaDto.id}" >
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistemaDto.nombre')}" th:errors="*{tipoSistemaDto.nombre}"></div>
+									            <input type="hidden" th:field="*{tipoSistema.id}" >
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistema.nombre')}" th:errors="*{tipoSistema.nombre}"></div>
 									        </div>
 									        <div class="col-sm-4">
 										        <div class="botonera-crud" align="left">

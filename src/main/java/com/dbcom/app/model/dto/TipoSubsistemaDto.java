@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 //Evitamos referencias circulares
-//@EqualsAndHashCode(exclude = "equipamientos")
+@EqualsAndHashCode(exclude = {"tipoSistema", "tiposSistemasDisponibles"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,7 +40,7 @@ public class TipoSubsistemaDto implements Serializable {
 	private String interfazOperacion;
 	
 	@NotNull(message = "{validation.notNull}")
-	private TipoSistemaDto tipoSistemaDto;
+	private TipoSistemaDto tipoSistema;
 	
 	@Builder.Default
 	private List<TipoSistemaDto> tiposSistemasDisponibles = new ArrayList<>();
