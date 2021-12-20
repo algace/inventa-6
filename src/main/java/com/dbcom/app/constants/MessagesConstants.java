@@ -81,7 +81,7 @@ public final class MessagesConstants {
     	POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA = texto;
 	}
 	
-	@Value("${html.label.eliminar.equipamiento.pregunta}")
+	@Value("${html.label.eliminar.aplicacion.pregunta}")
 	public void setMessagePopupEliminarAplicacionPregunta(final String texto) {
 		POPUP_ELIMINAR_APLICACION_PREGUNTA = texto;
 	}
