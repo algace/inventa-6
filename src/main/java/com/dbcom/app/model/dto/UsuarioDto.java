@@ -1,23 +1,12 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.NumberFormat;
-
-import com.dbcom.app.model.entity.Rol;
-import com.dbcom.app.model.entity.UsuarioPerfil;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -39,9 +28,9 @@ public final class UsuarioDto implements Serializable {
 
 	private Long id;
 	
-	private UsuarioPerfil usuarioPerfil;
+	private UsuarioPerfilDto usuarioPerfil;
 	
-	private Rol rol;
+	private RolDto rol;
 	 
 	@Size(min = 1, max = 120, message = "{validation.min1max120}")
 	private String nombreApellidos;

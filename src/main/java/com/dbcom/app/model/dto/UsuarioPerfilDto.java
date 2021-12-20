@@ -1,15 +1,9 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
+
 import javax.validation.constraints.Size;
 
-import com.dbcom.app.model.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -61,6 +55,6 @@ public final class UsuarioPerfilDto implements Serializable {
 	@Size(max = 250, message = "{validation.max250}")
 	private String direccion;
 	
-    private Usuario usuario;
+    private UsuarioDto usuario;
 	
 }

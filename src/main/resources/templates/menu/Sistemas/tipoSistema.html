@@ -88,17 +88,15 @@
 		       							 </div>
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.color}"></div> 
-									        <div class="col-sm-6">
-									            <input type="text" 
+									        <div class="col-sm-1" style="margin-right: 55px;">
+									            <input type="color" style="padding: 0px 2px;"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{color}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></div>
 									        </div>	
-		       							 </div>	
-		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.colorTexto}"></div>
-									        <div class="col-sm-6">
-									            <input type="text" 
+									        <div class="col-sm-1">
+									            <input type="color" style="padding: 0px 2px;" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{colorTexto}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('colorTexto')}" th:errors="*{colorTexto}"></div>

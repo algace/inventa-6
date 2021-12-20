@@ -7,8 +7,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.dbcom.app.model.entity.TipoChasis;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +29,7 @@ public final class ChasisPasarelaDto implements Serializable{
 	private String nombre;
 	
 	@NotNull(message = "{validation.notNull}")
-	private TipoChasis tipoChasis;
+	private TipoChasisDto tipoChasis;
 	
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")

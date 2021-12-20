@@ -7,9 +7,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.dbcom.app.model.entity.FuncionPasarela;
-import com.dbcom.app.model.entity.TipoChasis;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,10 +29,10 @@ public final class RecursoPasarelaDto implements Serializable{
 	private String nombre;
 	
 	@NotNull(message = "{validation.notNull}")
-	private TipoChasis tipoChasis;
+	private TipoChasisDto tipoChasis;
 	
 	@NotNull(message = "{validation.notNull}")
-	private FuncionPasarela funcionPasarela;
+	private FuncionPasarelaDto funcionPasarela;
 	
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")
