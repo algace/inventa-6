@@ -2,7 +2,6 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 
-import com.dbcom.app.model.entity.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +29,6 @@ public final class PermisosDto implements Serializable {
 
 	private Boolean lecturaEscritura;
 	
-	private Rol rol;
+	private RolDto rol;
 	
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.validation.constraints.Size;
 
-import com.dbcom.app.model.entity.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +30,6 @@ public final class NivelDto implements Serializable {
 	@Size(max = 50, message = "{validation.max50}")
 	private String nombre;
 	
-	private Rol rol;
+	private RolDto rol;
 	
 }

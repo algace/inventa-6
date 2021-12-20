@@ -2,7 +2,6 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 
-import com.dbcom.app.model.entity.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +28,6 @@ public final class AmbitoDto implements Serializable {
 	
 	private String nombre;
 	
-	private Rol rol;
+	private RolDto rol;
 	
 }

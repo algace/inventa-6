@@ -6,8 +6,6 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.dbcom.app.model.entity.FuncionPasarela;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +28,7 @@ public final class AmbitoRecursoDto implements Serializable{
 	private String nombre;
 	
 	@NotNull(message = "{validation.notNull}")
-	private FuncionPasarela funcionPasarela;
+	private FuncionPasarelaDto funcionPasarela;
 	
 	private List<FuncionPasarelaDto> funcionPasarelas;
 
