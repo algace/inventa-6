@@ -2,6 +2,7 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -110,7 +111,7 @@ public final class UsuarioServiceImpl implements UsuarioService {
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
 		// Actualizamos el registro de bbdd
-		usuarioBBDD.setRol(usuarioDto.getRol());
+//		usuarioBBDD.setRol(usuarioDto.getRol());
 		usuarioBBDD.setNombreApellidos(usuarioDto.getNombreApellidos());
 		usuarioBBDD = this.usuarioRepository.save(usuarioBBDD);		
 		

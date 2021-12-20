@@ -1,12 +1,9 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
+
 import javax.validation.constraints.Size;
 
-import com.dbcom.app.model.entity.Ambito;
-import com.dbcom.app.model.entity.Nivel;
-import com.dbcom.app.model.entity.Permisos;
-import com.dbcom.app.model.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,11 +27,11 @@ public final class RolDto implements Serializable {
 
 	private Long id;
 	
-	private Nivel nivel;
+	private NivelDto nivel;
 	
-	private Ambito ambito;
+	private AmbitoDto ambito;
 	
-	private Permisos permisos;
+	private PermisosDto permisos;
 	 
 	@Size(max = 50, message = "{validation.max50}")
 	private Integer idLocalizacion;
@@ -43,6 +40,6 @@ public final class RolDto implements Serializable {
 	
 	private Boolean planVoIP;
 	
-    private Usuario usuario;
+    private UsuarioDto usuario;
 	
 }

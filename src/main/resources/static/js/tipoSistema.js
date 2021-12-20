@@ -37,4 +37,6 @@ var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
         }
 	}
  });
+ 
+ document.getElementById("color").value = "#ffffff";
 
