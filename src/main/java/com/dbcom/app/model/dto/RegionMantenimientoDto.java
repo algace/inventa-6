@@ -3,6 +3,7 @@ package com.dbcom.app.model.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,7 @@ public class RegionMantenimientoDto implements Serializable {
 	private Long id;
 	
 	@NotNull(message = "{validation.notNull}")
+	@Size(min = 1, message = "{validation.notNull}")
 	private String nombre;
 	
 	private String descripcion;
