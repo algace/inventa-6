@@ -1,6 +1,8 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -44,6 +46,12 @@ public final class AirblockDto implements Serializable {
 	private String coordenadas;
 	
 	@Size(max = 250, message = "{validation.max250}")
+	private String descripcion;
+	
+	@Size(max = 250, message = "{validation.max250}")
 	private String sectoresATC;
+	
+	@Builder.Default
+	private List<SectorATCDto> sectorATCList = new ArrayList<>();
 	
 }

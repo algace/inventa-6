@@ -120,7 +120,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
 									        <div class="col-sm-6">
-									            <input id="flMin" type="text" 
+									            <input id="flMin" type="number" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{flMin}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMin')}" th:errors="*{flMin}"></div>
@@ -130,7 +130,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmax}"></div>
 									        <div class="col-sm-6">
-									            <input id="flMax" type="text" 
+									            <input id="flMax" type="number" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{flMax}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMax')}" th:errors="*{flMax}"></div>
@@ -150,6 +150,38 @@
 								</div>
 							</div>
 							<!--/* FIN - Información general */-->
+							<!--/* INICIO - Airblock */-->
+							<div class="card">
+								<div id="headingAirblocks" class="card-header">
+									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseAirblocks" aria-expanded="false"
+										aria-controls="collapseAirblocks">
+										<div style="display:flex;">
+											<div class="text-tab-accordion" ><span th:text="#{html.label.airblocks}"></span></div  >
+											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
+										</div >
+									</button>
+								</div>
+								<div id="collapseAirblocks" class="collapse" aria-labelledby="headingAirblocks" data-parent="#accordionFormulario">
+									<div class="card-body">
+										
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarAirblock', 
+										idButtonBorrar='botonBorrarAirblock', idInputSearch='searchAirblock', visible='true')"></div>
+										
+										<table id="tablaAirblocks" class="table table-striped table-bordered no-margin-top" style="width:100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="id"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.flMin}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.flMax}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.descripcion}"></th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!--/* FIN - Airblock */-->
 							
 						</div>
 						
@@ -183,6 +215,50 @@
 						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
 						<!--/* FIN - Popup de eliminación */-->
 			
+			
+						<!--/* INICIO - Popup de selección de airblock */-->
+						<div id="popupSeleccionarAirblock" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSeleccionarAirblockTitulo" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+								        <h5 id="modalSeleccionarAirblockTitulo" class="modal-title" th:text="#{html.label.airblocks}"></h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								        	<span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
+								        </button>
+								    </div>
+								    <div class="modal-body">
+								    	<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarAirblock', 
+											idButtonBorrar='botonBorrarAirblock', idInputSearch='searchSeleccionarAirblock', visible='false')"></div>
+								    	<table id="tablaSeleccionarAirblock" class="table table-striped table-bordered" style="width:100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="id"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.flMax}"></th>
+										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMin}"></th>
+										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.descripcion}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="airblockNoIncluido, item : *{airblocksNoIncluidos}">
+													<td th:text="${airblockNoIncluido.id}"></td>
+													<td th:text="${airblockNoIncluido.nombre}"></td>
+													<td th:text="${airblockNoIncluido.flMax}"></td>
+											  		<td th:text="${airblockNoIncluido.flMin}"></td>
+											  		<td th:text="${airblockNoIncluido.descripcion}"></td>
+												</tr>
+											</tbody>
+										</table>
+								    </div>
+								    <div class="modal-footer">
+								        <button id="botonAceptarSeleccionarAirblock" type="button" class="btn btn-primary" data-dismiss="modal" disabled 
+								        	th:text="#{html.boton.aceptar}"></button>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{html.boton.cancelar}"></button>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!--/* FIN - Popup de selección de airblock */-->
 					</form>
 				</div>
 			</div>
@@ -206,6 +282,10 @@
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var airblocks = [[${sectorATC.airblocks}]];
+			var airblocksJson = JSON.stringify(airblocks);
+			/*]]>*/
 			$('#collapseSectoresEspacioAereo, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->

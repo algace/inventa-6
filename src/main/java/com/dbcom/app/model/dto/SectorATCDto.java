@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -47,22 +48,26 @@ public final class SectorATCDto implements Serializable{
 	//private TipoFuenteInformacionDto tipoFuenteInformacion;
 	private TipoFuenteInformacion tipoFuenteInformacion;
 	
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
-	private String flMin;
+	@Max(999)
+	@NotNull(message = "{validation.notNull}")
+	private Integer flMin;
 	
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
-	private String flMax;
+	@Max(999)
+	@NotNull(message = "{validation.notNull}")
+	private Integer flMax;
 	
 	@Size(min = 1, max = 70, message = "{validation.min1max70}")
 	private String descripcion;
+	
+	private String airblockList;
 	
 	private List<TipoSectorATCDto> tiposSectorATC;
 	
 	private List<TipoFuenteInformacionDto> tiposFuenteInformacion;
 	
 	@Builder.Default	
-	private List<AirblockDto> airblock = new ArrayList<>(); 
+	private List<AirblockDto> airblocks = new ArrayList<>(); 
 	
 	@Builder.Default	
-	private List<AirblockDto> airblockNoIncluidos = new ArrayList<>(); 
+	private List<AirblockDto> airblocksNoIncluidos = new ArrayList<>(); 
 }

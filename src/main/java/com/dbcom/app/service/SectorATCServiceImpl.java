@@ -2,6 +2,8 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
-import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.entity.SectorATC;
-import com.dbcom.app.model.entity.SectorATC;
-import com.dbcom.app.model.entity.TipoChasis;
 import com.dbcom.app.model.entity.TipoFuenteInformacion;
 import com.dbcom.app.model.entity.TipoSectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -51,7 +50,7 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		return  SectorATCDto.builder()
 				.tiposSectorATC(tipoSectorATCService.readAll())
 				.tiposFuenteInformacion(tipoFuenteInformacionService.readAll())
-				.airblockNoIncluidos(this.modelMapperUtils.mapAll2List(airblockService.readAll(), AirblockDto.class))
+				.airblocksNoIncluidos(this.modelMapperUtils.mapAll2List(airblockService.readAll(), AirblockDto.class))
 				.build();
 	}
 
@@ -75,7 +74,19 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		final List<SectorATC> sectoresATC = this.sectorATCRepository.findAll();
 
 		final List<SectorATCDto> sectoresATCDto = new ArrayList<>(sectoresATC.size());		
-		sectoresATC.forEach(sectorATC -> sectoresATCDto.add(this.modelMapperUtils.map(sectorATC, SectorATCDto.class)));
+		sectoresATC.forEach(sectorATC -> {
+			SectorATCDto sectorATCDto = this.modelMapperUtils.map(sectorATC, SectorATCDto.class);
+			String airblockList = "";
+			for (int i=0; i < sectorATCDto.getAirblocks().size(); i++) {
+				if ((sectorATCDto.getAirblocks().size()-1) == i) {
+					airblockList = airblockList + sectorATCDto.getAirblocks().get(i).getNombre();
+				}else {
+					airblockList = airblockList + sectorATCDto.getAirblocks().get(i).getNombre() + ":";
+				}
+			}
+			sectorATCDto.setAirblockList(airblockList);
+			sectoresATCDto.add(sectorATCDto);
+		});
 		
 		return sectoresATCDto;
 	}
@@ -91,12 +102,15 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		SectorATCDto sector = this.modelMapperUtils.map(sectorATC, SectorATCDto.class);
 		sector.setTiposSectorATC(tipoSectorATCService.readAll());
 		sector.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
+		sector.setAirblocksNoIncluidos(this.modelMapperUtils.mapAll2List(this.airblockService.readNotContains(id), AirblockDto.class));
 
 		return sector; 
 	}
 
 	@Override
 	public SectorATCDto save(SectorATCDto sectorATCDto) {
+		
+		sectorATCDto.setAirblocks(filterListAirblock(sectorATCDto.getAirblocks()));
 		
 		SectorATC sectorATC = this.modelMapperUtils.map(sectorATCDto, SectorATC.class);
 	    
@@ -130,6 +144,22 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		log.info(LoggerConstants.LOG_UPDATE, sectorATCBBDD.getId());
 		
 		return this.modelMapperUtils.map(sectorATCBBDD, SectorATCDto.class);
+	}
+	
+	/**
+	 * Procesa una lista de objetos Airblock proveniente del front y elimina de esta lista los 
+	 * objetos que tienen un id null
+     * @param lista de objetos AirblockDto provenientes del front 
+     * @return lista de objetos AirblockDto filtrada 
+	 */
+	
+	
+	//ponerlo en el save y en el update
+	private List<AirblockDto> filterListAirblock(List<AirblockDto> listAirblocks) {
+	
+		return listAirblocks.stream()
+                            .filter(version -> !Objects.isNull(version.getId()))
+                            .collect(Collectors.toList());
 	}
 	
 }

@@ -60,6 +60,7 @@
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMax}"></th>
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMin}"></th>
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.coordenadas}"></th>
+					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.descripcion}"></th>
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.sectores}"></th>
 					    	</tr>
 					  	</thead>
@@ -70,6 +71,7 @@
 						  		<td th:text="${airblock.flMax}"></td>
 						  		<td th:text="${airblock.flMin}"></td>
 						  		<td th:text="${airblock.coordenadas}"></td>
+						  		<td th:text="${airblock.descripcion}"></td>
 						  		<td th:text="${airblock.sectoresATC}"></td>
 						  	</tr>			
 						</tbody>
@@ -80,6 +82,7 @@
 					      		<th th:text="#{html.tabla.pie.flMax}"></th>
 					      		<th th:text="#{html.tabla.pie.flMin}"></th>
 					      		<th th:text="#{html.tabla.pie.coordenadas}"></th>
+					      		<th th:text="#{html.tabla.pie.descripcion}"></th>
 					      		<th th:text="#{html.tabla.pie.sectores}"></th>
 					    	</tr>
 						</tfoot>
