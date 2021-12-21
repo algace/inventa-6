@@ -11,6 +11,6 @@ import com.dbcom.app.model.entity.TipoSistema;
  * @author jgm
  */
 @Repository
-public interface TiposSistemasRepository extends JpaRepository<TipoSistema, Long> {
+public interface TipoSistemaRepository extends JpaRepository<TipoSistema, Long> {
 
 }

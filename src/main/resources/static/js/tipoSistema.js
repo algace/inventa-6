@@ -4,6 +4,21 @@
 
 const ID_TABLA_TIPOS_SUBSISTEMAS = '#tablaTiposSubsistemas';
 
+// INICIO - Máscara para campo numérico
+// Permite números positivos y negativos entre 1 y 7 dígitos enteros y 2 dígitos decimales
+$("#codigoFuncionRed").mask('S#.S#S#S#.S#S#S0,00', {
+	translation: {
+		'S': { 
+			pattern: /[-]/, 
+			optional: true
+		}
+	},
+	reverse: true, 
+	selectOnFocus: true, 
+	clearIfNotMatch: true
+});
+// FIN - Máscara para campo numérico
+
 // INICIO - Configuración de la tabla Aplicacion
 var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
 	select: 'single',

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
-import com.dbcom.app.model.dao.TiposSubsistemasRepository;
+import com.dbcom.app.model.dao.TipoSubsistemaRepository;
+import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
 import com.dbcom.app.model.entity.TipoSistema;
 import com.dbcom.app.model.entity.TipoSubsistema;
@@ -19,15 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
+public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 
-	private final TiposSubsistemasRepository tipoSubsistemasRepository;
-	private final TiposSistemasService tiposSistemasService;
+	private final TipoSubsistemaRepository tipoSubsistemasRepository;
+	private final TipoSistemaService tiposSistemasService;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
-	public TiposSubsistemasServiceImpl(TiposSubsistemasRepository tipoSubsistemasRepository,
-			TiposSistemasService tiposSistemasService,
+	public TipoSubsistemaServiceImpl(TipoSubsistemaRepository tipoSubsistemasRepository,
+			TipoSistemaService tiposSistemasService,
 			ModelMapperUtils modelMapper) {
 		this.tipoSubsistemasRepository = tipoSubsistemasRepository;
 		this.tiposSistemasService = tiposSistemasService;
@@ -40,7 +41,7 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 	@Override
 	public TipoSubsistemaDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
-		return TipoSubsistemaDto.builder().tiposSistemasDisponibles(tiposSistemasService.readAll()).build();
+		return TipoSubsistemaDto.builder().tiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class)).build();
 	}
 
 	/**
@@ -85,7 +86,7 @@ public class TiposSubsistemasServiceImpl implements TiposSubsistemasService {
 		log.info(LoggerConstants.LOG_READ);
 		
 		final TipoSubsistemaDto result = this.modelMapperUtils.map(tipoSubsistema, TipoSubsistemaDto.class);
-		result.setTiposSistemasDisponibles(tiposSistemasService.readAll());
+		result.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
 		
 		return result;
 	}

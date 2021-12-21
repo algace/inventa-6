@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoSistemaDto;
  * 
  * @author jgm
  */
-public interface TiposSistemasService {
+public interface TipoSistemaService {
 	
 	/**
 	 * Creamos un tipo de sistema sin persistencia

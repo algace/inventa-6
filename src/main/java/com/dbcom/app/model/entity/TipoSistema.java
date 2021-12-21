@@ -54,10 +54,8 @@ public class TipoSistema implements Serializable {
 	@NotNull(message = "{validation.notNull}")
 	private String colorTexto;
 	
-	private String ejemplo;
-	
 	@NotNull(message = "{validation.notNull}")
-	private String codigoFuncionRed;
+	private Double codigoFuncionRed;
 	
 	@OneToMany(mappedBy="tipoSistema", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Set<TipoSubsistema> tiposSubsistemas;
