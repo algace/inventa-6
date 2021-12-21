@@ -2,8 +2,6 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,13 +10,10 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AirblockRepository;
-import com.dbcom.app.model.dao.EquipamientoRepository;
+import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
-import com.dbcom.app.model.dto.DocumentoDto;
-import com.dbcom.app.model.dto.EquipamientoDto;
 import com.dbcom.app.model.entity.Airblock;
-import com.dbcom.app.model.entity.Documento;
-import com.dbcom.app.model.entity.Equipamiento;
+import com.dbcom.app.model.entity.SectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +29,15 @@ public final class AirblockServiceImpl implements AirblockService {
 	
 	private AirblockRepository airblockRepository;
 	private final ModelMapperUtils  modelMapperUtils;
+	private SectorATCRepository sectorATCRepository;
 
 	@Autowired
 	public AirblockServiceImpl(ModelMapperUtils modelMapper,
-			AirblockRepository airblockRepository) {
+			AirblockRepository airblockRepository,
+			SectorATCRepository sectorATCRepository) {
 		this.modelMapperUtils = modelMapper;
 		this.airblockRepository = airblockRepository;
+		this.sectorATCRepository = sectorATCRepository;
 	}
 	
 	/**
@@ -86,10 +84,10 @@ public final class AirblockServiceImpl implements AirblockService {
 		final Airblock airblock = this.airblockRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 	
+		log.info(LoggerConstants.LOG_READ);	
+		
 		final AirblockDto result = this.modelMapperUtils.map(airblock, AirblockDto.class);
 		
-		log.info(LoggerConstants.LOG_READ);		
-
 		return result; 		
 		
 	}
@@ -122,12 +120,29 @@ public final class AirblockServiceImpl implements AirblockService {
 		airblockBBDD.setFlMin(airblockDto.getFlMin());
 		airblockBBDD.setFlMax(airblockDto.getFlMax());		
 		airblockBBDD.setCoordenadas(airblockDto.getCoordenadas());
+		airblockBBDD.setDescripcion(airblockDto.getDescripcion());
 		airblockBBDD.setSectoresATC(airblockDto.getSectoresATC());
 		airblockBBDD = this.airblockRepository.save(airblockBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, airblockBBDD.getId());
 		
 		return this.modelMapperUtils.map(airblockBBDD, AirblockDto.class);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<AirblockDto> readNotContains(Short id) {
+
+		final SectorATC sectorATC = this.sectorATCRepository.findById(id)
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+	
+		log.info(LoggerConstants.LOG_READ);		
+
+		final List<Airblock> airblock = this.airblockRepository.findAll();
+		airblock.removeAll(sectorATC.getAirblocks());
+		
+		return this.modelMapperUtils.mapAll2List(airblock, AirblockDto.class);
 	}
 }
  

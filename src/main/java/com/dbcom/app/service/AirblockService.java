@@ -38,6 +38,13 @@ public interface AirblockService extends GenericService<AirblockDto, Long> {
 	AirblockDto read(final Long id);
 	
 	/**
+	 * Obtenemos los airblocks que no tiene el sector ATC pasado como parámetro
+	 * @param id Identificador de la aplicación
+	 * @return Airblocks
+	 */
+	List<AirblockDto> readNotContains(final Short id);
+	
+	/**
 	 * Persistimos el airblock pasado como parámetro
 	 * @param airblockDto Airblock a persistir
 	 * @return Airblock persistido

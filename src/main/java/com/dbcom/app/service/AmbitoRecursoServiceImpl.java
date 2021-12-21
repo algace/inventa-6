@@ -12,6 +12,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AmbitoRecursoRepository;
 import com.dbcom.app.model.dto.AmbitoRecursoDto;
 import com.dbcom.app.model.entity.AmbitoRecurso;
+import com.dbcom.app.model.entity.FuncionPasarela;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -111,6 +112,8 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 		
 		// Actualizamos el registro de bbdd
 		ambitoRecursoBBDD.setNombre(ambitoRecursoDto.getNombre());
+		ambitoRecursoBBDD.setFuncionPasarela(this.modelMapperUtils.map(ambitoRecursoDto.getFuncionPasarela(),FuncionPasarela.class));
+		
 		ambitoRecursoBBDD = this.ambitoRecursoRepository.save(ambitoRecursoBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, ambitoRecursoBBDD.getId());

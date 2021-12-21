@@ -15,77 +15,74 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.AirblockDto;
-import com.dbcom.app.service.AirblockService;
+import com.dbcom.app.model.dto.PropietarioDto;
+import com.dbcom.app.service.PropietarioService;
+
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author eduardo.tubilleja
- * Enlace entre la vista y la lógica de negocio
- */
 @Slf4j
 @Controller
-public final class AirblockController {
-
+public class PropietarioController {
+	
 	// Atributos de la vista
-	private static final String ATTRIBUTE_AIRBLOCK = "airblock";
+	private static final String ATTRIBUTE_TIPO = "propietario";
 
 	// Vistas	
-	private static final String VIEW_AIRBLOCK = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + ATTRIBUTE_AIRBLOCK;
-	private static final String VIEW_AIRBLOCKS = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + "airblocks";
-	
+	private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU + ATTRIBUTE_TIPO;
+	private static final String VIEW_TIPOS = ControllerConstants.MAP_PATH_MENU + "propietarios";		
 
 	// Mapeo de las acciones
-	public static final String MAP_CREATE_AIRBLOCK =  ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCK 
+	public static final String MAP_CREATE_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO 
 			+ ControllerConstants.MAP_ACTION_CREAR;
-	public static final String MAP_DELETE_AIRBLOCK = ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCK 
+	public static final String MAP_DELETE_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO 
 			+ ControllerConstants.MAP_ACTION_BORRAR;
-	public static final String MAP_SAVE_AIRBLOCK = ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCK 
+	public static final String MAP_SAVE_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO 
 			+ ControllerConstants.MAP_ACTION_GUARDAR;
-	public static final String MAP_UPDATE_AIRBLOCK = ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCK 
+	public static final String MAP_UPDATE_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO 
 			+ ControllerConstants.MAP_ACTION_MODIFICAR;
-	public static final String MAP_READ_AIRBLOCK =  ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCK;
-	public static final String MAP_READALL_AIRBLOCKS = ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCKS;
+	public static final String MAP_READ_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO;
+	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
-	private final AirblockService airblockService;
+	private final PropietarioService propietarioService;
 	
 	@Autowired
-	public AirblockController(AirblockService airblockService) {
-		this.airblockService = airblockService;
+	public PropietarioController(PropietarioService propietarioService) {
+		this.propietarioService = propietarioService;
 	}
 	
 	/**
-	 * Obtenemos un listado de los airblocks
+	 * Obtenemos un listado de los propietarios
 	 * @param model Modelo
 	 * @return Vista
 	 */
-	@GetMapping(MAP_READALL_AIRBLOCKS)
+	@GetMapping(MAP_READALL_TIPOS)
 	public String readAll(final Model model) {
 		
 		// Contenido
-		model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.airblockService.readAll());		
+		model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.propietarioService.readAll());		
 
 		// Botones
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_LEER, MAP_READ_AIRBLOCK);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_AGNADIR, MAP_CREATE_AIRBLOCK);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_MODIFICAR, MAP_UPDATE_AIRBLOCK);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_BORRAR, MAP_DELETE_AIRBLOCK);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_LEER, MAP_READ_TIPO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_AGNADIR, MAP_CREATE_TIPO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_MODIFICAR, MAP_UPDATE_TIPO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_BORRAR, MAP_DELETE_TIPO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_BUSCAR, MAP_READALL_TIPOS);
 					
 		log.info(LoggerConstants.LOG_READALL);
 		
-		return VIEW_AIRBLOCKS;		
+		return VIEW_TIPOS;		
 	}
 	
 	/**
-	 * Creamos un airblock sin persistencia
+	 * Creamos un propietario sin persistencia
 	 * @param model modelo
 	 * @return Vista
 	 */
-	@GetMapping(value = MAP_CREATE_AIRBLOCK)
+	@GetMapping(MAP_CREATE_TIPO)
 	public String create(final Model model) {
 
 		// Creamos el registro
-		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.create());
+		model.addAttribute(ATTRIBUTE_TIPO, this.propietarioService.create());
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -94,23 +91,23 @@ public final class AirblockController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 		
 		// Botones
-		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_AIRBLOCK);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_AIRBLOCKS);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 					
 		log.info(LoggerConstants.LOG_CREATE);
 		
-		return VIEW_AIRBLOCK;		
+		return VIEW_TIPO;		
 	}
 	
 	/**
-	 * Persistimos el airblock pasado como parámetro
-	 * @param airblockDto Airblock a persistir
+	 * Persistimos el propietario pasado como parámetro
+	 * @param propietarioDto Propietario a persistir
 	 * @param bindingResult Validaciones
 	 * @param model Modelo
 	 * @return Vista
 	 */
-	@PostMapping(MAP_SAVE_AIRBLOCK)
-	public String save(@Valid @ModelAttribute(ATTRIBUTE_AIRBLOCK) final AirblockDto airblockDto, 
+	@PostMapping(MAP_SAVE_TIPO)
+	public String save(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final PropietarioDto propietarioDto, 
 			final BindingResult bindingResult, final Model model) {	
 		
 		final String vista;
@@ -123,32 +120,32 @@ public final class AirblockController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 			
 			// Botones
-			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_AIRBLOCK);
-			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_AIRBLOCKS);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
-			vista = VIEW_AIRBLOCK;
+			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.airblockService.save(airblockDto);
-			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_AIRBLOCKS);
-			log.info(LoggerConstants.LOG_SAVE, airblockDto.getId());
+			this.propietarioService.save(propietarioDto);
+			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
+			log.info(LoggerConstants.LOG_SAVE, propietarioDto.getId());
 		}
 		
 		return vista;
 	}
 	
 	/**
-	 * Obtenemos el airblock con el id facilitado
+	 * Obtenemos el propietario con el id facilitado
 	 * @param id Identificador
 	 * @param model Modelo
 	 * @return Vista
 	 */
-	@GetMapping(MAP_READ_AIRBLOCK + "/{id}")
-	public String read(@PathVariable("id") final Long id, final Model model) {
+	@GetMapping(MAP_READ_TIPO + "/{id}")
+	public String read(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
+		model.addAttribute(ATTRIBUTE_TIPO, this.propietarioService.read(id));
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -157,26 +154,26 @@ public final class AirblockController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 		
 		// Botones
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_AIRBLOCKS);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_AIRBLOCKS);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_TIPOS);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 					
 		log.info(LoggerConstants.LOG_READ);
 		
-		return VIEW_AIRBLOCK;
+		return VIEW_TIPO;
 		
 	}
 	
 	/**
-	 * Preparamos la vista para la actulización del airblock pasado como parámetro
+	 * Preparamos la vista para la actualización del propietario pasado como parámetro
 	 * @param id Identificador
 	 * @param model Modelo
 	 * @return Vista
 	 */
-	@GetMapping(MAP_UPDATE_AIRBLOCK + "/{id}")
-	public String updateGET(@PathVariable("id") final Long id, final Model model) {
-	
+	@GetMapping(MAP_UPDATE_TIPO + "/{id}")
+	public String updateGET(@PathVariable("id") final Short id, final Model model) {
+		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
+		model.addAttribute(ATTRIBUTE_TIPO, this.propietarioService.read(id));
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -185,28 +182,28 @@ public final class AirblockController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 				
 		// Botones
-		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_AIRBLOCK);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_AIRBLOCKS);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 					
 		log.info(LoggerConstants.LOG_UPDATE);
 		
-		return VIEW_AIRBLOCK;
+		return VIEW_TIPO;
 		
 	}
 	
 	/**
-	 * Actualizamos el airblock pasado como parámetro
-	 * @param airblockDto Airblock a actualizar
+	 * Actualizamos el propietario pasado como parámetro
+	 * @param propietarioDto Propietario a actualizar
 	 * @param bindingResult Validaciones
 	 * @param model Modelo
 	 * @return Vista
 	 */
-	@PostMapping(MAP_UPDATE_AIRBLOCK)
-	public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_AIRBLOCK) final AirblockDto airblockDto, 
+	@PostMapping(MAP_UPDATE_TIPO)
+	public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final PropietarioDto propietarioDto, 
 			final BindingResult bindingResult, final Model model) {		
 		
 		final String vista;
-		if (bindingResult.hasErrors()) {	
+		if (bindingResult.hasErrors()) {			
 
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -215,35 +212,35 @@ public final class AirblockController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 	
 			// Botones
-			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_AIRBLOCK);
-			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_AIRBLOCKS);
-			
-			vista = VIEW_AIRBLOCK;
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+		
+			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.airblockService.update(airblockDto);
-			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_AIRBLOCKS);
-			log.info(LoggerConstants.LOG_UPDATE, airblockDto.getId());			
+			this.propietarioService.update(propietarioDto);
+			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
+			log.info(LoggerConstants.LOG_UPDATE, propietarioDto.getId());			
 		}
 
 		return vista;		
 	}
 	
 	/**
-	 * Preparamos la vista para la eliminación del airblock pasado como parámetro
+	 * Preparamos la vista para la eliminación del propietario pasado como parámetro
 	 * @param id Identificador
 	 * @param model Modelo
 	 * @return Vista
 	 */
-	@GetMapping(MAP_DELETE_AIRBLOCK + "/{id}")
-	public String deleteGET(@PathVariable("id") final Long id, final Model model) {
+	@GetMapping(MAP_DELETE_TIPO + "/{id}")
+	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
+		model.addAttribute(ATTRIBUTE_TIPO, this.propietarioService.read(id));
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
-				MessagesConstants.POPUP_ELIMINAR_AIRBLOCK_PREGUNTA);
-
+				MessagesConstants.POPUP_ELIMINAR_PROPIETARIO_PREGUNTA);
+		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -251,25 +248,25 @@ public final class AirblockController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
 				
 		// Botones
-		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_AIRBLOCK
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_TIPO
 				.concat(ControllerConstants.MAP_ACTION_SLASH).concat(String.valueOf(id)));
-		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_AIRBLOCKS);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 					
 		log.info(LoggerConstants.LOG_DELETE);
 		
-		return VIEW_AIRBLOCK;		
+		return VIEW_TIPO;		
 	}
 	
 	/**
-	 * Eliminación del airblock pasado como parámetro
+	 * Eliminación del propietario pasado como parámetro
 	 * @param id Identificador
 	 * @return Vista
 	 */
-	@PostMapping(MAP_DELETE_AIRBLOCK + "/{id}")
-	public String deletePOST(@PathVariable("id") final Long id) {		
-		this.airblockService.delete(id);					
+	@PostMapping(MAP_DELETE_TIPO + "/{id}")
+	public String deletePOST(@PathVariable("id") final Short id) {		
+		this.propietarioService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
-		return ControllerConstants.REDIRECT.concat(MAP_READALL_AIRBLOCKS);		
+		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 	}
-	
+
 }

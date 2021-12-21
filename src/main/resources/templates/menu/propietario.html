@@ -39,13 +39,12 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
-					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.sectoresEspacioAereo}"></a></li>
-					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.airblocks}"></a></li>
+					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.propietarios}"></a></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
 		
-					<form action="#" th:action="@{${action}}" th:object="${airblock}" method="post" novalidate>
+					<form action="#" th:action="@{${action}}" th:object="${propietario}" method="post" novalidate>
 						<input type="hidden" th:field="*{id}">
 								
 						<div id="accordionFormulario" class="accordionFormulario">
@@ -64,42 +63,12 @@
 								<div id="collapseInformacionGeneral" class="collapse show" aria-labelledby="headingInformacionGeneral" data-parent="#accordionFormulario">
 									<div class="card-body formulario-padding">
 										<div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
+											<div class="col-sm-2" th:text="#{html.label.propietario}"></div>
 									        <div class="col-sm-6">
-									            <input id="nombre" type="text" 
+									            <input id="propietario" type="text" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
-									        </div>										        	
-		       							 </div>
-		       							 
-		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
-									        <div class="col-sm-6">
-									            <input id="flMin" type="number" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{flMin}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMin')}" th:errors="*{flMin}"></div>
-									        </div>										        	
-		       							 </div>
-		       							 
-		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.flmax}"></div>
-									        <div class="col-sm-6">
-									            <input id="flMax" type="number" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{flMax}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMax')}" th:errors="*{flMax}"></div>
-									        </div>										        	
-		       							 </div>
-		       							 
-		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.coordenadas}"></div>
-									        <div class="col-sm-6">
-									            <input id="coordenadas" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{coordenadas}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('coordenadas')}" th:errors="*{coordenadas}"></div>
+									            	th:field="*{propietario}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('propietario')}" th:errors="*{propietario}"></div>
 									        </div>										        	
 		       							 </div>
 		       							 
@@ -110,16 +79,6 @@
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
-									        </div>										        	
-		       							 </div>
-		       							 
-		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.sectoresATC}"></div>
-									        <div class="col-sm-6">
-									            <input id="sectoresATC" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{sectoresATC}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('sectoresATC')}" th:errors="*{sectoresATC}"></div>
 									        </div>										        	
 		       							 </div>
 									</div>
@@ -176,7 +135,7 @@
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
-			$('#collapseSectoresEspacioAereo, #collapseGestionBBDD').collapse('show', { "animation": false });
+			$('#collapsePropietarios, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
