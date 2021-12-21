@@ -90,7 +90,7 @@ public final class EquipamientoController {
 
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.create());
-		model.addAttribute("ficheroTamagnoMax",50000);
+		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -154,6 +154,7 @@ public final class EquipamientoController {
 		
 		// Contenido
 		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.read(id));
+		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

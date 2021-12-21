@@ -94,6 +94,9 @@ public final class EquipamientoDto implements Serializable {
 	private List<TipoDocumentoDto> tiposDocumento = new ArrayList<>();
 	
 	@Builder.Default
+	private List<Object> ficheros = new ArrayList<>();
+	
+	@Builder.Default
 	private List<FotografiaDto> fotografias = new ArrayList<>();
 	
 	// Atributos de los documentos

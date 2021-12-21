@@ -27,6 +27,10 @@ public final class ControllerConstants {
 	// Atributos para popup
 	public static final String ATTRIBUTE_POPUP_ELIMINAR_AVISO = "popupEliminarAviso";
 	public static final String ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA = "popupEliminarPregunta";
+	
+	// Atributos para ficheros
+	public static final String FICHERO_TAMAGNO_MAX = "ficheroTamagnoMax";
+	public static final int FICHERO_TAMAGNO_MAX_NUM = 50000000;
 
 	// Atributos para descargas
 	public static final String ATTRIBUTE_DOWNLOAD = "download";
