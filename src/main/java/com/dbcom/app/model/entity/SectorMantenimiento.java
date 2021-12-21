@@ -47,8 +47,6 @@ public class SectorMantenimiento implements Serializable {
 	
 	private String descripcion;
 	
-	private String airBlocks;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="region_id")
 	@NotNull(message = "{validation.notNull}")

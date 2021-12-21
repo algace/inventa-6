@@ -12,5 +12,7 @@ import com.dbcom.app.model.entity.RegionMantenimiento;
  */
 @Repository
 public interface RegionMantenimientoRepository extends JpaRepository<RegionMantenimiento, Long> {
+	
+	public RegionMantenimiento findByNombre(String nombre);
 
 }

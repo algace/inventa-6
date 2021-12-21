@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dto.RegionMantenimientoDto;
 import com.dbcom.app.model.dto.SectorMantenimientoDto;
+import com.dbcom.app.service.RegionMantenimientoService;
 import com.dbcom.app.service.SectorMantenimientoService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +51,16 @@ public class SectorMantenimientoController {
 	public static final String MAP_READALL_SECTORES_MANTENIMIENTO = ControllerConstants.MAP_ACTION_SLASH + VIEW_SECTORES_MANTENIMIENTO;
 		
 	private final SectorMantenimientoService sectorMantenimientoService;
+	private final RegionMantenimientoService regionMantenimientoService;
+	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
-	public SectorMantenimientoController(SectorMantenimientoService sectorMantenimientoService) {
+	public SectorMantenimientoController(SectorMantenimientoService sectorMantenimientoService,
+			RegionMantenimientoService regionMantenimientoService,
+			ModelMapperUtils  modelMapperUtils) {
 		this.sectorMantenimientoService = sectorMantenimientoService;
+		this.regionMantenimientoService = regionMantenimientoService;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -125,6 +134,12 @@ public class SectorMantenimientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_SECTOR_MANTENIMIENTO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_SECTORES_MANTENIMIENTO);
 		
+			//Se debe recuperar de nuevo la lista de regiones de mantenimiento disponibles 
+			//y poner a null el id de la región de mantemiento
+			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoDto.class));
+			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
+			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
+			
 			vista = VIEW_SECTOR_MANTENIMIENTO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
@@ -216,6 +231,12 @@ public class SectorMantenimientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_SECTOR_MANTENIMIENTO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_SECTORES_MANTENIMIENTO);
 		
+			//Se debe recuperar de nuevo la lista de regiones de mantenimiento disponibles 
+			//y poner a null el id de la región de mantemiento
+			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoDto.class));
+			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
+			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
+			
 			vista = VIEW_SECTOR_MANTENIMIENTO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		

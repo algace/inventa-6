@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,14 +36,14 @@ public class SectorMantenimientoDto implements Serializable {
 	private Long id;
 	
 	@NotNull(message = "{validation.notNull}")
+	@Size(min = 1, message = "{validation.notNull}")
 	private String nombre;
 	
 	private String descripcion;
 	
-	private String airBlocks;
-	
 	@NotNull(message = "{validation.notNull}")
-	private RegionMantenimientoDto regionMantenimiento;
+	@Valid
+	private RegionMantenimientoLiteDto regionMantenimiento;
 	
 	@Builder.Default
 	private List<RegionMantenimientoDto> regionesMantenimientoDisponibles = new ArrayList<>();

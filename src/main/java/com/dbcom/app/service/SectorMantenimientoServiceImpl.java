@@ -6,10 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dbcom.app.constants.AplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
+import com.dbcom.app.model.dao.RegionMantenimientoRepository;
 import com.dbcom.app.model.dao.SectorMantenimientoRepository;
+import com.dbcom.app.model.dto.RegionMantenimientoLiteDto;
 import com.dbcom.app.model.dto.SectorMantenimientoDto;
 import com.dbcom.app.model.entity.RegionMantenimiento;
 import com.dbcom.app.model.entity.SectorMantenimiento;
@@ -23,14 +26,17 @@ public class SectorMantenimientoServiceImpl implements SectorMantenimientoServic
 
 	private final SectorMantenimientoRepository sectorMantenimientoRepository;
 	private final RegionMantenimientoService regionMantenimientoService;
+	private final RegionMantenimientoRepository regionMantenimientoRepository;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public SectorMantenimientoServiceImpl(SectorMantenimientoRepository sectorMantenimientoRepository,
 			RegionMantenimientoService regionMantenimientoService,
+			RegionMantenimientoRepository regionMantenimientoRepository,
 			ModelMapperUtils modelMapper) {
 		this.sectorMantenimientoRepository = sectorMantenimientoRepository;
 		this.regionMantenimientoService = regionMantenimientoService;
+		this.regionMantenimientoRepository = regionMantenimientoRepository;
 		this.modelMapperUtils = modelMapper;
 	}
 	
@@ -40,7 +46,10 @@ public class SectorMantenimientoServiceImpl implements SectorMantenimientoServic
 	@Override
 	public SectorMantenimientoDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
-		return SectorMantenimientoDto.builder().regionesMantenimientoDisponibles(regionMantenimientoService.readAll()).build();
+		return SectorMantenimientoDto.builder()
+				                     .regionesMantenimientoDisponibles(regionMantenimientoService.readAll())
+				                     .regionMantenimiento(this.modelMapperUtils.map(regionMantenimientoRepository.findByNombre(AplicationConstants.REGION_MANTENIMIENTO_POR_DEFECTO),RegionMantenimientoLiteDto.class))
+				                     .build();
 	}
 
 	/**
