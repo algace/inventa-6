@@ -205,7 +205,7 @@ var table_con_split = $(ID_TABLA_RESULTADOS_CON_SPLIT).DataTable( {
 	dom: '<"top">rt<"bottom"ipl><"clear">',
 	searching:  true,
 	columnDefs: [{ 
-		targets: 8,
+		targets: targetSplit,
         render: function(data, type, full, meta){
 		   
 		   if (type == "display"){

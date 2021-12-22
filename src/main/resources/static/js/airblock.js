@@ -55,18 +55,7 @@ var tabla_sectores_atc = $(ID_TABLA_SECTORES_ATC).DataTable({
 	}
  });
 
-//Campo para el filtro
-$('#tablaSectoresATC tfoot th').each(function() {
-    var foot = $('#tablaSectoresATC tfoot th').eq($(this).index()).text();
-    $(this).html('<input type="text" class="form-control" placeholder="Filtrar por ' + foot + '" />');
-});
-  
-// Funcionalidad del filtro
-$("#tablaSectoresATC tfoot input").on('keyup change', function() {
-	tabla_sectores_atc.column($(this).parent().index() + ':visible')
-    	.search(this.value)
-        .draw();
-});
+
 // FIN - Configuración de la tabla Aplicacion
 
 $("#search").on('keyup change', function() {
