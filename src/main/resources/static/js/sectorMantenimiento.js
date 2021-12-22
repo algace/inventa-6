@@ -13,8 +13,8 @@ var rowElement = null;
 var idElement  = null;
 var rowNode = null;
 
-// INICIO - Configuración de la tabla Aplicacion
-var tabla_tipos_sistemas = $(ID_TABLA_REGIONES_MANTENIMIENTO).DataTable({ 
+// INICIO - Configuración de la tabla de regiones de mantenimiento
+var tabla_regiones_mantenimiento = $(ID_TABLA_REGIONES_MANTENIMIENTO).DataTable({ 
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
 	searching:  false,
@@ -58,8 +58,8 @@ var tabla_tipos_sistemas = $(ID_TABLA_REGIONES_MANTENIMIENTO).DataTable({
  })
  .on('click', 'tr', function() {
 	 rowNode = this;
-	 rowElement = tabla_tipos_sistemas.row(this).data();
-	 idElement = tabla_tipos_sistemas.row(this).data()[0];
+	 rowElement = tabla_regiones_mantenimiento.row(this).data();
+	 idElement = tabla_regiones_mantenimiento.row(this).data()[0];
 });
 
 // Botón Borrar
