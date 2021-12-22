@@ -79,6 +79,18 @@
 		       							 </div>
 		       							 
 		       							 <div class="row align-items-center">
+									        <div class="col-sm-2" th:text="#{html.label.regionOperativa}"></div>
+									        <div class="col-sm-6">
+											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{regionOperativa}">
+											    	<option th:value="0"></option>
+											    	<option th:each="regionOperativa : *{regionesOperativas}" th:value="${regionOperativa.id}" th:text="${regionOperativa.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('regionOperativa')}" th:errors="*{regionOperativa}"></div>
+									        </div>
+									     </div> 
+		       							 
+		       							 <div class="row align-items-center">
 									        <div class="col-sm-2" th:text="#{html.label.tiposSectoresATC}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 

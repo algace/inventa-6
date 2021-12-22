@@ -48,7 +48,10 @@ public final class SectorATC implements Serializable{
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
 	
-	//FALTA REGION OPERATIVA!!!!!!!!!!
+	@ManyToOne(fetch = FetchType.EAGER,
+			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
+	@NotNull(message = "{validation.notNull}")
+	private RegionOperativa regionOperativa;
 
 	@ManyToOne(fetch = FetchType.EAGER,
 			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	

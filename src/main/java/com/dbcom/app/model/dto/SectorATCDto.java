@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.model.entity.TipoFuenteInformacion;
 import com.dbcom.app.model.entity.TipoSectorATC;
 
@@ -35,7 +36,10 @@ public final class SectorATCDto implements Serializable{
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
 	
-	//FALTA REGION OPERATIVA!!!!!!!!!
+	@NotNull(message = "{validation.notNull}")
+	//private RegionOperativato regionOperativa;
+	private RegionOperativa regionOperativa;
+	
 	@NotNull(message = "{validation.notNull}")
 	//private TipoSectorATCDto tipoSectorATC;
 	private TipoSectorATC tipoSectorATC;
@@ -64,6 +68,8 @@ public final class SectorATCDto implements Serializable{
 	private List<TipoSectorATCDto> tiposSectorATC;
 	
 	private List<TipoFuenteInformacionDto> tiposFuenteInformacion;
+	
+	private List<RegionOperativaDto> regionesOperativas;
 	
 	@Builder.Default	
 	private List<AirblockDto> airblocks = new ArrayList<>(); 

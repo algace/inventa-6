@@ -16,6 +16,7 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.SectorATCDto;
+import com.dbcom.app.service.RegionOperativaService;
 import com.dbcom.app.service.SectorATCService;
 import com.dbcom.app.service.TipoFuenteInformacionService;
 import com.dbcom.app.service.TipoSectorATCService;
@@ -47,16 +48,18 @@ public class SectorATCController {
 	private final SectorATCService sectorATCService;
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
 	private final TipoSectorATCService tipoSectorATCService;
+	private final RegionOperativaService regionOperativaService;
 	
 	
 	@Autowired
 	public SectorATCController(SectorATCService sectorATCService,
 			TipoFuenteInformacionService tipoFuenteInformacionService,
-			TipoSectorATCService tipoSectorATCService) {
+			TipoSectorATCService tipoSectorATCService,
+			RegionOperativaService regionOperativaService) {
 		this.sectorATCService = sectorATCService;
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 		this.tipoSectorATCService = tipoSectorATCService;
-		
+		this.regionOperativaService = regionOperativaService;
 	}
 	
 	/**
@@ -132,6 +135,7 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
+			sectorATCDto.setRegionesOperativas(regionOperativaService.readAll());
 			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
 			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
 			

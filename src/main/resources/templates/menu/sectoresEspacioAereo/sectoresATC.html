@@ -57,6 +57,7 @@
 					    	<tr>
 					      		<th class="th-sm"  hidden="true">
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.nombre}"></th>
+					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.regionOperativa}"></th>
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.tipoFuenteInformacion}"></th>
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.fechaPublicacion}"></th>
 					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.tiposSectoresATC}"></th>
@@ -70,6 +71,7 @@
 						  	<tr th:each="sectorATC : ${lista}" th:id="${sectorATC.id}">
 						  		<td hidden="true" th:text="${sectorATC.id}"></td>
 						  		<td th:text="${sectorATC.nombre}"></td>
+						  		<td th:text="${sectorATC.regionOperativa.nombre}"></td>
 						  		<td th:text="${sectorATC.tipoFuenteInformacion.nombre}"></td>
 						  		<td th:text="${sectorATC.fechaPublicacion}"></td>
 						  		<td th:text="${sectorATC.tipoSectorATC.nombre}"></td>
@@ -83,6 +85,7 @@
 							<tr>
 					      		<th hidden="true">
 					    		<th th:text="#{html.tabla.pie.nombre}"></th>
+					    		<th th:text="#{html.tabla.pie.regionOperativa}"></th>
 					    		<th th:text="#{html.tabla.pie.tipoFuenteInformacion}"></th>
 					    		<th th:text="#{html.tabla.pie.fechaPublicacion}"></th>
 					    		<th th:text="#{html.tabla.pie.tiposSectoresATC}"></th>
