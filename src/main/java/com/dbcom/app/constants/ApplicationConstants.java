@@ -5,8 +5,9 @@ package com.dbcom.app.constants;
  * 
  * @author jgm
  */
-public final class AplicationConstants {
+public final class ApplicationConstants {
 	
 	public static final String REGION_MANTENIMIENTO_POR_DEFECTO = "Canarias";
+	public static final String REGION_OPERATIVA_POR_DEFECTO = "Canarias";
 
 }
