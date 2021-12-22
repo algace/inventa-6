@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dbcom.app.constants.AplicationConstants;
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
@@ -46,9 +46,18 @@ public class SectorMantenimientoServiceImpl implements SectorMantenimientoServic
 	@Override
 	public SectorMantenimientoDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
+		
+		RegionMantenimiento regionMantenimiento;
+		RegionMantenimiento regMantenimientoPorDefecto = regionMantenimientoRepository.findByNombre(ApplicationConstants.REGION_MANTENIMIENTO_POR_DEFECTO);
+		if (regMantenimientoPorDefecto == null) {
+			regionMantenimiento = RegionMantenimiento.builder().build();
+		} else {
+			regionMantenimiento = regMantenimientoPorDefecto;
+		}
+		
 		return SectorMantenimientoDto.builder()
 				                     .regionesMantenimientoDisponibles(regionMantenimientoService.readAll())
-				                     .regionMantenimiento(this.modelMapperUtils.map(regionMantenimientoRepository.findByNombre(AplicationConstants.REGION_MANTENIMIENTO_POR_DEFECTO),RegionMantenimientoLiteDto.class))
+				                     .regionMantenimiento(this.modelMapperUtils.map(regionMantenimiento,RegionMantenimientoLiteDto.class))
 				                     .build();
 	}
 
