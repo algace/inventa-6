@@ -53,7 +53,4 @@ public class Airblock implements Serializable {
 	@Size(max = 250, message = "{validation.max250}")
 	private String descripcion;
 	
-	@Size(max = 250, message = "{validation.max250}")
-	private String sectoresATC;
-	
 }

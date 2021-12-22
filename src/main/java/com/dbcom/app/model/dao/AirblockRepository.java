@@ -19,6 +19,7 @@ import com.dbcom.app.model.entity.SectorATC;
 @Repository
 public interface AirblockRepository extends JpaRepository<Airblock, Long> {
 	
-	//@Query("select a from SectorATC a join a.airblock v where v.id = :id")
-	//public List<SectorATC> findSectoresWithAirblock(@Param("id") long id);
+	@Query("select a from SectorATC a join a.airblocks v where v.id = :id")
+	public List<SectorATC> findSectoresATCWithAirbloks(@Param("id") long id);
+	
 }

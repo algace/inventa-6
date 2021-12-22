@@ -52,6 +52,6 @@ public final class AirblockDto implements Serializable {
 	private String sectoresATC;
 	
 	@Builder.Default
-	private List<SectorATCDto> sectorATCList = new ArrayList<>();
+	private List<SectorATCDto> sectoresATCList = new ArrayList<>();
 	
 }

@@ -137,7 +137,7 @@ function validarFotografiaNoSeleccionado() {
 	return resultado;
 }
 
-function validarDescripcion() {
+function validarDescripcionFotografia() {
 	var resultado;
 	
 	if ("" == $(ID_DESCRIPCION_FOTOGRAFIA).val()) {
@@ -162,7 +162,7 @@ function validarPopupFotografia() {
 	if (validarFotografiaNoSeleccionado()){
 		--contador;
 	}
-	if (validarDescripcion()){
+	if (validarDescripcionFotografia()){
 		--contador;
 	}
 	
