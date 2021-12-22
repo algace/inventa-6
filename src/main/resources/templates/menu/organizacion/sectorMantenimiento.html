@@ -87,7 +87,7 @@
 									            <input type="hidden" th:field="*{regionMantenimiento.id}" >
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('regionMantenimiento.id')}" th:errors="*{regionMantenimiento.id}"></div>
 									        </div>
-									        <div class="col-sm-4">
+									        <div class="col-sm-4" th:if="!${esCampoSoloLectura}">
 										        <div class="botonera-crud" align="left">
 													<a id="enlaceAgnadirRegion" class="button-crud" data-toggle="modal" data-target="#popupSeleccionarRegion" href="#">
 														<div>

@@ -87,7 +87,7 @@
 									            <input type="hidden" th:field="*{tipoSistema.id}" >
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistema.id')}" th:errors="*{tipoSistema.id}"></div>
 									        </div>
-									        <div class="col-sm-4">
+									        <div class="col-sm-4" th:if="!${esCampoSoloLectura}">
 										        <div class="botonera-crud" align="left">
 													<a id="enlaceAgnadirSistema" class="button-crud" data-toggle="modal" data-target="#popupSeleccionarSistema" href="#">
 														<div>
