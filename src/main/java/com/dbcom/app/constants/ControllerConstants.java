@@ -27,6 +27,10 @@ public final class ControllerConstants {
 	// Atributos para popup
 	public static final String ATTRIBUTE_POPUP_ELIMINAR_AVISO = "popupEliminarAviso";
 	public static final String ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA = "popupEliminarPregunta";
+	
+	// Atributos para ficheros
+	public static final String FICHERO_TAMAGNO_MAX = "ficheroTamagnoMax";
+	public static final int FICHERO_TAMAGNO_MAX_NUM = 50000000;
 
 	// Atributos para descargas
 	public static final String ATTRIBUTE_DOWNLOAD = "download";
@@ -42,6 +46,7 @@ public final class ControllerConstants {
 	public static final String ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO = "estaBotonCancelarActivo";
 	public static final String ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO = "estaBotonEliminarActivo";
 	public static final String ATTRIBUTE_APLICACIONES_VISIBLE = "applicacionesVisible";
+	public static final String ATTRIBUTE_SECTORES_ATC_VISIBLE = "sectoresATCVisible";
 	public static final String ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE = "tiposSubsistemasVisible";
 	
 

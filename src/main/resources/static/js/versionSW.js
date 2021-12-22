@@ -8,7 +8,7 @@ const ID_TABLA_APLICACIONES = '#tablaAplicaciones';
 var tabla_aplicaciones = $(ID_TABLA_APLICACIONES).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
-	searching:  false,
+	searching:  true,
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',

@@ -76,7 +76,7 @@
 	                </div>
 					<!--/* FIN - Submenú Pasarelas VoIP */-->
                 	<span style="font-size: 16px; color: #007bff"><i class="fas fa-caret-square-down"></i></span>
-                	<a class="sub" th:text="#{html.menu.propietarios}" href="#"></a> <br>
+                	<a class="sub" th:text="#{html.menu.propietarios}" th:href="@{/menu/propietarios}"></a> <br>
                 		
                 	<!--/* INICIO - Submenú Redes T/T */-->
                 	<div id="headingRedesTT">
@@ -123,7 +123,7 @@
 		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
 		                	<a class="subsub" th:text="#{html.menu.airblocks}" th:href="@{/menu/sectoresEspacioAereo/airblocks}"></a> <br>	
 		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
-		                	<a class="subsub" th:text="#{html.menu.sectoresATC}"></a> <br>	
+		                	<a class="subsub" th:text="#{html.menu.sectoresATC}" th:href="@{/menu/sectoresEspacioAereo/sectoresATC}"></a> <br>	
 		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
                 			<a class="subsub" th:text="#{html.menu.sectoresOACI}" th:href="@{/menu/sectoresEspacioAereo/sectoresOACI}"></a> <br>	
 	              		</div>

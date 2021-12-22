@@ -12,6 +12,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.ChasisPasarelaRepository;
 import com.dbcom.app.model.dto.ChasisPasarelaDto;
 import com.dbcom.app.model.entity.ChasisPasarela;
+import com.dbcom.app.model.entity.TipoChasis;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -111,6 +112,9 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 		
 		// Actualizamos el registro de bbdd
 		chasisPasarelaBBDD.setNombre(chasisPasarelaDto.getNombre());
+		chasisPasarelaBBDD.setTipoChasis(this.modelMapperUtils.map(chasisPasarelaDto.getTipoChasis(), TipoChasis.class));
+		chasisPasarelaBBDD.setIndiceCargaLimite(chasisPasarelaDto.getIndiceCargaLimite());
+		
 		chasisPasarelaBBDD = this.chasisPasarelaRepository.save(chasisPasarelaBBDD);		
 		
 		log.info(LoggerConstants.LOG_UPDATE, chasisPasarelaBBDD.getId());

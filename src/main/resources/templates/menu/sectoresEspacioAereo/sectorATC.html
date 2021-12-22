@@ -8,6 +8,9 @@
 		<!--/* INICIO - CSS */-->
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
 		
 		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
@@ -42,12 +45,12 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
 					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.sectoresEspacioAereo}"></a></li>
-					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.airblocks}"></a></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.sectoresATC}"></a></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
 		
-					<form action="#" th:action="@{${action}}" th:object="${airblock}" method="post" novalidate>
+					<form action="#" th:action="@{${action}}" th:object="${sectorATC}" method="post" novalidate>
 						<input type="hidden" th:field="*{id}">
 								
 						<div id="accordionFormulario" class="accordionFormulario">
@@ -76,6 +79,45 @@
 		       							 </div>
 		       							 
 		       							 <div class="row align-items-center">
+									        <div class="col-sm-2" th:text="#{html.label.tiposSectoresATC}"></div>
+									        <div class="col-sm-6">
+											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoSectorATC}">
+											    	<option th:value="0"></option>
+											    	<option th:each="tipoSectorATC : *{tiposSectorATC}" th:value="${tipoSectorATC.id}" th:text="${tipoSectorATC.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSectorATC')}" th:errors="*{tipoSectorATC}"></div>
+									        </div>
+									     </div> 
+									     
+									     <div class="row align-items-center">
+											<div class="col-sm-2" th:text="#{html.label.fechaPublicacion}"></div>
+											<div class="col-sm-6">
+								                <div class="input-group date" id="datetimepickerFecha" data-target-input="nearest">
+								                    <input type="text" data-target="#datetimepickerFecha" 
+								                    	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+								                    	th:field="*{fechaPublicacion}" th:disabled="${esCampoSoloLectura} ? 'true'"/>
+								                    <div class="input-group-append" data-target="#datetimepickerFecha" data-toggle="datetimepicker">
+								                        <div class="input-group-text"><i class="far fa-calendar"></i></div>
+								                    </div>
+								                </div>
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('fechaPublicacion')}" th:errors="*{fechaPublicacion}"></div>
+									        </div>
+		       							 </div>	
+									     
+									     <div class="row align-items-center">
+									        <div class="col-sm-2" th:text="#{html.label.tipoFuenteInformacion}"></div>
+									        <div class="col-sm-6">
+											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoFuenteInformacion}">
+											    	<option th:value="0"></option>
+											    	<option th:each="tipoFuenteInformacion : *{tiposFuenteInformacion}" th:value="${tipoFuenteInformacion.id}" th:text="${tipoFuenteInformacion.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoFuenteInformacion')}" th:errors="*{tipoFuenteInformacion}"></div>
+									        </div>
+									     </div> 
+		       							 
+		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
 									        <div class="col-sm-6">
 									            <input id="flMin" type="number" 
@@ -96,16 +138,6 @@
 		       							 </div>
 		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.coordenadas}"></div>
-									        <div class="col-sm-6">
-									            <input id="coordenadas" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{coordenadas}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('coordenadas')}" th:errors="*{coordenadas}"></div>
-									        </div>										        	
-		       							 </div>
-		       							 
-		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
 									            <input id="descripcion" type="text" 
@@ -118,52 +150,38 @@
 								</div>
 							</div>
 							<!--/* FIN - Información general */-->
-							
-							<!--/* INICIO - Sectores ATC */-->	
-							<div class="card" th:if="${sectoresATCVisible}">
-								<div id="headingAplicaciones" class="card-header">
-									<h5 class="mb-0">
-										<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseAplicaciones" aria-expanded="false"
-											aria-controls="collapseAplicaciones">
-											<div style="display:flex;">
-												<div class="text-tab-accordion" ><span th:text="#{html.label.sectoresATC}"></span></div  >
-												<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
-											</div >
-										</button>
-									</h5>
+							<!--/* INICIO - Airblock */-->
+							<div class="card">
+								<div id="headingAirblocks" class="card-header">
+									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseAirblocks" aria-expanded="false"
+										aria-controls="collapseAirblocks">
+										<div style="display:flex;">
+											<div class="text-tab-accordion" ><span th:text="#{html.label.airblocks}"></span></div  >
+											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
+										</div >
+									</button>
 								</div>
-								<div id="collapseAplicaciones" class="collapse" aria-labelledby="headingAplicaciones" data-parent="#accordionFormulario">
+								<div id="collapseAirblocks" class="collapse" aria-labelledby="headingAirblocks" data-parent="#accordionFormulario">
 									<div class="card-body">
-										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarSectorATC', 
-											idButtonBorrar='botonBorrarSectorATC', idInputSearch='search', visible='false')"></div>
-										<table id="tablaSectoresATC" class="table table-striped table-bordered no-margin-top" style="width:100%">
+										
+										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarAirblock', 
+										idButtonBorrar='botonBorrarAirblock', idInputSearch='searchAirblock', visible='true')"></div>
+										
+										<table id="tablaAirblocks" class="table table-striped table-bordered no-margin-top" style="width:100%">
 											<thead>
 												<tr>
-													<th class="th-sm"  th:text="#{html.tabla.cabecera.nombre}"></th>
-										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.tipoFuenteInformacion}"></th>
-										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.fechaPublicacion}"></th>
-										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.tiposSectoresATC}"></th>
-										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMax}"></th>
-										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMin}"></th>
-										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.descripcion}"></th>
+													<th class="th-sm" th:text="id"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.flMin}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.flMax}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.descripcion}"></th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr th:each="sectorATC, item : *{sectoresATCList}">
-													<td th:text="${sectorATC.nombre}"></td>
-													<td th:text="${sectorATC.tipoFuenteInformacion.nombre}"></td>
-											  		<td th:text="${sectorATC.fechaPublicacion}"></td>
-											  		<td th:text="${sectorATC.tipoSectorATC.nombre}"></td>
-											  		<td th:text="${sectorATC.flMax}"></td>
-											  		<td th:text="${sectorATC.flMin}"></td>
-											  		<td th:text="${sectorATC.descripcion}"></td>
-												</tr>
-											</tbody>
 										</table>
 									</div>
 								</div>
 							</div>
-							<!--/* FIN - Sectores ATC */-->	
+							<!--/* FIN - Airblock */-->
 							
 						</div>
 						
@@ -197,6 +215,50 @@
 						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
 						<!--/* FIN - Popup de eliminación */-->
 			
+			
+						<!--/* INICIO - Popup de selección de airblock */-->
+						<div id="popupSeleccionarAirblock" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSeleccionarAirblockTitulo" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+								        <h5 id="modalSeleccionarAirblockTitulo" class="modal-title" th:text="#{html.label.airblocks}"></h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								        	<span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
+								        </button>
+								    </div>
+								    <div class="modal-body">
+								    	<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarAirblock', 
+											idButtonBorrar='botonBorrarAirblock', idInputSearch='searchSeleccionarAirblock', visible='false')"></div>
+								    	<table id="tablaSeleccionarAirblock" class="table table-striped table-bordered" style="width:100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="id"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm"  th:text="#{html.tabla.cabecera.flMax}"></th>
+										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMin}"></th>
+										    		<th class="th-sm"  th:text="#{html.tabla.cabecera.descripcion}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="airblockNoIncluido, item : *{airblocksNoIncluidos}">
+													<td th:text="${airblockNoIncluido.id}"></td>
+													<td th:text="${airblockNoIncluido.nombre}"></td>
+													<td th:text="${airblockNoIncluido.flMax}"></td>
+											  		<td th:text="${airblockNoIncluido.flMin}"></td>
+											  		<td th:text="${airblockNoIncluido.descripcion}"></td>
+												</tr>
+											</tbody>
+										</table>
+								    </div>
+								    <div class="modal-footer">
+								        <button id="botonAceptarSeleccionarAirblock" type="button" class="btn btn-primary" data-dismiss="modal" disabled 
+								        	th:text="#{html.boton.aceptar}"></button>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{html.boton.cancelar}"></button>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!--/* FIN - Popup de selección de airblock */-->
 					</form>
 				</div>
 			</div>
@@ -220,11 +282,14 @@
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var airblocks = [[${sectorATC.airblocks}]];
+			var airblocksJson = JSON.stringify(airblocks);
+			/*]]>*/
 			$('#collapseSectoresEspacioAereo, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
-		<script type="text/javascript" th:src="@{/js/airblock.js}"></script>
-	
+		<script type="text/javascript" th:src="@{/js/sectorATC.js}"></script>
 	</body>
 </html>

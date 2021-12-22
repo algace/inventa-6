@@ -51,11 +51,27 @@ $(ID_BOTON_CANCELAR_POPUP_SUBIR_DOCUMENTO).on('click', function() {
 	resetFormPopupSubirDocumento();
 });
 
+var listData = [];
+
 // INICIO - Configuración de la tabla documentos
 var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
+	data: listData,
+	columnDefs: [{ 
+		targets: 1,
+        render: function(data, type, full, meta){
+		   if (type == "display"){
+	           return data + '<input type="file" id="ficheros' + full.id +'" name="ficheros['+ full.id + ']" value="' + full.doc + '" style="display:none">';
+           }else{
+			   return data;
+		   }
+        }
+    }],
+	columns: [
+			  {data: "nombre", name: "nombre", title: "Nombre"}, 
+			  {data: "descripcion", name: "marca", title: "Marca"}],
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',
@@ -209,7 +225,13 @@ function validarPopupDocumento() {
 	} else {
 		$(ID_BARRA_PROGRESO_DOC).attr("hidden", "hidden");
 	}
-		
+	
+	
+		$(ID_TABLA_DOCUMENTOS).DataTable()
+		.row
+		.add({id: 1, doc: $(ID_FICHERO_DOC)[0].files[0], nombre: $(ID_FICHERO_DOC)[0].files[0].name, descripcion: $('#descripcionDocumento').val()})
+		.draw();
+	
 	return ((contador == 0) ? true : false);
 }
 

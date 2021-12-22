@@ -46,9 +46,9 @@ $(ID_DATETIMEPICKER_HORA).datetimepicker({
 // INICIO - Configuración de la tabla Versiones
 var tabla_versiones = $(ID_TABLA_VERSIONES).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
 	data: JSON.parse(versionesSWJson),
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
@@ -119,8 +119,8 @@ $("#tablaVersiones tfoot input").on('keyup change', function() {
 // Configuración de la tabla del popup para seleccionar Versiones
 var tabla_seleccionar_versiones =  $(ID_TABLA_SELECCIONAR_VERSION).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
@@ -223,9 +223,9 @@ $(ID_MODAL_VERSION).on('show.bs.modal', function () {
 // INICIO - Configuración de la tabla Equipamiento
 var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTOS).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
 	data: JSON.parse(equipamientosJson),
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
@@ -301,8 +301,8 @@ $("#tablaEquipamiento tfoot input").on('keyup change', function() {
 // Configuración de la tabla del popup para seleccionar Versiones
 var tabla_seleccionar_equipamiento = $(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
@@ -412,13 +412,6 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
 
 $(ID_MODAL_EQUIPAMIENTO).on('show.bs.modal', function () {
 	$(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
-});
-
-$("#search").on('keyup change', function() {
-    table.columns()
-    	.data()
-    	.search(this.value)
-        .draw();
 });
 
 $(ID_INPUT_SEARCH_EQUIPAMIENTOS).on('keyup change', function() {

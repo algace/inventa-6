@@ -1,6 +1,11 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -29,16 +34,24 @@ public final class AirblockDto implements Serializable {
 	@Size(min = 1, max = 70, message = "{validation.min1max70}")
 	private String nombre;
 	 
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
+	@Max(999)
+	@NotNull(message = "{validation.notNull}")
 	private String flMin;
 	
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
+	@Max(999)
+	@NotNull(message = "{validation.notNull}")
 	private String flMax;
 
 	@Size(max = 250, message = "{validation.max250}")
 	private String coordenadas;
 	
 	@Size(max = 250, message = "{validation.max250}")
+	private String descripcion;
+	
+	@Size(max = 250, message = "{validation.max250}")
 	private String sectoresATC;
+	
+	@Builder.Default
+	private List<SectorATCDto> sectoresATCList = new ArrayList<>();
 	
 }

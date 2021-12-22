@@ -28,15 +28,18 @@ public final class MessagesConstants {
 	
 	// Mensajes para los popups
 	public static String POPUP_ELIMINAR_APLICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_AIRBLOCK_PREGUNTA;
 	public static String POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA;
+	public static String POPUP_ELIMINAR_PROPIETARIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_REGION_MANTENIMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_REGION_OPERATIVA_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_MANTENIMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA;
+	public static String POPUP_ELIMINAR_SECTORATC_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
@@ -81,6 +84,11 @@ public final class MessagesConstants {
 	public void setMessagePopupEliminarAmbitoRecursoPregunta(final String texto) {
     	POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA = texto;
 	}
+    
+    @Value("${html.label.eliminar.airblock.pregunta}")
+   	public void setMessagePopupEliminarAirblockPregunta(final String texto) {
+       	POPUP_ELIMINAR_AIRBLOCK_PREGUNTA = texto;
+   	}
 	
 	@Value("${html.label.eliminar.aplicacion.pregunta}")
 	public void setMessagePopupEliminarAplicacionPregunta(final String texto) {
@@ -102,9 +110,19 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA = texto;
 	}
 	
+	@Value("${html.label.eliminar.propietario.pregunta}")
+	public void setMessagePopupEliminarPropietarioPregunta(final String texto) {
+		POPUP_ELIMINAR_PROPIETARIO_PREGUNTA = texto;
+	}
+	
 	@Value("${html.label.eliminar.recursoPasarela.pregunta}")
 	public void setMessagePopupEliminarRecursoPasarelaPregunta(final String texto) {
 		POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.sectorATC.pregunta}")
+	public void setMessagePopupEliminarSectorATCPregunta(final String texto) {
+		POPUP_ELIMINAR_SECTORATC_PREGUNTA = texto;
 	}
 
 	@Value("${html.label.eliminar.regionMantenimiento.pregunta}")
