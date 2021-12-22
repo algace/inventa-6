@@ -14,6 +14,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
+import com.dbcom.app.model.entity.Airblock;
 import com.dbcom.app.model.entity.SectorATC;
 import com.dbcom.app.model.entity.TipoFuenteInformacion;
 import com.dbcom.app.model.entity.TipoSectorATC;
@@ -138,6 +139,10 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		sectorATCBBDD.setFlMax(sectorATCDto.getFlMax());
 		sectorATCBBDD.setFlMin(sectorATCDto.getFlMin());
 		sectorATCBBDD.setDescripcion(sectorATCDto.getDescripcion());
+
+		//se limpia la lista del objeto airblock vacío que viene por defecto
+		sectorATCDto.setAirblocks(filterListAirblock(sectorATCDto.getAirblocks()));
+		sectorATCBBDD.setAirblocks(this.modelMapperUtils.mapAll2Set(sectorATCDto.getAirblocks(), Airblock.class));
 		
 		sectorATCBBDD = this.sectorATCRepository.save(sectorATCBBDD);		
 		
