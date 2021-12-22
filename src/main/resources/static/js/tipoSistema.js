@@ -7,8 +7,8 @@ const ID_TABLA_TIPOS_SUBSISTEMAS = '#tablaTiposSubsistemas';
 // INICIO - Configuración de la tabla Aplicacion
 var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',

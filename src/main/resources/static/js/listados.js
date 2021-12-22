@@ -176,10 +176,14 @@ $("#search").on('keyup change', function() {
 	    	.search(this.value)
 	        .draw();
     }else{
-	    table_sistemas.columns()
-	    	.data()
-	    	.search(this.value)
-	        .draw()
+		if(table_con_split){
+			
+		}else{
+		    table_sistemas.columns()
+		    	.data()
+		    	.search(this.value)
+		        .draw()
+	    }
     }
 });
 
@@ -276,13 +280,6 @@ $('#tablaResultadosConSplit tfoot th').each(function() {
 // Funcionalidad del filtro
 $("#tablaResultadosConSplit tfoot input").on('keyup change', function() {
     table_con_split.column($(this).parent().index() + ':visible')
-    	.search(this.value)
-        .draw();
-});
-
-$("#search").on('keyup change', function() {
-    table_con_split.columns()
-    	.data()
     	.search(this.value)
         .draw();
 });

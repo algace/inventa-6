@@ -28,8 +28,8 @@ $(ID_DATETIMEPICKER_FECHA).datetimepicker({
 // INICIO - Configuración de la tabla Versiones
 var tabla_airblocks = $(ID_TABLA_AIRBLOCKS).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	data: JSON.parse(airblocksJson),
 	columnDefs: [{ 
 		targets: 0,
@@ -102,8 +102,8 @@ $("#tablaAirblocks tfoot input").on('keyup change', function() {
 // Configuración de la tabla del popup para seleccionar Versiones
 var tabla_seleccionar_airblocks =  $(ID_TABLA_SELECCIONAR_AIRBLOCK).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false

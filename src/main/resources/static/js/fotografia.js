@@ -34,8 +34,8 @@ $(ID_BOTON_CANCELAR_POPUP_SUBIR_FOTOGRAFIA).on('click', function() {
 // INICIO - Configuración de la tabla fotografias
 var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',

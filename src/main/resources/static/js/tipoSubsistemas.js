@@ -17,7 +17,7 @@ var rowNode = null;
 var tabla_tipos_sistemas = $(ID_TABLA_TIPOS_SISTEMAS).DataTable({ 
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
-	searching:  false,
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false

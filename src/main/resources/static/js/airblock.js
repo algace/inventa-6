@@ -25,7 +25,7 @@ const ID_TABLA_SECTORES_ATC = '#tablaSectoresATC';
 var tabla_sectores_atc = $(ID_TABLA_SECTORES_ATC).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
-	searching:  false,
+	searching:  true,
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',

@@ -56,8 +56,8 @@ var listData = [];
 // INICIO - Configuración de la tabla documentos
 var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
 	select: 'single',
-	dom: '<"top">rt<"bottom"ifpl><"clear">',
-	searching:  false,
+	dom: '<"top">rt<"bottom"ipl><"clear">',
+	searching:  true,
 	data: listData,
 	columnDefs: [{ 
 		targets: 1,
