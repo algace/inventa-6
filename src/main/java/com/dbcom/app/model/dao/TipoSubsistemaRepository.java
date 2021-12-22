@@ -14,7 +14,7 @@ import com.dbcom.app.model.entity.TipoSubsistema;
  * @author jgm
  */
 @Repository
-public interface TiposSubsistemasRepository extends JpaRepository<TipoSubsistema, Long> {
+public interface TipoSubsistemaRepository extends JpaRepository<TipoSubsistema, Long> {
 	
 	List<TipoSubsistema> findByTipoSistema(TipoSistema tipoSistema);
 

@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoSubsistemaDto;
  * 
  * @author jgm
  */
-public interface TiposSubsistemasService {
+public interface TipoSubsistemaService {
 
 	/**
 	 * Creamos un tipo de subsistema sin persistencia

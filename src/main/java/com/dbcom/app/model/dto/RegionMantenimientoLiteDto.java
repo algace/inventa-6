@@ -3,33 +3,26 @@ package com.dbcom.app.model.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Dto para Sistemas
- * 
- * @author jgm
- */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegionMantenimientoDto implements Serializable {
-	
+public class RegionMantenimientoLiteDto implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7441571973884824233L;
+	private static final long serialVersionUID = -1247066495454874666L;
 
-	private Long id;
-	
 	@NotNull(message = "{validation.notNull}")
-	@Size(min = 1, message = "{validation.notNull}")
+    private Long id;
+	
 	private String nombre;
 	
 	private String descripcion;

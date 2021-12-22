@@ -1,9 +1,12 @@
 package com.dbcom.app.model.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.dbcom.app.model.entity.RegionMantenimiento;
+import com.dbcom.app.model.entity.SectorMantenimiento;
 
 /**
  * Operaciones de persistencia contra la bbdd
@@ -11,8 +14,8 @@ import com.dbcom.app.model.entity.RegionMantenimiento;
  * @author jgm
  */
 @Repository
-public interface RegionMantenimientoRepository extends JpaRepository<RegionMantenimiento, Long> {
+public interface SectorMantenimientoRepository extends JpaRepository<SectorMantenimiento, Long> {
 	
-	public RegionMantenimiento findByNombre(String nombre);
+	List<SectorMantenimiento> findByRegionMantenimiento(RegionMantenimiento regionMantenimiento);
 
 }

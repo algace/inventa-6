@@ -15,24 +15,25 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * Dto para Subsistemas
+ * Dto para Sector de mantenimiento
  * 
  * @author jgm
  */
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = {"tipoSistema", "tiposSistemasDisponibles"})
+@EqualsAndHashCode(exclude = {"regionMantenimiento", "regionesMantenimientoDisponibles"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoSubsistemaDto implements Serializable {
+public class SectorMantenimientoDto implements Serializable {
+	
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 9003153481472335966L;
-	
-    private Long id;
+	private static final long serialVersionUID = -6587304688580657739L;
+
+	private Long id;
 	
 	@NotNull(message = "{validation.notNull}")
 	@Size(min = 1, message = "{validation.notNull}")
@@ -40,13 +41,11 @@ public class TipoSubsistemaDto implements Serializable {
 	
 	private String descripcion;
 	
-	private String interfazOperacion;
-	
 	@NotNull(message = "{validation.notNull}")
 	@Valid
-	private TipoSistemaLiteDto tipoSistema;
+	private RegionMantenimientoLiteDto regionMantenimiento;
 	
 	@Builder.Default
-	private List<TipoSistemaLiteDto> tiposSistemasDisponibles = new ArrayList<>();
+	private List<RegionMantenimientoDto> regionesMantenimientoDisponibles = new ArrayList<>();
 
 }

@@ -44,6 +44,21 @@ public class RegionMantenimientoServiceImpl implements RegionMantenimientoServic
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void delete(Long id) {
+
+		final RegionMantenimiento regionMantenimiento = this.regionMantenimientoRepository.findById(id)
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		this.regionMantenimientoRepository.delete(regionMantenimiento);		
+		
+		log.info(LoggerConstants.LOG_DELETE, id);
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<RegionMantenimientoDto> readAll() {
 
 		final List<RegionMantenimiento> regionesMantenimiento = this.regionMantenimientoRepository.findAll();
@@ -85,6 +100,27 @@ public class RegionMantenimientoServiceImpl implements RegionMantenimientoServic
 		log.info(LoggerConstants.LOG_CREATE, regionMantenimiento.getNombre());		
 		
 		return this.modelMapperUtils.map(regionMantenimiento, RegionMantenimientoDto.class);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public RegionMantenimientoDto update(RegionMantenimientoDto regionMantenimientoDto) {
+
+		final RegionMantenimiento regionMantenimiento = this.modelMapperUtils.map(regionMantenimientoDto, RegionMantenimiento.class);
+		
+		RegionMantenimiento regionMantenimientoBBDD = this.regionMantenimientoRepository.findById(regionMantenimiento.getId())
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		// Actualizamos el registro de bbdd
+		regionMantenimientoBBDD.setNombre(regionMantenimientoDto.getNombre());
+		regionMantenimientoBBDD.setDescripcion(regionMantenimientoDto.getDescripcion());
+		regionMantenimientoBBDD = this.regionMantenimientoRepository.save(regionMantenimientoBBDD);		
+		
+		log.info(LoggerConstants.LOG_UPDATE, regionMantenimientoBBDD.getId());
+		
+		return this.modelMapperUtils.map(regionMantenimientoBBDD, RegionMantenimientoDto.class);
 	}
 
 }

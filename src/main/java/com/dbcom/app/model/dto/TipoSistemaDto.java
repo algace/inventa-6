@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.NumberFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,20 +36,22 @@ public class TipoSistemaDto implements Serializable {
 	private Long id;
 	
 	@NotNull(message = "{validation.notNull}")
+	@Size(min = 1, message = "{validation.notNull}")
 	private String nombre;
 	
 	private String descripcion;
 	
 	@NotNull(message = "{validation.notNull}")
+	@Size(min = 1, message = "{validation.notNull}")
 	private String color;
 	
 	@NotNull(message = "{validation.notNull}")
+	@Size(min = 1, message = "{validation.notNull}")
 	private String colorTexto;
 	
-	private String ejemplo;
-	
 	@NotNull(message = "{validation.notNull}")
-	private String codigoFuncionRed;
+	@NumberFormat(pattern = "###,###.##")
+	private Double codigoFuncionRed;
 	
 	@Builder.Default
 	private List<TipoSubsistemaDto> tiposSubsistemas = new ArrayList<>();

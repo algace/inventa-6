@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
-import com.dbcom.app.service.TiposSubsistemasService;
+import com.dbcom.app.service.TipoSistemaService;
+import com.dbcom.app.service.TipoSubsistemaService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Controller
-public class TiposSubsistemasController {
+public class TipoSubsistemaController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_TIPO_SUBSISTEMA = "tipoSubsistema";
@@ -47,11 +50,17 @@ public class TiposSubsistemasController {
 	public static final String MAP_READ_TIPO_SUBSISTEMA = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO_SUBSISTEMA;
 	public static final String MAP_READALL_TIPOS_SUBSISTEMAS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS_SUBSISTEMAS;
 		
-	private final TiposSubsistemasService tiposSubsistemasService;
+	private final TipoSubsistemaService tiposSubsistemasService;
+	private final TipoSistemaService tiposSistemasService;
+	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
-	public TiposSubsistemasController(TiposSubsistemasService tiposSubsistemasService) {
+	public TipoSubsistemaController(TipoSubsistemaService tiposSubsistemasService,
+			TipoSistemaService tiposSistemasService,
+			ModelMapperUtils modelMapper) {
 		this.tiposSubsistemasService = tiposSubsistemasService;
+		this.tiposSistemasService = tiposSistemasService;
+		this.modelMapperUtils = modelMapper;
 	}
 	
 	/**
@@ -115,17 +124,22 @@ public class TiposSubsistemasController {
 		
 		final String vista;
 		if (bindingResult.hasErrors()) {
+			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-			model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.FALSE);
 			
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO_SUBSISTEMA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
-		
+			
+			//Se debe recuperar de nuevo la lista de sistemas disponibles y poner a null el id del sistema
+			tipoSubsistemaDto.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
+			tipoSubsistemaDto.getTipoSistema().setId(null);
+			model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, tipoSubsistemaDto);
+			
 			vista = VIEW_TIPO_SUBSISTEMA;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
@@ -155,7 +169,6 @@ public class TiposSubsistemasController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.TRUE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_TIPOS_SUBSISTEMAS);
@@ -184,7 +197,6 @@ public class TiposSubsistemasController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.TRUE);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO_SUBSISTEMA);
@@ -214,12 +226,16 @@ public class TiposSubsistemasController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-			model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.TRUE);
 	
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO_SUBSISTEMA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
 		
+			//Se debe recuperar de nuevo la lista de sistemas disponibles y poner a null el id del sistema
+			tipoSubsistemaDto.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
+			tipoSubsistemaDto.getTipoSistema().setId(null);
+			model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, tipoSubsistemaDto);
+			
 			vista = VIEW_TIPO_SUBSISTEMA;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
@@ -251,7 +267,6 @@ public class TiposSubsistemasController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
-		model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.TRUE);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_TIPO_SUBSISTEMA

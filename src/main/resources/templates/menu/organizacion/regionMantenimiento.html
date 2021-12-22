@@ -44,14 +44,14 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
-					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.sistemas}"></a></li>
-					    	<li class="breadcrumb-item"><a class="breadcrumb-a" th:href="@{${volver}}" th:text="#{html.menu.tiposSubsistemas}"></a></li>
-					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.tipoSubsistema}"></li>
+					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.organizacion}"></a></li>
+					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.regionesMantenimiento}"></li>
+					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.regionMantenimiento}"></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
 		
-					<form action="#" th:action="@{${action}}" th:object="${tipoSubsistema}" method="post" novalidate>
+					<form action="#" th:action="@{${action}}" th:object="${regionMantenimiento}" method="post" novalidate>
 						<input type="hidden" th:field="*{id}">
 								
 						<div id="accordionFormulario" class="accordionFormulario">
@@ -79,48 +79,12 @@
 									        </div>										        	
 		       							 </div>
 		       							 <div class="row  align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.sistema}"></div> 
-									        <div class="col-sm-6">
-									            <input type="text" 
-									            	th:field="*{tipoSistema.nombre}" th:class="'form-control'" 
-									            	th:disabled="'true'">
-									            <input type="hidden" th:field="*{tipoSistema.id}" >
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistema.id')}" th:errors="*{tipoSistema.id}"></div>
-									        </div>
-									        <div class="col-sm-4" th:if="!${esCampoSoloLectura}">
-										        <div class="botonera-crud" align="left">
-													<a id="enlaceAgnadirSistema" class="button-crud" data-toggle="modal" data-target="#popupSeleccionarSistema" href="#">
-														<div>
-															<i class="far fa-plus-square icono-crud"></i>
-															<span class="text-crud" th:text="#{html.boton.agnadir}"/>
-														</div>
-													</a>
-														
-													<a class="button-crud" id="enlaceBorrarSistema">
-														<div>
-															<i class="far fa-times-circle icono-crud"></i>
-															<span class="text-crud" th:text="#{html.boton.eliminar}"/>
-														</div>
-													</a>
-												</div >	
-									        </div >
-		       							 </div>
-		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
 									            <input type="text"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
-									        </div>										        	
-		       							 </div>
-		       							 <div class="row  align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.interfazOperacion}"></div>
-									        <div class="col-sm-6">
-									            <input type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{interfazOperacion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('interfazOperacion')}" th:errors="*{interfazOperacion}"></div>
 									        </div>										        	
 		       							 </div>							
 									</div>
@@ -159,44 +123,6 @@
 						<!--/* INICIO - Popup de eliminación */-->
 						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
 						<!--/* FIN - Popup de eliminación */-->
-						
-						<div id="popupSeleccionarSistema" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSeleccionarVersionTitulo" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-								        <h5 id="modalSeleccionarSistemaTitulo" class="modal-title" th:text="#{html.label.sistemas}"></h5>
-								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								        	<span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
-								        </button>
-								    </div>
-								    <div class="modal-body">
-								    	<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarSistema', 
-											idButtonBorrar='botonBorrarSistema', idInputSearch='searchSistemas', visible='false')"></div>
-								    	<table id="tablaTiposSistemas" class="table table-striped table-bordered" style="width:100%">
-											<thead>
-												<tr>
-													<th class="th-sm" th:text="id"></th>
-													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
-													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="tipoSistemaDisponible : *{tiposSistemasDisponibles}">
-													<td th:text="${tipoSistemaDisponible.id}"></td>
-													<td th:text="${tipoSistemaDisponible.nombre}"></td>
-													<td th:text="${tipoSistemaDisponible.descripcion}"></td>
-												</tr>
-											</tbody>
-										</table>
-								    </div>
-								    <div class="modal-footer">
-								        <button id="botonAceptarSeleccionarSistema" type="button" class="btn btn-primary" data-dismiss="modal" disabled 
-								        	th:text="#{html.boton.aceptar}"></button>
-								        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{html.boton.cancelar}"></button>
-								    </div>
-								</div>
-							</div>
-						</div>
 			
 					</form>
 					
@@ -222,11 +148,10 @@
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
-			$('#collapseSistemas, #collapseGestionBBDD').collapse('show', { "animation": false });
+			$('#collapseOrganizacion, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
-		<script type="text/javascript" th:src="@{/js/tipoSubsistemas.js}"></script>
 	
 	</body>
 </html>

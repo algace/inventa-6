@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
-import com.dbcom.app.model.dao.TiposSistemasRepository;
-import com.dbcom.app.model.dao.TiposSubsistemasRepository;
+import com.dbcom.app.model.dao.TipoSistemaRepository;
+import com.dbcom.app.model.dao.TipoSubsistemaRepository;
 import com.dbcom.app.model.dto.TipoSistemaDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
 import com.dbcom.app.model.entity.TipoSistema;
@@ -21,15 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class TiposSistemasServiceImpl implements TiposSistemasService {
+public class TipoSistemaServiceImpl implements TipoSistemaService {
 
-	private final TiposSistemasRepository tipoSistemasRepository;
-	private final TiposSubsistemasRepository tipoSubsistemasRepository;
+	private final TipoSistemaRepository tipoSistemasRepository;
+	private final TipoSubsistemaRepository tipoSubsistemasRepository;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
-	public TiposSistemasServiceImpl(TiposSistemasRepository tipoSistemasRepository,
-			TiposSubsistemasRepository tipoSubsistemasRepository,
+	public TipoSistemaServiceImpl(TipoSistemaRepository tipoSistemasRepository,
+			TipoSubsistemaRepository tipoSubsistemasRepository,
 			ModelMapperUtils modelMapper) {
 		this.tipoSistemasRepository = tipoSistemasRepository;
 		this.tipoSubsistemasRepository = tipoSubsistemasRepository;
@@ -126,7 +126,6 @@ public class TiposSistemasServiceImpl implements TiposSistemasService {
 		tipoSistemaBBDD.setDescripcion(tipoSistemaDto.getDescripcion());
 		tipoSistemaBBDD.setColor(tipoSistemaDto.getColor());
 		tipoSistemaBBDD.setColorTexto(tipoSistema.getColorTexto());
-		tipoSistemaBBDD.setEjemplo(tipoSistema.getEjemplo());
 		tipoSistemaBBDD.setCodigoFuncionRed(tipoSistema.getCodigoFuncionRed());
 		tipoSistemaBBDD.setTiposSubsistemas(tipoSistemaBBDD.getTiposSubsistemas());
 		tipoSistemaBBDD = this.tipoSistemasRepository.save(tipoSistemaBBDD);		

@@ -3,7 +3,7 @@ package com.dbcom.app.model.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dbcom.app.model.entity.TipoSistema;
+import com.dbcom.app.model.entity.RegionOperativa;
 
 /**
  * Operaciones de persistencia contra la bbdd
@@ -11,6 +11,8 @@ import com.dbcom.app.model.entity.TipoSistema;
  * @author jgm
  */
 @Repository
-public interface TiposSistemasRepository extends JpaRepository<TipoSistema, Long> {
+public interface RegionOperativaRepository extends JpaRepository<RegionOperativa, Long> {
+	
+	public RegionOperativa findByNombre(String nombre);
 
 }

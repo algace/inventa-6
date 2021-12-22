@@ -19,12 +19,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegionMantenimientoDto implements Serializable {
+public class RegionOperativaDto implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7441571973884824233L;
+	private static final long serialVersionUID = -614408699102256697L;
 
 	private Long id;
 	

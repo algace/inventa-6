@@ -3,7 +3,7 @@ package com.dbcom.app.model.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dbcom.app.model.entity.RegionMantenimiento;
+import com.dbcom.app.model.entity.TipoSistema;
 
 /**
  * Operaciones de persistencia contra la bbdd
@@ -11,8 +11,6 @@ import com.dbcom.app.model.entity.RegionMantenimiento;
  * @author jgm
  */
 @Repository
-public interface RegionMantenimientoRepository extends JpaRepository<RegionMantenimiento, Long> {
-	
-	public RegionMantenimiento findByNombre(String nombre);
+public interface TipoSistemaRepository extends JpaRepository<TipoSistema, Long> {
 
 }

@@ -177,7 +177,10 @@ $("#search").on('keyup change', function() {
 	        .draw();
     }else{
 		if(table_con_split){
-			
+			table_con_split.columns()
+		    	.data()
+		    	.search(this.value)
+		        .draw()
 		}else{
 		    table_sistemas.columns()
 		    	.data()
