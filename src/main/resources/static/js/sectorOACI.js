@@ -17,7 +17,7 @@ var rowNode = null;
 var tabla_regiones_operativas = $(ID_TABLA_REGIONES_OPERATIVAS).DataTable({ 
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
-	searching:  false,
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
@@ -74,7 +74,7 @@ $(ID_BOTON_BORRAR_REGION).on('click', function () {
 $(ID_BOTON_ACEPTAR_SELECCIONAR_REGION).on('click', function () {
 
 	document.getElementById(ID_INPUT_HIDDEN_ID_REGION).value = rowElement[0];
-	document.getElementById(ID_INPUT_NOMBRE_REGION).value = rowElement[1];
+	document.getElementById(ID_INPUT_NOMBRE_REGION).value = (rowElement[1]);
 	
 });
 
