@@ -11,6 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.ChasisPasarelaRepository;
 import com.dbcom.app.model.dto.ChasisPasarelaDto;
+import com.dbcom.app.model.dto.ChasisPasarelaLiteDto;
 import com.dbcom.app.model.entity.ChasisPasarela;
 import com.dbcom.app.model.entity.TipoChasis;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -65,6 +66,18 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 
 		final List<ChasisPasarelaDto> chasisPasarelasDto = new ArrayList<>(chasisPasarelas.size());		
 		chasisPasarelas.forEach(chasisPasarela -> chasisPasarelasDto.add(this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaDto.class)));
+		
+		return chasisPasarelasDto;
+	}
+	
+	public List<ChasisPasarelaLiteDto> readAllLite() {
+		
+		log.info(LoggerConstants.LOG_READALL);
+
+		final List<ChasisPasarela> chasisPasarelas = this.chasisPasarelaRepository.findAll();
+
+		final List<ChasisPasarelaLiteDto> chasisPasarelasDto = new ArrayList<>(chasisPasarelas.size());		
+		chasisPasarelas.forEach(chasisPasarela -> chasisPasarelasDto.add(this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaLiteDto.class)));
 		
 		return chasisPasarelasDto;
 	}
