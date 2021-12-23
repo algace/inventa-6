@@ -2,10 +2,12 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
@@ -116,6 +118,30 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 		log.info(LoggerConstants.LOG_UPDATE, tipoTopologiaBBDD.getId());
 		
 		return this.modelMapperUtils.map(tipoTopologiaBBDD, TipoTopologiaDto.class);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<TipoTopologiaDto> getTiposTopologiasConValorPorDefecto() {
+
+		TipoTopologia primerTipoTopologia;
+		TipoTopologia tipoTopologiaPorDefecto = tipoTopologiaRepository.findByNombre(ApplicationConstants.TIPO_TOPOLOGIA_POR_DEFECTO);
+		List<TipoTopologia> listaTiposTopologia = new ArrayList<TipoTopologia>();
+		
+		if (tipoTopologiaPorDefecto != null) {
+			primerTipoTopologia = tipoTopologiaPorDefecto;
+		} else {
+			primerTipoTopologia = TipoTopologia.builder().build();
+		}
+		listaTiposTopologia.add(primerTipoTopologia);
+		listaTiposTopologia.addAll(tipoTopologiaRepository.findAll()
+				                                          .stream()
+				                                          .filter(tipoTopologia -> !tipoTopologia.equals(primerTipoTopologia))
+				                                          .collect(Collectors.toList()));
+		
+		return this.modelMapperUtils.mapAll2List(listaTiposTopologia, TipoTopologiaDto.class);
 	}
 	
 }

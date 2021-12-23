@@ -3,17 +3,14 @@ package com.dbcom.app.model.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dbcom.app.model.entity.TipoTopologia;
-
+import com.dbcom.app.model.entity.RedTT;
 
 /**
  * Operaciones de persistencia contra la bbdd
  * 
- * @author jose.vallve
+ * @author neoris
  */
 @Repository
-public interface TipoTopologiaRepository extends JpaRepository<TipoTopologia, Short> {
-	
-	public TipoTopologia findByNombre(String nombre);
+public interface RedTTRepository extends JpaRepository<RedTT, Long> {
 
 }
