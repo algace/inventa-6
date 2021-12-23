@@ -24,7 +24,7 @@ import com.dbcom.app.utils.ModelMapperUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author jgm
+ * @author neoris
  * Enlace entre la vista y la lógica de negocio
  */
 @Slf4j

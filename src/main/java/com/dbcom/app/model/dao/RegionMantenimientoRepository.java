@@ -8,7 +8,7 @@ import com.dbcom.app.model.entity.RegionMantenimiento;
 /**
  * Operaciones de persistencia contra la bbdd
  * 
- * @author jgm
+ * @author neoris
  */
 @Repository
 public interface RegionMantenimientoRepository extends JpaRepository<RegionMantenimiento, Long> {

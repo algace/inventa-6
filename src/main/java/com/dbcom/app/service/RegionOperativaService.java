@@ -7,7 +7,7 @@ import com.dbcom.app.model.dto.RegionOperativaDto;
 /**
  * Lógica para regiones operativas
  * 
- * @author jgm
+ * @author neoris
  */
 public interface RegionOperativaService {
 

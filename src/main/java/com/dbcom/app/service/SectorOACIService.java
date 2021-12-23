@@ -7,7 +7,7 @@ import com.dbcom.app.model.dto.SectorOACIDto;
 /**
  * Lógica para tipos de subsistemas
  * 
- * @author jgm
+ * @author neoris
  */
 public interface SectorOACIService {
 	

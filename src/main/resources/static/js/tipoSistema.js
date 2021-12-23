@@ -1,5 +1,5 @@
 /*!
- * Funciones propias de version.html
+ * Funciones propias de tipoSistema.html
  */
 
 const ID_TABLA_TIPOS_SUBSISTEMAS = '#tablaTiposSubsistemas';

@@ -10,9 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Dto para Sistemas
+ * Dto para validación una región operativa
  * 
- * @author jgm
+ * @author neoris
  */
 @Data
 @Builder

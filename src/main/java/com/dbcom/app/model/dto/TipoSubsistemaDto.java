@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 /**
  * Dto para Subsistemas
  * 
- * @author jgm
+ * @author neoris
  */
 @Data
 //Evitamos referencias circulares

@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 /**
  * Entidad para Subistemas
  * 
- * @author jgm
+ * @author neoris
  */
 @Entity
 @Data

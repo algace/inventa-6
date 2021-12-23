@@ -1,5 +1,5 @@
 /*!
- * Funciones propias de version.html
+ * Funciones propias de sectorMantenimiento.html
  */
 
 const ID_TABLA_REGIONES_MANTENIMIENTO = '#tablaRegionesMantenimiento';

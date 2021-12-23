@@ -11,7 +11,7 @@ import com.dbcom.app.model.entity.SectorMantenimiento;
 /**
  * Operaciones de persistencia contra la bbdd
  * 
- * @author jgm
+ * @author neoris
  */
 @Repository
 public interface SectorMantenimientoRepository extends JpaRepository<SectorMantenimiento, Long> {

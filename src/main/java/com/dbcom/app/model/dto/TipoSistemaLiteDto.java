@@ -9,6 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Dto para validación una tipo de sistema
+ * 
+ * @author neoris
+ */
 @Data
 @Builder
 @AllArgsConstructor

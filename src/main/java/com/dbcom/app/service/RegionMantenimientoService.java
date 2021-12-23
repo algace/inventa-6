@@ -7,7 +7,7 @@ import com.dbcom.app.model.dto.RegionMantenimientoDto;
 /**
  * Lógica para regiones de mantenimiento
  * 
- * @author jgm
+ * @author neoris
  */
 public interface RegionMantenimientoService {
 

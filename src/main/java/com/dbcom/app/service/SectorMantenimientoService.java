@@ -7,7 +7,7 @@ import com.dbcom.app.model.dto.SectorMantenimientoDto;
 /**
  * Lógica para tipos de subsistemas
  * 
- * @author jgm
+ * @author neoris
  */
 public interface SectorMantenimientoService {
 

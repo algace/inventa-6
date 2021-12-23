@@ -9,6 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Dto para validación una región de manetnimiento
+ * 
+ * @author neoris
+ */
 @Data
 @Builder
 @AllArgsConstructor

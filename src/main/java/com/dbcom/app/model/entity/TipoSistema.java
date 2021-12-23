@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 /**
  * Entidad para sistemas
  * 
- * @author jgm
+ * @author neoris
  */
 @Entity
 @Data

@@ -3,7 +3,7 @@ package com.dbcom.app.constants;
 /**
  * Constantes comunes de la aplicación
  * 
- * @author jgm
+ * @author neoris
  */
 public final class ApplicationConstants {
 	

@@ -8,7 +8,7 @@ import com.dbcom.app.model.entity.SectorOACI;
 /**
  * Operaciones de persistencia contra la bbdd
  * 
- * @author jgm
+ * @author neoris
  */
 @Repository
 public interface SectorOACIRepository extends JpaRepository<SectorOACI, Long> {

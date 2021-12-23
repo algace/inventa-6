@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 /**
  * Dto para Sector de mantenimiento
  * 
- * @author jgm
+ * @author neoris
  */
 @Data
 //Evitamos referencias circulares

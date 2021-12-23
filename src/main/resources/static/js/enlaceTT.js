@@ -1,5 +1,5 @@
 /*!
- * Funciones propias de redTT.html
+ * Funciones propias de enlaceTT.html
  */
 
 const ID_TABLA_ENLACES_TT = '#tablaEnlacesTT';

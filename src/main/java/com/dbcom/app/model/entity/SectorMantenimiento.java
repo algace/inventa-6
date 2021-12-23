@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 /**
  * Entidad para Sector de mantenimiento
  * 
- * @author jgm
+ * @author neoris
  */
 @Entity
 @Data

@@ -1,5 +1,5 @@
 /*!
- * Funciones propias de version.html
+ * Funciones propias de sectorOACI.html
  */
 
 const ID_TABLA_REGIONES_OPERATIVAS = '#tablaRegionesOperativas';
