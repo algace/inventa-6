@@ -2,6 +2,7 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class RegionOperativaLiteDto implements Serializable {
 	private static final long serialVersionUID = -6710770299966165281L;
 
 	@NotNull(message = "{validation.notNull}")
+	@Min(value = 1, message = "{validation.notNull}")
 	private Long id;
 	
 	private String nombre;

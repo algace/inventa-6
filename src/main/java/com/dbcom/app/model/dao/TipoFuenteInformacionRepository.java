@@ -14,4 +14,5 @@ import com.dbcom.app.model.entity.TipoFuenteInformacion;
 @Repository
 public interface TipoFuenteInformacionRepository extends JpaRepository<TipoFuenteInformacion, Short> {
 
+	public TipoFuenteInformacion findByNombre(String nombre);
 }
