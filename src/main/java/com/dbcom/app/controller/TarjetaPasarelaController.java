@@ -15,23 +15,20 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.SectorATCDto;
-import com.dbcom.app.service.RegionOperativaService;
-import com.dbcom.app.service.SectorATCService;
-import com.dbcom.app.service.TipoFuenteInformacionService;
-import com.dbcom.app.service.TipoSectorATCService;
+import com.dbcom.app.model.dto.TarjetaPasarelaDto;
+import com.dbcom.app.service.TarjetaPasarelaService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class SectorATCController {
+public final class TarjetaPasarelaController {
 	// Atributos de la vista
-	private static final String ATTRIBUTE_TIPO = "sectorATC";
+	private static final String ATTRIBUTE_TIPO = "tarjetaPasarela";
 
 	// Vistas	
-	private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + ATTRIBUTE_TIPO;
-	private static final String VIEW_TIPOS = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + "sectoresATC";		
+	private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + ATTRIBUTE_TIPO;
+	private static final String VIEW_TIPOS = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + "tarjetasPasarela";		
 
 	// Mapeo de las acciones
 	public static final String MAP_CREATE_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO 
@@ -45,25 +42,15 @@ public class SectorATCController {
 	public static final String MAP_READ_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO;
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
-	private final SectorATCService sectorATCService;
-	private final TipoFuenteInformacionService tipoFuenteInformacionService;
-	private final TipoSectorATCService tipoSectorATCService;
-	private final RegionOperativaService regionOperativaService;
-	
+	private final TarjetaPasarelaService tarjetaPasarelaService;
 	
 	@Autowired
-	public SectorATCController(SectorATCService sectorATCService,
-			TipoFuenteInformacionService tipoFuenteInformacionService,
-			TipoSectorATCService tipoSectorATCService,
-			RegionOperativaService regionOperativaService) {
-		this.sectorATCService = sectorATCService;
-		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
-		this.tipoSectorATCService = tipoSectorATCService;
-		this.regionOperativaService = regionOperativaService;
+	public TarjetaPasarelaController(TarjetaPasarelaService tarjetaPasarelaService) {
+		this.tarjetaPasarelaService = tarjetaPasarelaService;
 	}
 	
 	/**
-	 * Obtenemos un listado de sectores ATC
+	 * Obtenemos un listado de los tipos de chasis
 	 * @param model Modelo
 	 * @return Vista
 	 */
@@ -71,7 +58,7 @@ public class SectorATCController {
 	public String readAll(final Model model) {
 		
 		// Contenido
-		model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.sectorATCService.readAll());		
+		model.addAttribute(ControllerConstants.ATTRIBUTE_LISTA, this.tarjetaPasarelaService.readAll());		
 
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_LEER, MAP_READ_TIPO);
@@ -86,7 +73,7 @@ public class SectorATCController {
 	}
 	
 	/**
-	 * Creamos un sector ATC sin persistencia
+	 * Creamos una tarjeta sin persistencia
 	 * @param model modelo
 	 * @return Vista
 	 */
@@ -94,7 +81,7 @@ public class SectorATCController {
 	public String create(final Model model) {
 
 		// Creamos el registro
-		model.addAttribute(ATTRIBUTE_TIPO, this.sectorATCService.create());
+		model.addAttribute(ATTRIBUTE_TIPO, this.tarjetaPasarelaService.create());
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -112,14 +99,14 @@ public class SectorATCController {
 	}
 	
 	/**
-	 * Persistimos el sector ATC pasado como parámetro
-	 * @param sectorATCDto Sector ATC a persistir
+	 * Persistimos la tarjeta pasado como parámetro
+	 * @param tarjetaPasarelaDto Tarjeta a persistir
 	 * @param bindingResult Validaciones
 	 * @param model Modelo
 	 * @return Vista
 	 */
 	@PostMapping(MAP_SAVE_TIPO)
-	public String save(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final SectorATCDto sectorATCDto, 
+	public String save(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final TarjetaPasarelaDto tarjetaPasarelaDto, 
 			final BindingResult bindingResult, final Model model) {	
 		
 		final String vista;
@@ -135,26 +122,20 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
-			sectorATCDto.setRegionesOperativas(regionOperativaService.readAll());
-			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
-			
-			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
-			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.sectorATCService.save(sectorATCDto);
+			this.tarjetaPasarelaService.save(tarjetaPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
-			log.info(LoggerConstants.LOG_SAVE, sectorATCDto.getId());
+			log.info(LoggerConstants.LOG_SAVE, tarjetaPasarelaDto.getId());
 		}
 		
 		return vista;
 	}
 	
 	/**
-	 * Obtenemos el sector ATC con el id facilitado
+	 * Obtenemos la tarjeta con el id facilitado
 	 * @param id Identificador
 	 * @param model Modelo
 	 * @return Vista
@@ -163,7 +144,7 @@ public class SectorATCController {
 	public String read(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.sectorATCService.read(id));
+		model.addAttribute(ATTRIBUTE_TIPO, this.tarjetaPasarelaService.read(id));
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -182,7 +163,7 @@ public class SectorATCController {
 	}
 	
 	/**
-	 * Preparamos la vista para la actualización del sector ATC pasado como parámetro
+	 * Preparamos la vista para la actualización de la tarjeta pasada como parámetro
 	 * @param id Identificador
 	 * @param model Modelo
 	 * @return Vista
@@ -191,7 +172,7 @@ public class SectorATCController {
 	public String updateGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.sectorATCService.read(id));
+		model.addAttribute(ATTRIBUTE_TIPO, this.tarjetaPasarelaService.read(id));
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -210,14 +191,14 @@ public class SectorATCController {
 	}
 	
 	/**
-	 * Actualizamos el sector ATC pasado como parámetro
-	 * @param sectorATCDto Sector ATC a actualizar
+	 * Actualizamos la tarjeta pasado como parámetro
+	 * @param tarjetaPasarelaDto Tarjeta a actualizar
 	 * @param bindingResult Validaciones
 	 * @param model Modelo
 	 * @return Vista
 	 */
 	@PostMapping(MAP_UPDATE_TIPO)
-	public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final SectorATCDto sectorATCDto, 
+	public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_TIPO) final TarjetaPasarelaDto tarjetaPasarelaDto, 
 			final BindingResult bindingResult, final Model model) {		
 		
 		final String vista;
@@ -233,25 +214,20 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
-			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
-			
-			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
-			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.sectorATCService.update(sectorATCDto);
+			this.tarjetaPasarelaService.update(tarjetaPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
-			log.info(LoggerConstants.LOG_UPDATE, sectorATCDto.getId());			
+			log.info(LoggerConstants.LOG_UPDATE, tarjetaPasarelaDto.getId());			
 		}
 
 		return vista;		
 	}
 	
 	/**
-	 * Preparamos la vista para la eliminación del sector ATC pasado como parámetro
+	 * Preparamos la vista para la eliminación de la tarjeta pasada como parámetro
 	 * @param id Identificador
 	 * @param model Modelo
 	 * @return Vista
@@ -260,9 +236,9 @@ public class SectorATCController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.sectorATCService.read(id));
+		model.addAttribute(ATTRIBUTE_TIPO, this.tarjetaPasarelaService.read(id));
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
-				MessagesConstants.POPUP_ELIMINAR_SECTORATC_PREGUNTA);
+				MessagesConstants.POPUP_ELIMINAR_TARJETAPASARELA_PREGUNTA);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -281,13 +257,13 @@ public class SectorATCController {
 	}
 	
 	/**
-	 * Eliminación del sector ATC pasado como parámetro
+	 * Eliminación de la tarjeta pasada como parámetro
 	 * @param id Identificador
 	 * @return Vista
 	 */
 	@PostMapping(MAP_DELETE_TIPO + "/{id}")
 	public String deletePOST(@PathVariable("id") final Short id) {		
-		this.sectorATCService.delete(id);					
+		this.tarjetaPasarelaService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 	}

@@ -40,6 +40,8 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_SECTOR_MANTENIMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTORATC_PREGUNTA;
+	public static String POPUP_ELIMINAR_SERVICIORADIO_PREGUNTA;
+	public static String POPUP_ELIMINAR_TARJETAPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
@@ -124,6 +126,11 @@ public final class MessagesConstants {
 	public void setMessagePopupEliminarSectorATCPregunta(final String texto) {
 		POPUP_ELIMINAR_SECTORATC_PREGUNTA = texto;
 	}
+	
+	@Value("${html.label.eliminar.servicioRadio.pregunta}")
+	public void setMessagePopupEliminarServicioRadioPregunta(final String texto) {
+		POPUP_ELIMINAR_SERVICIORADIO_PREGUNTA = texto;
+	}
 
 	@Value("${html.label.eliminar.regionMantenimiento.pregunta}")
 	public void setMessagePopupEliminarRegionMantenimientoPregunta(final String texto) {
@@ -143,6 +150,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.sectorOACI.pregunta}")
 	public void setMessagePopupEliminarSectorOACIPregunta(final String texto) {
 		POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.tarjetaPasarela.pregunta}")
+	public void setMessagePopupEliminarTarjetaPregunta(final String texto) {
+		POPUP_ELIMINAR_TARJETAPASARELA_PREGUNTA = texto;
 	}
 	
 	@Value("${html.label.eliminar.tipoDocumento.aviso}")

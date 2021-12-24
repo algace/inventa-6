@@ -48,10 +48,13 @@ public final class SectorATC implements Serializable{
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
 	
-	//FALTA REGION OPERATIVA!!!!!!!!!!
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="regionOperativa_id")
+	@NotNull(message = "{validation.notNull}")
+	private RegionOperativa regionOperativa;
 
-	@ManyToOne(fetch = FetchType.EAGER,
-			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="tipoSectorATC_id")
 	@NotNull(message = "{validation.notNull}")
 	private TipoSectorATC tipoSectorATC;
 	
@@ -60,8 +63,8 @@ public final class SectorATC implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaPublicacion;
 	
-	@ManyToOne(fetch = FetchType.EAGER,
-			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="tipoFuenteInformacion_id")
 	@NotNull(message = "{validation.notNull}")
 	private TipoFuenteInformacion tipoFuenteInformacion;
 	

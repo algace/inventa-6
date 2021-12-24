@@ -3,6 +3,7 @@ package com.dbcom.app.model.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,7 +30,8 @@ public final class ChasisPasarelaDto implements Serializable{
 	private String nombre;
 	
 	@NotNull(message = "{validation.notNull}")
-	private TipoChasisDto tipoChasis;
+	@Valid
+	private TipoChasisLiteDto tipoChasis;
 	
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")

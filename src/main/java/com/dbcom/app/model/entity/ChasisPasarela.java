@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
@@ -39,8 +40,9 @@ public class ChasisPasarela implements Serializable{
 	private String nombre;
 
 	
-	@ManyToOne(fetch = FetchType.EAGER,
-			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="tipoChasis_id")
+	@NotNull(message = "{validation.notNull}")
 	private TipoChasis tipoChasis;
 	
 	@Max(999)

@@ -26,4 +26,5 @@ public class TipoChasisLiteDto implements Serializable {
 	private Long id;
 	
 	private String nombre;
+	
 }

@@ -27,4 +27,3 @@ public class FuncionPasarelaLiteDto implements Serializable {
 	
 	private String nombre;
 }
-

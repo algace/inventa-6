@@ -1,10 +1,10 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import com.dbcom.app.model.entity.TipoChasis;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class AmbitoRecursoDto implements Serializable{
-	
+public class ChasisPasarelaLiteDto implements Serializable{
+
 	/**
 	 * 
 	 */
@@ -24,12 +24,8 @@ public final class AmbitoRecursoDto implements Serializable{
 
 	private Short id;
 	
-	@Size(min = 1, max = 50, message = "{validation.min1max50}")
-	private String nombre;
-	
 	@NotNull(message = "{validation.notNull}")
-	private FuncionPasarelaLiteDto funcionPasarela;
+	private TipoChasis tipoChasis;
 	
-	private List<FuncionPasarelaDto> funcionPasarelas;
-
+	private Boolean isSeleccionado;
 }

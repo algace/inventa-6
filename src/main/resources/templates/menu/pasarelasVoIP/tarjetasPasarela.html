@@ -44,55 +44,31 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
-					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.sectoresEspacioAereo}"></a></li>
-					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.sectoresATC}"></a></li>
+					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.pasarelasVoIP}"></a></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.tarjetas}"></a></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
 			
 					<div th:replace="fragments/botoneraTabla :: botoneraTabla"></div>
 			 
-					<table id="tablaResultadosConSplit" class="table table-striped table-bordered" style="width: 100%">
+					<table id="tablaResultados" class="table table-striped table-bordered" style="width: 100%">
 						<thead>
 					    	<tr>
 					      		<th class="th-sm"  hidden="true">
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.nombre}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.regionOperativa}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.tipoFuenteInformacion}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.fechaPublicacion}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.tiposSectoresATC}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMax}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.flMin}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.descripcion}"></th>
-					    		<th class="th-sm"  th:text="#{html.tabla.cabecera.airblocks}"></th>
+					    		<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
 					    	</tr>
 					  	</thead>
 					  	<tbody>			 
-						  	<tr th:each="sectorATC : ${lista}" th:id="${sectorATC.id}">
-						  		<td hidden="true" th:text="${sectorATC.id}"></td>
-						  		<td th:text="${sectorATC.nombre}"></td>
-						  		<td th:text="${sectorATC.regionOperativa.nombre}"></td>
-						  		<td th:text="${sectorATC.tipoFuenteInformacion.nombre}"></td>
-						  		<td th:text="${sectorATC.fechaPublicacion}"></td>
-						  		<td th:text="${sectorATC.tipoSectorATC.nombre}"></td>
-						  		<td th:text="${sectorATC.flMax}"></td>
-						  		<td th:text="${sectorATC.flMin}"></td>
-						  		<td th:text="${sectorATC.descripcion}"></td>
-						  		<td th:text="${sectorATC.airblockList}"></td>
+						  	<tr th:each="tarjetasPasarela : ${lista}" th:id="${tarjetasPasarela.id}">
+						  		<td hidden="true" th:text="${tarjetasPasarela.id}"></td>
+						  		<td th:text="${tarjetasPasarela.nombre}"></td>
 						  	</tr>			
 						</tbody>
 						<tfoot>
 							<tr>
 					      		<th hidden="true">
 					    		<th th:text="#{html.tabla.pie.nombre}"></th>
-					    		<th th:text="#{html.tabla.pie.regionOperativa}"></th>
-					    		<th th:text="#{html.tabla.pie.tipoFuenteInformacion}"></th>
-					    		<th th:text="#{html.tabla.pie.fechaPublicacion}"></th>
-					    		<th th:text="#{html.tabla.pie.tiposSectoresATC}"></th>
-					      		<th th:text="#{html.tabla.pie.flMax}"></th>
-					      		<th th:text="#{html.tabla.pie.flMin}"></th>
-					      		<th th:text="#{html.tabla.pie.descripcion}"></th>
-					      		<th th:text="#{html.tabla.pie.airblocks}"></th>
 					    	</tr>
 						</tfoot>
 					</table>
@@ -114,17 +90,14 @@
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
-		
+		<script type="text/javascript" th:src="@{/js/listados.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
-			var targetSplit = 8;
-			$('#collapseSectoresEspacioAereo, #collapseGestionBBDD').collapse('show', { "animation": false });
+			$('#collapsePasarelasVoIP, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
-		
-		<script type="text/javascript" th:src="@{/js/listados.js}"></script>
 				
 	</body>
 </html>

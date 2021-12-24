@@ -13,8 +13,11 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
+import com.dbcom.app.model.dto.RegionOperativaDto;
+import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.entity.Airblock;
+import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.model.entity.SectorATC;
 import com.dbcom.app.model.entity.TipoFuenteInformacion;
 import com.dbcom.app.model.entity.TipoSectorATC;
@@ -31,26 +34,33 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	private final TipoSectorATCService tipoSectorATCService;
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
 	private final AirblockService airblockService;
+	private final RegionOperativaService regionOperativaService;
 	
 	@Autowired
 	public SectorATCServiceImpl(ModelMapperUtils modelMapper,
 									   SectorATCRepository sectorATCRepository,
 									   TipoSectorATCService tipoSectorATCService,
 									   TipoFuenteInformacionService tipoFuenteInformacionService,
-									   AirblockService airblockService) {
+									   AirblockService airblockService,
+									   RegionOperativaService regionOperativaService) {
 		this.modelMapperUtils = modelMapper;
 		this.sectorATCRepository = sectorATCRepository;
 		this.tipoSectorATCService = tipoSectorATCService;
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 		this.airblockService = airblockService;
+		this.regionOperativaService = regionOperativaService;
 	}
 
 	@Override
 	public SectorATCDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
+				
+		List<RegionOperativaDto> listaRegionesDisponibles = regionOperativaService.getRegionesOperativasConValorPorDefecto();
 		return  SectorATCDto.builder()
 				.tiposSectorATC(tipoSectorATCService.readAll())
 				.tiposFuenteInformacion(tipoFuenteInformacionService.readAll())
+				.regionOperativa(this.modelMapperUtils.map(listaRegionesDisponibles.get(0), RegionOperativaLiteDto.class))
+				.regionesOperativas(listaRegionesDisponibles)
 				.airblocksNoIncluidos(this.modelMapperUtils.mapAll2List(airblockService.readAll(), AirblockDto.class))
 				.build();
 	}
@@ -103,6 +113,7 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		SectorATCDto sector = this.modelMapperUtils.map(sectorATC, SectorATCDto.class);
 		sector.setTiposSectorATC(tipoSectorATCService.readAll());
 		sector.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
+		sector.setRegionesOperativas(regionOperativaService.readAll());
 		sector.setAirblocksNoIncluidos(this.modelMapperUtils.mapAll2List(this.airblockService.readNotContains(id), AirblockDto.class));
 
 		return sector; 
@@ -133,6 +144,7 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		
 		// Actualizamos el registro de bbdd
 		sectorATCBBDD.setNombre(sectorATCDto.getNombre());
+		sectorATCBBDD.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionOperativa(), RegionOperativa.class));
 		sectorATCBBDD.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTipoFuenteInformacion(), TipoFuenteInformacion.class));
 		sectorATCBBDD.setFechaPublicacion(sectorATCDto.getFechaPublicacion());
 		sectorATCBBDD.setTipoSectorATC(this.modelMapperUtils.map(sectorATCDto.getTipoSectorATC(), TipoSectorATC.class));

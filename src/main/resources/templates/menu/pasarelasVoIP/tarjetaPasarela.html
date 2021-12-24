@@ -6,12 +6,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!--/* INICIO - CSS */-->
-		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
-		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		<link rel="stylesheet" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
+		<link rel="stylesheet" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
 		
 		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/formulario.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/botoneraTabla.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/dataTable.css}">
 		<!--/* FIN - CSS */-->
 		
 		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
@@ -40,12 +44,12 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
 					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.pasarelasVoIP}"></a></li>
-					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.ambitosRecursos}"></a></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" th:text="#{html.menu.tarjetas}"></a></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
 		
-					<form action="#" th:action="@{${action}}" th:object="${ambitoRecurso}" method="post" novalidate>
+					<form action="#" th:action="@{${action}}" th:object="${tarjetaPasarela}" method="post" novalidate>
 						<input type="hidden" th:field="*{id}">
 								
 						<div id="accordionFormulario" class="accordionFormulario">
@@ -71,27 +75,42 @@
 									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 									        </div>	
-									    </div>
-									    <div class="row align-items-center">
-									        <div class="col-sm-2" th:text="#{html.label.funcionPasarela}"></div>
-									        <div class="col-sm-6">
-											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{funcionPasarela.id}">
-											    	<option th:value="0"></option>
-											    	<option th:each="funcionPasarela : *{funcionPasarelas}" th:value="${funcionPasarela.id}" th:text="${funcionPasarela.nombre}"></option>
-											    </select>
-											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('funcionPasarela')}" th:errors="*{funcionPasarela}"></div>
-									            <!--<input id="tipoChasis" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{tipoChasis}" th:disabled="${esCampoSoloLectura} ? 'true'"> -->
-									           
-									        </div>
-									     </div>
+									    </div> 
 									</div>
 								</div>
 							</div>
 							<!--/* FIN - Información general */-->
-							
+							<!--/* INICIO - chasis */-->
+							<div class="card">
+								<div id="headingChasis" class="card-header">
+									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseChasis" aria-expanded="false"
+										aria-controls="collapseChasis">
+										<div style="display:flex;">
+											<div class="text-tab-accordion" ><span th:text="#{html.label.chasisPasarelas}"></span></div  >
+											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
+										</div >
+									</button>
+								</div>
+								<div id="collapseChasis" class="collapse" aria-labelledby="headingChasis" data-parent="#accordionFormulario">
+									<div class="card-body">
+										<table id="checkboxTarjeta" class="table table-striped table-bordered" style="width:100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="Seleccionar"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="chasisPasarela : *{chasisPasarelas}" th:value="${chasisPasarela.id}">
+													<td> <input type="checkbox" th:checked="${chasisPasarela.isSeleccionado}"/></td>
+													<td th:text="${chasisPasarela.tipoChasis.nombre}"></td>
+												</tr >
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!--/* FIN - chasis */-->
 						</div>
 						
 						<br>
@@ -136,8 +155,12 @@
 		</div>
 
 		<!--/* INICIO - JS */-->
-		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<script th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>			
+		<script th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
+		<script th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
@@ -145,6 +168,7 @@
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
+		<script type="text/javascript" th:src="@{/js/tarjetaPasarela.js}"></script>
 	
 	</body>
 </html>
