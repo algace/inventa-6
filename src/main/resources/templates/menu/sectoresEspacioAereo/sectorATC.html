@@ -82,7 +82,7 @@
 									        <div class="col-sm-2" th:text="#{html.label.regionOperativa}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{regionOperativa}">
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{regionOperativa.id}">
 											    	<option th:value="0"></option>
 											    	<option th:each="regionOperativa : *{regionesOperativas}" th:value="${regionOperativa.id}" th:text="${regionOperativa.nombre}"></option>
 											    </select>
@@ -94,7 +94,7 @@
 									        <div class="col-sm-2" th:text="#{html.label.tiposSectoresATC}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoSectorATC}">
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoSectorATC.id}">
 											    	<option th:value="0"></option>
 											    	<option th:each="tipoSectorATC : *{tiposSectorATC}" th:value="${tipoSectorATC.id}" th:text="${tipoSectorATC.nombre}"></option>
 											    </select>
@@ -121,7 +121,7 @@
 									        <div class="col-sm-2" th:text="#{html.label.tipoFuenteInformacion}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoFuenteInformacion}">
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoFuenteInformacion.id}">
 											    	<option th:value="0"></option>
 											    	<option th:each="tipoFuenteInformacion : *{tiposFuenteInformacion}" th:value="${tipoFuenteInformacion.id}" th:text="${tipoFuenteInformacion.nombre}"></option>
 											    </select>

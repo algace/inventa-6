@@ -5,15 +5,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.dbcom.app.model.entity.RegionOperativa;
-import com.dbcom.app.model.entity.TipoFuenteInformacion;
-import com.dbcom.app.model.entity.TipoSectorATC;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,20 +34,20 @@ public final class SectorATCDto implements Serializable{
 	private String nombre;
 	
 	@NotNull(message = "{validation.notNull}")
-	//private RegionOperativato regionOperativa;
-	private RegionOperativa regionOperativa;
+	@Valid
+	private RegionOperativaLiteDto regionOperativa;
 	
 	@NotNull(message = "{validation.notNull}")
-	//private TipoSectorATCDto tipoSectorATC;
-	private TipoSectorATC tipoSectorATC;
+	@Valid
+	private TipoSectorATCLiteDto tipoSectorATC;
 	
 	@NotNull(message = "{validation.notNull}")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaPublicacion;
 	
 	@NotNull(message = "{validation.notNull}")
-	//private TipoFuenteInformacionDto tipoFuenteInformacion;
-	private TipoFuenteInformacion tipoFuenteInformacion;
+	@Valid
+	private TipoFuenteInformacionLiteDto tipoFuenteInformacion;
 	
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")

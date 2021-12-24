@@ -49,4 +49,12 @@ public interface RegionOperativaService {
 	 * @return Región operativa actualizada
 	 */
 	RegionOperativaDto update(final RegionOperativaDto regionOperativaDto);
+	
+	/**
+	 * Obtenemos un listado de las regiones operativas teniendo en cuenta la región operativa por defecto
+	 * Si la región por defecto existe en BBDD se debe poner la primera de la lista. Si no existe en BBDD
+	 * se deberá poner como primer elemento de la lista una región con sus campos vacíos
+	 * @return Listado
+	 */
+	List<RegionOperativaDto> getRegionesOperativasConValorPorDefecto();
 }

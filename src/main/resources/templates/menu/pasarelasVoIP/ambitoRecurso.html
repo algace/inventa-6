@@ -76,7 +76,7 @@
 									        <div class="col-sm-2" th:text="#{html.label.funcionPasarela}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{funcionPasarela}">
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{funcionPasarela.id}">
 											    	<option th:value="0"></option>
 											    	<option th:each="funcionPasarela : *{funcionPasarelas}" th:value="${funcionPasarela.id}" th:text="${funcionPasarela.nombre}"></option>
 											    </select>

@@ -2,10 +2,12 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
@@ -121,6 +123,30 @@ public class RegionOperativaServiceImpl implements RegionOperativaService {
 		log.info(LoggerConstants.LOG_UPDATE, regionOperativaBBDD.getId());
 		
 		return this.modelMapperUtils.map(regionOperativaBBDD, RegionOperativaDto.class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<RegionOperativaDto> getRegionesOperativasConValorPorDefecto() {
+
+		RegionOperativa primerRegionOperativa;
+		RegionOperativa regionOperativaPorDefecto = regionOperativaRepository.findByNombre(ApplicationConstants.REGION_OPERATIVA_POR_DEFECTO);
+		List<RegionOperativa> listaTiposTopologia = new ArrayList<RegionOperativa>();
+		
+		if (regionOperativaPorDefecto != null) {
+			primerRegionOperativa = regionOperativaPorDefecto;
+		} else {
+			primerRegionOperativa = RegionOperativa.builder().build();
+		}
+		listaTiposTopologia.add(primerRegionOperativa);
+		listaTiposTopologia.addAll(regionOperativaRepository.findAll()
+				                                          .stream()
+				                                          .filter(tipoTopologia -> !tipoTopologia.equals(primerRegionOperativa))
+				                                          .collect(Collectors.toList()));
+		
+		return this.modelMapperUtils.mapAll2List(listaTiposTopologia, RegionOperativaDto.class);
 	}
 
 }

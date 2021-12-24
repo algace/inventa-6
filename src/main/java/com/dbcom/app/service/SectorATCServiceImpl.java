@@ -13,6 +13,8 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
+import com.dbcom.app.model.dto.RegionOperativaDto;
+import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.entity.Airblock;
 import com.dbcom.app.model.entity.RegionOperativa;
@@ -52,10 +54,13 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	@Override
 	public SectorATCDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
+				
+		List<RegionOperativaDto> listaRegionesDisponibles = regionOperativaService.getRegionesOperativasConValorPorDefecto();
 		return  SectorATCDto.builder()
 				.tiposSectorATC(tipoSectorATCService.readAll())
 				.tiposFuenteInformacion(tipoFuenteInformacionService.readAll())
-				.regionesOperativas(regionOperativaService.readAll())
+				.regionOperativa(this.modelMapperUtils.map(listaRegionesDisponibles.get(0), RegionOperativaLiteDto.class))
+				.regionesOperativas(listaRegionesDisponibles)
 				.airblocksNoIncluidos(this.modelMapperUtils.mapAll2List(airblockService.readAll(), AirblockDto.class))
 				.build();
 	}
