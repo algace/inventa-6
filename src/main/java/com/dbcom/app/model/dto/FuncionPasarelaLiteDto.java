@@ -2,8 +2,8 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,18 +14,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class TipoChasisDto implements Serializable {
-	
+public class FuncionPasarelaLiteDto implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5515279126181661133L;
 
+	@NotNull(message = "{validation.notNull}")
+	@Min(value = 1, message = "{validation.notNull}")
 	private Long id;
 	
-	@NotNull(message = "{validation.notNull}")
-	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
-	
 }
+

@@ -130,8 +130,8 @@ public final class RecursoPasarelaController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 				
-				recursoPasarelaDto.setTiposChasis(tipoChasisService.readAll());
-				recursoPasarelaDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				recursoPasarelaDto.setTiposChasisDisponibles(tipoChasisService.readAll());
+				recursoPasarelaDto.setFuncionesPasarelaDisponibles(funcionPasarelaService.readAll());
 				model.addAttribute(ATTRIBUTE_TIPO, recursoPasarelaDto);
 			
 				vista = VIEW_TIPO;
@@ -226,8 +226,8 @@ public final class RecursoPasarelaController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 				
-				recursoPasarelaDto.setTiposChasis(tipoChasisService.readAll());
-				recursoPasarelaDto.setFuncionPasarelas(funcionPasarelaService.readAll());
+				recursoPasarelaDto.setTiposChasisDisponibles(tipoChasisService.readAll());
+				recursoPasarelaDto.setFuncionesPasarelaDisponibles(funcionPasarelaService.readAll());
 				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
