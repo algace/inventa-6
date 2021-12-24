@@ -16,6 +16,8 @@ import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.RegionOperativaDto;
 import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorATCDto;
+import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
+import com.dbcom.app.model.dto.TipoFuenteInformacionLiteDto;
 import com.dbcom.app.model.entity.Airblock;
 import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.model.entity.SectorATC;
@@ -56,9 +58,12 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		log.info(LoggerConstants.LOG_CREATE);
 				
 		List<RegionOperativaDto> listaRegionesDisponibles = regionOperativaService.getRegionesOperativasConValorPorDefecto();
+		List<TipoFuenteInformacionDto> listaTiposFuenteInformacionDisponibles = tipoFuenteInformacionService.getTipoFuenteInformacionConValorPorDefecto();
+		
 		return  SectorATCDto.builder()
 				.tiposSectorATC(tipoSectorATCService.readAll())
-				.tiposFuenteInformacion(tipoFuenteInformacionService.readAll())
+				.tipoFuenteInformacion(this.modelMapperUtils.map(listaTiposFuenteInformacionDisponibles.get(0),TipoFuenteInformacionLiteDto.class))
+				.tiposFuenteInformacion(listaTiposFuenteInformacionDisponibles)
 				.regionOperativa(this.modelMapperUtils.map(listaRegionesDisponibles.get(0), RegionOperativaLiteDto.class))
 				.regionesOperativas(listaRegionesDisponibles)
 				.airblocksNoIncluidos(this.modelMapperUtils.mapAll2List(airblockService.readAll(), AirblockDto.class))

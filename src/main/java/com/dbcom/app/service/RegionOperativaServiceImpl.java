@@ -133,20 +133,20 @@ public class RegionOperativaServiceImpl implements RegionOperativaService {
 
 		RegionOperativa primerRegionOperativa;
 		RegionOperativa regionOperativaPorDefecto = regionOperativaRepository.findByNombre(ApplicationConstants.REGION_OPERATIVA_POR_DEFECTO);
-		List<RegionOperativa> listaTiposTopologia = new ArrayList<RegionOperativa>();
+		List<RegionOperativa> listaRegiones = new ArrayList<RegionOperativa>();
 		
 		if (regionOperativaPorDefecto != null) {
 			primerRegionOperativa = regionOperativaPorDefecto;
 		} else {
 			primerRegionOperativa = RegionOperativa.builder().build();
 		}
-		listaTiposTopologia.add(primerRegionOperativa);
-		listaTiposTopologia.addAll(regionOperativaRepository.findAll()
+		listaRegiones.add(primerRegionOperativa);
+		listaRegiones.addAll(regionOperativaRepository.findAll()
 				                                          .stream()
-				                                          .filter(tipoTopologia -> !tipoTopologia.equals(primerRegionOperativa))
+				                                          .filter(regionOperativa -> !regionOperativa.equals(primerRegionOperativa))
 				                                          .collect(Collectors.toList()));
 		
-		return this.modelMapperUtils.mapAll2List(listaTiposTopologia, RegionOperativaDto.class);
+		return this.modelMapperUtils.mapAll2List(listaRegiones, RegionOperativaDto.class);
 	}
 
 }
