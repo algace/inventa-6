@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.dbcom.app.model.entity.AmbitoRecurso;
 
 @Repository
-public interface AmbitoRecursoRepository extends JpaRepository<AmbitoRecurso, Short>{
+public interface AmbitoRecursoRepository extends JpaRepository<AmbitoRecurso, Long>{
 
 }

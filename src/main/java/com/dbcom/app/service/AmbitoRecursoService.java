@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.AmbitoRecursoDto;
 
-public interface AmbitoRecursoService  extends GenericService<AmbitoRecursoDto, Short>{
+public interface AmbitoRecursoService {
 
 	/**
 	 * Creamos un ámbito sin persistencia
@@ -16,7 +16,7 @@ public interface AmbitoRecursoService  extends GenericService<AmbitoRecursoDto, 
 	 * Borrado del ámbito con el id facilitado
 	 * @param id Identificador
 	 */
-	void delete(final Short id);
+	void delete(final Long id);
 
 	/**
 	 * Obtenemos un listado de los ámbitos
@@ -29,7 +29,7 @@ public interface AmbitoRecursoService  extends GenericService<AmbitoRecursoDto, 
 	 * @param id Identificador
 	 * @return Ámbito
 	 */
-	AmbitoRecursoDto read(final Short id);
+	AmbitoRecursoDto read(final Long id);
 	
 	/**
 	 * Persistimos el ámbito pasado como parámetro

@@ -27,7 +27,7 @@ public class AmbitoRecurso {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AMBITORECURSO_SEQ")
 	@SequenceGenerator(sequenceName = "ambitorecurso_seq", initialValue = 1, allocationSize = 1 , name = "AMBITORECURSO_SEQ")
-	private Short id;
+	private Long id;
 	
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
