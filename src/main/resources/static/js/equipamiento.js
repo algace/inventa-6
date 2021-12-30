@@ -17,6 +17,7 @@ const ID_FICHERO_DOC = '#fichero';
 const ID_FORM_SUBIR_DOCUMENTO = '#formSubirDocumento';
 const ID_TIPO_DOCUMENTO = '#tipoDocumento';
 const ID_TABLA_DOCUMENTOS = '#tablaDocumentos';
+const ID_MODAL_DOCUMENTO = '#popupSubirDocumento';
 
 var rowNode;
 
@@ -38,6 +39,7 @@ $("#ganancia, #perdida, #apertura, #diametro").mask('S#.S#S#S#.S#S#S0,00', {
 // Reset de los campos del formulario del popup de subir documento
 function resetFormPopupSubirDocumento() {
 	$('.custom-file-label').html('');
+	$(ID_FICHERO_DOC).value = "";
 	$(ID_FORM_SUBIR_DOCUMENTO)[0].reset();
 }
 
@@ -51,19 +53,27 @@ $(ID_BOTON_CANCELAR_POPUP_SUBIR_DOCUMENTO).on('click', function() {
 	resetFormPopupSubirDocumento();
 });
 
-var listData = [];
+var cont = documentos.length;
 
 // INICIO - Configuración de la tabla documentos
 var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
 	searching:  true,
-	data: listData,
+	data: JSON.parse(documentosJson),
 	columnDefs: [{ 
-		targets: 1,
+		targets: 0,
         render: function(data, type, full, meta){
+			
 		   if (type == "display"){
-	           return data + '<input type="file" id="ficheros' + full.id +'" name="ficheros['+ full.id + ']" value="' + full.doc + '" style="display:none">';
+			   if (full.id){
+					cont++;
+			   }
+	           return data + '<div id="' + full.divId + '">'+ 
+	           '<input type="hidden" id="documentos' + cont + '.contenido" name="documentos[' + cont + '].contenido" value="' + full.contenido +'">' +
+	           '<input type="hidden" id="documentos' + cont + '.tipoDocumento.id" name="documentos[' + cont + '].tipoDocumento.id" value="' + full.tipoDocumento.id +'">' +
+	           '<input type="hidden" id="documentos' + cont + '.descripcion" name="documentos[' + cont + '].descripcion" value="' + full.descripcion +'">' +
+	           '</div>';
            }else{
 			   return data;
 		   }
@@ -71,7 +81,8 @@ var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
     }],
 	columns: [
 			  {data: "nombre", name: "nombre", title: "Nombre"}, 
-			  {data: "descripcion", name: "marca", title: "Marca"}],
+			  {data: "tipoDocumento.nombre", name: "tipoDocumento", title: "Tipo Documento"}, 
+			  {data: "descripcion", name: "descripcion", title: "Descripción"}],
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',
@@ -199,6 +210,36 @@ function validarDescripcion() {
 	return resultado;
 }
 
+
+function insertDocumentInTable(){
+	
+	/*cont++;
+	var fileToClone = $(ID_FICHERO_DOC);
+	var file = fileToClone.clone();
+	file.attr("class", "")
+	file.attr("name","documentos[" + cont + "].documento");
+	file.attr("id","documentos" + cont + ".documento");
+	file.attr("style","display:none");*/
+
+	var divId = $(ID_FICHERO_DOC)[0].files[0].lastModified;
+	
+
+	$(ID_TABLA_DOCUMENTOS).DataTable()
+	.row
+	.add({
+		divId: divId,
+		contenido: fileByteArray, 
+		nombre: $(ID_FICHERO_DOC)[0].files[0].name, 
+		descripcion: $('#descripcionDocumento').val(),
+		tipoDocumento: {
+			id: $('#tipoDocumento option:selected').val(),
+			nombre: $('#tipoDocumento option:selected').text()
+		}
+	}).draw();
+	
+	//$("#"+ divId).append(file);
+}
+
 function validarPopupDocumento() {
 	var contador = 3;
 	
@@ -222,23 +263,36 @@ function validarPopupDocumento() {
 	// Mostramos la barra de progreso
 	if (contador == 0) {
 		$(ID_BARRA_PROGRESO_DOC).removeAttr("hidden");
+		insertDocumentInTable();
 	} else {
 		$(ID_BARRA_PROGRESO_DOC).attr("hidden", "hidden");
 	}
-	
-	
-		$(ID_TABLA_DOCUMENTOS).DataTable()
-		.row
-		.add({id: 1, doc: $(ID_FICHERO_DOC)[0].files[0], nombre: $(ID_FICHERO_DOC)[0].files[0].name, descripcion: $('#descripcionDocumento').val()})
-		.draw();
-	
+		
 	return ((contador == 0) ? true : false);
 }
 
+var input = document.querySelector('input')
+var reader = new FileReader();
+var fileByteArray = [];
 // Seteamos el nombre del fichero en el input de selección del fichero
 $('input[type="file"]').on('change', function(e){
 	var nombre = e.target.files[0].name;    
 	$(this).next('.custom-file-label').html(nombre);
+ 	fileByteArray = [];
+  	reader.readAsArrayBuffer(e.target.files[0]);
+  	reader.onloadend = (evt) => {
+    if (evt.target.readyState === FileReader.DONE) {
+      const arrayBuffer = evt.target.result,
+        array = new Uint8Array(arrayBuffer);
+      for (const a of array) {
+        fileByteArray.push(a);
+      }
+    }
+  }
+});
+
+$(ID_MODAL_DOCUMENTO).on('show.bs.modal', function () {
+	resetFormPopupSubirDocumento();
 });
 // FIN - Validaciones subir fichero
 
