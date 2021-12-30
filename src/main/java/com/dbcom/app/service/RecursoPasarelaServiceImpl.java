@@ -41,8 +41,8 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	 */
 	public RecursoPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return RecursoPasarelaDto.builder().tiposChasis(tipoChasisService.readAll())
-										   .funcionPasarelas(funcionPasarelaService.readAll()).build();
+		return RecursoPasarelaDto.builder().tiposChasisDisponibles(tipoChasisService.readAll())
+										   .funcionesPasarelaDisponibles(funcionPasarelaService.readAll()).build();
 	}
 	
 	/**
@@ -84,8 +84,8 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
 		RecursoPasarelaDto chasis = this.modelMapperUtils.map(recursoPasarela, RecursoPasarelaDto.class);
-		chasis.setTiposChasis(tipoChasisService.readAll());
-		chasis.setFuncionPasarelas(funcionPasarelaService.readAll());
+		chasis.setTiposChasisDisponibles(tipoChasisService.readAll());
+		chasis.setFuncionesPasarelaDisponibles(funcionPasarelaService.readAll());
 
 		return chasis; 
 

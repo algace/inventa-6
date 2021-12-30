@@ -15,10 +15,14 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorATCDto;
+import com.dbcom.app.model.dto.TipoFuenteInformacionLiteDto;
+import com.dbcom.app.service.RegionOperativaService;
 import com.dbcom.app.service.SectorATCService;
 import com.dbcom.app.service.TipoFuenteInformacionService;
 import com.dbcom.app.service.TipoSectorATCService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,16 +51,21 @@ public class SectorATCController {
 	private final SectorATCService sectorATCService;
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
 	private final TipoSectorATCService tipoSectorATCService;
+	private final RegionOperativaService regionOperativaService;
+	private final ModelMapperUtils  modelMapperUtils;
 	
 	
 	@Autowired
 	public SectorATCController(SectorATCService sectorATCService,
 			TipoFuenteInformacionService tipoFuenteInformacionService,
-			TipoSectorATCService tipoSectorATCService) {
+			TipoSectorATCService tipoSectorATCService,
+			RegionOperativaService regionOperativaService,
+			ModelMapperUtils  modelMapperUtils) {
 		this.sectorATCService = sectorATCService;
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 		this.tipoSectorATCService = tipoSectorATCService;
-		
+		this.regionOperativaService = regionOperativaService;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -132,8 +141,16 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
+			
 			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
+			
+			//se recupera la lista de tipos de fuentes de informacion con el valor por defecto
+			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTipoFuenteInformacionConValorPorDefecto());
+			sectorATCDto.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTiposFuenteInformacion().get(0), TipoFuenteInformacionLiteDto.class));
+			
+			//se recupera la lista de regiones operativas con el valor por defecto
+			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
+			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
 			
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
@@ -230,7 +247,16 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
 			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.readAll());
+			
+			//se recupera la lista de tipos de fuentes de informacion con el valor por defecto
+			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTipoFuenteInformacionConValorPorDefecto());
+			sectorATCDto.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTiposFuenteInformacion().get(0), TipoFuenteInformacionLiteDto.class));
+			
+			
+			//se recupera la lista de regiones operativas con el valor por defecto
+			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
+			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
+			
 			
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			

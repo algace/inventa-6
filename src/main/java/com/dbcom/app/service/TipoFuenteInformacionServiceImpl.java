@@ -2,10 +2,12 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
@@ -116,6 +118,30 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 		log.info(LoggerConstants.LOG_UPDATE, tipoFuenteInformacionBBDD.getId());
 		
 		return this.modelMapperUtils.map(tipoFuenteInformacionBBDD, TipoFuenteInformacionDto.class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<TipoFuenteInformacionDto> getTipoFuenteInformacionConValorPorDefecto() {
+
+		TipoFuenteInformacion primerTipoFuenteInformacion;
+		TipoFuenteInformacion tipoFuenteInformacionPorDefecto = tipoFuenteInformacionRepository.findByNombre(ApplicationConstants.FUENTE_DATOS_POR_DEFECTO);
+		List<TipoFuenteInformacion> listaTiposFuenteInformacion = new ArrayList<TipoFuenteInformacion>();
+		
+		if (tipoFuenteInformacionPorDefecto != null) {
+			primerTipoFuenteInformacion = tipoFuenteInformacionPorDefecto;
+		} else {
+			primerTipoFuenteInformacion = TipoFuenteInformacion.builder().build();
+		}
+		listaTiposFuenteInformacion.add(primerTipoFuenteInformacion);
+		listaTiposFuenteInformacion.addAll(tipoFuenteInformacionRepository.findAll()
+				                                          .stream()
+				                                          .filter(tipoFuenteInformacion -> !tipoFuenteInformacion.equals(primerTipoFuenteInformacion))
+				                                          .collect(Collectors.toList()));
+		
+		return this.modelMapperUtils.mapAll2List(listaTiposFuenteInformacion, TipoFuenteInformacionDto.class);
 	}
 	
 }

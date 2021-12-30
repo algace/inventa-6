@@ -41,11 +41,11 @@ public class Airblock implements Serializable {
 	 
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")
-	private String flMin;
+	private Integer flMin;
 
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")
-	private String flMax;
+	private Integer flMax;
 
 	@Size(max = 250, message = "{validation.max250}")
 	private String coordenadas;

@@ -7,9 +7,9 @@ import com.dbcom.app.model.dto.TipoSistemaDto;
 /**
  * Lógica para tipos de sistemas
  * 
- * @author jgm
+ * @author neoris
  */
-public interface TiposSistemasService {
+public interface TipoSistemaService {
 	
 	/**
 	 * Creamos un tipo de sistema sin persistencia

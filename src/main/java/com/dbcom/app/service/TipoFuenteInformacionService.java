@@ -50,4 +50,12 @@ public interface TipoFuenteInformacionService extends GenericService<TipoFuenteI
 	 */
 	TipoFuenteInformacionDto update(final TipoFuenteInformacionDto tipoFuenteInformacionDto);
 	
+	/**
+	 * Obtenemos un listado de los tipos de fuentes de información teniendo en cuenta el tipo de fuente por defecto
+	 * Si el tipo de fuente por defecto existe en BBDD se debe poner el primero de la lista. Si no existe en BBDD
+	 * se deberá poner como primer elemento de la lista un tipo de fuente de informacióncon sus campos vacíos
+	 * @return Listado
+	 */
+	List<TipoFuenteInformacionDto> getTipoFuenteInformacionConValorPorDefecto();
+	
 }

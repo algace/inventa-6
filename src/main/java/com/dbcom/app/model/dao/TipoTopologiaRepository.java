@@ -13,5 +13,7 @@ import com.dbcom.app.model.entity.TipoTopologia;
  */
 @Repository
 public interface TipoTopologiaRepository extends JpaRepository<TipoTopologia, Short> {
+	
+	public TipoTopologia findByNombre(String nombre);
 
 }

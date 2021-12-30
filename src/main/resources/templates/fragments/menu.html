@@ -71,29 +71,16 @@
                 			<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
                 			<a class="subsub" th:text="#{html.menu.recursos}" th:href="@{/menu/pasarelasVoIP/recursosPasarela}"></a><br>	
                 			<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
-                			<a class="subsub" th:text="#{html.menu.tarjetas}"></a><br>	
+                			<a class="subsub" th:text="#{html.menu.tarjetas}" th:href="@{/menu/pasarelasVoIP/tarjetasPasarela}"></a><br>	
 	              		</div>
 	                </div>
 					<!--/* FIN - Submenú Pasarelas VoIP */-->
                 	<span style="font-size: 16px; color: #007bff"><i class="fas fa-caret-square-down"></i></span>
                 	<a class="sub" th:text="#{html.menu.propietarios}" th:href="@{/menu/propietarios}"></a> <br>
                 		
-                	<!--/* INICIO - Submenú Redes T/T */-->
-                	<div id="headingRedesTT">
-                		<span style="font-size: 16px; color: #007bff"><i class="fas fa-caret-square-down"></i></span>
-	                	<a class="sub" href="#" data-toggle="collapse" data-target="#collapseRedesTT" aria-expanded="true" aria-controls="collapseRedesTT" 
-	                		th:text="#{html.menu.redesTT}"></a>	
-	            	</div>
-                	<div id="collapseRedesTT" class="collapse" aria-labelledby="headingRedesTT" data-parent="#collapseGestionBBDD">
-		                <div id="redesTT" style="margin-left: 10%">
-		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
-		                	<a class="subsub" th:text="#{html.menu.redesTT}"></a> <br>	
-		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
-                			<a class="subsub" th:text="#{html.menu.enlacesTT}"></a> <br>	
-	              		</div>
-	                </div>
-					<!--/* FIN - Submenú Redes T/T */-->
-					
+                	<span style="font-size: 16px; color: #007bff"><i class="fas fa-caret-square-down"></i></span>
+                	<a class="sub" th:text="#{html.menu.redesTT}" th:href="@{/menu/redesTT}"></a> <br>
+                	
                 	<!--/* INICIO - Submenú Organización */-->
                 	<div id="headingOrganizacion">
                 		<span style="font-size: 16px; color: #007bff"><i class="fas fa-caret-square-down"></i></span>
@@ -105,9 +92,9 @@
 		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
 		                	<a class="subsub" th:text="#{html.menu.regionesMantenimiento}" th:href="@{/menu/organizacion/regionesMantenimiento}"></a> <br>	
 		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
-                			<a class="subsub" th:text="#{html.menu.sectoresMantenimiento}"></a> <br>	
+                			<a class="subsub" th:text="#{html.menu.sectoresMantenimiento}" th:href="@{/menu/organizacion/sectoresMantenimiento}"></a> <br>	
                 			<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
-                			<a class="subsub" th:text="#{html.menu.regionesOperativas}"></a> <br>	
+                			<a class="subsub" th:text="#{html.menu.regionesOperativas}" th:href="@{/menu/organizacion/regionesOperativas}"></a> <br>	
 	              		</div>
 	                </div>
 					<!--/* FIN - Submenú Organización */-->
@@ -125,12 +112,12 @@
 		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
 		                	<a class="subsub" th:text="#{html.menu.sectoresATC}" th:href="@{/menu/sectoresEspacioAereo/sectoresATC}"></a> <br>	
 		                	<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
-                			<a class="subsub" th:text="#{html.menu.sectoresOACI}"></a> <br>	
+                			<a class="subsub" th:text="#{html.menu.sectoresOACI}" th:href="@{/menu/sectoresEspacioAereo/sectoresOACI}"></a> <br>	
 	              		</div>
 	                </div>
 					<!--/* FIN - Submenú Sectores Espacio Aéreo */-->
 					<span style="font-size: 16px; color: #007bff"><i class="fas fa-caret-square-down"></i></span>
-                	<a class="sub" th:text="#{html.menu.serviciosRadio}" href="#"></a> <br>	
+                	<a class="sub" th:text="#{html.menu.serviciosRadio}" th:href="@{/menu/serviciosRadio}"></a> <br>	
                 	<!--/* INICIO - Submenú Sistemas */-->
                 	<div id="headingSistemas">
                 		<span style="font-size: 16px; color: #007bff"><i class="fas fa-caret-square-down"></i></span>
@@ -211,6 +198,8 @@
                 			<a class="subsub" th:text="#{html.menu.usoAntenas}" th:href="@{/menu/tipos/tiposUsoAntena}"></a> <br>	
                 			<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
                 			<a class="subsub" th:text="#{html.menu.usoTiradas}" th:href="@{/menu/tipos/tiposUsoTirada}"></a> <br>	
+                			<span style="font-size: 16px; color: black"><i class="fas fa-caret-right"></i></span>
+                			<a class="subsub" th:text="#{html.menu.tiposTirada}" th:href="@{/menu/tipos/tiposTirada}"></a> <br>
 	              		</div>
 	                </div>
 					<!--/* FIN - Submenú Tipos */-->

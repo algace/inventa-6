@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.ChasisPasarelaDto;
+import com.dbcom.app.model.dto.ChasisPasarelaLiteDto;
 
 public interface ChasisPasarelaService extends GenericService<ChasisPasarelaDto, Short>{
 
@@ -23,6 +24,9 @@ public interface ChasisPasarelaService extends GenericService<ChasisPasarelaDto,
 	 * @return Listado
 	 */
 	List<ChasisPasarelaDto> readAll();
+	
+	List<ChasisPasarelaLiteDto> readAllLite();
+
 	
 	/**
 	 * Obtenemos el tipo de pasarela con el id facilitado

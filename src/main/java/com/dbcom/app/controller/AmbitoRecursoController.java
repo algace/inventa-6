@@ -148,7 +148,7 @@ public final class AmbitoRecursoController {
 		 * @return Vista
 		 */
 		@GetMapping(MAP_READ_TIPO + "/{id}")
-		public String read(@PathVariable("id") final Short id, final Model model) {
+		public String read(@PathVariable("id") final Long id, final Model model) {
 			
 			// Contenido
 			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.read(id));
@@ -176,7 +176,7 @@ public final class AmbitoRecursoController {
 		 * @return Vista
 		 */
 		@GetMapping(MAP_UPDATE_TIPO + "/{id}")
-		public String updateGET(@PathVariable("id") final Short id, final Model model) {
+		public String updateGET(@PathVariable("id") final Long id, final Model model) {
 			
 			// Contenido
 			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.read(id));
@@ -243,7 +243,7 @@ public final class AmbitoRecursoController {
 		 * @return Vista
 		 */
 		@GetMapping(MAP_DELETE_TIPO + "/{id}")
-		public String deleteGET(@PathVariable("id") final Short id, final Model model) {
+		public String deleteGET(@PathVariable("id") final Long id, final Model model) {
 			
 			// Contenido
 			model.addAttribute(ATTRIBUTE_TIPO, this.ambitoRecursoService.read(id));
@@ -272,7 +272,7 @@ public final class AmbitoRecursoController {
 		 * @return Vista
 		 */
 		@PostMapping(MAP_DELETE_TIPO + "/{id}")
-		public String deletePOST(@PathVariable("id") final Short id) {		
+		public String deletePOST(@PathVariable("id") final Long id) {		
 			this.ambitoRecursoService.delete(id);					
 			log.info(LoggerConstants.LOG_DELETE);		
 			return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		

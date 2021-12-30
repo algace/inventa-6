@@ -5,14 +5,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.dbcom.app.model.entity.TipoFuenteInformacion;
-import com.dbcom.app.model.entity.TipoSectorATC;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,18 +33,21 @@ public final class SectorATCDto implements Serializable{
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
 	
-	//FALTA REGION OPERATIVA!!!!!!!!!
 	@NotNull(message = "{validation.notNull}")
-	//private TipoSectorATCDto tipoSectorATC;
-	private TipoSectorATC tipoSectorATC;
+	@Valid
+	private RegionOperativaLiteDto regionOperativa;
+	
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private TipoSectorATCLiteDto tipoSectorATC;
 	
 	@NotNull(message = "{validation.notNull}")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaPublicacion;
 	
 	@NotNull(message = "{validation.notNull}")
-	//private TipoFuenteInformacionDto tipoFuenteInformacion;
-	private TipoFuenteInformacion tipoFuenteInformacion;
+	@Valid
+	private TipoFuenteInformacionLiteDto tipoFuenteInformacion;
 	
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")
@@ -64,6 +65,8 @@ public final class SectorATCDto implements Serializable{
 	private List<TipoSectorATCDto> tiposSectorATC;
 	
 	private List<TipoFuenteInformacionDto> tiposFuenteInformacion;
+	
+	private List<RegionOperativaDto> regionesOperativas;
 	
 	@Builder.Default	
 	private List<AirblockDto> airblocks = new ArrayList<>(); 

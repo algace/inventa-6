@@ -7,9 +7,9 @@ import com.dbcom.app.model.dto.TipoSubsistemaDto;
 /**
  * Lógica para tipos de subsistemas
  * 
- * @author jgm
+ * @author neoris
  */
-public interface TiposSubsistemasService {
+public interface TipoSubsistemaService {
 
 	/**
 	 * Creamos un tipo de subsistema sin persistencia

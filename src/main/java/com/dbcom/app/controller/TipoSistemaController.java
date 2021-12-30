@@ -16,17 +16,17 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.TipoSistemaDto;
-import com.dbcom.app.service.TiposSistemasService;
+import com.dbcom.app.service.TipoSistemaService;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author jgm
+ * @author neoris
  * Enlace entre la vista y la lógica de negocio
  */
 @Slf4j
 @Controller
-public class TiposSistemasController {
+public class TipoSistemaController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_TIPO_SISTEMA = "tipoSistema";
@@ -47,10 +47,10 @@ public class TiposSistemasController {
 	public static final String MAP_READ_TIPO_SISTEMA = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO_SISTEMA;
 	public static final String MAP_READALL_TIPOS_SISTEMAS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS_SISTEMAS;
 		
-	private final TiposSistemasService tiposSistemasService;
+	private final TipoSistemaService tiposSistemasService;
 	
 	@Autowired
-	public TiposSistemasController(TiposSistemasService tiposSistemasService) {
+	public TipoSistemaController(TipoSistemaService tiposSistemasService) {
 		this.tiposSistemasService = tiposSistemasService;
 	}
 	

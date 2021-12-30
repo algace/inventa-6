@@ -44,7 +44,7 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public void delete(final Short id) {			
+	public void delete(final Long id) {			
 		
 		final AmbitoRecurso ambitoRecursoBBDD = this.ambitoRecursoRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
@@ -72,7 +72,7 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public AmbitoRecursoDto read(final Short id) {	
+	public AmbitoRecursoDto read(final Long id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
 

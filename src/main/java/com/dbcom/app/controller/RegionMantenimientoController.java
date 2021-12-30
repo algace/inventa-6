@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
+import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.RegionMantenimientoDto;
 import com.dbcom.app.service.RegionMantenimientoService;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author jgm
+ * @author neoris
  * Enlace entre la vista y la lógica de negocio
  */
 @Slf4j
@@ -119,7 +120,6 @@ public class RegionMantenimientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-			//model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.FALSE);
 			
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_REGION_MANTENIMIENTO);
@@ -154,7 +154,6 @@ public class RegionMantenimientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
-		//model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE, Boolean.TRUE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_REGIONES_MANTENIMIENTO);
@@ -164,5 +163,110 @@ public class RegionMantenimientoController {
 		
 		return VIEW_REGION_MANTENIMIENTO;
 		
+	}
+	
+	/**
+	 * Preparamos la vista para la actulización de la región de mantenimiento pasada como parámetro
+	 * @param id Identificador
+	 * @param model Modelo
+	 * @return Vista
+	 */
+	@GetMapping(MAP_UPDATE_REGION_MANTENIMIENTO + "/{id}")
+	public String updateGET(@PathVariable("id") final Long id, final Model model) {
+		
+		// Contenido
+		model.addAttribute(ATTRIBUTE_REGION_MANTENIMIENTO, this.regionMantenimientoService.read(id));
+		
+		// Activación de los botones necesarios
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+				
+		// Botones
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_REGION_MANTENIMIENTO);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_REGIONES_MANTENIMIENTO);
+					
+		log.info(LoggerConstants.LOG_UPDATE);
+		
+		return VIEW_REGION_MANTENIMIENTO;
+	}
+	
+	/**
+	 * Actualizamos la región de mantenimiento pasada como parámetro
+	 * @param tipoSubsistemaDto Tipo de subsistema a actualizar
+	 * @param bindingResult Validaciones
+	 * @param model Modelo
+	 * @return Vista
+	 */
+	@PostMapping(MAP_UPDATE_REGION_MANTENIMIENTO)
+	public String updatePOST(@Valid @ModelAttribute(ATTRIBUTE_REGION_MANTENIMIENTO) final RegionMantenimientoDto regionMantenimientoDto, 
+			final BindingResult bindingResult, final Model model) {		
+		
+		final String vista;
+		if (bindingResult.hasErrors()) {			
+
+			// Activación de los botones necesarios
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+	
+			// Botones
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_REGION_MANTENIMIENTO);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_REGIONES_MANTENIMIENTO);
+		
+			vista = VIEW_REGION_MANTENIMIENTO;
+			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
+		
+		} else {
+			this.regionMantenimientoService.update(regionMantenimientoDto);
+			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_MANTENIMIENTO);
+			log.info(LoggerConstants.LOG_UPDATE, regionMantenimientoDto.getId());			
+		}
+
+		return vista;		
+	}
+	
+	/**
+	 * Preparamos la vista para la eliminación de la región de mantenimiento pasada como parámetro
+	 * @param id Identificador
+	 * @param model Modelo
+	 * @return Vista
+	 */
+	@GetMapping(MAP_DELETE_REGION_MANTENIMIENTO + "/{id}")
+	public String deleteGET(@PathVariable("id") final Long id, final Model model) {
+		
+		// Contenido
+		model.addAttribute(ATTRIBUTE_REGION_MANTENIMIENTO, this.regionMantenimientoService.read(id));
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
+				MessagesConstants.POPUP_ELIMINAR_REGION_MANTENIMIENTO_PREGUNTA);
+		
+		// Activación de los botones necesarios
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
+				
+		// Botones
+		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_REGION_MANTENIMIENTO
+				.concat(ControllerConstants.MAP_ACTION_SLASH).concat(String.valueOf(id)));
+		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_REGIONES_MANTENIMIENTO);
+					
+		log.info(LoggerConstants.LOG_DELETE);
+		
+		return VIEW_REGION_MANTENIMIENTO;		
+	}
+	
+	/**
+	 * Eliminación de la la región de mantenimiento pasada como parámetro
+	 * @param id Identificador
+	 * @return Vista
+	 */
+	@PostMapping(MAP_DELETE_REGION_MANTENIMIENTO + "/{id}")
+	public String deletePOST(@PathVariable("id") final Long id) {		
+		this.regionMantenimientoService.delete(id);					
+		log.info(LoggerConstants.LOG_DELETE);		
+		return ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_MANTENIMIENTO);		
 	}
 }

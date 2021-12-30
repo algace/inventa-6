@@ -36,7 +36,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "equipamientos")
+@EqualsAndHashCode(exclude = {"equipamientos", "versionesSW"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

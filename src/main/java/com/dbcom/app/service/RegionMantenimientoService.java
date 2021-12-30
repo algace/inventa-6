@@ -5,26 +5,32 @@ import java.util.List;
 import com.dbcom.app.model.dto.RegionMantenimientoDto;
 
 /**
- * Lógica para tipos de subsistemas
+ * Lógica para regiones de mantenimiento
  * 
- * @author jgm
+ * @author neoris
  */
 public interface RegionMantenimientoService {
 
 	/**
-	 * Creamos un tipo de subsistema sin persistencia
-	 * @return Nuevo tipo de subsistema
+	 * Creamos una región de mantenimiento sin persistencia
+	 * @return Nueva región de mantenimiento
 	 */
 	RegionMantenimientoDto create();
 	
 	/**
-	 * Obtenemos un listado de los tipos de subsistemas
+	 * Borrado de la región de mantenimiento con el id facilitado
+	 * @param id Identificador
+	 */
+	void delete(final Long id);
+	
+	/**
+	 * Obtenemos un listado de las regiones de mantenimiento
 	 * @return Listado
 	 */
 	List<RegionMantenimientoDto> readAll();
 	
 	/**
-	 * Obtenemos el tipo de subsistema con el id facilitado
+	 * Obtenemos la región de mantenimiento con el id facilitado
 	 * @param id Identificador
 	 * @return Versión
 	 */
@@ -36,4 +42,11 @@ public interface RegionMantenimientoService {
 	 * @return Region de mantenimiento persistida
 	 */
 	RegionMantenimientoDto save(final RegionMantenimientoDto regionMantenimientoDto);
+	
+	/**
+	 * Actualizamos la región de mantenimiento pasada como parámetro
+	 * @param regionMantenimientoDto Región de mantenimiento a actualizar
+	 * @return Región de mantenimiento actualizada
+	 */
+	RegionMantenimientoDto update(final RegionMantenimientoDto regionMantenimientoDto);
 }

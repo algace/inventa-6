@@ -35,7 +35,13 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_PROPIETARIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA;
+	public static String POPUP_ELIMINAR_REGION_MANTENIMIENTO_PREGUNTA;
+	public static String POPUP_ELIMINAR_REGION_OPERATIVA_PREGUNTA;
+	public static String POPUP_ELIMINAR_SECTOR_MANTENIMIENTO_PREGUNTA;
+	public static String POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTORATC_PREGUNTA;
+	public static String POPUP_ELIMINAR_SERVICIORADIO_PREGUNTA;
+	public static String POPUP_ELIMINAR_TARJETAPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
@@ -86,7 +92,7 @@ public final class MessagesConstants {
        	POPUP_ELIMINAR_AIRBLOCK_PREGUNTA = texto;
    	}
 	
-	@Value("${html.label.eliminar.equipamiento.pregunta}")
+	@Value("${html.label.eliminar.aplicacion.pregunta}")
 	public void setMessagePopupEliminarAplicacionPregunta(final String texto) {
 		POPUP_ELIMINAR_APLICACION_PREGUNTA = texto;
 	}
@@ -120,7 +126,37 @@ public final class MessagesConstants {
 	public void setMessagePopupEliminarSectorATCPregunta(final String texto) {
 		POPUP_ELIMINAR_SECTORATC_PREGUNTA = texto;
 	}
+	
+	@Value("${html.label.eliminar.servicioRadio.pregunta}")
+	public void setMessagePopupEliminarServicioRadioPregunta(final String texto) {
+		POPUP_ELIMINAR_SERVICIORADIO_PREGUNTA = texto;
+	}
 
+	@Value("${html.label.eliminar.regionMantenimiento.pregunta}")
+	public void setMessagePopupEliminarRegionMantenimientoPregunta(final String texto) {
+		POPUP_ELIMINAR_REGION_MANTENIMIENTO_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.regionOperativa.pregunta}")
+	public void setMessagePopupEliminarRegionOperativaPregunta(final String texto) {
+		POPUP_ELIMINAR_REGION_OPERATIVA_PREGUNTA = texto;
+	}
+		
+	@Value("${html.label.eliminar.sectorMantenimiento.pregunta}")
+	public void setMessagePopupEliminarSectorMantenimientoPregunta(final String texto) {
+		POPUP_ELIMINAR_SECTOR_MANTENIMIENTO_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.sectorOACI.pregunta}")
+	public void setMessagePopupEliminarSectorOACIPregunta(final String texto) {
+		POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.tarjetaPasarela.pregunta}")
+	public void setMessagePopupEliminarTarjetaPregunta(final String texto) {
+		POPUP_ELIMINAR_TARJETAPASARELA_PREGUNTA = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoDocumento.aviso}")
 	public void setMessagePopupEliminarTipoDocumentoAviso(final String texto) {
 		POPUP_ELIMINAR_TIPO_DOCUMENTO_AVISO = texto;

@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 /**
  * Entidad para Subistemas
  * 
- * @author jgm
+ * @author neoris
  */
 @Entity
 @Data
@@ -30,7 +30,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoSubsistema implements Serializable {/**
+public class TipoSubsistema implements Serializable {
+	
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7103723791170940577L;

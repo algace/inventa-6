@@ -20,7 +20,7 @@ public final class FuncionPasarelaDto implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Short id;
+	private Long id;
 	
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
