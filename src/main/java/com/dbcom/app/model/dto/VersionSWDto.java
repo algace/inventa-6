@@ -35,7 +35,6 @@ public final class VersionSWDto implements Serializable {
 	@Size(min = 1, max = 50, message = "{validation.min1max50}")
 	private String nombre;
 	 
-	@Size(min = 1, max = 250, message = "{validation.min1max250}")
 	private String descripcion;
 
 	@Builder.Default

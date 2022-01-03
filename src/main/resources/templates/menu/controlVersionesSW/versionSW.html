@@ -81,9 +81,8 @@
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div> 
 									        <div class="col-sm-6">
 									            <textarea id="descripcion" rows="3" style="resize: none;"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:class="form-control"
 									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"></textarea>
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
 									        </div>	
 		       							 </div>							
 									</div>
