@@ -67,6 +67,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_RECURSOOPERATIVO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_RECURSORADIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_SISTEMA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SUBSISTEMA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMALOCAL_PREGUNTA;
@@ -283,6 +284,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoSistema.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoSistemaNoPermitidoAviso(final String texto) {
+		POPUP_ELIMINAR_TIPO_SISTEMA_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoSistema.pregunta}")
 	public void setMessagePopupEliminarTipoSistemaPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_SISTEMA_PREGUNTA = texto;
@@ -324,7 +330,7 @@ public final class MessagesConstants {
 	}
 	
 	@Value("${html.label.eliminar.version.no.permitido.mensaje}")
-	public void setMessagePopupEliminarNoPermitidoAviso(final String texto) {
+	public void setMessagePopupEliminarVersionNoPermitidoAviso(final String texto) {
 		POPUP_ELIMINAR_VERSION_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
