@@ -5,12 +5,28 @@ var rowElement = null;
 var idElement  = null;
 var rowNode = null;
 
-
+var cont = -1;
 // Configuración de la tabla del popup para seleccionar Versiones
 var tabla_checkboxTarjeta =  $(ID_CHECKBOX_TARJETA).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
 	searching:  true,
+	columnDefs: [{ 
+		targets: 0,
+        render: function(data, type, full, meta){
+		   if (type == "display"){
+			   cont++;
+	           return data + '<input type="checkbox" checked="' + full.isSeleccionado + '" id="chasisPasarelas' + cont +'.isSeleccionado" name="chasisPasarelas['+ cont + '].isSeleccionado">';
+           }else{
+			   return data;
+		   }
+        }
+    }],
+	columns: [
+	  {data: "chasisPasarela.isSeleccionado"},
+	  {data: "nombre", name: "nombre", title: "Nombre"}, 
+	  {data: "descripcion", name: "descripcion", title: "Descripción"}
+	],
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',

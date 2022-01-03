@@ -1,5 +1,10 @@
 package com.dbcom.app.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +20,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.dto.TipoFuenteInformacionLiteDto;
+import com.dbcom.app.service.AirblockService;
 import com.dbcom.app.service.RegionOperativaService;
 import com.dbcom.app.service.SectorATCService;
 import com.dbcom.app.service.TipoFuenteInformacionService;
@@ -53,6 +60,7 @@ public class SectorATCController {
 	private final TipoSectorATCService tipoSectorATCService;
 	private final RegionOperativaService regionOperativaService;
 	private final ModelMapperUtils  modelMapperUtils;
+	private final AirblockService airblockService;
 	
 	
 	@Autowired
@@ -60,12 +68,14 @@ public class SectorATCController {
 			TipoFuenteInformacionService tipoFuenteInformacionService,
 			TipoSectorATCService tipoSectorATCService,
 			RegionOperativaService regionOperativaService,
-			ModelMapperUtils  modelMapperUtils) {
+			ModelMapperUtils  modelMapperUtils,
+			AirblockService airblockService) {
 		this.sectorATCService = sectorATCService;
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 		this.tipoSectorATCService = tipoSectorATCService;
 		this.regionOperativaService = regionOperativaService;
 		this.modelMapperUtils = modelMapperUtils;
+		this.airblockService = airblockService;
 	}
 	
 	/**
@@ -151,6 +161,10 @@ public class SectorATCController {
 			//se recupera la lista de regiones operativas con el valor por defecto
 			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
 			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
+			
+			List<AirblockDto> allAirblocks = airblockService.readAll();
+			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
+			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
 			
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
@@ -252,12 +266,14 @@ public class SectorATCController {
 			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTipoFuenteInformacionConValorPorDefecto());
 			sectorATCDto.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTiposFuenteInformacion().get(0), TipoFuenteInformacionLiteDto.class));
 			
-			
 			//se recupera la lista de regiones operativas con el valor por defecto
 			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
 			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
 			
-			
+			List<AirblockDto> allAirblocks = airblockService.readAll();
+			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
+			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
+
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
 			vista = VIEW_TIPO;
@@ -313,4 +329,6 @@ public class SectorATCController {
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 	}
+	
+	
 }
