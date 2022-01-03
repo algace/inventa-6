@@ -75,6 +75,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_UBICACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_USOANTENA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_USOTIRADA_PREGUNTA;
+	public static String POPUP_ELIMINAR_VERSION_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_VERSION_PREGUNTA;
 
     @Value("${fichero.tamagno.maximo}")
@@ -320,6 +321,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.tipoUsoTirada.pregunta}")
 	public void setMessagePopupEliminarTipoUsoTiradaPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_USOTIRADA_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.version.no.permitido.mensaje}")
+	public void setMessagePopupEliminarNoPermitidoAviso(final String texto) {
+		POPUP_ELIMINAR_VERSION_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.version.pregunta}")
