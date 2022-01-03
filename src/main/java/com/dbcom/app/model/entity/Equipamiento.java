@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
@@ -101,10 +102,8 @@ public class Equipamiento implements Serializable {
 	@NotEmpty(message = "{validation.notNull}")
 	private String subsistema;
 	
-	@OneToMany(fetch = FetchType.LAZY,
-			   cascade = CascadeType.ALL, 
-			   orphanRemoval = true,
-			   mappedBy = "equipamiento")
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinColumn(name = "equipamiento_id", referencedColumnName = "id")
 	@Builder.Default
 	private Set<Documento> documentos = new HashSet<>();
 	

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
@@ -29,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-public final class EquipamientoServiceImpl implements EquipamientoService {
+public class EquipamientoServiceImpl implements EquipamientoService {
 	
 	private final AplicacionSWRepository aplicacionSWRepository;
 	private EquipamientoRepository equipamientoRepository;
@@ -119,6 +120,7 @@ public final class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	public EquipamientoDto save(final EquipamientoDto equipamientoDto) {		
 		
 		Equipamiento equipamiento = this.modelMapperUtils.map(equipamientoDto, Equipamiento.class);

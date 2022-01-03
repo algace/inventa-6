@@ -70,6 +70,7 @@ var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
 					cont++;
 			   }
 	           return data + '<div id="' + full.divId + '">'+ 
+	           '<input type="hidden" id="documentos' + cont + '.nombre" name="documentos[' + cont + '].nombre" value="' + full.nombre +'">' +
 	           '<input type="hidden" id="documentos' + cont + '.contenido" name="documentos[' + cont + '].contenido" value="' + full.contenido +'">' +
 	           '<input type="hidden" id="documentos' + cont + '.tipoDocumento.id" name="documentos[' + cont + '].tipoDocumento.id" value="' + full.tipoDocumento.id +'">' +
 	           '<input type="hidden" id="documentos' + cont + '.descripcion" name="documentos[' + cont + '].descripcion" value="' + full.descripcion +'">' +
