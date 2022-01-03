@@ -101,8 +101,12 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="chasisPasarela : *{chasisPasarelas}" th:value="${chasisPasarela.id}">
-													<td> <input type="checkbox" th:checked="${chasisPasarela.isSeleccionado}"/></td>
+												<tr th:each="chasisPasarela, stat : *{chasisPasarelas}">
+													
+													<td> 
+													<input type="checkbox" th:name="|chasisPasarelas[${stat.index}]|" 
+														th:value="${chasisPasarela.getId()}" th:checked="${chasisPasarela.isSeleccionado}" 
+													/></td>
 													<td th:text="${chasisPasarela.tipoChasis.nombre}"></td>
 												</tr >
 											</tbody>

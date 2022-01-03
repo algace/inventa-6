@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,6 +183,34 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		return listAirblocks.stream()
                             .filter(version -> !Objects.isNull(version.getId()))
                             .collect(Collectors.toList());
+	}
+	
+	public List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados){
+
+		List<AirblockDto> airblocks = new ArrayList<>();
+	
+		allAirblocks.stream().forEach(airblock -> {
+			if (airblockSeleccionados.stream().anyMatch(ab -> airblock.getId() == ab.getId())) {
+				airblocks.add(airblock);
+			}
+		});
+	
+		return airblocks;
+	}
+	
+	public List<AirblockDto> listAirblocksNoSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados){
+
+		airblockSeleccionados.stream().forEach(airblock -> {
+				List<AirblockDto> list = allAirblocks.stream().filter(ab -> airblock.getId() == ab.getId()).collect(Collectors.toList());
+				if(!list.isEmpty()){
+					Optional<AirblockDto> optAirblocks = list.stream().findFirst();
+					if(optAirblocks.isPresent()) {
+						allAirblocks.remove(optAirblocks.get());
+					}
+			};
+		});
+
+		return allAirblocks;
 	}
 	
 }
