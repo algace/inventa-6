@@ -4,8 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.dbcom.app.model.entity.SectorATC;
+import com.dbcom.app.model.entity.TipoSectorATC;
 
 @Repository
 public interface SectorATCRepository extends JpaRepository<SectorATC, Short>{
+	
+	public Long countByTipoSectorATC(TipoSectorATC tipoSectorATC);
 
 }

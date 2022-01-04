@@ -66,6 +66,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_RADIOENLACE_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_RECURSOOPERATIVO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_RECURSORADIO_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_SECTORATC_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMA_PREGUNTA;
@@ -280,6 +281,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_RECURSORADIO_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoSectorATC.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoSectorATCNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_SECTORATC_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoSectorATC.pregunta}")
 	public void setMessagePopupEliminarTipoSectorATCPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA = texto;
