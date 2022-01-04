@@ -45,11 +45,11 @@ public interface SectorATCService extends GenericService<SectorATCDto, Short>{
 	 */
 	SectorATCDto update(final SectorATCDto sectorATCDto);
 	
-	/*
-	 * 
+	/**
+	 * métodos internos para tratar las listas de Airblocks de manera correcta según hayan sido seleccionados o no.
 	 */
-     List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> listAirblock);
+    List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> listAirblock);
      
-     List<AirblockDto> listAirblocksNoSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados);
+    List<AirblockDto> listAirblocksNoSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados);
 	
 }

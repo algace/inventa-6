@@ -169,22 +169,6 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		return this.modelMapperUtils.map(sectorATCBBDD, SectorATCDto.class);
 	}
 	
-	/**
-	 * Procesa una lista de objetos Airblock proveniente del front y elimina de esta lista los 
-	 * objetos que tienen un id null
-     * @param lista de objetos AirblockDto provenientes del front 
-     * @return lista de objetos AirblockDto filtrada 
-	 */
-	
-	
-	//ponerlo en el save y en el update
-	private List<AirblockDto> filterListAirblock(List<AirblockDto> listAirblocks) {
-	
-		return listAirblocks.stream()
-                            .filter(version -> !Objects.isNull(version.getId()))
-                            .collect(Collectors.toList());
-	}
-	
 	public List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados){
 
 		List<AirblockDto> airblocks = new ArrayList<>();
@@ -213,4 +197,19 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		return allAirblocks;
 	}
 	
+	/**
+	 * Procesa una lista de objetos Airblock proveniente del front y elimina de esta lista los 
+	 * objetos que tienen un id null
+     * @param lista de objetos AirblockDto provenientes del front 
+     * @return lista de objetos AirblockDto filtrada 
+	 */
+	
+	
+	//ponerlo en el save y en el update
+	private List<AirblockDto> filterListAirblock(List<AirblockDto> listAirblocks) {
+	
+		return listAirblocks.stream()
+                            .filter(version -> !Objects.isNull(version.getId()))
+                            .collect(Collectors.toList());
+	}
 }

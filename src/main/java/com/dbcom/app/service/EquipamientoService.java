@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.EquipamientoDto;
+import com.dbcom.app.model.dto.EquipamientoLiteDto;
 import com.dbcom.app.model.dto.VersionSWDto;
 
 
@@ -30,6 +31,12 @@ public interface EquipamientoService extends GenericService<EquipamientoDto, Lon
 	 * @return Listado
 	 */
 	List<EquipamientoDto> readAll();
+	
+	/**
+	 * Obtenemos un listado de los equipamientos Lite
+	 * @return Listado
+	 */
+	List<EquipamientoLiteDto> readAllLite();
 	
 	/**
 	 * Obtenemos el equipamiento con el id facilitado

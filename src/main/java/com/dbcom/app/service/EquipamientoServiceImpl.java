@@ -15,6 +15,7 @@ import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.EquipamientoRepository;
 import com.dbcom.app.model.dto.DocumentoDto;
 import com.dbcom.app.model.dto.EquipamientoDto;
+import com.dbcom.app.model.dto.EquipamientoLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.Documento;
 import com.dbcom.app.model.entity.Equipamiento;
@@ -81,6 +82,21 @@ public final class EquipamientoServiceImpl implements EquipamientoService {
 		log.info(LoggerConstants.LOG_READALL);
 		
 		return equipamientosDto;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<EquipamientoLiteDto> readAllLite() {
+		
+		final List<Equipamiento> equipamientos = this.equipamientoRepository.findAll();
+		
+		final List<EquipamientoLiteDto> equipamientosLiteDto = new ArrayList<>(equipamientos.size());		
+		equipamientos.forEach(equipamiento -> equipamientosLiteDto.add(this.modelMapperUtils.map(equipamiento, EquipamientoLiteDto.class)));
+		
+		log.info(LoggerConstants.LOG_READALL);
+		
+		return equipamientosLiteDto;
 	}
 	
 	/**

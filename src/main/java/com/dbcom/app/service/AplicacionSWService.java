@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.AplicacionSWDto;
 import com.dbcom.app.model.dto.AplicacionSWLiteDto;
+import com.dbcom.app.model.dto.EquipamientoLiteDto;
+import com.dbcom.app.model.dto.VersionSWLiteDto;
 
 /**
  * Lógica para aplicaciones
@@ -50,5 +52,21 @@ public interface AplicacionSWService {
 	 * @return Aplicación actualizada
 	 */
 	AplicacionSWDto update(final AplicacionSWDto aplicacionSWDto);
+	
+	/**
+	 * métodos internos para tratar las listas de Versiones de manera correcta según hayan sido seleccionadas o no.
+	 */
+	
+	List<VersionSWLiteDto> listVersionesSeleccionadas(List<VersionSWLiteDto> allVersiones, List<VersionSWLiteDto> listVersion);
+    
+    List<VersionSWLiteDto> listVersionesNoSeleccionadas(List<VersionSWLiteDto> allVersiones, List<VersionSWLiteDto> versionesSeleccionadas);
+	
+	/**
+	 * métodos internos para tratar las listas de Equipamientos de manera correcta según hayan sido seleccionados o no.
+	 */
+	
+	List<EquipamientoLiteDto> listEquipamientosSeleccionados(List<EquipamientoLiteDto> allEquipamientos, List<EquipamientoLiteDto> listEquipamientos);
+    
+    List<EquipamientoLiteDto> listEquipamientosNoSeleccionados(List<EquipamientoLiteDto> allEquipamientos, List<EquipamientoLiteDto> equipamientosSeleccionados);
 	
 }

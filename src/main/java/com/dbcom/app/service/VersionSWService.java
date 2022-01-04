@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.VersionSWDto;
+import com.dbcom.app.model.dto.VersionSWLiteDto;
 
 /**
  * Lógica para versiones
@@ -28,6 +29,12 @@ public interface VersionSWService extends GenericService<VersionSWDto, Long> {
 	 * @return Listado
 	 */
 	List<VersionSWDto> readAll();
+	
+	/**
+	 * Obtenemos un listado de las versiones Lite
+	 * @return Listado
+	 */
+	List<VersionSWLiteDto> readAllLite();
 	
 	/**
 	 * Obtenemos la versión con el id facilitado

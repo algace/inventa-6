@@ -15,6 +15,7 @@ import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.VersionSWRepository;
 import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 import com.dbcom.app.model.dto.VersionSWDto;
+import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.VersionSW;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -72,6 +73,21 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		
 		final List<VersionSWDto> versionesSWDto = new ArrayList<>(versionesSW.size());		
 		versionesSW.forEach(versionSW -> versionesSWDto.add(this.modelMapperUtils.map(versionSW, VersionSWDto.class)));
+		
+		log.info(LoggerConstants.LOG_READALL);
+		
+		return versionesSWDto;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<VersionSWLiteDto> readAllLite() {
+		
+		final List<VersionSW> versionesSW = this.versionSWRepository.findAll();
+		
+		final List<VersionSWLiteDto> versionesSWDto = new ArrayList<>(versionesSW.size());		
+		versionesSW.forEach(versionSW -> versionesSWDto.add(this.modelMapperUtils.map(versionSW, VersionSWLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 		

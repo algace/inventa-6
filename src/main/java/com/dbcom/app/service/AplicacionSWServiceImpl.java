@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,6 +158,70 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		return listVersiones.stream()
                             .filter(version -> !Objects.isNull(version.getId()))
                             .collect(Collectors.toList());
+	}
+
+	@Override
+	public List<VersionSWLiteDto> listVersionesSeleccionadas(List<VersionSWLiteDto> allVersiones,
+			List<VersionSWLiteDto> listVersion) {
+		
+		List<VersionSWLiteDto> versiones = new ArrayList<>();
+		
+		allVersiones.stream().forEach(version -> {
+			if(listVersion.stream().anyMatch(vSW -> version.getId() == vSW.getId())) {
+				versiones.add(version);
+			}
+		});
+		
+		return versiones;
+	}
+
+	@Override
+	public List<VersionSWLiteDto> listVersionesNoSeleccionadas(List<VersionSWLiteDto> allVersiones,
+			List<VersionSWLiteDto> versionesSeleccionadas) {
+		
+		versionesSeleccionadas.stream().forEach(version -> {
+			List<VersionSWLiteDto> list = allVersiones.stream().filter(vSW -> version.getId() == vSW.getId()).collect(Collectors.toList());
+			if(!list.isEmpty()){
+				Optional<VersionSWLiteDto> optVersiones = list.stream().findFirst();
+				if(optVersiones.isPresent()) {
+					allVersiones.remove(optVersiones.get());
+				}
+			};
+		});
+		
+		return allVersiones;
+	}
+
+	@Override
+	public List<EquipamientoLiteDto> listEquipamientosSeleccionados(List<EquipamientoLiteDto> allEquipamientos,
+			List<EquipamientoLiteDto> listEquipamientos) {
+		
+		List<EquipamientoLiteDto> equipamientos = new ArrayList<>();
+		
+		allEquipamientos.stream().forEach(equipamiento -> {
+			if(listEquipamientos.stream().anyMatch(eQ -> equipamiento.getId() == eQ.getId())) {
+				equipamientos.add(equipamiento);
+			}
+		});
+		
+		return equipamientos;
+	}
+
+	@Override
+	public List<EquipamientoLiteDto> listEquipamientosNoSeleccionados(List<EquipamientoLiteDto> allEquipamientos,
+			List<EquipamientoLiteDto> equipamientosSeleccionados) {
+		
+		equipamientosSeleccionados.stream().forEach(equipamiento -> {
+			List<EquipamientoLiteDto> list = allEquipamientos.stream().filter(eQ -> equipamiento.getId() == eQ.getId()).collect(Collectors.toList());
+			if(!list.isEmpty()){
+				Optional<EquipamientoLiteDto> optEquipamientos = list.stream().findFirst();
+				if(optEquipamientos.isPresent()) {
+					allEquipamientos.remove(optEquipamientos.get());
+				}
+			};
+		});
+		
+		return allEquipamientos;
 	}
 	
 	/**

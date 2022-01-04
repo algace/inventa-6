@@ -1,5 +1,7 @@
 package com.dbcom.app.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,11 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.AplicacionSWDto;
+import com.dbcom.app.model.dto.EquipamientoLiteDto;
+import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.service.AplicacionSWService;
+import com.dbcom.app.service.EquipamientoService;
+import com.dbcom.app.service.VersionSWService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +54,16 @@ public final class AplicacionSWController {
 	public static final String MAP_READALL_APLICACIONES = ControllerConstants.MAP_ACTION_SLASH + VIEW_APLICACIONES;
 	
 	private final AplicacionSWService aplicacionService;
+	private final VersionSWService versionSWService;
+	private final EquipamientoService equipamientoService;
 	
 	@Autowired
-	public AplicacionSWController(AplicacionSWService aplicacionService) {
+	public AplicacionSWController(AplicacionSWService aplicacionService, 
+									VersionSWService versionSWService, 
+									EquipamientoService equipamientoService) {
 		this.aplicacionService = aplicacionService;
+		this.versionSWService = versionSWService;
+		this.equipamientoService = equipamientoService;
 	}
 	
 	/**
@@ -125,6 +137,17 @@ public final class AplicacionSWController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_APLICACION);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_APLICACIONES);
+			
+			//se recupera la lista de versiones tratando correctamente las que ya hayan sido seleccionadas
+			List<VersionSWLiteDto> allVersiones = versionSWService.readAllLite();
+			aplicacionDto.setVersionesSW(aplicacionService.listVersionesSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
+			aplicacionDto.setVersionesSWNoIncluidas(aplicacionService.listVersionesNoSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
+			
+			//se recupera la lista de equipamientos tratando correctamente los que ya hayan sido seleccionados
+			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAllLite();
+			aplicacionDto.setEquipamientos(aplicacionService.listEquipamientosSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
+			aplicacionDto.setEquipamientosNoIncluidos(aplicacionService.listEquipamientosNoSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
+			
 			vista = VIEW_APLICACION;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
@@ -216,6 +239,17 @@ public final class AplicacionSWController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_APLICACION);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_APLICACIONES);
+			
+			//se recupera la lista de versiones tratando correctamente las que ya hayan sido seleccionadas
+			List<VersionSWLiteDto> allVersiones = versionSWService.readAllLite();
+			aplicacionDto.setVersionesSW(aplicacionService.listVersionesSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
+			aplicacionDto.setVersionesSWNoIncluidas(aplicacionService.listVersionesNoSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
+			
+			//se recupera la lista de equipamientos tratando correctamente los que ya hayan sido seleccionados
+			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAllLite();
+			aplicacionDto.setEquipamientos(aplicacionService.listEquipamientosSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
+			aplicacionDto.setEquipamientosNoIncluidos(aplicacionService.listEquipamientosNoSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
+			
 		
 			vista = VIEW_APLICACION;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		

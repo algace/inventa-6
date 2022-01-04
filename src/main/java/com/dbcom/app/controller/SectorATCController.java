@@ -162,6 +162,7 @@ public class SectorATCController {
 			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
 			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
 			
+			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
 			List<AirblockDto> allAirblocks = airblockService.readAll();
 			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
 			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
@@ -270,6 +271,7 @@ public class SectorATCController {
 			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
 			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
 			
+			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
 			List<AirblockDto> allAirblocks = airblockService.readAll();
 			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
 			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
