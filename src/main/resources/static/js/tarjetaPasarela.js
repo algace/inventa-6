@@ -27,7 +27,7 @@ var tabla_checkboxTarjeta =  $(ID_CHECKBOX_TARJETA).DataTable({
     }],
 	columns: [
 	  {data: "isSeleccionado", name: "seleccionar", title: "Seleccionar"},
-	  {data: "tipoChasis.nombre", name: "nombre", title: "Nombre"}
+	  {data: "nombre", name: "nombre", title: "Nombre"}
 	],
 	language: {
 	    'sProcessing':     'Procesando...',

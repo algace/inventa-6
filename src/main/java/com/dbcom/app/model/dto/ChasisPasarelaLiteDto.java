@@ -22,6 +22,8 @@ public class ChasisPasarelaLiteDto implements Serializable{
 
 	private Short id;
 	
+	private String nombre;
+	
 	@NotNull(message = "{validation.notNull}")
 	private TipoChasisLiteDto tipoChasis;
 	
