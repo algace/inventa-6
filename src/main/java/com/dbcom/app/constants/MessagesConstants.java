@@ -28,6 +28,7 @@ public final class MessagesConstants {
 	
 	// Mensajes para los popups
 	public static String POPUP_ELIMINAR_APLICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_AIRBLOCK_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_AIRBLOCK_PREGUNTA;
 	public static String POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_NO_PERMITIDO_MENSAJE;
@@ -100,6 +101,11 @@ public final class MessagesConstants {
     @Value("${html.label.eliminar.chasisPasarela.no.permitido.mensaje}")
 	public void setMessagePopupEliminarChasisPasarelaNoPermitidoMensaje(final String texto) {
     	POPUP_ELIMINAR_CHASISPASARELA_NO_PERMITIDO_MENSAJE = texto;
+	}
+    
+    @Value("${html.label.eliminar.airblock.no.permitido.mensaje}")
+	public void setMessagePopupEliminarAirblockNoPermitidoMensaje(final String texto) {
+    	POPUP_ELIMINAR_AIRBLOCK_NO_PERMITIDO_MENSAJE = texto;
 	}
     
     @Value("${html.label.eliminar.airblock.pregunta}")
