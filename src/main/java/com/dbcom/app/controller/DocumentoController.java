@@ -46,7 +46,7 @@ public final class DocumentoController {
 	 * @param descripcionDocumento Descripción
 	 * @param fichero Fichero a subir
 	 */
-	@PostMapping(MAP_UPLOAD_DOCUMENTO)
+	@PostMapping(MAP_UPLOAD_DOCUMENTO + "djjdjd")
 	public void subirFichero(@RequestParam("id") final Long id, 
 							   @RequestParam("idTipoDocumento") final Short idTipoDocumento,
 							   @RequestParam("descripcionDocumento") final String descripcionDocumento,

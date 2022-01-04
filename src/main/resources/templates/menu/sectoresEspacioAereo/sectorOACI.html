@@ -109,7 +109,7 @@
 											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
 									        <div class="col-sm-6">
 									            <input type="number" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	class="form-control"
 									            	th:field="*{flMin}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMin')}" th:errors="*{flMin}"></div>
 									        </div>										        	
@@ -118,7 +118,7 @@
 											<div class="col-sm-2" th:text="#{html.label.flmax}"></div>
 									        <div class="col-sm-6">
 									            <input type="number"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	class="form-control"
 									            	th:field="*{flMax}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMax')}" th:errors="*{flMax}"></div>
 									        </div>										        	
@@ -127,7 +127,7 @@
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
 									            <input type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	class="form-control"
 									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
 									        </div>										        	
@@ -136,7 +136,7 @@
 											<div class="col-sm-2" th:text="#{html.label.coordenadas}"></div>
 									        <div class="col-sm-6">
 									        	<textarea rows="3" style="resize: none;"
-									            		th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            		class="form-control"
 									           		 	th:field="*{coordenadas}" th:disabled="${esCampoSoloLectura} ? 'true'"></textarea>
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('coordenadas')}" th:errors="*{coordenadas}"></div>
 									        </div>										        	

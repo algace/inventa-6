@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
+import com.dbcom.app.model.entity.TipoFuenteInformacion;
 import com.dbcom.app.service.TipoFuenteInformacionService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,10 +52,16 @@ public final class TipoFuenteInformacionController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;		
 
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
+	private final SectorATCRepository sectorATCRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public TipoFuenteInformacionController(TipoFuenteInformacionService tipoFuenteInformacionService) {
+	public TipoFuenteInformacionController(TipoFuenteInformacionService tipoFuenteInformacionService,
+			SectorATCRepository sectorATCRepository,
+			ModelMapperUtils  modelMapperUtils) {
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
+		this.sectorATCRepository = sectorATCRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -242,9 +251,19 @@ public final class TipoFuenteInformacionController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.tipoFuenteInformacionService.read(id));
+		TipoFuenteInformacionDto tipoFuenteInformacionDto = this.tipoFuenteInformacionService.read(id);
+		Long tipoFuenteInformacionAsignado = this.sectorATCRepository.countByTipoFuenteInformacion(this.modelMapperUtils.map(tipoFuenteInformacionDto, TipoFuenteInformacion.class));
+				
+		model.addAttribute(ATTRIBUTE_TIPO, tipoFuenteInformacionDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_NO_PERMITIDO_MENSAJE);
+		if (tipoFuenteInformacionAsignado > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

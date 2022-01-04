@@ -247,6 +247,8 @@ public final class VersionControllerSW {
 		model.addAttribute(ATTRIBUTE_VERSION, this.versionService.read(id));
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_VERSION_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_VERSION_NO_PERMITIDO_MENSAJE);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -271,10 +273,10 @@ public final class VersionControllerSW {
 	 * @return Vista
 	 */
 	@PostMapping(MAP_DELETE_VERSION + "/{id}")
-	public String deletePOST(@PathVariable("id") final Long id) {		
+	public String deletePOST(@PathVariable("id") final Long id) {	
 		this.versionService.delete(id);					
-		log.info(LoggerConstants.LOG_DELETE);		
-		return ControllerConstants.REDIRECT.concat(MAP_READALL_VERSIONES);		
+		log.info(LoggerConstants.LOG_DELETE);
+		return ControllerConstants.REDIRECT.concat(MAP_READALL_VERSIONES);
 	}
 	
 }

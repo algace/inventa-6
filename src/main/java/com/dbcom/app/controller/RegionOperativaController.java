@@ -15,8 +15,12 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.SectorATCRepository;
+import com.dbcom.app.model.dao.SectorOACIRepository;
 import com.dbcom.app.model.dto.RegionOperativaDto;
+import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.service.RegionOperativaService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +52,19 @@ public class RegionOperativaController {
 	public static final String MAP_READALL_REGIONES_OPERATIVAS = ControllerConstants.MAP_ACTION_SLASH + VIEW_REGIONES_OPERATIVAS;
 	
 	private final RegionOperativaService regionOperativaService;
+	private final SectorATCRepository sectorATCRepository;
+	private final SectorOACIRepository sectorOACIRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public RegionOperativaController(RegionOperativaService regionOperativaService) {
+	public RegionOperativaController(RegionOperativaService regionOperativaService,
+			SectorATCRepository sectorATCRepository,
+			SectorOACIRepository sectorOACIRepository,
+			ModelMapperUtils  modelMapperUtils) {
 		this.regionOperativaService = regionOperativaService;
+		this.sectorATCRepository = sectorATCRepository;
+		this.sectorOACIRepository = sectorOACIRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -238,9 +251,20 @@ public class RegionOperativaController {
 	public String deleteGET(@PathVariable("id") final Long id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_REGION_OPERATIVA, this.regionOperativaService.read(id));
+		RegionOperativaDto regionOperativaDto = this.regionOperativaService.read(id);
+		Long sectorATCAsignado = this.sectorATCRepository.countByRegionOperativa(this.modelMapperUtils.map(regionOperativaDto, RegionOperativa.class));
+		Long sectorOACIAsignado = this.sectorOACIRepository.countByRegionOperativa(this.modelMapperUtils.map(regionOperativaDto, RegionOperativa.class));
+		
+		model.addAttribute(ATTRIBUTE_REGION_OPERATIVA, regionOperativaDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_REGION_OPERATIVA_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_REGION_OPERATIVA_NO_PERMITIDO_MENSAJE);
+		if ((sectorATCAsignado > 0) || (sectorOACIAsignado > 0)) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

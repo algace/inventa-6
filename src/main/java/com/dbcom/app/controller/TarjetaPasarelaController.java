@@ -121,12 +121,14 @@ public final class TarjetaPasarelaController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+			
+			model.addAttribute(ATTRIBUTE_TIPO, this.tarjetaPasarelaService.setListChasisPasarelasInTarjetasPasarelasDTO(tarjetaPasarelaDto));
 		
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tarjetaPasarelaService.save(tarjetaPasarelaDto);
+			this.tarjetaPasarelaService.saveUpdate(tarjetaPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tarjetaPasarelaDto.getId());
 		}
@@ -213,12 +215,14 @@ public final class TarjetaPasarelaController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+			
+			model.addAttribute(ATTRIBUTE_TIPO, this.tarjetaPasarelaService.setListChasisPasarelasInTarjetasPasarelasDTO(tarjetaPasarelaDto));
 		
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tarjetaPasarelaService.update(tarjetaPasarelaDto);
+			this.tarjetaPasarelaService.saveUpdate(tarjetaPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tarjetaPasarelaDto.getId());			
 		}

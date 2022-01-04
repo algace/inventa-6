@@ -6,6 +6,8 @@ import javax.persistence.Lob;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,6 +45,8 @@ public final class DocumentoDto implements Serializable {
 	
 	@Builder.Default
 	private TipoDocumentoDto tipoDocumento = new TipoDocumentoDto();
+	
+	private MultipartFile documento;
 	
 	private EquipamientoDto equipamiento;
 	

@@ -27,6 +27,8 @@ public final class ControllerConstants {
 	// Atributos para popup
 	public static final String ATTRIBUTE_POPUP_ELIMINAR_AVISO = "popupEliminarAviso";
 	public static final String ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA = "popupEliminarPregunta";
+	public static final String ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE = "popupEliminarNoPermitidoMensaje";
+	public static final String ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO = "estaBotonEliminarNoPermitidoActivo";
 	
 	// Atributos para ficheros
 	public static final String FICHERO_TAMAGNO_MAX = "ficheroTamagnoMax";
@@ -49,7 +51,7 @@ public final class ControllerConstants {
 	public static final String ATTRIBUTE_SECTORES_ATC_VISIBLE = "sectoresATCVisible";
 	public static final String ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE = "tiposSubsistemasVisible";
 	
-
+	
 	// Acciones para mapas
 	public static final String MAP_ACTION_SLASH = "/";
 	public static final String MAP_ACTION_CREAR = MAP_ACTION_SLASH + "crear";

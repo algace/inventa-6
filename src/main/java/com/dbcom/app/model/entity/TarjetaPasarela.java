@@ -47,5 +47,5 @@ public class TarjetaPasarela implements Serializable{
 			  joinColumns = @JoinColumn(name = "id_tarjetaPasarela", referencedColumnName = "id"), 
 			  inverseJoinColumns = @JoinColumn(name = "id_chasisPasarela", referencedColumnName = "id", foreignKey = @ForeignKey(name="none")))
 	@Builder.Default
-	private Set<ChasisPasarela> chasisPasarela = new HashSet<>();
+	private Set<ChasisPasarela> chasisPasarelas = new HashSet<>();
 }

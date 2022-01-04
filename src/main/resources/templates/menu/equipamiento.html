@@ -50,9 +50,8 @@
 					</nav>
 					<!--/* FIN - Migas de pan */-->
 		
-					<form action="#" th:action="@{${action}}" th:object="${equipamiento}" method="post" novalidate>
+					<form action="#" th:action="@{${action}}" th:object="${equipamiento}" method="post" enctype="multipart/form-data" novalidate>
 						<input type="hidden" th:field="*{id}">
-								
 						<div id="accordionFormulario" class="accordionFormulario">
 						
 							<!--/* INICIO - Información general */-->
@@ -78,7 +77,7 @@
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 									        </div>										        	
 		       							 </div>
-		       							 <div class="row align-items-center">
+		       							 <div class="row align-items-center" id="">
 											<div class="col-sm-2" th:text="#{html.label.sistema}"></div> 
 									        <div class="col-sm-6">
 									            <input id="sistema" type="text" 
@@ -269,17 +268,9 @@
 												<tr>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.tipoDocumento}"></th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr th:each="documento, item : *{documentos}">
-													<td>
-														<a th:href="|@{${download}}/| + ${documento.id}" th:text="${documento.nombre}"></a>
-													</td>
-													<td th:text="${documento.descripcion}"></td>
-													<input type="hidden" th:field="*{documentos[__${item.index}__].id}"> 
-												</tr>
-											</tbody>
 										</table>
 									</div>
 								</div>
@@ -498,14 +489,19 @@
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/jquery-mask-plugin/1.14.15/dist/jquery.mask.js}"></script>
-		<script type="text/javascript" th:src="@{/js/equipamiento.js}"></script>
-		<script type="text/javascript" th:src="@{/js/fotografia.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript" th:object="${equipamiento}">
+			/*<![CDATA[*/
+			var documentos = [[${equipamiento.documentos}]];
+			var documentosJson = JSON.stringify(documentos);
+			/*]]>*/
 			$('#collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->
+		
+		<script type="text/javascript" th:src="@{/js/equipamiento.js}"></script>
+		<script type="text/javascript" th:src="@{/js/fotografia.js}"></script>
 		<!--/* FIN - JS */-->
 	
 	</body>

@@ -100,16 +100,6 @@
 													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr th:each="chasisPasarela, stat : *{chasisPasarelas}">
-													
-													<td> 
-													<input type="checkbox" th:name="|chasisPasarelas[${stat.index}]|" 
-														th:value="${chasisPasarela.getId()}" th:checked="${chasisPasarela.isSeleccionado}" 
-													/></td>
-													<td th:text="${chasisPasarela.tipoChasis.nombre}"></td>
-												</tr >
-											</tbody>
 										</table>
 									</div>
 								</div>
@@ -159,15 +149,21 @@
 		</div>
 
 		<!--/* INICIO - JS */-->
-		<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-		<script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
-		<script th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>			
-		<script th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
-		<script th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
-		<script th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/momentjs/2.24.0/min/moment-with-locales.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js}"></script>	
+		<script type="text/javascript" th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>			
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var chasisPasarelas = [[${tarjetaPasarela.chasisPasarelas}]];
+			var chasisPasarelasJson = JSON.stringify(chasisPasarelas);
+			/*]]>*/
 			$('#collapsePasarelasVoIP, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->

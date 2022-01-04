@@ -145,14 +145,14 @@ public final class DocumentoServiceImpl implements DocumentoService {
 				final Documento documento = Documento.builder()
 												.nombre(fichero.getOriginalFilename())
 												.descripcion(descripcionDocumento)
-												.contenido(fichero.getBytes())
-												.tipo(fichero.getContentType())
+//												.contenido(fichero.getBytes())
+//												.tipo(fichero.getContentType())
 												.tipoDocumento(tipoDocumento)
-												.equipamiento(equipamiento)
+//												.equipamiento(equipamiento)
 												.build();
 				this.documentoRepository.save(documento);
 	
-			} catch (IOException e) {
+			} catch (Exception e) {
 				log.error(ExceptionConstants.DAO_EXCEPTION, fichero.getOriginalFilename());
 			}
 			

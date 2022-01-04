@@ -1,5 +1,10 @@
 package com.dbcom.app.controller;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dto.DocumentoDto;
 import com.dbcom.app.model.dto.EquipamientoDto;
 import com.dbcom.app.service.EquipamientoService;
 import com.dbcom.app.service.TipoDocumentoService;
@@ -113,12 +120,27 @@ public final class EquipamientoController {
 	 * @param bindingResult Validaciones
 	 * @param model Modelo
 	 * @return Vista
+	 * @throws IOException 
 	 */
 	@PostMapping(MAP_SAVE_EQUIPAMIENTO)
 	public String save(@Valid @ModelAttribute(ATTRIBUTE_EQUIPAMIENTO) final EquipamientoDto equipamientoDto, 
-			final BindingResult bindingResult, final Model model) {	
+			final BindingResult bindingResult, final Model model) throws IOException {	
 		
 		final String vista;
+		
+//			List<DocumentoDto> documentos = equipamientoDto.getDocumentos().stream()
+//					.filter((DocumentoDto documento) -> !Objects.isNull(documento.getDescripcion())).collect(Collectors.toList());
+//		
+//			for (DocumentoDto documento: documentos) {
+//				MultipartFile file = documento.getDocumento();
+//			    if (!file.isEmpty()) {
+//			        System.out.println(file.getOriginalFilename());
+//			    }
+//			    System.out.println("tamaño doc: " + file.getSize());
+//			    System.out.println("idTipoDocumento: " + documento.getTipoDocumento().getId());
+//				System.out.println("descripcion: " + documento.getDescripcion());
+//				
+//			}
 		if (bindingResult.hasErrors()) {
 
 			// Activación de los botones necesarios

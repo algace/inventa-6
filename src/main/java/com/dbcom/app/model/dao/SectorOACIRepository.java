@@ -3,6 +3,7 @@ package com.dbcom.app.model.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.model.entity.SectorOACI;
 
 /**
@@ -13,4 +14,5 @@ import com.dbcom.app.model.entity.SectorOACI;
 @Repository
 public interface SectorOACIRepository extends JpaRepository<SectorOACI, Long> {
 
+	public Long countByRegionOperativa(RegionOperativa regionOperativa);
 }

@@ -50,11 +50,4 @@ public class TipoDocumento implements Serializable {
 	@Size(max = 250, message = "{validation.max250}")
 	private String descripcion;
 	
-	@OneToMany(fetch = FetchType.LAZY,
-			   cascade = CascadeType.ALL, 
-			   orphanRemoval = true,
-			   mappedBy = "tipoDocumento")
-	@Builder.Default
-	private Set<Documento> documentos = new HashSet<>();
-	
 }
