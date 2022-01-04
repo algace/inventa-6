@@ -260,7 +260,7 @@ public final class ChasisPasarelaController {
 		ChasisPasarelaDto chasisPasarelaDto = this.chasisPasarelaService.read(id);
 		Long tarjetaAsignada = this.tarjetaPasarelaRepository.countByChasisPasarelas(this.modelMapperUtils.map(chasisPasarelaDto, ChasisPasarela.class));
 		
-		model.addAttribute(ATTRIBUTE_TIPO, this.chasisPasarelaService.read(id));
+		model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
