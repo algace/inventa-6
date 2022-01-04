@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
-import com.dbcom.app.model.entity.TipoChasis;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +23,8 @@ public class ChasisPasarelaLiteDto implements Serializable{
 	private Short id;
 	
 	@NotNull(message = "{validation.notNull}")
-	private TipoChasis tipoChasis;
+	private TipoChasisLiteDto tipoChasis;
 	
-	private Boolean isSeleccionado;
+	@Builder.Default
+	private Boolean isSeleccionado = false;
 }

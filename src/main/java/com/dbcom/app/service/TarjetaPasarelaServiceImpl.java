@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
-import com.dbcom.app.model.dao.ChasisPasarelaRepository;
 import com.dbcom.app.model.dao.TarjetaPasarelaRepository;
-import com.dbcom.app.model.dto.ChasisPasarelaDto;
 import com.dbcom.app.model.dto.ChasisPasarelaLiteDto;
 import com.dbcom.app.model.dto.TarjetaPasarelaDto;
 import com.dbcom.app.model.entity.TarjetaPasarela;
@@ -22,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{
+public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{ 
 
 	private final ModelMapperUtils modelMapperUtils;
 	private final TarjetaPasarelaRepository tarjetaPasarelaRepository;
@@ -40,6 +38,7 @@ public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TarjetaPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return TarjetaPasarelaDto.builder()
@@ -50,6 +49,7 @@ public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TarjetaPasarela tarjetaPasarelaBBDD = this.tarjetaPasarelaRepository.findById(id)
@@ -63,6 +63,7 @@ public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TarjetaPasarelaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -78,6 +79,7 @@ public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TarjetaPasarelaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,7 +90,7 @@ public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{
 		
 		List<ChasisPasarelaLiteDto> chasisPasarelaList = chasisPasarelaService.readAllLite().stream().map(chasisPasarela -> {
 			
-			chasisPasarela.setIsSeleccionado(Boolean.valueOf(tarjetaPasarela.getChasisPasarela().stream().anyMatch(chasisPasarelaTarjeta -> chasisPasarela.getId() == chasisPasarelaTarjeta.getId())));
+			chasisPasarela.setIsSeleccionado(Boolean.valueOf(tarjetaPasarela.getChasisPasarelas().stream().anyMatch(chasisPasarelaTarjeta -> chasisPasarela.getId() == chasisPasarelaTarjeta.getId())));
 			
 			return chasisPasarela;
 			
@@ -106,35 +108,37 @@ public class TarjetaPasarelaServiceImpl implements TarjetaPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public TarjetaPasarelaDto save(final TarjetaPasarelaDto tarjetaPasarelaDto) {		
+	@Override
+	public TarjetaPasarelaDto saveUpdate(final TarjetaPasarelaDto tarjetaPasarelaDto) {		
 		
-		tarjetaPasarelaDto.setChasisPasarelas(tarjetaPasarelaDto.getChasisPasarelas());
+		List<ChasisPasarelaLiteDto> chasisPasarelas = tarjetaPasarelaDto.getChasisPasarelas().stream().filter(chasisPasarela -> chasisPasarela.getIsSeleccionado()).toList();
+		
+		tarjetaPasarelaDto.setChasisPasarelas(chasisPasarelas);
 		
 		TarjetaPasarela tarjetaPasarela = this.modelMapperUtils.map(tarjetaPasarelaDto, TarjetaPasarela.class);
 	    
 		tarjetaPasarela = this.tarjetaPasarelaRepository.save(tarjetaPasarela);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tarjetaPasarela.getNombre());		
-		
 		return this.modelMapperUtils.map(tarjetaPasarela, TarjetaPasarelaDto.class);
+		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public TarjetaPasarelaDto update(final TarjetaPasarelaDto tarjetaPasarelaDto) {		
+	@Override
+	public TarjetaPasarelaDto setListChasisPasarelasInTarjetasPasarelasDTO(TarjetaPasarelaDto tarjetaPasarelaDto) {
 		
-		final TarjetaPasarela tarjetaPasarela = this.modelMapperUtils.map(tarjetaPasarelaDto, TarjetaPasarela.class);
+		tarjetaPasarelaDto.setChasisPasarelas(chasisPasarelaService.readAllLite().stream().map(chasisPasarela -> {
+			
+			chasisPasarela.setIsSeleccionado(
+					Boolean.valueOf(tarjetaPasarelaDto.getChasisPasarelas()
+													  .stream()
+													  .anyMatch(chasisPasarelaTarjeta -> (chasisPasarela.getId() == chasisPasarelaTarjeta.getId()) && 
+															  				chasisPasarelaTarjeta.getIsSeleccionado())));
+			
+			return chasisPasarela;
+			
+		}).collect(Collectors.toList()));
 		
-		TarjetaPasarela tarjetaPasarelaBBDD = this.tarjetaPasarelaRepository.findById(tarjetaPasarela.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tarjetaPasarelaBBDD.setNombre(tarjetaPasarelaDto.getNombre());
-		tarjetaPasarelaBBDD = this.tarjetaPasarelaRepository.save(tarjetaPasarelaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tarjetaPasarelaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tarjetaPasarelaBBDD, TarjetaPasarelaDto.class);
+		return tarjetaPasarelaDto;
 	}
+
 }
