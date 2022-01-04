@@ -2,9 +2,11 @@ package com.dbcom.app.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.dbcom.app.model.dto.TarjetaPasarelaDto;
 
-public interface TarjetaPasarelaService extends GenericService<TarjetaPasarelaDto, Short> {
+public interface TarjetaPasarelaService {
 	
 	/**
 	 * Creamos una tarjeta sin persistencia
@@ -36,13 +38,15 @@ public interface TarjetaPasarelaService extends GenericService<TarjetaPasarelaDt
 	 * @param pasarelaChasisDto Tipo de pasarela a persistir
 	 * @return Tarjeta persistida
 	 */
-	TarjetaPasarelaDto save(final TarjetaPasarelaDto tarjetaPasarelaDto);
-		
+	TarjetaPasarelaDto saveUpdate(final TarjetaPasarelaDto tarjetaPasarelaDto) ;
+	
+	
+	
 	/**
-	 * Actualizamos la tarjeta pasado como parámetro
-	 * @param pasarelaChasisDto Tarjeta a actualizar
-	 * @return Tarjeta actualizado
+	 * Se añade lista de chasis pasarelas al DTO
+	 * @param tarjetaPasarelaDto Tipo de pasarela a actualizar
+	 * @return tarjetaPasarelaDto actualizada
 	 */
-	TarjetaPasarelaDto update(final TarjetaPasarelaDto tarjetaPasarelaDto);
-
+	TarjetaPasarelaDto setListChasisPasarelasInTarjetasPasarelasDTO(TarjetaPasarelaDto tarjetaPasarelaDto);
+		
 }

@@ -10,22 +10,24 @@ var cont = -1;
 var tabla_checkboxTarjeta =  $(ID_CHECKBOX_TARJETA).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
+	data: JSON.parse(chasisPasarelasJson),
 	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
         render: function(data, type, full, meta){
 		   if (type == "display"){
 			   cont++;
-	           return data + '<input type="checkbox" checked="' + full.isSeleccionado + '" id="chasisPasarelas' + cont +'.isSeleccionado" name="chasisPasarelas['+ cont + '].isSeleccionado">';
+			   var checked = data == true ? 'checked' : '';
+	           return '<input type="checkbox" id="chasisPasarelas' + cont +'.isSeleccionado" name="chasisPasarelas['+ cont + '].isSeleccionado" ' + checked + '>' +
+	           		  '<input type="hidden" id="chasisPasarelas' + cont +'.id" name="chasisPasarelas['+ cont + '].id" value="' + full.id + '">';
            }else{
 			   return data;
 		   }
         }
     }],
 	columns: [
-	  {data: "chasisPasarela.isSeleccionado"},
-	  {data: "nombre", name: "nombre", title: "Nombre"}, 
-	  {data: "descripcion", name: "descripcion", title: "Descripción"}
+	  {data: "isSeleccionado", name: "seleccionar", title: "Seleccionar"},
+	  {data: "tipoChasis.nombre", name: "nombre", title: "Nombre"}
 	],
 	language: {
 	    'sProcessing':     'Procesando...',

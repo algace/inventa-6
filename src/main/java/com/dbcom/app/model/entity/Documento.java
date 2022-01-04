@@ -3,15 +3,17 @@ package com.dbcom.app.model.entity;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -53,16 +55,13 @@ public class Documento implements Serializable {
 	@Lob
 	private byte[] contenido;
 	
-	@NotEmpty
-	private String tipo;
+//	@NotEmpty
+//	private String tipo;
 	
-	@ManyToOne(fetch = FetchType.LAZY,
-			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@Builder.Default
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="tipoDocumento_id")
+	@NotNull(message = "{validation.notNull}")
 	private TipoDocumento tipoDocumento = new TipoDocumento();
-	
-	@ManyToOne(fetch = FetchType.LAZY,
-			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-	private Equipamiento equipamiento;
 	
 }

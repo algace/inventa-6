@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.NumberFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -94,7 +95,7 @@ public final class EquipamientoDto implements Serializable {
 	private List<TipoDocumentoDto> tiposDocumento = new ArrayList<>();
 	
 	@Builder.Default
-	private List<Object> ficheros = new ArrayList<>();
+	private List<MultipartFile> ficheros = new ArrayList<>();
 	
 	@Builder.Default
 	private List<FotografiaDto> fotografias = new ArrayList<>();
