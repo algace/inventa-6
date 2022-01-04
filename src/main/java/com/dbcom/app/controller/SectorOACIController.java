@@ -145,7 +145,7 @@ public class SectorOACIController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.sectorOACIService.save(sectorOACIDto);
+			this.sectorOACIService.saveUpdate(sectorOACIDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_SECTORES_OACI);
 			log.info(LoggerConstants.LOG_SAVE, sectorOACIDto.getId());
 		}
@@ -242,7 +242,7 @@ public class SectorOACIController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.sectorOACIService.update(sectorOACIDto);
+			this.sectorOACIService.saveUpdate(sectorOACIDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_SECTORES_OACI);
 			log.info(LoggerConstants.LOG_UPDATE, sectorOACIDto.getId());			
 		}

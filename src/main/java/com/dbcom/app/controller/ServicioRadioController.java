@@ -126,7 +126,7 @@ public final class ServicioRadioController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.servicioRadioService.save(servicioRadioDto);
+			this.servicioRadioService.saveUpdate(servicioRadioDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, servicioRadioDto.getId());
 		}
@@ -218,7 +218,7 @@ public final class ServicioRadioController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.servicioRadioService.update(servicioRadioDto);
+			this.servicioRadioService.saveUpdate(servicioRadioDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, servicioRadioDto.getId());			
 		}

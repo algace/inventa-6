@@ -107,44 +107,13 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public AplicacionSWDto save(final AplicacionSWDto aplicacionSWDto) {		
+	public AplicacionSWDto saveUpdate(final AplicacionSWDto aplicacionSWDto) {		
 		
 		aplicacionSWDto.setEquipamientos(filterListEquipamientos(aplicacionSWDto.getEquipamientos()));
 		aplicacionSWDto.setVersionesSW(filterListVersionesSW(aplicacionSWDto.getVersionesSW()));
-		AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);
-		aplicacionSW = this.aplicacionSWRepository.save(aplicacionSW);	
+		AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, aplicacionSW.getNombre());		
-		
-		return this.modelMapperUtils.map(aplicacionSW, AplicacionSWDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public AplicacionSWDto update(final AplicacionSWDto aplicacionSWDto) {		
-
-		final AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);
-		
-		AplicacionSW aplicacionSWBBDD = this.aplicacionSWRepository.findById(aplicacionSW.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		aplicacionSWBBDD.setNombre(aplicacionSWDto.getNombre());
-		aplicacionSWBBDD.setArchivo(aplicacionSWDto.getArchivo());
-		aplicacionSWBBDD.setFecha(aplicacionSWDto.getFecha());
-		aplicacionSWBBDD.setHora(aplicacionSWDto.getHora());
-		
-		aplicacionSWDto.setEquipamientos(filterListEquipamientos(aplicacionSWDto.getEquipamientos()));
-		aplicacionSWDto.setVersionesSW(filterListVersionesSW(aplicacionSWDto.getVersionesSW()));
-		aplicacionSWBBDD.setEquipamientos(this.modelMapperUtils.mapAll2Set(aplicacionSWDto.getEquipamientos(), Equipamiento.class));
-		aplicacionSWBBDD.setVersionesSW(this.modelMapperUtils.mapAll2Set(aplicacionSWDto.getVersionesSW(), VersionSW.class));
-
-		aplicacionSWBBDD = this.aplicacionSWRepository.save(aplicacionSWBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, aplicacionSWBBDD.getId());
-		
-		return this.modelMapperUtils.map(aplicacionSWBBDD, AplicacionSWDto.class);
+		return this.modelMapperUtils.map(this.aplicacionSWRepository.save(aplicacionSW), AplicacionSWDto.class);
 	}
 	
 	/**

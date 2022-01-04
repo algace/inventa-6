@@ -147,7 +147,7 @@ public class RedTTController {
 		
 			
 		} else {		
-			this.redTTService.save(redTTDto);
+			this.redTTService.saveUpdate(redTTDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REDESTT);
 			log.info(LoggerConstants.LOG_SAVE, redTTDto.getId());
 		}
@@ -243,7 +243,7 @@ public class RedTTController {
 			vista = VIEW_REDTT;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		} else {
-			this.redTTService.update(redTTDto);
+			this.redTTService.saveUpdate(redTTDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REDESTT);
 			log.info(LoggerConstants.LOG_UPDATE, redTTDto.getId());			
 		}

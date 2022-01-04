@@ -11,9 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.RecursoPasarelaRepository;
 import com.dbcom.app.model.dto.RecursoPasarelaDto;
-import com.dbcom.app.model.entity.FuncionPasarela;
 import com.dbcom.app.model.entity.RecursoPasarela;
-import com.dbcom.app.model.entity.TipoChasis;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -94,38 +92,11 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public RecursoPasarelaDto save(final RecursoPasarelaDto recursoPasarelaDto) {		
+	public RecursoPasarelaDto saveUpdate(final RecursoPasarelaDto recursoPasarelaDto) {		
 		
 		RecursoPasarela recursoPasarela = this.modelMapperUtils.map(recursoPasarelaDto, RecursoPasarela.class);
-	    
-		recursoPasarela = this.recursoPasarelaRepository.save(recursoPasarela);	
 		
-		log.info(LoggerConstants.LOG_CREATE, recursoPasarela.getNombre());		
-		
-		return this.modelMapperUtils.map(recursoPasarela, RecursoPasarelaDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public RecursoPasarelaDto update(final RecursoPasarelaDto recursoPasarelaDto) {		
-		
-		final RecursoPasarela recursoPasarela = this.modelMapperUtils.map(recursoPasarelaDto, RecursoPasarela.class);
-		
-		RecursoPasarela recursoPasarelaBBDD = this.recursoPasarelaRepository.findById(recursoPasarela.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		recursoPasarelaBBDD.setNombre(recursoPasarelaDto.getNombre());
-		recursoPasarelaBBDD.setTipoChasis(this.modelMapperUtils.map(recursoPasarelaDto.getTipoChasis(), TipoChasis.class));
-		recursoPasarelaBBDD.setFuncionPasarela(this.modelMapperUtils.map(recursoPasarelaDto.getFuncionPasarela(), FuncionPasarela.class));
-		recursoPasarelaBBDD.setIndiceCarga(recursoPasarelaDto.getIndiceCarga());
-		
-		recursoPasarelaBBDD = this.recursoPasarelaRepository.save(recursoPasarelaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, recursoPasarelaBBDD.getId());
-		
-		return this.modelMapperUtils.map(recursoPasarelaBBDD, RecursoPasarelaDto.class);
+		return this.modelMapperUtils.map(this.recursoPasarelaRepository.save(recursoPasarela), RecursoPasarelaDto.class);
 	}
 
 }

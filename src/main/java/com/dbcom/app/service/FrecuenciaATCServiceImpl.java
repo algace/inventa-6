@@ -89,40 +89,11 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public FrecuenciaATCDto save(final FrecuenciaATCDto frecuenciaATCDto) {		
+	public FrecuenciaATCDto saveUpdate(final FrecuenciaATCDto frecuenciaATCDto) {		
 		
 		FrecuenciaATC frecuenciaATC = this.modelMapperUtils.map(frecuenciaATCDto, FrecuenciaATC.class);
-	    
-		frecuenciaATC = this.frecuenciaATCRepository.save(frecuenciaATC);	
 		
-		log.info(LoggerConstants.LOG_CREATE, frecuenciaATC.getNombre());		
-		
-		return this.modelMapperUtils.map(frecuenciaATC, FrecuenciaATCDto.class);
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public FrecuenciaATCDto update(final FrecuenciaATCDto frecuenciaATCDto) {		
-		
-		FrecuenciaATC frecuenciaATCBBDD = this.frecuenciaATCRepository.findById(frecuenciaATCDto.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		frecuenciaATCBBDD.setNombre(frecuenciaATCDto.getNombre());
-		frecuenciaATCBBDD.setDependencia(frecuenciaATCDto.getDependencia());
-		frecuenciaATCBBDD.setDescripcion(frecuenciaATCDto.getDescripcion());		
-		frecuenciaATCBBDD.setTipoServicio(frecuenciaATCDto.getTipoServicio());
-		frecuenciaATCBBDD.setFrecuenciaBackup(frecuenciaATCDto.getFrecuenciaBackup());
-		frecuenciaATCBBDD.setTitular(frecuenciaATCDto.getTitular());
-		frecuenciaATCBBDD.setDocOACI(frecuenciaATCDto.getDocOACI());
-		frecuenciaATCBBDD.setObservaciones(frecuenciaATCDto.getObservaciones());
-		frecuenciaATCBBDD = this.frecuenciaATCRepository.save(frecuenciaATCBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, frecuenciaATCBBDD.getId());
-		
-		return this.modelMapperUtils.map(frecuenciaATCBBDD, FrecuenciaATCDto.class);
+		return this.modelMapperUtils.map(this.frecuenciaATCRepository.save(frecuenciaATC), FrecuenciaATCDto.class);
 	}
 }
  

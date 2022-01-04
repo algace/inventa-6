@@ -132,7 +132,7 @@ public final class TipoCanalizacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoCanalizacionService.save(tipoCanalizacionDto);
+			this.tipoCanalizacionService.saveUpdate(tipoCanalizacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoCanalizacionDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoCanalizacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoCanalizacionService.update(tipoCanalizacionDto);
+			this.tipoCanalizacionService.saveUpdate(tipoCanalizacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoCanalizacionDto.getId());			
 		}

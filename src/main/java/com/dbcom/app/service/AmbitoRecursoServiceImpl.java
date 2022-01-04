@@ -89,36 +89,11 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public AmbitoRecursoDto save(final AmbitoRecursoDto ambitoRecursoDto) {		
+	public AmbitoRecursoDto saveUpdate(final AmbitoRecursoDto ambitoRecursoDto) {		
 		
 		AmbitoRecurso ambitoRecurso = this.modelMapperUtils.map(ambitoRecursoDto, AmbitoRecurso.class);
-	    
-		ambitoRecurso = this.ambitoRecursoRepository.save(ambitoRecurso);	
 		
-		log.info(LoggerConstants.LOG_CREATE, ambitoRecurso.getNombre());		
-		
-		return this.modelMapperUtils.map(ambitoRecurso, AmbitoRecursoDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public AmbitoRecursoDto update(final AmbitoRecursoDto ambitoRecursoDto) {		
-		
-		final AmbitoRecurso ambitoRecurso = this.modelMapperUtils.map(ambitoRecursoDto, AmbitoRecurso.class);
-		
-		AmbitoRecurso ambitoRecursoBBDD = this.ambitoRecursoRepository.findById(ambitoRecurso.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		ambitoRecursoBBDD.setNombre(ambitoRecursoDto.getNombre());
-		ambitoRecursoBBDD.setFuncionPasarela(this.modelMapperUtils.map(ambitoRecursoDto.getFuncionPasarela(),FuncionPasarela.class));
-		
-		ambitoRecursoBBDD = this.ambitoRecursoRepository.save(ambitoRecursoBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, ambitoRecursoBBDD.getId());
-		
-		return this.modelMapperUtils.map(ambitoRecursoBBDD, AmbitoRecursoDto.class);
+		return this.modelMapperUtils.map(this.ambitoRecursoRepository.save(ambitoRecurso), AmbitoRecursoDto.class);
 	}
 
 }

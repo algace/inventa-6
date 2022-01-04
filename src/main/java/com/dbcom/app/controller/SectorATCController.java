@@ -173,7 +173,7 @@ public class SectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.sectorATCService.save(sectorATCDto);
+			this.sectorATCService.saveUpdate(sectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, sectorATCDto.getId());
 		}
@@ -282,7 +282,7 @@ public class SectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.sectorATCService.update(sectorATCDto);
+			this.sectorATCService.saveUpdate(sectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, sectorATCDto.getId());			
 		}

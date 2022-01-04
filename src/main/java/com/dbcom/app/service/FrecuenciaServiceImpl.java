@@ -89,39 +89,11 @@ public final class FrecuenciaServiceImpl implements FrecuenciaService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public FrecuenciaDto save(final FrecuenciaDto frecuenciaDto) {		
+	public FrecuenciaDto saveUpdate(final FrecuenciaDto frecuenciaDto) {		
 		
-		Frecuencia frecuencia = this.modelMapperUtils.map(frecuenciaDto, Frecuencia.class);
-	    
-		frecuencia = this.frecuenciaRepository.save(frecuencia);	
+		Frecuencia frecuencia = this.modelMapperUtils.map(frecuenciaDto, Frecuencia.class);		
 		
-		log.info(LoggerConstants.LOG_CREATE, frecuencia.getNombre());		
-		
-		return this.modelMapperUtils.map(frecuencia, FrecuenciaDto.class);
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public FrecuenciaDto update(final FrecuenciaDto frecuenciaDto) {		
-		
-		Frecuencia frecuenciaBBDD = this.frecuenciaRepository.findById(frecuenciaDto.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		frecuenciaBBDD.setNombre(frecuenciaBBDD.getNombre());
-		frecuenciaBBDD.setValor(frecuenciaBBDD.getValor());
-		frecuenciaBBDD.setUnidad(frecuenciaBBDD.getUnidad());		
-		frecuenciaBBDD.setBanda(frecuenciaBBDD.getBanda());
-		frecuenciaBBDD.setFechaPublicacion(frecuenciaBBDD.getFechaPublicacion());
-		frecuenciaBBDD.setFuente(frecuenciaBBDD.getFuente());
-		frecuenciaBBDD.setObservaciones(frecuenciaBBDD.getObservaciones());
-		frecuenciaBBDD = this.frecuenciaRepository.save(frecuenciaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, frecuenciaBBDD.getId());
-		
-		return this.modelMapperUtils.map(frecuenciaBBDD, FrecuenciaDto.class);
+		return this.modelMapperUtils.map(this.frecuenciaRepository.save(frecuencia), FrecuenciaDto.class);
 	}
 }
  

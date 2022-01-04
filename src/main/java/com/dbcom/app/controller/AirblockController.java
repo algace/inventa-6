@@ -132,7 +132,7 @@ public final class AirblockController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.airblockService.save(airblockDto);
+			this.airblockService.saveUpdate(airblockDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_AIRBLOCKS);
 			log.info(LoggerConstants.LOG_SAVE, airblockDto.getId());
 		}
@@ -227,7 +227,7 @@ public final class AirblockController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.airblockService.update(airblockDto);
+			this.airblockService.saveUpdate(airblockDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_AIRBLOCKS);
 			log.info(LoggerConstants.LOG_UPDATE, airblockDto.getId());			
 		}

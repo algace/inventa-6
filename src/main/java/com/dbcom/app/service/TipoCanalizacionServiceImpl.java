@@ -88,34 +88,10 @@ public final class TipoCanalizacionServiceImpl implements TipoCanalizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoCanalizacionDto save(final TipoCanalizacionDto tipoCanalizacionDto) {		
+	public TipoCanalizacionDto saveUpdate(final TipoCanalizacionDto tipoCanalizacionDto) {		
 		
 		TipoCanalizacion tipoCanalizacion = this.modelMapperUtils.map(tipoCanalizacionDto, TipoCanalizacion.class);
-	    
-		tipoCanalizacion = this.tipoCanalizacionRepository.save(tipoCanalizacion);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoCanalizacion.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoCanalizacion, TipoCanalizacionDto.class);
+		return this.modelMapperUtils.map(this.tipoCanalizacionRepository.save(tipoCanalizacion), TipoCanalizacionDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoCanalizacionDto update(final TipoCanalizacionDto tipoCanalizacionDto) {		
-		
-		final TipoCanalizacion tipoCanalizacion = this.modelMapperUtils.map(tipoCanalizacionDto, TipoCanalizacion.class);
-		
-		TipoCanalizacion tipoCanalizacionBBDD = this.tipoCanalizacionRepository.findById(tipoCanalizacion.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoCanalizacionBBDD.setNombre(tipoCanalizacionDto.getNombre());
-		tipoCanalizacionBBDD = this.tipoCanalizacionRepository.save(tipoCanalizacionBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoCanalizacionBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoCanalizacionBBDD, TipoCanalizacionDto.class);
-	}
-	
 }

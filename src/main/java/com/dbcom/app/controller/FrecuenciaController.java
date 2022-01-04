@@ -130,7 +130,7 @@ public final class FrecuenciaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.frecuenciaService.save(frecuenciaDto);
+			this.frecuenciaService.saveUpdate(frecuenciaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_FRECUENCIAS);
 			log.info(LoggerConstants.LOG_SAVE, frecuenciaDto.getId());
 		}
@@ -222,7 +222,7 @@ public final class FrecuenciaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.frecuenciaService.update(frecuenciaDto);
+			this.frecuenciaService.saveUpdate(frecuenciaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_FRECUENCIAS);
 			log.info(LoggerConstants.LOG_UPDATE, frecuenciaDto.getId());			
 		}

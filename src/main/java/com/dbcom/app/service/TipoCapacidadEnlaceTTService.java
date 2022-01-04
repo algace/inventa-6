@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoCapacidadEnlaceTTDto;
  * 
  * @author jose.vallve
  */
-public interface TipoCapacidadEnlaceTTService extends GenericService<TipoCapacidadEnlaceTTDto, Short> {
+public interface TipoCapacidadEnlaceTTService {
 
 	/**
 	 * Creamos un tipo de capacidad enlace TT sin persistencia
@@ -41,13 +41,6 @@ public interface TipoCapacidadEnlaceTTService extends GenericService<TipoCapacid
 	 * @param tipoCapacidadEnlaceTTDto Tipo de capacidad enlace TT a persistir
 	 * @return Tipo de capacidad enlace TT persistido
 	 */
-	TipoCapacidadEnlaceTTDto save(final TipoCapacidadEnlaceTTDto tipoCapacidadEnlaceTTDto);
-		
-	/**
-	 * Actualizamos el tipo de capacidad enlace TT pasado como parámetro
-	 * @param tipoCapacidadEnlaceTTDto Tipo de capacidad enlace TT a actualizar
-	 * @return Tipo de capacidad enlace TT actualizado
-	 */
-	TipoCapacidadEnlaceTTDto update(final TipoCapacidadEnlaceTTDto tipoCapacidadEnlaceTTDto);
+	TipoCapacidadEnlaceTTDto saveUpdate(final TipoCapacidadEnlaceTTDto tipoCapacidadEnlaceTTDto);
 	
 }

@@ -135,7 +135,7 @@ public final class EquipamientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.equipamientoService.save(equipamientoDto);
+			this.equipamientoService.saveUpdate(equipamientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_EQUIPAMIENTOS);
 			log.info(LoggerConstants.LOG_SAVE, equipamientoDto.getId());
 		}
@@ -242,7 +242,7 @@ public final class EquipamientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.equipamientoService.update(equipamientoDto);
+			this.equipamientoService.saveUpdate(equipamientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_EQUIPAMIENTOS);
 			log.info(LoggerConstants.LOG_UPDATE, equipamientoDto.getId());			
 		}

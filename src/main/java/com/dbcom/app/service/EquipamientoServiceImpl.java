@@ -135,47 +135,11 @@ public final class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public EquipamientoDto save(final EquipamientoDto equipamientoDto) {		
+	public EquipamientoDto saveUpdate(final EquipamientoDto equipamientoDto) {		
 		
 		Equipamiento equipamiento = this.modelMapperUtils.map(equipamientoDto, Equipamiento.class);
-	    
-		equipamiento = this.equipamientoRepository.save(equipamiento);	
-		
-		log.info(LoggerConstants.LOG_CREATE, equipamiento.getNombre());		
-		
-		return this.modelMapperUtils.map(equipamiento, EquipamientoDto.class);
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public EquipamientoDto update(final EquipamientoDto equipamientoDto) {		
-		
-		Equipamiento equipamientoBBDD = this.equipamientoRepository.findById(equipamientoDto.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		equipamientoBBDD.setNombre(equipamientoDto.getNombre());
-		equipamientoBBDD.setSistema(equipamientoDto.getSistema());
-		equipamientoBBDD.setSubsistema(equipamientoDto.getSubsistema());		
-		equipamientoBBDD.setMarca(equipamientoDto.getMarca());
-		equipamientoBBDD.setModelo(equipamientoDto.getModelo());
-		equipamientoBBDD.setCaracteristicas(equipamientoDto.getCaracteristicas());
-		equipamientoBBDD.setEntradas(equipamientoDto.getEntradas());
-		equipamientoBBDD.setSalidas(equipamientoDto.getSalidas());
-		equipamientoBBDD.setGanancia(equipamientoDto.getGanancia());
-		equipamientoBBDD.setPerdida(equipamientoDto.getPerdida());
-		equipamientoBBDD.setNumeroPuertos(equipamientoDto.getNumeroPuertos());
-		equipamientoBBDD.setApertura(equipamientoDto.getApertura());
-		equipamientoBBDD.setDiametro(equipamientoDto.getDiametro());
-		equipamientoBBDD.setDescripcion(equipamientoDto.getDescripcion());
-		equipamientoBBDD.getDocumentos().removeAll(this.getDocumentosEliminar(equipamientoBBDD, equipamientoDto));
-		equipamientoBBDD = this.equipamientoRepository.save(equipamientoBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, equipamientoBBDD.getId());
-		
-		return this.modelMapperUtils.map(equipamientoBBDD, EquipamientoDto.class);
+	    		
+		return this.modelMapperUtils.map(this.equipamientoRepository.save(equipamiento), EquipamientoDto.class);
 	}
 	
 	/**

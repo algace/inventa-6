@@ -102,36 +102,10 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public ChasisPasarelaDto save(final ChasisPasarelaDto chasisPasarelaDto) {		
+	public ChasisPasarelaDto saveUpdate(final ChasisPasarelaDto chasisPasarelaDto) {		
 		
 		ChasisPasarela chasisPasarela = this.modelMapperUtils.map(chasisPasarelaDto, ChasisPasarela.class);
 	    
-		chasisPasarela = this.chasisPasarelaRepository.save(chasisPasarela);	
-		
-		log.info(LoggerConstants.LOG_CREATE, chasisPasarela.getNombre());		
-		
-		return this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public ChasisPasarelaDto update(final ChasisPasarelaDto chasisPasarelaDto) {		
-		
-		final ChasisPasarela chasisPasarela = this.modelMapperUtils.map(chasisPasarelaDto, ChasisPasarela.class);
-		
-		ChasisPasarela chasisPasarelaBBDD = this.chasisPasarelaRepository.findById(chasisPasarela.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		chasisPasarelaBBDD.setNombre(chasisPasarelaDto.getNombre());
-		chasisPasarelaBBDD.setTipoChasis(this.modelMapperUtils.map(chasisPasarelaDto.getTipoChasis(), TipoChasis.class));
-		chasisPasarelaBBDD.setIndiceCargaLimite(chasisPasarelaDto.getIndiceCargaLimite());
-		
-		chasisPasarelaBBDD = this.chasisPasarelaRepository.save(chasisPasarelaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, chasisPasarelaBBDD.getId());
-		
-		return this.modelMapperUtils.map(chasisPasarelaBBDD, ChasisPasarelaDto.class);
+		return this.modelMapperUtils.map(this.chasisPasarelaRepository.save(chasisPasarela), ChasisPasarelaDto.class);
 	}
 }

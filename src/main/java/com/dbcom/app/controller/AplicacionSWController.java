@@ -152,7 +152,7 @@ public final class AplicacionSWController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.aplicacionService.save(aplicacionDto);
+			this.aplicacionService.saveUpdate(aplicacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_APLICACIONES);
 			log.info(LoggerConstants.LOG_SAVE, aplicacionDto.getId());
 		}
@@ -254,7 +254,7 @@ public final class AplicacionSWController {
 			vista = VIEW_APLICACION;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		} else {
-			this.aplicacionService.update(aplicacionDto);
+			this.aplicacionService.saveUpdate(aplicacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_APLICACIONES);
 			log.info(LoggerConstants.LOG_UPDATE, aplicacionDto.getId());			
 		}

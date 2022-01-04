@@ -126,47 +126,13 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	}
 
 	@Override
-	public SectorATCDto save(SectorATCDto sectorATCDto) {
+	public SectorATCDto saveUpdate(SectorATCDto sectorATCDto) {
 		
 		sectorATCDto.setAirblocks(filterListAirblock(sectorATCDto.getAirblocks()));
 		
-		SectorATC sectorATC = this.modelMapperUtils.map(sectorATCDto, SectorATC.class);
-	    
-		sectorATC = this.sectorATCRepository.save(sectorATC);	
+		SectorATC sectorATC = this.modelMapperUtils.map(sectorATCDto, SectorATC.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, sectorATC.getNombre());		
-		
-		return this.modelMapperUtils.map(sectorATC, SectorATCDto.class);
-	}
-
-	@Override
-	public SectorATCDto update(SectorATCDto sectorATCDto) {
-		
-		final SectorATC sectorATC = this.modelMapperUtils.map(sectorATCDto, SectorATC.class);
-		
-		SectorATC sectorATCBBDD = this.sectorATCRepository.findById(sectorATC.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		
-		// Actualizamos el registro de bbdd
-		sectorATCBBDD.setNombre(sectorATCDto.getNombre());
-		sectorATCBBDD.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionOperativa(), RegionOperativa.class));
-		sectorATCBBDD.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTipoFuenteInformacion(), TipoFuenteInformacion.class));
-		sectorATCBBDD.setFechaPublicacion(sectorATCDto.getFechaPublicacion());
-		sectorATCBBDD.setTipoSectorATC(this.modelMapperUtils.map(sectorATCDto.getTipoSectorATC(), TipoSectorATC.class));
-		sectorATCBBDD.setFlMax(sectorATCDto.getFlMax());
-		sectorATCBBDD.setFlMin(sectorATCDto.getFlMin());
-		sectorATCBBDD.setDescripcion(sectorATCDto.getDescripcion());
-
-		//se limpia la lista del objeto airblock vacío que viene por defecto
-		sectorATCDto.setAirblocks(filterListAirblock(sectorATCDto.getAirblocks()));
-		sectorATCBBDD.setAirblocks(this.modelMapperUtils.mapAll2Set(sectorATCDto.getAirblocks(), Airblock.class));
-		
-		sectorATCBBDD = this.sectorATCRepository.save(sectorATCBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, sectorATCBBDD.getId());
-		
-		return this.modelMapperUtils.map(sectorATCBBDD, SectorATCDto.class);
+		return this.modelMapperUtils.map(this.sectorATCRepository.save(sectorATC), SectorATCDto.class);
 	}
 	
 	public List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados){

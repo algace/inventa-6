@@ -44,14 +44,7 @@ public interface AplicacionSWService {
 	 * @param aplicacionSWDto Aplicación a persistir
 	 * @return Aplicación persistida
 	 */
-	AplicacionSWDto save(final AplicacionSWDto aplicacionSWDto);
-		
-	/**
-	 * Actualizamos la aplicación pasada como parámetro
-	 * @param aplicacionSWDto Aplicación a actualizar
-	 * @return Aplicación actualizada
-	 */
-	AplicacionSWDto update(final AplicacionSWDto aplicacionSWDto);
+	AplicacionSWDto saveUpdate(final AplicacionSWDto aplicacionSWDto);
 	
 	/**
 	 * métodos internos para tratar las listas de Versiones de manera correcta según hayan sido seleccionadas o no.

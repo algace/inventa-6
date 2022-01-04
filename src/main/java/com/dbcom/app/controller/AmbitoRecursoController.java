@@ -133,7 +133,7 @@ public final class AmbitoRecursoController {
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 			
 			} else {		
-				this.ambitoRecursoService.save(ambitoRecursoDto);
+				this.ambitoRecursoService.saveUpdate(ambitoRecursoDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 				log.info(LoggerConstants.LOG_SAVE, ambitoRecursoDto.getId());
 			}
@@ -228,7 +228,7 @@ public final class AmbitoRecursoController {
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 			
 			} else {
-				this.ambitoRecursoService.update(ambitoRecursoDto);
+				this.ambitoRecursoService.saveUpdate(ambitoRecursoDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 				log.info(LoggerConstants.LOG_UPDATE, ambitoRecursoDto.getId());			
 			}
