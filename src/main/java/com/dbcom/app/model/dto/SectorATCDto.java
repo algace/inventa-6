@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -49,15 +48,10 @@ public final class SectorATCDto implements Serializable{
 	@Valid
 	private TipoFuenteInformacionLiteDto tipoFuenteInformacion;
 	
-	@Max(999)
-	@NotNull(message = "{validation.notNull}")
 	private Integer flMin;
 	
-	@Max(999)
-	@NotNull(message = "{validation.notNull}")
 	private Integer flMax;
 	
-	@Size(min = 1, max = 70, message = "{validation.min1max70}")
 	private String descripcion;
 	
 	private String airblockList;
