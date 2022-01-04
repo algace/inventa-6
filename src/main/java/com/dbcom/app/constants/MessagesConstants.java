@@ -37,6 +37,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_REGION_MANTENIMIENTO_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_REGION_MANTENIMIENTO_PREGUNTA;
+	public static String POPUP_ELIMINAR_REGION_OPERATIVA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_REGION_OPERATIVA_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_MANTENIMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA;
@@ -133,10 +134,14 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_REGION_MANTENIMIENTO_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
-	
 	@Value("${html.label.eliminar.sectorATC.pregunta}")
 	public void setMessagePopupEliminarSectorATCPregunta(final String texto) {
 		POPUP_ELIMINAR_SECTORATC_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.regionOperativa.no.permitido.mensaje}")
+	public void setMessagePopupEliminarRegionOperativaNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_REGION_OPERATIVA_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.servicioRadio.pregunta}")
