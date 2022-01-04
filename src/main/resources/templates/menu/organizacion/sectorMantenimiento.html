@@ -109,7 +109,7 @@
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
 									            <input type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	class="form-control"
 									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
 									        </div>										        	
