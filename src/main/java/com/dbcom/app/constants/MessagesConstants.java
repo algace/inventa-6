@@ -55,6 +55,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_ENLACETT_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_EQUIPOCONFIGURACIONRADIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_ESTRUCTURA_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_INSTALACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_INTERFAZOPERACION_PREGUNTA;
@@ -226,6 +227,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_ESTRUCTURA_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoFuenteInformacion.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoFuenteInformacionNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoFuenteInformacion.pregunta}")
 	public void setMessagePopupEliminarTipoFuenteInformacionPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_PREGUNTA = texto;
