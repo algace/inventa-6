@@ -32,6 +32,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
+	public static String POPUP_ELIMINAR_FUNCIONPASARELA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_PROPIETARIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA;
@@ -113,6 +114,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.chasisPasarela.pregunta}")
 	public void setMessagePopupEliminarPasarelaPregunta(final String texto) {
 		POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.funcionPasarela.no.permitido.mensaje}")
+	public void setMessagePopupEliminarFuncionPasarelaNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_FUNCIONPASARELA_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.funcionPasarela.pregunta}")
