@@ -248,6 +248,8 @@ public class TipoSistemaController {
 		model.addAttribute(ATTRIBUTE_TIPO_SISTEMA, this.tiposSistemasService.read(id));
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_SISTEMA_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_TIPO_SISTEMA_NO_PERMITIDO_MENSAJE);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
