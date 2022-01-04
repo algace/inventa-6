@@ -47,6 +47,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_CHASIS_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_CHASIS_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CONFICURACIONRADIOENLACE_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CONFICURACIONTIRADA_PREGUNTA;
@@ -192,6 +193,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.tipoCapacidadEnlaceTT.pregunta}")
 	public void setMessagePopupEliminarTipoCapacidadEnlaceTTPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.tipoChasis.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoChasisNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_CHASIS_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.tipoChasis.pregunta}")
