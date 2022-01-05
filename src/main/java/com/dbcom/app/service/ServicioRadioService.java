@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.ServicioRadioDto;
 
-public interface ServicioRadioService extends GenericService<ServicioRadioDto, Short> {
+public interface ServicioRadioService {
 	
 	
 	/**
@@ -37,12 +37,5 @@ public interface ServicioRadioService extends GenericService<ServicioRadioDto, S
 	 * @param servicioRadioDto Servicio de radio a persistir
 	 * @return Servicio de radio persistido
 	 */
-	ServicioRadioDto save(final ServicioRadioDto servicioRadioDto);
-		
-	/**
-	 * Actualizamos el servicio de radio pasado como parámetro
-	 * @param servicioRadioDto Servicio de radio a actualizar
-	 * @return Servicio de radio actualizado
-	 */
-	ServicioRadioDto update(final ServicioRadioDto servicioRadioDto);
+	ServicioRadioDto saveUpdate(final ServicioRadioDto servicioRadioDto);
 }

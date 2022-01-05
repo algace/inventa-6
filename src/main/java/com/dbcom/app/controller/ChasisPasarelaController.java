@@ -143,7 +143,7 @@ public final class ChasisPasarelaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.chasisPasarelaService.save(chasisPasarelaDto);
+			this.chasisPasarelaService.saveUpdate(chasisPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, chasisPasarelaDto.getId());
 		}
@@ -239,7 +239,7 @@ public final class ChasisPasarelaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.chasisPasarelaService.update(chasisPasarelaDto);
+			this.chasisPasarelaService.saveUpdate(chasisPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, chasisPasarelaDto.getId());			
 		}

@@ -13,8 +13,7 @@ import com.dbcom.app.model.dao.TipoSubsistemaRepository;
 import com.dbcom.app.model.dto.TipoInterfazOperacionDto;
 import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
-import com.dbcom.app.model.entity.TipoInterfazOperacion;
-import com.dbcom.app.model.entity.TipoSistema;
+import com.dbcom.app.model.dto.TipoSubsistemaLiteDto;
 import com.dbcom.app.model.entity.TipoSubsistema;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -46,9 +45,11 @@ public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 	@Override
 	public TipoSubsistemaDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
+
 		return TipoSubsistemaDto.builder().tiposInterfazOperacion(this.modelMapperUtils.mapAll2List(tiposInterfazOperacionService.readAll(),TipoInterfazOperacionDto.class))
 										  .tiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class))
 										  .build();
+
 	}
 
 	/**
@@ -69,12 +70,12 @@ public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoSubsistemaDto> readAll() {
+	public List<TipoSubsistemaLiteDto> readAll() {
 
 		final List<TipoSubsistema> tiposSubsistemas = this.tipoSubsistemasRepository.findAll();
 		
-		final List<TipoSubsistemaDto> tiposSubsistemasDto = new ArrayList<>(tiposSubsistemas.size());
-		tiposSubsistemas.forEach(tiposSubsistema -> tiposSubsistemasDto.add(this.modelMapperUtils.map(tiposSubsistema, TipoSubsistemaDto.class)));
+		final List<TipoSubsistemaLiteDto> tiposSubsistemasDto = new ArrayList<>(tiposSubsistemas.size());
+		tiposSubsistemas.forEach(tiposSubsistema -> tiposSubsistemasDto.add(this.modelMapperUtils.map(tiposSubsistema, TipoSubsistemaLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 
@@ -103,39 +104,10 @@ public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TipoSubsistemaDto save(TipoSubsistemaDto tipoSubsistemaDto) {
+	public TipoSubsistemaDto saveUpdate(TipoSubsistemaDto tipoSubsistemaDto) {
 
 		TipoSubsistema tipoSubsistema = this.modelMapperUtils.map(tipoSubsistemaDto, TipoSubsistema.class);
-		tipoSubsistema.setTipoInterfazOperacion(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoInterfazOperacion(), TipoInterfazOperacion.class));
-	    tipoSubsistema.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(), TipoSistema.class));
 		
-		tipoSubsistema = this.tipoSubsistemasRepository.save(tipoSubsistema);	
-		
-		log.info(LoggerConstants.LOG_CREATE, tipoSubsistema.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoSubsistema, TipoSubsistemaDto.class);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TipoSubsistemaDto update(TipoSubsistemaDto tipoSubsistemaDto) {
-
-		final TipoSubsistema tipoSubsistema = this.modelMapperUtils.map(tipoSubsistemaDto, TipoSubsistema.class);
-		
-		TipoSubsistema tipoSubsistemaBBDD = this.tipoSubsistemasRepository.findById(tipoSubsistema.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoSubsistemaBBDD.setNombre(tipoSubsistemaDto.getNombre());
-		tipoSubsistemaBBDD.setDescripcion(tipoSubsistemaDto.getDescripcion());
-		tipoSubsistemaBBDD.setTipoInterfazOperacion(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoInterfazOperacion(),TipoInterfazOperacion.class));
-		tipoSubsistemaBBDD.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(),TipoSistema.class));
-		tipoSubsistemaBBDD = this.tipoSubsistemasRepository.save(tipoSubsistemaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoSubsistemaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoSubsistemaBBDD, TipoSubsistemaDto.class);
+		return this.modelMapperUtils.map(this.tipoSubsistemasRepository.save(tipoSubsistema), TipoSubsistemaDto.class);
 	}
 }

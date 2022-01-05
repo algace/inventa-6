@@ -141,7 +141,7 @@ public final class TipoTopologiaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoTopologiaService.save(tipoTopologiaDto);
+			this.tipoTopologiaService.saveUpdate(tipoTopologiaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoTopologiaDto.getId());
 		}
@@ -233,7 +233,7 @@ public final class TipoTopologiaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoTopologiaService.update(tipoTopologiaDto);
+			this.tipoTopologiaService.saveUpdate(tipoTopologiaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoTopologiaDto.getId());			
 		}

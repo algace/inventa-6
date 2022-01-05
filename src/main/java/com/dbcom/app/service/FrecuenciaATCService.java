@@ -10,7 +10,7 @@ import com.dbcom.app.model.dto.FrecuenciaATCDto;
  * 
  * @author eduardo.tubilleja
  */
-public interface FrecuenciaATCService extends GenericService<FrecuenciaATCDto, Long> {
+public interface FrecuenciaATCService {
 
 	/**
 	 * Creamos una frecuenciaATC sin persistencia
@@ -42,13 +42,6 @@ public interface FrecuenciaATCService extends GenericService<FrecuenciaATCDto, L
 	 * @param frecuenciaATCDto FrecuenciaATC a persistir
 	 * @return FrecuenciaATC persistido
 	 */
-	FrecuenciaATCDto save(final FrecuenciaATCDto frecuenciaATCDto);
-		
-	/**
-	 * Actualizamos la frecuenciaATC pasada como parámetro
-	 * @param frecuenciaDto FrecuenciaATC a actualizar
-	 * @return FrecuenciaATC actualizado
-	 */
-	FrecuenciaATCDto update(final FrecuenciaATCDto frecuenciaATCDto);
+	FrecuenciaATCDto saveUpdate(final FrecuenciaATCDto frecuenciaATCDto);
 	
 }

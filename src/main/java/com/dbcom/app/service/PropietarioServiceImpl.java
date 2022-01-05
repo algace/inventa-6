@@ -33,6 +33,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public PropietarioDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new PropietarioDto();
@@ -41,6 +42,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final Propietario propietarioBBDD = this.propietarioRepository.findById(id)
@@ -54,6 +56,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<PropietarioDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -69,6 +72,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public PropietarioDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -83,36 +87,11 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public PropietarioDto save(final PropietarioDto propietarioDto) {		
+	@Override
+	public PropietarioDto saveUpdate(final PropietarioDto propietarioDto) {		
 		
 		Propietario propietario = this.modelMapperUtils.map(propietarioDto, Propietario.class);
-	    
-		propietario = this.propietarioRepository.save(propietario);	
 		
-		log.info(LoggerConstants.LOG_CREATE, propietario.getPropietario());		
-		
-		return this.modelMapperUtils.map(propietario, PropietarioDto.class);
+		return this.modelMapperUtils.map(this.propietarioRepository.save(propietario), PropietarioDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public PropietarioDto update(final PropietarioDto propietarioDto) {		
-		
-		final Propietario propietario = this.modelMapperUtils.map(propietarioDto, Propietario.class);
-		
-		Propietario propietarioBBDD = this.propietarioRepository.findById(propietario.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		propietarioBBDD.setPropietario(propietarioDto.getPropietario());
-		propietarioBBDD.setDescripcion(propietarioDto.getDescripcion());
-		
-		propietarioBBDD = this.propietarioRepository.save(propietarioBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, propietarioBBDD.getId());
-		
-		return this.modelMapperUtils.map(propietarioBBDD, PropietarioDto.class);
-	}
-
 }

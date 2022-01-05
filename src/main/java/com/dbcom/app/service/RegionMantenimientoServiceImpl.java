@@ -91,36 +91,10 @@ public class RegionMantenimientoServiceImpl implements RegionMantenimientoServic
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RegionMantenimientoDto save(RegionMantenimientoDto regionMantenimientoDto) {
+	public RegionMantenimientoDto saveUpdate(RegionMantenimientoDto regionMantenimientoDto) {
 
 		RegionMantenimiento regionMantenimiento = this.modelMapperUtils.map(regionMantenimientoDto, RegionMantenimiento.class);
-	    
-		regionMantenimiento = this.regionMantenimientoRepository.save(regionMantenimiento);	
 		
-		log.info(LoggerConstants.LOG_CREATE, regionMantenimiento.getNombre());		
-		
-		return this.modelMapperUtils.map(regionMantenimiento, RegionMantenimientoDto.class);
+		return this.modelMapperUtils.map(this.regionMantenimientoRepository.save(regionMantenimiento), RegionMantenimientoDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public RegionMantenimientoDto update(RegionMantenimientoDto regionMantenimientoDto) {
-
-		final RegionMantenimiento regionMantenimiento = this.modelMapperUtils.map(regionMantenimientoDto, RegionMantenimiento.class);
-		
-		RegionMantenimiento regionMantenimientoBBDD = this.regionMantenimientoRepository.findById(regionMantenimiento.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		regionMantenimientoBBDD.setNombre(regionMantenimientoDto.getNombre());
-		regionMantenimientoBBDD.setDescripcion(regionMantenimientoDto.getDescripcion());
-		regionMantenimientoBBDD = this.regionMantenimientoRepository.save(regionMantenimientoBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, regionMantenimientoBBDD.getId());
-		
-		return this.modelMapperUtils.map(regionMantenimientoBBDD, RegionMantenimientoDto.class);
-	}
-
 }

@@ -11,31 +11,41 @@ const ID_ERROR_FOTOGRAFIA_VACIO = '#errorFotografiaVacio';
 const ID_FOTOGRAFIA_FOTO = '#fotografia';
 const ID_FORM_SUBIR_FOTOGRAFIA = '#formSubirFotografia';
 const ID_TABLA_FOTOGRAFIAS = '#tablaFotografias';
+const ID_MODAL_FOTOGRAFIA = '#popupSubirFotografia';
 
-var rowNode;
-
-
-// Reset de los campos del formulario del popup de subir fotografia
-function resetFormPopupSubirFotografia() {
-	$('.custom-file-label').html('');
-	$(ID_FORM_SUBIR_FOTOGRAFIA)[0].reset();
-}
-
-// Icono aspa del popup de subir fotografia
-$(ID_BOTON_ASPA_POPUP_SUBIR_FOTOGRAFIA).on('click', function() {
-	resetFormPopupSubirFotografia();
-});
-
-// Botón Cancelar del popup de subir fotografia
-$(ID_BOTON_CANCELAR_POPUP_SUBIR_FOTOGRAFIA).on('click', function() {
-	resetFormPopupSubirFotografia();
-});
+var contfoto = fotografias.length;
 
 // INICIO - Configuración de la tabla fotografias
 var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
 	searching:  true,
+	data: JSON.parse(fotografiasJson),
+	columnDefs: [{ 
+		targets: 0,
+        render: function(data, type, full, meta){
+	
+		   if (type == "display"){
+			   contfoto++;
+			   
+	           var result = data + '<input type="hidden" id="fotografias' + contfoto + '.nombre" name="fotografias[' + contfoto + '].nombre" value="' + full.nombre +'">' +
+	           '<input type="hidden" id="fotografias' + contfoto + '.contenido" name="fotografias[' + contfoto + '].contenido" value="' + full.contenido +'">' +
+	           '<input type="hidden" id="fotografias' + contfoto + '.descripcion" name="fotografias[' + contfoto + '].descripcion" value="' + full.descripcion +'">';
+	           
+	           if(full.id){
+			   		result = result + '<input type="hidden" id="fotografias' + contfoto + '.id" name="fotografias[' + contfoto + '].id" value="' + full.id +'">';
+			   }
+	           
+	           return result;
+           }else{
+			   return data;
+		   }
+        }
+    }],
+	columns: [
+			  {data: "nombre", name: "nombre", title: "Nombre"}, 
+			  {data: "descripcion", name: "descripcion", title: "Descripción"}
+	],
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',
@@ -150,6 +160,20 @@ function validarDescripcionFotografia() {
 	return resultado;
 }
 
+function insertFotografiaInTable(){
+	
+
+	$(ID_TABLA_FOTOGRAFIAS).DataTable()
+	.row
+	.add({
+		id: null,
+		contenido: fileByteArray, 
+		nombre: $(ID_FOTOGRAFIA_FOTO)[0].files[0].name, 
+		descripcion: $('#descripcionFotografia').val(),
+	}).draw();
+	
+}
+
 function validarPopupFotografia() {
 	var contador = 2;
 	
@@ -169,7 +193,7 @@ function validarPopupFotografia() {
 	// Mostramos la barra de progreso
 	if (contador == 0) {
 		$(ID_BARRA_PROGRESO_FOTOGRAFIA).removeAttr("hidden");
-		/*equipamiento.fotografias.push({'id':1, 'nombre': $(ID_FOTOGRAFIA_FOTO)[0].files[0], 'descripcion': 'description'});*/
+		insertFotografiaInTable();
 	} else {
 		$(ID_BARRA_PROGRESO_FOTOGRAFIA).attr("hidden", "hidden");
 	}
@@ -177,44 +201,23 @@ function validarPopupFotografia() {
 	return ((contador == 0) ? true : false);
 }
 
-// Seteamos el nombre del fotografia en el input de selección del fotografia
-$('input[type="file"]').on('change', function(e){
-	var nombre = e.target.files[0].name;    
-	$(this).next('.custom-file-label').html(nombre);
-});
-// FIN - Validaciones subir fotografia
+// Reset de los campos del formulario del popup de subir fotografia
+function resetFormPopupSubirFotografia() {
+	$('.custom-file-label').html('');
+	$(ID_FOTOGRAFIA_FOTO).value = "";
+	$(ID_FORM_SUBIR_FOTOGRAFIA)[0].reset();
+}
 
-// INICIO - Subir archivo
-$(ID_FORM_SUBIR_FOTOGRAFIA).on('submit', function(e) {	 
-    e.preventDefault();
-    $.ajax({
-        xhr: function() {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener('progress', function(evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = ((evt.loaded / evt.total) * 100);
-                    $('.progress-bar').width(percentComplete + '%');
-                    $('.progress-bar').html(percentComplete + '%');
-                }  
-            }, false);
-            return xhr;
-        },
-        type: 'POST',
-        url: this.action,
-        data: new FormData(this),
-        contentType: false,
-        cache: false,
-        processData:false,
-        beforeSend: function() {
-            $('.progress-bar').width('0%');           
-            $(ID_BARRA_PROGRESO_FOTOGRAFIA).removeAttr("hidden");           
-        },
-        success: function(response) {      
-        	// Recargamos la página ya que desde el backoffice no la recarga 
-        	// por hacer la subida del fotografia con ajax 
-        	location.reload();              
-        },
-        error: function(e) {
-        }
-    });
+// Icono aspa del popup de subir fotografia
+$(ID_BOTON_ASPA_POPUP_SUBIR_FOTOGRAFIA).on('click', function() {
+	resetFormPopupSubirFotografia();
+});
+
+// Botón Cancelar del popup de subir fotografia
+$(ID_BOTON_CANCELAR_POPUP_SUBIR_FOTOGRAFIA).on('click', function() {
+	resetFormPopupSubirFotografia();
+});
+
+$(ID_MODAL_FOTOGRAFIA).on('show.bs.modal', function () {
+	resetFormPopupSubirFotografia();
 });

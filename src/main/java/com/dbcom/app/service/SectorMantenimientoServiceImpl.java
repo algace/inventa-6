@@ -112,37 +112,11 @@ public class SectorMantenimientoServiceImpl implements SectorMantenimientoServic
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SectorMantenimientoDto save(SectorMantenimientoDto sectorMantenimientoDto) {
+	public SectorMantenimientoDto saveUpdate(SectorMantenimientoDto sectorMantenimientoDto) {
 
 		SectorMantenimiento sectorMantenimiento = this.modelMapperUtils.map(sectorMantenimientoDto, SectorMantenimiento.class);
-		sectorMantenimiento.setRegionMantenimiento(this.modelMapperUtils.map(sectorMantenimientoDto.getRegionMantenimiento(), RegionMantenimiento.class));
+		sectorMantenimiento.setRegionMantenimiento(this.modelMapperUtils.map(sectorMantenimientoDto.getRegionMantenimiento(), RegionMantenimiento.class));	
 		
-		sectorMantenimiento = this.sectorMantenimientoRepository.save(sectorMantenimiento);	
-		
-		log.info(LoggerConstants.LOG_CREATE, sectorMantenimiento.getNombre());		
-		
-		return this.modelMapperUtils.map(sectorMantenimiento, SectorMantenimientoDto.class);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public SectorMantenimientoDto update(SectorMantenimientoDto sectorMantenimientoDto) {
-
-		final SectorMantenimiento sectorMantenimiento = this.modelMapperUtils.map(sectorMantenimientoDto, SectorMantenimiento.class);
-		
-		SectorMantenimiento sectorMantenimientoBBDD = this.sectorMantenimientoRepository.findById(sectorMantenimiento.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		sectorMantenimientoBBDD.setNombre(sectorMantenimientoDto.getNombre());
-		sectorMantenimientoBBDD.setDescripcion(sectorMantenimientoDto.getDescripcion());
-		sectorMantenimientoBBDD.setRegionMantenimiento(this.modelMapperUtils.map(sectorMantenimientoDto.getRegionMantenimiento(),RegionMantenimiento.class));
-		sectorMantenimientoBBDD = this.sectorMantenimientoRepository.save(sectorMantenimientoBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, sectorMantenimientoBBDD.getId());
-		
-		return this.modelMapperUtils.map(sectorMantenimientoBBDD, SectorMantenimientoDto.class);
+		return this.modelMapperUtils.map(this.sectorMantenimientoRepository.save(sectorMantenimiento), SectorMantenimientoDto.class);
 	}
 }

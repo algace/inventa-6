@@ -15,6 +15,7 @@ import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.VersionSWRepository;
 import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 import com.dbcom.app.model.dto.VersionSWDto;
+import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.VersionSW;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -45,6 +46,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public VersionSWDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
 		return new VersionSWDto();
@@ -53,6 +55,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Long id) {			
 		
 		final VersionSW versionSWBBDD = this.versionSWRepository.findById(id)
@@ -66,6 +69,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<VersionSWDto> readAll() {
 		
 		final List<VersionSW> versionesSW = this.versionSWRepository.findAll();
@@ -81,6 +85,23 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public List<VersionSWLiteDto> readAllLite() {
+		
+		final List<VersionSW> versionesSW = this.versionSWRepository.findAll();
+		
+		final List<VersionSWLiteDto> versionesSWDto = new ArrayList<>(versionesSW.size());		
+		versionesSW.forEach(versionSW -> versionesSWDto.add(this.modelMapperUtils.map(versionSW, VersionSWLiteDto.class)));
+		
+		log.info(LoggerConstants.LOG_READALL);
+		
+		return versionesSWDto;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public VersionSWDto read(final Long id) {	
 		
 		final VersionSW versionSW = this.versionSWRepository.findById(id)
@@ -101,6 +122,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<VersionSWDto> readNotContains(final Long id) {	
 		
 		final AplicacionSW aplicacionSW = this.aplicacionSWRepository.findById(id)
@@ -118,39 +140,11 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public VersionSWDto save(final VersionSWDto versionSWDto) {		
+	@Override
+	public VersionSWDto saveUpdate(final VersionSWDto versionSWDto) {		
 		
-		VersionSW versionSW = this.modelMapperUtils.map(versionSWDto, VersionSW.class);
-	    
-		versionSW = this.versionSWRepository.save(versionSW);	
+		VersionSW versionSW = this.modelMapperUtils.map(versionSWDto, VersionSW.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, versionSW.getNombre());		
-		
-		return this.modelMapperUtils.map(versionSW, VersionSWDto.class);
+		return this.modelMapperUtils.map(this.versionSWRepository.save(versionSW), VersionSWDto.class);
 	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public VersionSWDto update(final VersionSWDto versionSWDto) {		
-		
-		final VersionSW versionSW = this.modelMapperUtils.map(versionSWDto, VersionSW.class);
-		
-		VersionSW versionSWBBDD = this.versionSWRepository.findById(versionSW.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		versionSWBBDD.setNombre(versionSWDto.getNombre());
-		versionSWBBDD.setDescripcion(versionSWDto.getDescripcion());
-		versionSWDto.setAplicacionesSW(versionSWDto.getAplicacionesSW().stream()
-                                                                       .filter(aplicacion -> !Objects.isNull(aplicacion.getId()))
-                                                                       .collect(Collectors.toList()));
-		versionSWBBDD = this.versionSWRepository.save(versionSWBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, versionSWBBDD.getId());
-		
-		return this.modelMapperUtils.map(versionSWBBDD, VersionSWDto.class);
-	}
-	
 }

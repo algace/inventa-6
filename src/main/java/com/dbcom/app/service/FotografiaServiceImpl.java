@@ -85,7 +85,7 @@ public class FotografiaServiceImpl implements FotografiaService {
 												        .nombre(fichero.getOriginalFilename())
 												        .descripcion(descripcionFotografia)
 												        .contenido(fichero.getBytes())
-												        .equipamiento(equipamiento)
+//												        .equipamiento(equipamiento)
 												        .build();
 				this.fotografiaRepository.save(fotografia);
 	

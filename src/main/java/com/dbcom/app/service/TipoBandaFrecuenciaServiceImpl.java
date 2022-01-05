@@ -39,6 +39,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoBandaFrecuenciaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoBandaFrecuenciaDto();
@@ -47,6 +48,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoBandaFrecuencia tipoBandaFrecuenciaBBDD = this.tipoBandaFrecuenciaRepository.findById(id)
@@ -60,6 +62,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoBandaFrecuenciaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -75,6 +78,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoBandaFrecuenciaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -89,34 +93,12 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoBandaFrecuenciaDto save(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto) {		
+	@Override
+	public TipoBandaFrecuenciaDto saveUpdate(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto) {		
 		
-		TipoBandaFrecuencia tipoBandaFrecuencia = this.modelMapperUtils.map(tipoBandaFrecuenciaDto, TipoBandaFrecuencia.class);
-	    
-		tipoBandaFrecuencia = this.tipoBandaFrecuenciaRepository.save(tipoBandaFrecuencia);	
+		TipoBandaFrecuencia tipoBandaFrecuencia = this.modelMapperUtils.map(tipoBandaFrecuenciaDto, TipoBandaFrecuencia.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoBandaFrecuencia.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoBandaFrecuencia, TipoBandaFrecuenciaDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoBandaFrecuenciaDto update(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto) {		
-		
-		final TipoBandaFrecuencia tipoBandaFrecuencia = this.modelMapperUtils.map(tipoBandaFrecuenciaDto, TipoBandaFrecuencia.class);
-		
-		TipoBandaFrecuencia tipoBandaFrecuenciaBBDD = this.tipoBandaFrecuenciaRepository.findById(tipoBandaFrecuencia.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoBandaFrecuenciaBBDD.setNombre(tipoBandaFrecuenciaDto.getNombre());
-		tipoBandaFrecuenciaBBDD = this.tipoBandaFrecuenciaRepository.save(tipoBandaFrecuenciaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoBandaFrecuenciaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoBandaFrecuenciaBBDD, TipoBandaFrecuenciaDto.class);
+		return this.modelMapperUtils.map(this.tipoBandaFrecuenciaRepository.save(tipoBandaFrecuencia), TipoBandaFrecuenciaDto.class);
 	}
 
 	@Override

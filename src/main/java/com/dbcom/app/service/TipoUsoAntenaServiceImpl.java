@@ -38,6 +38,7 @@ public final class TipoUsoAntenaServiceImpl implements TipoUsoAntenaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoUsoAntenaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoUsoAntenaDto();
@@ -46,6 +47,7 @@ public final class TipoUsoAntenaServiceImpl implements TipoUsoAntenaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoUsoAntena tipoUsoAntenaBBDD = this.tipoUsoAntenaRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoUsoAntenaServiceImpl implements TipoUsoAntenaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoUsoAntenaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoUsoAntenaServiceImpl implements TipoUsoAntenaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoUsoAntenaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoUsoAntenaServiceImpl implements TipoUsoAntenaService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoUsoAntenaDto save(final TipoUsoAntenaDto tipoUsoAntenaDto) {		
+	@Override
+	public TipoUsoAntenaDto saveUpdate(final TipoUsoAntenaDto tipoUsoAntenaDto) {		
 		
-		TipoUsoAntena tipoUsoAntena = this.modelMapperUtils.map(tipoUsoAntenaDto, TipoUsoAntena.class);
-	    
-		tipoUsoAntena = this.tipoUsoAntenaRepository.save(tipoUsoAntena);	
+		TipoUsoAntena tipoUsoAntena = this.modelMapperUtils.map(tipoUsoAntenaDto, TipoUsoAntena.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoUsoAntena.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoUsoAntena, TipoUsoAntenaDto.class);
+		return this.modelMapperUtils.map(this.tipoUsoAntenaRepository.save(tipoUsoAntena), TipoUsoAntenaDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoUsoAntenaDto update(final TipoUsoAntenaDto tipoUsoAntenaDto) {		
-		
-		final TipoUsoAntena tipoUsoAntena = this.modelMapperUtils.map(tipoUsoAntenaDto, TipoUsoAntena.class);
-		
-		TipoUsoAntena tipoUsoAntenaBBDD = this.tipoUsoAntenaRepository.findById(tipoUsoAntena.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoUsoAntenaBBDD.setNombre(tipoUsoAntenaDto.getNombre());
-		tipoUsoAntenaBBDD = this.tipoUsoAntenaRepository.save(tipoUsoAntenaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoUsoAntenaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoUsoAntenaBBDD, TipoUsoAntenaDto.class);
-	}
-	
 }

@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoJerarquiaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoJerarquiaService extends GenericService<TipoJerarquiaDto, Short> {
+public interface TipoJerarquiaService {
 
 	/**
 	 * Creamos un tipo de jerarquía sin persistencia
@@ -41,13 +41,6 @@ public interface TipoJerarquiaService extends GenericService<TipoJerarquiaDto, S
 	 * @param tipoJerarquiaDto Tipo de jerarquía a persistir
 	 * @return Tipo de jerarquía persistido
 	 */
-	TipoJerarquiaDto save(final TipoJerarquiaDto tipoJerarquiaDto);
-		
-	/**
-	 * Actualizamos el tipo de jerarquía pasado como parámetro
-	 * @param tipoJerarquiaDto Tipo de jerarquía a actualizar
-	 * @return Tipo de jerarquía actualizado
-	 */
-	TipoJerarquiaDto update(final TipoJerarquiaDto tipoJerarquiaDto);
+	TipoJerarquiaDto saveUpdate(final TipoJerarquiaDto tipoJerarquiaDto);
 	
 }

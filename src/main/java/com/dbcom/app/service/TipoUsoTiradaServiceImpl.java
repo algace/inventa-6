@@ -38,6 +38,7 @@ public final class TipoUsoTiradaServiceImpl implements TipoUsoTiradaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoUsoTiradaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoUsoTiradaDto();
@@ -46,6 +47,7 @@ public final class TipoUsoTiradaServiceImpl implements TipoUsoTiradaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoUsoTirada tipoUsoTiradaBBDD = this.tipoUsoTiradaRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoUsoTiradaServiceImpl implements TipoUsoTiradaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoUsoTiradaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoUsoTiradaServiceImpl implements TipoUsoTiradaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoUsoTiradaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoUsoTiradaServiceImpl implements TipoUsoTiradaService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoUsoTiradaDto save(final TipoUsoTiradaDto tipoUsoTiradaDto) {		
+	@Override
+	public TipoUsoTiradaDto saveUpdate(final TipoUsoTiradaDto tipoUsoTiradaDto) {		
 		
-		TipoUsoTirada tipoUsoTirada = this.modelMapperUtils.map(tipoUsoTiradaDto, TipoUsoTirada.class);
-	    
-		tipoUsoTirada = this.tipoUsoTiradaRepository.save(tipoUsoTirada);	
+		TipoUsoTirada tipoUsoTirada = this.modelMapperUtils.map(tipoUsoTiradaDto, TipoUsoTirada.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoUsoTirada.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoUsoTirada, TipoUsoTiradaDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoUsoTiradaDto update(final TipoUsoTiradaDto tipoUsoTiradaDto) {		
-		
-		final TipoUsoTirada tipoUsoTirada = this.modelMapperUtils.map(tipoUsoTiradaDto, TipoUsoTirada.class);
-		
-		TipoUsoTirada tipoUsoTiradaBBDD = this.tipoUsoTiradaRepository.findById(tipoUsoTirada.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoUsoTiradaBBDD.setNombre(tipoUsoTiradaDto.getNombre());
-		tipoUsoTiradaBBDD = this.tipoUsoTiradaRepository.save(tipoUsoTiradaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoUsoTiradaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoUsoTiradaBBDD, TipoUsoTiradaDto.class);
-	}
-	
+		return this.modelMapperUtils.map(this.tipoUsoTiradaRepository.save(tipoUsoTirada), TipoUsoTiradaDto.class);
+	}	
 }

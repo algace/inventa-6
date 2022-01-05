@@ -38,6 +38,7 @@ public final class TipoSectorATCServiceImpl implements TipoSectorATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoSectorATCDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoSectorATCDto();
@@ -46,6 +47,7 @@ public final class TipoSectorATCServiceImpl implements TipoSectorATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoSectorATC tipoSectorATCBBDD = this.tipoSectorATCRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoSectorATCServiceImpl implements TipoSectorATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoSectorATCDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoSectorATCServiceImpl implements TipoSectorATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoSectorATCDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoSectorATCServiceImpl implements TipoSectorATCService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoSectorATCDto save(final TipoSectorATCDto tipoSectorATCDto) {		
+	@Override
+	public TipoSectorATCDto saveUpdate(final TipoSectorATCDto tipoSectorATCDto) {		
 		
-		TipoSectorATC tipoSectorATC = this.modelMapperUtils.map(tipoSectorATCDto, TipoSectorATC.class);
-	    
-		tipoSectorATC = this.tipoSectorATCRepository.save(tipoSectorATC);	
+		TipoSectorATC tipoSectorATC = this.modelMapperUtils.map(tipoSectorATCDto, TipoSectorATC.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoSectorATC.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoSectorATC, TipoSectorATCDto.class);
+		return this.modelMapperUtils.map(this.tipoSectorATCRepository.save(tipoSectorATC), TipoSectorATCDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoSectorATCDto update(final TipoSectorATCDto tipoSectorATCDto) {		
-		
-		final TipoSectorATC tipoSectorATC = this.modelMapperUtils.map(tipoSectorATCDto, TipoSectorATC.class);
-		
-		TipoSectorATC tipoSectorATCBBDD = this.tipoSectorATCRepository.findById(tipoSectorATC.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoSectorATCBBDD.setNombre(tipoSectorATCDto.getNombre());
-		tipoSectorATCBBDD = this.tipoSectorATCRepository.save(tipoSectorATCBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoSectorATCBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoSectorATCBBDD, TipoSectorATCDto.class);
-	}
-	
 }

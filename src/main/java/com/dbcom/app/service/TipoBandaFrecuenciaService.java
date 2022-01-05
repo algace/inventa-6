@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoBandaFrecuenciaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoBandaFrecuenciaService extends GenericService<TipoBandaFrecuenciaDto, Short> {
+public interface TipoBandaFrecuenciaService {
 
 	/**
 	 * Creamos un tipo de banda de frecuencia sin persistencia
@@ -41,14 +41,7 @@ public interface TipoBandaFrecuenciaService extends GenericService<TipoBandaFrec
 	 * @param tipoBandaFrecuenciaDto Tipo de banda de frecuencia a persistir
 	 * @return Tipo de banda de frecuencia persistido
 	 */
-	TipoBandaFrecuenciaDto save(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto);
-		
-	/**
-	 * Actualizamos el tipo de bandas de frecuencia pasado como parámetro
-	 * @param tipoBandaFrecuenciaDto Tipo de banda de frecuencia a actualizar
-	 * @return Tipo de banda de frecuencia actualizado
-	 */
-	TipoBandaFrecuenciaDto update(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto);
+	TipoBandaFrecuenciaDto saveUpdate(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto);
 	
 	/**
 	 * Obtenemos un listado de los tipos de bandas de frecuencia teniendo en cuenta el tipo de banda por defecto

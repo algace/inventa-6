@@ -33,6 +33,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FuncionPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new FuncionPasarelaDto();
@@ -41,6 +42,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final FuncionPasarela FuncionPasarelaBBDD = this.funcionPasarelaRepository.findById(id)
@@ -54,6 +56,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<FuncionPasarelaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -69,6 +72,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FuncionPasarelaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -83,33 +87,11 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public FuncionPasarelaDto save(final FuncionPasarelaDto funcionPasarelaDto) {		
+	@Override
+	public FuncionPasarelaDto saveUpdate(final FuncionPasarelaDto funcionPasarelaDto) {		
 		
 		FuncionPasarela funcionPasarela = this.modelMapperUtils.map(funcionPasarelaDto, FuncionPasarela.class);
-	    
-		funcionPasarela = this.funcionPasarelaRepository.save(funcionPasarela);	
 		
-		log.info(LoggerConstants.LOG_CREATE, funcionPasarela.getNombre());		
-		
-		return this.modelMapperUtils.map(funcionPasarela, FuncionPasarelaDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public FuncionPasarelaDto update(final FuncionPasarelaDto funcionPasarelaDto) {		
-		
-		final FuncionPasarela funcionPasarela = this.modelMapperUtils.map(funcionPasarelaDto, FuncionPasarela.class);
-		
-		FuncionPasarela FuncionPasarelaBBDD = this.funcionPasarelaRepository.findById(funcionPasarela.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		FuncionPasarelaBBDD.setNombre(funcionPasarelaDto.getNombre());
-		FuncionPasarelaBBDD = this.funcionPasarelaRepository.save(FuncionPasarelaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, FuncionPasarelaBBDD.getId());
-		
-		return this.modelMapperUtils.map(FuncionPasarelaBBDD, FuncionPasarelaDto.class);
+		return this.modelMapperUtils.map(this.funcionPasarelaRepository.save(funcionPasarela), FuncionPasarelaDto.class);
 	}
 }

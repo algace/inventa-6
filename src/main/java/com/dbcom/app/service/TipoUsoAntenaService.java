@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoUsoAntenaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoUsoAntenaService extends GenericService<TipoUsoAntenaDto, Short> {
+public interface TipoUsoAntenaService {
 
 	/**
 	 * Creamos un tipo de uso antena sin persistencia
@@ -41,13 +41,6 @@ public interface TipoUsoAntenaService extends GenericService<TipoUsoAntenaDto, S
 	 * @param tipoUsoAntenaDto Tipo de uso antena a persistir
 	 * @return Tipo de uso antena persistido
 	 */
-	TipoUsoAntenaDto save(final TipoUsoAntenaDto tipoUsoAntenaDto);
-		
-	/**
-	 * Actualizamos el tipo de uso antena pasado como parámetro
-	 * @param tipoUsoAntenaDto Tipo de uso antena a actualizar
-	 * @return Tipo de uso antena actualizado
-	 */
-	TipoUsoAntenaDto update(final TipoUsoAntenaDto tipoUsoAntenaDto);
+	TipoUsoAntenaDto saveUpdate(final TipoUsoAntenaDto tipoUsoAntenaDto);
 	
 }

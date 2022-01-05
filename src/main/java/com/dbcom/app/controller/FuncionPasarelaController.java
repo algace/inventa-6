@@ -140,7 +140,7 @@ public final class FuncionPasarelaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.funcionPasarelaService.save(funcionPasarelaDto);
+			this.funcionPasarelaService.saveUpdate(funcionPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, funcionPasarelaDto.getId());
 		}
@@ -232,7 +232,7 @@ public final class FuncionPasarelaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.funcionPasarelaService.update(funcionPasarelaDto);
+			this.funcionPasarelaService.saveUpdate(funcionPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, funcionPasarelaDto.getId());			
 		}

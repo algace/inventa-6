@@ -138,7 +138,7 @@ public class RegionMantenimientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.regionMantenimientoService.save(regionMantenimientoDto);
+			this.regionMantenimientoService.saveUpdate(regionMantenimientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_MANTENIMIENTO);
 			log.info(LoggerConstants.LOG_SAVE, regionMantenimientoDto.getId());
 		}
@@ -229,7 +229,7 @@ public class RegionMantenimientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.regionMantenimientoService.update(regionMantenimientoDto);
+			this.regionMantenimientoService.saveUpdate(regionMantenimientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_MANTENIMIENTO);
 			log.info(LoggerConstants.LOG_UPDATE, regionMantenimientoDto.getId());			
 		}

@@ -3,7 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.EquipamientoDto;
-import com.dbcom.app.model.dto.VersionSWDto;
+import com.dbcom.app.model.dto.EquipamientoLiteDto;
 
 
 /**
@@ -11,7 +11,7 @@ import com.dbcom.app.model.dto.VersionSWDto;
  * 
  * @author jose.vallve
  */
-public interface EquipamientoService extends GenericService<EquipamientoDto, Long> {
+public interface EquipamientoService {
 
 	/**
 	 * Creamos un equipamiento sin persistencia
@@ -29,7 +29,13 @@ public interface EquipamientoService extends GenericService<EquipamientoDto, Lon
 	 * Obtenemos un listado de los equipamientos
 	 * @return Listado
 	 */
-	List<EquipamientoDto> readAll();
+	List<EquipamientoLiteDto> readAll();
+	
+	/**
+	 * Obtenemos un listado de los equipamientos Lite
+	 * @return Listado
+	 */
+	List<EquipamientoLiteDto> readAllLite();
 	
 	/**
 	 * Obtenemos el equipamiento con el id facilitado
@@ -50,13 +56,13 @@ public interface EquipamientoService extends GenericService<EquipamientoDto, Lon
 	 * @param equipamientoDto Equipamiento a persistir
 	 * @return Equipamiento persistido
 	 */
-	EquipamientoDto save(final EquipamientoDto equipamientoDto);
-		
-	/**
-	 * Actualizamos el equipamiento pasado como parámetro
-	 * @param equipamientoDto Equipamiento a actualizar
-	 * @return Equipamiento actualizado
-	 */
-	EquipamientoDto update(final EquipamientoDto equipamientoDto);
+	EquipamientoDto saveUpdate(final EquipamientoDto equipamientoDto);
 	
+	/**
+	 * Informa todas las listas y objetos para la recaraga de la vista
+	 * @param equipamientoDto Equipamiento a persistir
+	 * @return EquipamientoDto persistido
+	 */
+	EquipamientoDto setAllAttributesEquipamientoDto(final EquipamientoDto equipamientoDto);
+		
 }

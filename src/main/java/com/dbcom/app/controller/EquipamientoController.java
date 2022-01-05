@@ -1,9 +1,6 @@
 package com.dbcom.app.controller;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -15,13 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.DocumentoDto;
 import com.dbcom.app.model.dto.EquipamientoDto;
 import com.dbcom.app.service.EquipamientoService;
 import com.dbcom.app.service.TipoDocumentoService;
@@ -56,13 +51,11 @@ public final class EquipamientoController {
 	public static final String MAP_READALL_EQUIPAMIENTOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTOS;
 
 	private final EquipamientoService equipamientoService;
-	private final TipoDocumentoService tipoDocumentoService;
 	
 	@Autowired
 	public EquipamientoController(EquipamientoService equipamientoService,
 			TipoDocumentoService tipoDocumentoService) {
 		this.equipamientoService = equipamientoService;
-		this.tipoDocumentoService = tipoDocumentoService;
 	}
 	
 	/**
@@ -128,19 +121,6 @@ public final class EquipamientoController {
 		
 		final String vista;
 		
-//			List<DocumentoDto> documentos = equipamientoDto.getDocumentos().stream()
-//					.filter((DocumentoDto documento) -> !Objects.isNull(documento.getDescripcion())).collect(Collectors.toList());
-//		
-//			for (DocumentoDto documento: documentos) {
-//				MultipartFile file = documento.getDocumento();
-//			    if (!file.isEmpty()) {
-//			        System.out.println(file.getOriginalFilename());
-//			    }
-//			    System.out.println("tamaño doc: " + file.getSize());
-//			    System.out.println("idTipoDocumento: " + documento.getTipoDocumento().getId());
-//				System.out.println("descripcion: " + documento.getDescripcion());
-//				
-//			}
 		if (bindingResult.hasErrors()) {
 
 			// Activación de los botones necesarios
@@ -152,12 +132,16 @@ public final class EquipamientoController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_EQUIPAMIENTO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_EQUIPAMIENTOS);
+			
+			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_EQUIPAMIENTOS);
+			
+			model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.setAllAttributesEquipamientoDto(equipamientoDto));
 		
 			vista = VIEW_EQUIPAMIENTO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.equipamientoService.save(equipamientoDto);
+			this.equipamientoService.saveUpdate(equipamientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_EQUIPAMIENTOS);
 			log.info(LoggerConstants.LOG_SAVE, equipamientoDto.getId());
 		}
@@ -212,7 +196,6 @@ public final class EquipamientoController {
 	
 		// Contenido
 		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.read(id));
-		model.addAttribute(ControllerConstants.ATTRIBUTE_TIPOS_DOCUMENTO, this.tipoDocumentoService.readAll());
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -260,11 +243,13 @@ public final class EquipamientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_EQUIPAMIENTO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_EQUIPAMIENTOS);
 			
+			model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.setAllAttributesEquipamientoDto(equipamientoDto));
+			
 			vista = VIEW_EQUIPAMIENTO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.equipamientoService.update(equipamientoDto);
+			this.equipamientoService.saveUpdate(equipamientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_EQUIPAMIENTOS);
 			log.info(LoggerConstants.LOG_UPDATE, equipamientoDto.getId());			
 		}

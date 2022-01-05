@@ -152,7 +152,7 @@ public class TipoSubsistemaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.tiposSubsistemasService.save(tipoSubsistemaDto);
+			this.tiposSubsistemasService.saveUpdate(tipoSubsistemaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS_SUBSISTEMAS);
 			log.info(LoggerConstants.LOG_SAVE, tipoSubsistemaDto.getId());
 		}
@@ -252,7 +252,7 @@ public class TipoSubsistemaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tiposSubsistemasService.update(tipoSubsistemaDto);
+			this.tiposSubsistemasService.saveUpdate(tipoSubsistemaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS_SUBSISTEMAS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoSubsistemaDto.getId());			
 		}

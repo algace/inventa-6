@@ -132,7 +132,7 @@ public final class TipoEnlaceTTController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoEnlaceTTService.save(tipoEnlaceTTDto);
+			this.tipoEnlaceTTService.saveUpdate(tipoEnlaceTTDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoEnlaceTTDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoEnlaceTTController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoEnlaceTTService.update(tipoEnlaceTTDto);
+			this.tipoEnlaceTTService.saveUpdate(tipoEnlaceTTDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoEnlaceTTDto.getId());			
 		}

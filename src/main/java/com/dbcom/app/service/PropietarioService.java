@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.PropietarioDto;
 
-public interface PropietarioService extends GenericService<PropietarioDto, Short>{
+public interface PropietarioService {
 
 	/**
 	 * Creamos un propietario sin persistencia
@@ -36,12 +36,5 @@ public interface PropietarioService extends GenericService<PropietarioDto, Short
 	 * @param propietarioDto Propietario a persistir
 	 * @return Propietario persistido
 	 */
-	PropietarioDto save(final PropietarioDto propietarioDto);
-		
-	/**
-	 * Actualizamos el propietario pasado como parámetro
-	 * @param propietarioDto Propietario a actualizar
-	 * @return Propietario actualizado
-	 */
-	PropietarioDto update(final PropietarioDto propietarioDto);
+	PropietarioDto saveUpdate(final PropietarioDto propietarioDto);
 }

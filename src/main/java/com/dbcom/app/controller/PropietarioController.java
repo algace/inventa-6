@@ -127,7 +127,7 @@ public class PropietarioController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.propietarioService.save(propietarioDto);
+			this.propietarioService.saveUpdate(propietarioDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, propietarioDto.getId());
 		}
@@ -219,7 +219,7 @@ public class PropietarioController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.propietarioService.update(propietarioDto);
+			this.propietarioService.saveUpdate(propietarioDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, propietarioDto.getId());			
 		}

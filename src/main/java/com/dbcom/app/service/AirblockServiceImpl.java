@@ -44,6 +44,7 @@ public final class AirblockServiceImpl implements AirblockService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public AirblockDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new AirblockDto();
@@ -52,6 +53,7 @@ public final class AirblockServiceImpl implements AirblockService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Long id) {			
 		
 		final Airblock airblockBBDD = this.airblockRepository.findById(id)
@@ -65,6 +67,7 @@ public final class AirblockServiceImpl implements AirblockService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<AirblockDto> readAll() {
 		
 		final List<Airblock> airblocks = this.airblockRepository.findAll();
@@ -93,6 +96,7 @@ public final class AirblockServiceImpl implements AirblockService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public AirblockDto read(final Long id) {		
 		
 		final Airblock airblock = this.airblockRepository.findById(id)
@@ -112,42 +116,18 @@ public final class AirblockServiceImpl implements AirblockService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public AirblockDto save(final AirblockDto airblocksDto) {		
+	@Override
+	public AirblockDto saveUpdate(final AirblockDto airblocksDto) {		
 		
 		Airblock airblock = this.modelMapperUtils.map(airblocksDto, Airblock.class);
-	    
-		airblock = this.airblockRepository.save(airblock);	
 		
-		log.info(LoggerConstants.LOG_CREATE, airblock.getNombre());		
-		
-		return this.modelMapperUtils.map(airblock, AirblockDto.class);
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public AirblockDto update(final AirblockDto airblockDto) {		
-		
-		Airblock airblockBBDD = this.airblockRepository.findById(airblockDto.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		airblockBBDD.setNombre(airblockDto.getNombre());
-		airblockBBDD.setFlMin(airblockDto.getFlMin());
-		airblockBBDD.setFlMax(airblockDto.getFlMax());		
-		airblockBBDD.setCoordenadas(airblockDto.getCoordenadas());
-		airblockBBDD.setDescripcion(airblockDto.getDescripcion());
-		airblockBBDD = this.airblockRepository.save(airblockBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, airblockBBDD.getId());
-		
-		return this.modelMapperUtils.map(airblockBBDD, AirblockDto.class);
+		return this.modelMapperUtils.map(this.airblockRepository.save(airblock), AirblockDto.class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<AirblockDto> readNotContains(Short id) {
 
 		final SectorATC sectorATC = this.sectorATCRepository.findById(id)

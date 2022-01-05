@@ -5,7 +5,7 @@ import java.util.List;
 import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 
-public interface SectorATCService extends GenericService<SectorATCDto, Short>{
+public interface SectorATCService {
 	/**
 	 * Creamos un sector ATC sin persistencia
 	 * @return Nueva aplicación
@@ -36,20 +36,13 @@ public interface SectorATCService extends GenericService<SectorATCDto, Short>{
 	 * @param sectorATCDto Sector ATC a persistir
 	 * @return Sector ATC persistido
 	 */
-	SectorATCDto save(final SectorATCDto sectorATCDto);
-		
-	/**
-	 * Actualizamos el Sector ATC pasado como parámetro
-	 * @param sectorATCDto Sector ATC a actualizar
-	 * @return Sector ATC actualizada
-	 */
-	SectorATCDto update(final SectorATCDto sectorATCDto);
+	SectorATCDto saveUpdate(final SectorATCDto sectorATCDto);
 	
-	/*
-	 * 
+	/**
+	 * métodos internos para tratar las listas de Airblocks de manera correcta según hayan sido seleccionados o no.
 	 */
-     List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> listAirblock);
+    List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> listAirblock);
      
-     List<AirblockDto> listAirblocksNoSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados);
+    List<AirblockDto> listAirblocksNoSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados);
 	
 }

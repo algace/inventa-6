@@ -144,7 +144,7 @@ public class SectorMantenimientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.sectorMantenimientoService.save(sectorMantenimientoDto);
+			this.sectorMantenimientoService.saveUpdate(sectorMantenimientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_SECTORES_MANTENIMIENTO);
 			log.info(LoggerConstants.LOG_SAVE, sectorMantenimientoDto.getId());
 		}
@@ -241,7 +241,7 @@ public class SectorMantenimientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.sectorMantenimientoService.update(sectorMantenimientoDto);
+			this.sectorMantenimientoService.saveUpdate(sectorMantenimientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_SECTORES_MANTENIMIENTO);
 			log.info(LoggerConstants.LOG_UPDATE, sectorMantenimientoDto.getId());			
 		}

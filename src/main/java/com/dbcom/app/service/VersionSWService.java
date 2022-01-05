@@ -3,13 +3,14 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.VersionSWDto;
+import com.dbcom.app.model.dto.VersionSWLiteDto;
 
 /**
  * Lógica para versiones
  * 
  * @author jose.vallve
  */
-public interface VersionSWService extends GenericService<VersionSWDto, Long> {
+public interface VersionSWService {
 
 	/**
 	 * Creamos una versión sin persistencia
@@ -30,6 +31,12 @@ public interface VersionSWService extends GenericService<VersionSWDto, Long> {
 	List<VersionSWDto> readAll();
 	
 	/**
+	 * Obtenemos un listado de las versiones Lite
+	 * @return Listado
+	 */
+	List<VersionSWLiteDto> readAllLite();
+	
+	/**
 	 * Obtenemos la versión con el id facilitado
 	 * @param id Identificador
 	 * @return Versión
@@ -48,13 +55,6 @@ public interface VersionSWService extends GenericService<VersionSWDto, Long> {
 	 * @param versionSWDto Versión a persistir
 	 * @return Versión persistida
 	 */
-	VersionSWDto save(final VersionSWDto versionSWDto);
-		
-	/**
-	 * Actualizamos la versión pasada como parámetro
-	 * @param versionSWDto Versión a actualizar
-	 * @return Versión actualizada
-	 */
-	VersionSWDto update(final VersionSWDto versionSWDto);
+	VersionSWDto saveUpdate(final VersionSWDto versionSWDto);
 	
 }

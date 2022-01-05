@@ -33,6 +33,7 @@ public class ServicioRadioServiceImpl implements ServicioRadioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ServicioRadioDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new ServicioRadioDto();
@@ -41,6 +42,7 @@ public class ServicioRadioServiceImpl implements ServicioRadioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final ServicioRadio servicioRadioBBDD = this.servicioRadioRepository.findById(id)
@@ -54,6 +56,7 @@ public class ServicioRadioServiceImpl implements ServicioRadioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<ServicioRadioDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -69,6 +72,7 @@ public class ServicioRadioServiceImpl implements ServicioRadioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ServicioRadioDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -83,34 +87,12 @@ public class ServicioRadioServiceImpl implements ServicioRadioService{
 	/**
 	 * {@inheritDoc}
 	 */
-	public ServicioRadioDto save(final ServicioRadioDto servicioRadioDto) {		
+	@Override
+	public ServicioRadioDto saveUpdate(final ServicioRadioDto servicioRadioDto) {		
 		
-		ServicioRadio servicioRadio = this.modelMapperUtils.map(servicioRadioDto, ServicioRadio.class);
-	    
-		servicioRadio = this.servicioRadioRepository.save(servicioRadio);	
+		ServicioRadio servicioRadio = this.modelMapperUtils.map(servicioRadioDto, ServicioRadio.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, servicioRadio.getServicio());		
-		
-		return this.modelMapperUtils.map(servicioRadio, ServicioRadioDto.class);
+		return this.modelMapperUtils.map(this.servicioRadioRepository.save(servicioRadio), ServicioRadioDto.class);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ServicioRadioDto update(final ServicioRadioDto servicioRadioDto) {		
-		
-		final ServicioRadio servicioRadio = this.modelMapperUtils.map(servicioRadioDto, ServicioRadio.class);
-		
-		ServicioRadio servicioRadioBBDD = this.servicioRadioRepository.findById(servicioRadio.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		servicioRadioBBDD.setServicio(servicioRadioDto.getServicio());
-		servicioRadioBBDD.setDescripcion(servicioRadioDto.getDescripcion());
-		servicioRadioBBDD = this.servicioRadioRepository.save(servicioRadioBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, servicioRadioBBDD.getId());
-		
-		return this.modelMapperUtils.map(servicioRadioBBDD, ServicioRadioDto.class);
-	}
 }

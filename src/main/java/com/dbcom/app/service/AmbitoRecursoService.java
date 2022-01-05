@@ -36,13 +36,6 @@ public interface AmbitoRecursoService {
 	 * @param pasarelaChasisDto Tipo de pasarela a persistir
 	 * @return Ámbito persistido
 	 */
-	AmbitoRecursoDto save(final AmbitoRecursoDto ambitoRecursoDto);
-		
-	/**
-	 * Actualizamos el tipo de pasarela pasado como parámetro
-	 * @param ambitoRecursoDto Ámbito a actualizar
-	 * @return Ámbito actualizado
-	 */
-	AmbitoRecursoDto update(final AmbitoRecursoDto ambitoRecursoDto);
-
+	AmbitoRecursoDto saveUpdate(final AmbitoRecursoDto ambitoRecursoDto);
+	
 }

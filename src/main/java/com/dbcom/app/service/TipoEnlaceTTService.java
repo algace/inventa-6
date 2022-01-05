@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoEnlaceTTDto;
  * 
  * @author jose.vallve
  */
-public interface TipoEnlaceTTService extends GenericService<TipoEnlaceTTDto, Short> {
+public interface TipoEnlaceTTService {
 
 	/**
 	 * Creamos un tipo de enlace TT sin persistencia
@@ -41,13 +41,5 @@ public interface TipoEnlaceTTService extends GenericService<TipoEnlaceTTDto, Sho
 	 * @param tipoEnlaceTTDto Tipo de enlace TT a persistir
 	 * @return Tipo de enlace TT persistido
 	 */
-	TipoEnlaceTTDto save(final TipoEnlaceTTDto tipoEnlaceTTDto);
-		
-	/**
-	 * Actualizamos el tipo de enlace TT pasado como parámetro
-	 * @param tipoEnlaceTTDto Tipo de enlace TT a actualizar
-	 * @return Tipo de enlace TT actualizado
-	 */
-	TipoEnlaceTTDto update(final TipoEnlaceTTDto tipoEnlaceTTDto);
-	
+	TipoEnlaceTTDto saveUpdate(final TipoEnlaceTTDto tipoEnlaceTTDto);
 }

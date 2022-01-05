@@ -143,7 +143,7 @@ public class RegionOperativaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.regionOperativaService.save(regionOperativaDto);
+			this.regionOperativaService.saveUpdate(regionOperativaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_OPERATIVAS);
 			log.info(LoggerConstants.LOG_SAVE, regionOperativaDto.getId());
 		}
@@ -233,7 +233,7 @@ public class RegionOperativaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.regionOperativaService.update(regionOperativaDto);
+			this.regionOperativaService.saveUpdate(regionOperativaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_OPERATIVAS);
 			log.info(LoggerConstants.LOG_UPDATE, regionOperativaDto.getId());			
 		}

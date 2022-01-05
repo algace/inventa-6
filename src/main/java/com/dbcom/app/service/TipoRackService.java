@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoRackDto;
  * 
  * @author jose.vallve
  */
-public interface TipoRackService extends GenericService<TipoRackDto, Short> {
+public interface TipoRackService {
 
 	/**
 	 * Creamos un tipo de rack sin persistencia
@@ -41,13 +41,6 @@ public interface TipoRackService extends GenericService<TipoRackDto, Short> {
 	 * @param tipoRackDto Tipo de rack a persistir
 	 * @return Tipo de rack persistido
 	 */
-	TipoRackDto save(final TipoRackDto tipoRackDto);
-		
-	/**
-	 * Actualizamos el tipo de rack pasado como parámetro
-	 * @param tipoRackDto Tipo de rack a actualizar
-	 * @return Tipo de rack actualizado
-	 */
-	TipoRackDto update(final TipoRackDto tipoRackDto);
+	TipoRackDto saveUpdate(final TipoRackDto tipoRackDto);
 	
 }

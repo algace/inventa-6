@@ -39,6 +39,7 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoFuenteInformacionDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoFuenteInformacionDto();
@@ -47,6 +48,7 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoFuenteInformacion tipoFuenteInformacionBBDD = this.tipoFuenteInformacionRepository.findById(id)
@@ -60,6 +62,7 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoFuenteInformacionDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -75,6 +78,7 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoFuenteInformacionDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -89,34 +93,12 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoFuenteInformacionDto save(final TipoFuenteInformacionDto tipoFuenteInformacionDto) {		
+	@Override
+	public TipoFuenteInformacionDto saveUpdate(final TipoFuenteInformacionDto tipoFuenteInformacionDto) {		
 		
-		TipoFuenteInformacion tipoFuenteInformacion = this.modelMapperUtils.map(tipoFuenteInformacionDto, TipoFuenteInformacion.class);
-	    
-		tipoFuenteInformacion = this.tipoFuenteInformacionRepository.save(tipoFuenteInformacion);	
+		TipoFuenteInformacion tipoFuenteInformacion = this.modelMapperUtils.map(tipoFuenteInformacionDto, TipoFuenteInformacion.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoFuenteInformacion.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoFuenteInformacion, TipoFuenteInformacionDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoFuenteInformacionDto update(final TipoFuenteInformacionDto tipoFuenteInformacionDto) {		
-		
-		final TipoFuenteInformacion tipoFuenteInformacion = this.modelMapperUtils.map(tipoFuenteInformacionDto, TipoFuenteInformacion.class);
-		
-		TipoFuenteInformacion tipoFuenteInformacionBBDD = this.tipoFuenteInformacionRepository.findById(tipoFuenteInformacion.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoFuenteInformacionBBDD.setNombre(tipoFuenteInformacionDto.getNombre());
-		tipoFuenteInformacionBBDD = this.tipoFuenteInformacionRepository.save(tipoFuenteInformacionBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoFuenteInformacionBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoFuenteInformacionBBDD, TipoFuenteInformacionDto.class);
+		return this.modelMapperUtils.map(this.tipoFuenteInformacionRepository.save(tipoFuenteInformacion), TipoFuenteInformacionDto.class);
 	}
 	
 	/**

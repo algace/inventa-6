@@ -38,6 +38,7 @@ public final class TipoPolarizacionServiceImpl implements TipoPolarizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoPolarizacionDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoPolarizacionDto();
@@ -46,6 +47,7 @@ public final class TipoPolarizacionServiceImpl implements TipoPolarizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoPolarizacion tipoPolarizacionBBDD = this.tipoPolarizacionRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoPolarizacionServiceImpl implements TipoPolarizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoPolarizacionDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoPolarizacionServiceImpl implements TipoPolarizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoPolarizacionDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoPolarizacionServiceImpl implements TipoPolarizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoPolarizacionDto save(final TipoPolarizacionDto tipoPolarizacionDto) {		
+	@Override
+	public TipoPolarizacionDto saveUpdate(final TipoPolarizacionDto tipoPolarizacionDto) {		
 		
 		TipoPolarizacion tipoPolarizacion = this.modelMapperUtils.map(tipoPolarizacionDto, TipoPolarizacion.class);
-	    
-		tipoPolarizacion = this.tipoPolarizacionRepository.save(tipoPolarizacion);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoPolarizacion.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoPolarizacion, TipoPolarizacionDto.class);
+		return this.modelMapperUtils.map(this.tipoPolarizacionRepository.save(tipoPolarizacion), TipoPolarizacionDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoPolarizacionDto update(final TipoPolarizacionDto tipoPolarizacionDto) {		
-		
-		final TipoPolarizacion tipoPolarizacion = this.modelMapperUtils.map(tipoPolarizacionDto, TipoPolarizacion.class);
-		
-		TipoPolarizacion tipoPolarizacionBBDD = this.tipoPolarizacionRepository.findById(tipoPolarizacion.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoPolarizacionBBDD.setNombre(tipoPolarizacionDto.getNombre());
-		tipoPolarizacionBBDD = this.tipoPolarizacionRepository.save(tipoPolarizacionBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoPolarizacionBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoPolarizacionBBDD, TipoPolarizacionDto.class);
-	}
-	
 }

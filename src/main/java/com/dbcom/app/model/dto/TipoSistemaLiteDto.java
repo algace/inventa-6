@@ -31,4 +31,10 @@ public class TipoSistemaLiteDto implements Serializable {
 	private String nombre;
 	
 	private String descripcion;
+	
+	private String color;
+	
+	private String colorTexto;
+	
+	private Double codigoFuncionRed;
 }

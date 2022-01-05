@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.TipoSistemaDto;
+import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 
 /**
  * Lógica para tipos de sistemas
@@ -27,7 +28,7 @@ public interface TipoSistemaService {
 	 * Obtenemos un listado de los tipos de sistemas
 	 * @return Listado
 	 */
-	List<TipoSistemaDto> readAll();
+	List<TipoSistemaLiteDto> readAll();
 	
 	/**
 	 * Obtenemos el tipo de sistema con el id facilitado
@@ -41,13 +42,6 @@ public interface TipoSistemaService {
 	 * @param tipoSistemaDto Tipo de sistema a persistir
 	 * @return Tipo de sistema persistido
 	 */
-	TipoSistemaDto save(final TipoSistemaDto tipoSistemaDto);
-	
-	/**
-	 * Actualizamos el tipo de sistema pasado como parámetro
-	 * @param tipoSistemaDto Tipo de sistema a actualizar
-	 * @return Tipo de sistema actualizado
-	 */
-	TipoSistemaDto update(final TipoSistemaDto tipoSistemaDto);
+	TipoSistemaDto saveUpdate(final TipoSistemaDto tipoSistemaDto);
 
 }

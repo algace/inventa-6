@@ -132,7 +132,7 @@ public final class TipoUsoAntenaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoUsoAntenaService.save(tipoUsoAntenaDto);
+			this.tipoUsoAntenaService.saveUpdate(tipoUsoAntenaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoUsoAntenaDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoUsoAntenaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoUsoAntenaService.update(tipoUsoAntenaDto);
+			this.tipoUsoAntenaService.saveUpdate(tipoUsoAntenaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoUsoAntenaDto.getId());			
 		}

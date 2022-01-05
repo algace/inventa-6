@@ -133,7 +133,7 @@ public final class TipoDependenciaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoDependenciaService.save(tipoDependenciaDto);
+			this.tipoDependenciaService.saveUpdate(tipoDependenciaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoDependenciaDto.getId());
 		}
@@ -225,7 +225,7 @@ public final class TipoDependenciaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoDependenciaService.update(tipoDependenciaDto);
+			this.tipoDependenciaService.saveUpdate(tipoDependenciaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoDependenciaDto.getId());			
 		}

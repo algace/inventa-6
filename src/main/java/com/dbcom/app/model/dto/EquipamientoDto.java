@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.NumberFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -79,11 +78,19 @@ public final class EquipamientoDto implements Serializable {
 	@NumberFormat(pattern = "###,###.##") 
 	private Double diametro;
 	
-	@NotEmpty(message = "{validation.notNull}")
-	private String sistema;
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private TipoSistemaLiteDto tipoSistema;
 	
-	@NotEmpty(message = "{validation.notNull}")
-	private String subsistema;
+	@Builder.Default
+	private List<TipoSistemaLiteDto> tiposSistemasDisponibles = new ArrayList<>();
+	
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private TipoSubsistemaLiteDto tipoSubsistema;
+	
+	@Builder.Default
+	private List<TipoSubsistemaLiteDto> tiposSubsistemasDisponibles = new ArrayList<>();
 	
 	@Builder.Default
 	private List<AplicacionSWDto> aplicaciones = new ArrayList<>();
@@ -95,16 +102,6 @@ public final class EquipamientoDto implements Serializable {
 	private List<TipoDocumentoDto> tiposDocumento = new ArrayList<>();
 	
 	@Builder.Default
-	private List<MultipartFile> ficheros = new ArrayList<>();
-	
-	@Builder.Default
 	private List<FotografiaDto> fotografias = new ArrayList<>();
-	
-	// Atributos de los documentos
-	private Long idTipoDocumento;
-	private String descripcionDocumento;
-	
-	// Atributos de las fotografias
-	private String descripcionFotografia;
 	
 }

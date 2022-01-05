@@ -38,6 +38,7 @@ public final class TipoInstalacionServiceImpl implements TipoInstalacionService 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoInstalacionDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoInstalacionDto();
@@ -46,6 +47,7 @@ public final class TipoInstalacionServiceImpl implements TipoInstalacionService 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoInstalacion tipoInstalacionBBDD = this.tipoInstalacionRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoInstalacionServiceImpl implements TipoInstalacionService 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoInstalacionDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoInstalacionServiceImpl implements TipoInstalacionService 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoInstalacionDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoInstalacionServiceImpl implements TipoInstalacionService 
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoInstalacionDto save(final TipoInstalacionDto tipoInstalacionDto) {		
+	@Override
+	public TipoInstalacionDto saveUpdate(final TipoInstalacionDto tipoInstalacionDto) {		
 		
 		TipoInstalacion tipoInstalacion = this.modelMapperUtils.map(tipoInstalacionDto, TipoInstalacion.class);
-	    
-		tipoInstalacion = this.tipoInstalacionRepository.save(tipoInstalacion);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoInstalacion.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoInstalacion, TipoInstalacionDto.class);
+		return this.modelMapperUtils.map(this.tipoInstalacionRepository.save(tipoInstalacion), TipoInstalacionDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoInstalacionDto update(final TipoInstalacionDto tipoInstalacionDto) {		
-		
-		final TipoInstalacion tipoInstalacion = this.modelMapperUtils.map(tipoInstalacionDto, TipoInstalacion.class);
-		
-		TipoInstalacion tipoInstalacionBBDD = this.tipoInstalacionRepository.findById(tipoInstalacion.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoInstalacionBBDD.setNombre(tipoInstalacionDto.getNombre());
-		tipoInstalacionBBDD = this.tipoInstalacionRepository.save(tipoInstalacionBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoInstalacionBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoInstalacionBBDD, TipoInstalacionDto.class);
-	}
-	
 }

@@ -38,6 +38,7 @@ public final class TipoConfiguracionRadioenlaceServiceImpl implements TipoConfig
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoConfiguracionRadioenlaceDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoConfiguracionRadioenlaceDto();
@@ -46,6 +47,7 @@ public final class TipoConfiguracionRadioenlaceServiceImpl implements TipoConfig
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoConfiguracionRadioenlace tipoConfiguracionRadioenlaceBBDD = this.tipoConfiguracionRadioenlaceRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoConfiguracionRadioenlaceServiceImpl implements TipoConfig
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoConfiguracionRadioenlaceDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoConfiguracionRadioenlaceServiceImpl implements TipoConfig
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoConfiguracionRadioenlaceDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,12 @@ public final class TipoConfiguracionRadioenlaceServiceImpl implements TipoConfig
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoConfiguracionRadioenlaceDto save(final TipoConfiguracionRadioenlaceDto tipoConfiguracionRadioenlaceDto) {		
+	@Override
+	public TipoConfiguracionRadioenlaceDto saveUpdate(final TipoConfiguracionRadioenlaceDto tipoConfiguracionRadioenlaceDto) {		
 		
 		TipoConfiguracionRadioenlace tipoConfiguracionRadioenlace = this.modelMapperUtils.map(tipoConfiguracionRadioenlaceDto, TipoConfiguracionRadioenlace.class);
 	    
-		tipoConfiguracionRadioenlace = this.tipoConfiguracionRadioenlaceRepository.save(tipoConfiguracionRadioenlace);	
-		
-		log.info(LoggerConstants.LOG_CREATE, tipoConfiguracionRadioenlace.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoConfiguracionRadioenlace, TipoConfiguracionRadioenlaceDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoConfiguracionRadioenlaceDto update(final TipoConfiguracionRadioenlaceDto tipoConfiguracionRadioenlaceDto) {		
-		
-		final TipoConfiguracionRadioenlace tipoConfiguracionRadioenlace = this.modelMapperUtils.map(tipoConfiguracionRadioenlaceDto, TipoConfiguracionRadioenlace.class);
-		
-		TipoConfiguracionRadioenlace tipoConfiguracionRadioenlaceBBDD = this.tipoConfiguracionRadioenlaceRepository.findById(tipoConfiguracionRadioenlace.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoConfiguracionRadioenlaceBBDD.setNombre(tipoConfiguracionRadioenlaceDto.getNombre());
-		tipoConfiguracionRadioenlaceBBDD = this.tipoConfiguracionRadioenlaceRepository.save(tipoConfiguracionRadioenlaceBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoConfiguracionRadioenlaceBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoConfiguracionRadioenlaceBBDD, TipoConfiguracionRadioenlaceDto.class);
+		return this.modelMapperUtils.map(this.tipoConfiguracionRadioenlaceRepository.save(tipoConfiguracionRadioenlace), TipoConfiguracionRadioenlaceDto.class);
 	}
 	
 }

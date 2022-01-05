@@ -12,6 +12,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TipoSistemaRepository;
 import com.dbcom.app.model.dao.TipoSubsistemaRepository;
 import com.dbcom.app.model.dto.TipoSistemaDto;
+import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
 import com.dbcom.app.model.entity.TipoSistema;
 import com.dbcom.app.model.entity.TipoSubsistema;
@@ -63,12 +64,12 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoSistemaDto> readAll() {
+	public List<TipoSistemaLiteDto> readAll() {
 
         final List<TipoSistema> tiposSistemas = this.tipoSistemasRepository.findAll();
 		
-		final List<TipoSistemaDto> tiposSistemasDto = new ArrayList<>(tiposSistemas.size());		
-		tiposSistemas.forEach(tipoSistema -> tiposSistemasDto.add(this.modelMapperUtils.map(tipoSistema, TipoSistemaDto.class)));
+		final List<TipoSistemaLiteDto> tiposSistemasDto = new ArrayList<>(tiposSistemas.size());		
+		tiposSistemas.forEach(tipoSistema -> tiposSistemasDto.add(this.modelMapperUtils.map(tipoSistema, TipoSistemaLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 
@@ -79,15 +80,11 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TipoSistemaDto save(TipoSistemaDto tipoSistemaDto) {
+	public TipoSistemaDto saveUpdate(TipoSistemaDto tipoSistemaDto) {
 
-		TipoSistema tipoSistema = this.modelMapperUtils.map(tipoSistemaDto, TipoSistema.class);
-	    
-		tipoSistema = this.tipoSistemasRepository.save(tipoSistema);	
+		TipoSistema tipoSistema = this.modelMapperUtils.map(tipoSistemaDto, TipoSistema.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoSistema.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoSistema, TipoSistemaDto.class);
+		return this.modelMapperUtils.map(this.tipoSistemasRepository.save(tipoSistema), TipoSistemaDto.class);
 	}
 
 	/**
@@ -109,30 +106,4 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 		
 		return result;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TipoSistemaDto update(TipoSistemaDto tipoSistemaDto) {
-
-		final TipoSistema tipoSistema = this.modelMapperUtils.map(tipoSistemaDto, TipoSistema.class);
-		
-		TipoSistema tipoSistemaBBDD = this.tipoSistemasRepository.findById(tipoSistema.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoSistemaBBDD.setNombre(tipoSistemaDto.getNombre());
-		tipoSistemaBBDD.setDescripcion(tipoSistemaDto.getDescripcion());
-		tipoSistemaBBDD.setColor(tipoSistemaDto.getColor());
-		tipoSistemaBBDD.setColorTexto(tipoSistema.getColorTexto());
-		tipoSistemaBBDD.setCodigoFuncionRed(tipoSistema.getCodigoFuncionRed());
-		tipoSistemaBBDD.setTiposSubsistemas(tipoSistemaBBDD.getTiposSubsistemas());
-		tipoSistemaBBDD = this.tipoSistemasRepository.save(tipoSistemaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoSistemaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoSistemaBBDD, TipoSistemaDto.class);
-	}	
-
 }

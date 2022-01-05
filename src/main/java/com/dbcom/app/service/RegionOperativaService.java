@@ -41,14 +41,7 @@ public interface RegionOperativaService {
 	 * @param RegionOperativaDto Region operativa a persistir
 	 * @return Region operativa persistida
 	 */
-	RegionOperativaDto save(final RegionOperativaDto regionOperativaDto);
-	
-	/**
-	 * Actualizamos la región operativa pasada como parámetro
-	 * @param regionOperativaDto Región operativa a actualizar
-	 * @return Región operativa actualizada
-	 */
-	RegionOperativaDto update(final RegionOperativaDto regionOperativaDto);
+	RegionOperativaDto saveUpdate(final RegionOperativaDto regionOperativaDto);
 	
 	/**
 	 * Obtenemos un listado de las regiones operativas teniendo en cuenta la región operativa por defecto

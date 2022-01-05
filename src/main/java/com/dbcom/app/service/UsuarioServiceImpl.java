@@ -38,6 +38,7 @@ public final class UsuarioServiceImpl implements UsuarioService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public UsuarioDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new UsuarioDto();
@@ -46,6 +47,7 @@ public final class UsuarioServiceImpl implements UsuarioService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Long id) {			
 		
 		final Usuario usuarioBBDD = this.usuarioRepository.findById(id)
@@ -59,6 +61,7 @@ public final class UsuarioServiceImpl implements UsuarioService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<UsuarioDto> readAll() {
 		
 		final List<Usuario> usuarios = this.usuarioRepository.findAll();
@@ -74,6 +77,7 @@ public final class UsuarioServiceImpl implements UsuarioService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public UsuarioDto read(final Long id) {		
 		
 		final Usuario usuario = this.usuarioRepository.findById(id)
@@ -90,34 +94,12 @@ public final class UsuarioServiceImpl implements UsuarioService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public UsuarioDto save(final UsuarioDto usuarioDto) {		
+	@Override
+	public UsuarioDto saveUpdate(final UsuarioDto usuarioDto) {		
 		
-		Usuario usuario = this.modelMapperUtils.map(usuarioDto, Usuario.class);
-	    
-		usuario = this.usuarioRepository.save(usuario);	
+		Usuario usuario = this.modelMapperUtils.map(usuarioDto, Usuario.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, usuario.getNombreApellidos());		
-		
-		return this.modelMapperUtils.map(usuario, UsuarioDto.class);
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public UsuarioDto update(final UsuarioDto usuarioDto) {		
-		
-		Usuario usuarioBBDD = this.usuarioRepository.findById(usuarioDto.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-//		usuarioBBDD.setRol(usuarioDto.getRol());
-		usuarioBBDD.setNombreApellidos(usuarioDto.getNombreApellidos());
-		usuarioBBDD = this.usuarioRepository.save(usuarioBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, usuarioBBDD.getId());
-		
-		return this.modelMapperUtils.map(usuarioBBDD, UsuarioDto.class);
+		return this.modelMapperUtils.map(this.usuarioRepository.save(usuario), UsuarioDto.class);
 	}
 }
  

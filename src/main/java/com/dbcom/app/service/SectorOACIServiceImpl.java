@@ -112,42 +112,11 @@ public class SectorOACIServiceImpl implements SectorOACIService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SectorOACIDto save(SectorOACIDto sectorOACIDto) {
+	public SectorOACIDto saveUpdate(SectorOACIDto sectorOACIDto) {
 
 		SectorOACI sectorOACI = this.modelMapperUtils.map(sectorOACIDto, SectorOACI.class);
-		sectorOACI.setRegionOperativa(this.modelMapperUtils.map(sectorOACIDto.getRegionOperativa(), RegionOperativa.class));
+		sectorOACI.setRegionOperativa(this.modelMapperUtils.map(sectorOACIDto.getRegionOperativa(), RegionOperativa.class));	
 		
-		sectorOACI = this.sectorOACIRepository.save(sectorOACI);	
-		
-		log.info(LoggerConstants.LOG_CREATE, sectorOACI.getNombre());		
-		
-		return this.modelMapperUtils.map(sectorOACI, SectorOACIDto.class);
+		return this.modelMapperUtils.map(this.sectorOACIRepository.save(sectorOACI), SectorOACIDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public SectorOACIDto update(SectorOACIDto sectorOACIDto) {
-
-		final SectorOACI sectorOACI = this.modelMapperUtils.map(sectorOACIDto, SectorOACI.class);
-		
-		SectorOACI sectorOACIBBDD = this.sectorOACIRepository.findById(sectorOACI.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		sectorOACIBBDD.setNombre(sectorOACIDto.getNombre());
-		sectorOACIBBDD.setRegionOperativa(this.modelMapperUtils.map(sectorOACIDto.getRegionOperativa(),RegionOperativa.class));
-		sectorOACIBBDD.setFlMin(sectorOACIDto.getFlMin());
-		sectorOACIBBDD.setFlMax(sectorOACIDto.getFlMax());
-		sectorOACIBBDD.setDescripcion(sectorOACIDto.getDescripcion());
-		sectorOACIBBDD.setCoordenadas(sectorOACIDto.getCoordenadas());
-		
-		sectorOACIBBDD = this.sectorOACIRepository.save(sectorOACIBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, sectorOACIBBDD.getId());
-		
-		return this.modelMapperUtils.map(sectorOACIBBDD, SectorOACIDto.class);
-	}
-
 }

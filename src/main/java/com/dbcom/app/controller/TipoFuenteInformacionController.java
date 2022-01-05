@@ -141,7 +141,7 @@ public final class TipoFuenteInformacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoFuenteInformacionService.save(tipoFuenteInformacionDto);
+			this.tipoFuenteInformacionService.saveUpdate(tipoFuenteInformacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoFuenteInformacionDto.getId());
 		}
@@ -233,7 +233,7 @@ public final class TipoFuenteInformacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoFuenteInformacionService.update(tipoFuenteInformacionDto);
+			this.tipoFuenteInformacionService.saveUpdate(tipoFuenteInformacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoFuenteInformacionDto.getId());			
 		}

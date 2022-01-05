@@ -132,7 +132,7 @@ public final class TipoConfiguracionRadioenlaceController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoConfiguracionRadioenlaceService.save(tipoConfiguracionRadioenlaceDto);
+			this.tipoConfiguracionRadioenlaceService.saveUpdate(tipoConfiguracionRadioenlaceDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoConfiguracionRadioenlaceDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoConfiguracionRadioenlaceController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoConfiguracionRadioenlaceService.update(tipoConfiguracionRadioenlaceDto);
+			this.tipoConfiguracionRadioenlaceService.saveUpdate(tipoConfiguracionRadioenlaceDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoConfiguracionRadioenlaceDto.getId());			
 		}

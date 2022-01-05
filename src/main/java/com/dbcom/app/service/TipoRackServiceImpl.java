@@ -38,6 +38,7 @@ public final class TipoRackServiceImpl implements TipoRackService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoRackDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoRackDto();
@@ -46,6 +47,7 @@ public final class TipoRackServiceImpl implements TipoRackService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoRack tipoRackBBDD = this.tipoRackRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoRackServiceImpl implements TipoRackService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoRackDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoRackServiceImpl implements TipoRackService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoRackDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoRackServiceImpl implements TipoRackService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoRackDto save(final TipoRackDto tipoRackDto) {		
+	@Override
+	public TipoRackDto saveUpdate(final TipoRackDto tipoRackDto) {		
 		
 		TipoRack tipoRack = this.modelMapperUtils.map(tipoRackDto, TipoRack.class);
-	    
-		tipoRack = this.tipoRackRepository.save(tipoRack);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoRack.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoRack, TipoRackDto.class);
+		return this.modelMapperUtils.map(this.tipoRackRepository.save(tipoRack), TipoRackDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoRackDto update(final TipoRackDto tipoRackDto) {		
-		
-		final TipoRack tipoRack = this.modelMapperUtils.map(tipoRackDto, TipoRack.class);
-		
-		TipoRack tipoRackBBDD = this.tipoRackRepository.findById(tipoRack.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoRackBBDD.setNombre(tipoRackDto.getNombre());
-		tipoRackBBDD = this.tipoRackRepository.save(tipoRackBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoRackBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoRackBBDD, TipoRackDto.class);
-	}
-	
 }

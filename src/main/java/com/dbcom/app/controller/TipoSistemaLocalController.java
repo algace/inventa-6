@@ -132,7 +132,7 @@ public final class TipoSistemaLocalController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoSistemaLocalService.save(tipoSistemaLocalDto);
+			this.tipoSistemaLocalService.saveUpdate(tipoSistemaLocalDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoSistemaLocalDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoSistemaLocalController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoSistemaLocalService.update(tipoSistemaLocalDto);
+			this.tipoSistemaLocalService.saveUpdate(tipoSistemaLocalDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoSistemaLocalDto.getId());			
 		}
