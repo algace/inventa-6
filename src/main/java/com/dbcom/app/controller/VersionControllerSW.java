@@ -131,7 +131,7 @@ public final class VersionControllerSW {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.versionService.save(versionDto);
+			this.versionService.saveUpdate(versionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_VERSIONES);
 			log.info(LoggerConstants.LOG_SAVE, versionDto.getId());
 		}
@@ -226,7 +226,7 @@ public final class VersionControllerSW {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.versionService.update(versionDto);
+			this.versionService.saveUpdate(versionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_VERSIONES);
 			log.info(LoggerConstants.LOG_UPDATE, versionDto.getId());			
 		}

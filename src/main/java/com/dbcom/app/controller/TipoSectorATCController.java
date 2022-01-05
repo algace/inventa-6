@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.TipoSectorATCDto;
+import com.dbcom.app.model.entity.TipoSectorATC;
 import com.dbcom.app.service.TipoSectorATCService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,10 +52,16 @@ public final class TipoSectorATCController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;
 
 	private final TipoSectorATCService tipoSectorATCService;
+	private final SectorATCRepository sectorATCRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public TipoSectorATCController(TipoSectorATCService tipoSectorATCService) {
+	public TipoSectorATCController(TipoSectorATCService tipoSectorATCService,
+			SectorATCRepository sectorATCRepository,
+			ModelMapperUtils  modelMapperUtils) {
 		this.tipoSectorATCService = tipoSectorATCService;
+		this.sectorATCRepository = sectorATCRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -132,7 +141,7 @@ public final class TipoSectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoSectorATCService.save(tipoSectorATCDto);
+			this.tipoSectorATCService.saveUpdate(tipoSectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoSectorATCDto.getId());
 		}
@@ -224,7 +233,7 @@ public final class TipoSectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoSectorATCService.update(tipoSectorATCDto);
+			this.tipoSectorATCService.saveUpdate(tipoSectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoSectorATCDto.getId());			
 		}
@@ -242,9 +251,19 @@ public final class TipoSectorATCController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.tipoSectorATCService.read(id));
+		TipoSectorATCDto tipoSectorATCDto = this.tipoSectorATCService.read(id);
+		Long tipoSectorAsignado = this.sectorATCRepository.countByTipoSectorATC(this.modelMapperUtils.map(tipoSectorATCDto, TipoSectorATC.class));
+		
+		model.addAttribute(ATTRIBUTE_TIPO, tipoSectorATCDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_TIPO_SECTORATC_NO_PERMITIDO_MENSAJE);
+		if (tipoSectorAsignado > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

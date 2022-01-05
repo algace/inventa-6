@@ -41,12 +41,5 @@ public interface SectorMantenimientoService {
 	 * @param sectorMantenimientoDto Sector de mantenimiento a persistir
 	 * @return Sector de mantenimiento persistido
 	 */
-	SectorMantenimientoDto save(final SectorMantenimientoDto sectorMantenimientoDto);
-	
-	/**
-	 * Actualizamos el sector de mantenimiento pasado como parámetro
-	 * @param tipoSubsistemaDto Sector de mantenimiento a actualizar
-	 * @return Sector de mantenimiento actualizado
-	 */
-	SectorMantenimientoDto update(final SectorMantenimientoDto sectorMantenimientoDto);
+	SectorMantenimientoDto saveUpdate(final SectorMantenimientoDto sectorMantenimientoDto);
 }

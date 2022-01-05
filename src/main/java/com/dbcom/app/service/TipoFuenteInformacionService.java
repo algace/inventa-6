@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
  * 
  * @author jose.vallve
  */
-public interface TipoFuenteInformacionService extends GenericService<TipoFuenteInformacionDto, Short> {
+public interface TipoFuenteInformacionService {
 
 	/**
 	 * Creamos un tipo de fuente de información sin persistencia
@@ -41,14 +41,7 @@ public interface TipoFuenteInformacionService extends GenericService<TipoFuenteI
 	 * @param tipoFuenteInformacionDto Tipo de fuente de información a persistir
 	 * @return Tipo de fuente de información persistido
 	 */
-	TipoFuenteInformacionDto save(final TipoFuenteInformacionDto tipoFuenteInformacionDto);
-		
-	/**
-	 * Actualizamos el tipo de fuente de información pasado como parámetro
-	 * @param tipoFuenteInformacionDto Tipo de fuente de información a actualizar
-	 * @return Tipo de fuente de información actualizado
-	 */
-	TipoFuenteInformacionDto update(final TipoFuenteInformacionDto tipoFuenteInformacionDto);
+	TipoFuenteInformacionDto saveUpdate(final TipoFuenteInformacionDto tipoFuenteInformacionDto);
 	
 	/**
 	 * Obtenemos un listado de los tipos de fuentes de información teniendo en cuenta el tipo de fuente por defecto

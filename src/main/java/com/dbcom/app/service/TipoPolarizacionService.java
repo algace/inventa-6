@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoPolarizacionDto;
  * 
  * @author jose.vallve
  */
-public interface TipoPolarizacionService extends GenericService<TipoPolarizacionDto, Short> {
+public interface TipoPolarizacionService {
 
 	/**
 	 * Creamos un tipo de polarización sin persistencia
@@ -41,13 +41,6 @@ public interface TipoPolarizacionService extends GenericService<TipoPolarizacion
 	 * @param tipoPolarizacionDto Tipo de polarización a persistir
 	 * @return Tipo de polarización persistido
 	 */
-	TipoPolarizacionDto save(final TipoPolarizacionDto tipoPolarizacionDto);
-		
-	/**
-	 * Actualizamos el tipo de polarización pasado como parámetro
-	 * @param tipoPolarizacionDto Tipo de polarización a actualizar
-	 * @return Tipo de polarización actualizado
-	 */
-	TipoPolarizacionDto update(final TipoPolarizacionDto tipoPolarizacionDto);
+	TipoPolarizacionDto saveUpdate(final TipoPolarizacionDto tipoPolarizacionDto);
 	
 }

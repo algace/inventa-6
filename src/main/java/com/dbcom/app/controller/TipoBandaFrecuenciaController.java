@@ -132,7 +132,7 @@ public final class TipoBandaFrecuenciaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoBandaFrecuenciaService.save(tipoBandaFrecuenciaDto);
+			this.tipoBandaFrecuenciaService.saveUpdate(tipoBandaFrecuenciaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoBandaFrecuenciaDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoBandaFrecuenciaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoBandaFrecuenciaService.update(tipoBandaFrecuenciaDto);
+			this.tipoBandaFrecuenciaService.saveUpdate(tipoBandaFrecuenciaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoBandaFrecuenciaDto.getId());			
 		}

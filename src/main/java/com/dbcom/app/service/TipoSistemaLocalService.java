@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoSistemaLocalDto;
  * 
  * @author jose.vallve
  */
-public interface TipoSistemaLocalService extends GenericService<TipoSistemaLocalDto, Short> {
+public interface TipoSistemaLocalService {
 
 	/**
 	 * Creamos un tipo de sistema local sin persistencia
@@ -41,13 +41,6 @@ public interface TipoSistemaLocalService extends GenericService<TipoSistemaLocal
 	 * @param tipoSistemaLocalDto Tipo de sistema local a persistir
 	 * @return Tipo de sistema local persistido
 	 */
-	TipoSistemaLocalDto save(final TipoSistemaLocalDto tipoSistemaLocalDto);
-		
-	/**
-	 * Actualizamos el tipo de sistema local pasado como parámetro
-	 * @param tipoSistemaLocalDto Tipo de sistema local a actualizar
-	 * @return Tipo de sistema local actualizado
-	 */
-	TipoSistemaLocalDto update(final TipoSistemaLocalDto tipoSistemaLocalDto);
+	TipoSistemaLocalDto saveUpdate(final TipoSistemaLocalDto tipoSistemaLocalDto);
 	
 }

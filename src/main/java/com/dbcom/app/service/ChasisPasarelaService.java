@@ -5,7 +5,7 @@ import java.util.List;
 import com.dbcom.app.model.dto.ChasisPasarelaDto;
 import com.dbcom.app.model.dto.ChasisPasarelaLiteDto;
 
-public interface ChasisPasarelaService extends GenericService<ChasisPasarelaDto, Short>{
+public interface ChasisPasarelaService {
 
 	/**
 	 * Creamos una pasarela sin persistencia
@@ -40,13 +40,6 @@ public interface ChasisPasarelaService extends GenericService<ChasisPasarelaDto,
 	 * @param pasarelaChasisDto Tipo de pasarela a persistir
 	 * @return Tipo de chasis persistido
 	 */
-	ChasisPasarelaDto save(final ChasisPasarelaDto chasisPasarelaDto);
-		
-	/**
-	 * Actualizamos el tipo de pasarela pasado como parámetro
-	 * @param pasarelaChasisDto Tipo de chasis a actualizar
-	 * @return Tipo de pasarela actualizado
-	 */
-	ChasisPasarelaDto update(final ChasisPasarelaDto chasisPasarelaDto);
+	ChasisPasarelaDto saveUpdate(final ChasisPasarelaDto chasisPasarelaDto);
 
 }

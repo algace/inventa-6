@@ -38,6 +38,7 @@ public final class TipoEquipoConfiguracionRadioServiceImpl implements TipoEquipo
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoEquipoConfiguracionRadioDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoEquipoConfiguracionRadioDto();
@@ -46,6 +47,7 @@ public final class TipoEquipoConfiguracionRadioServiceImpl implements TipoEquipo
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoEquipoConfiguracionRadio tipoEquipoConfiguracionRadioBBDD = this.tipoEquipoConfiguracionRadioRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoEquipoConfiguracionRadioServiceImpl implements TipoEquipo
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoEquipoConfiguracionRadioDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoEquipoConfiguracionRadioServiceImpl implements TipoEquipo
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoEquipoConfiguracionRadioDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,35 +92,11 @@ public final class TipoEquipoConfiguracionRadioServiceImpl implements TipoEquipo
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoEquipoConfiguracionRadioDto save(final TipoEquipoConfiguracionRadioDto tipoEquipoConfiguracionRadioDto) {		
+	@Override
+	public TipoEquipoConfiguracionRadioDto saveUpdate(final TipoEquipoConfiguracionRadioDto tipoEquipoConfiguracionRadioDto) {		
 		
 		TipoEquipoConfiguracionRadio tipoEquipoConfiguracionRadio = this.modelMapperUtils.map(tipoEquipoConfiguracionRadioDto, TipoEquipoConfiguracionRadio.class);
-	    
-		tipoEquipoConfiguracionRadio = this.tipoEquipoConfiguracionRadioRepository.save(tipoEquipoConfiguracionRadio);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoEquipoConfiguracionRadio.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoEquipoConfiguracionRadio, TipoEquipoConfiguracionRadioDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoEquipoConfiguracionRadioDto update(final TipoEquipoConfiguracionRadioDto tipoEquipoConfiguracionRadioDto) {		
-		
-		final TipoEquipoConfiguracionRadio tipoEquipoConfiguracionRadio = this.modelMapperUtils.map(tipoEquipoConfiguracionRadioDto, TipoEquipoConfiguracionRadio.class);
-		
-		TipoEquipoConfiguracionRadio tipoEquipoConfiguracionRadioBBDD = this.tipoEquipoConfiguracionRadioRepository.findById(tipoEquipoConfiguracionRadio.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoEquipoConfiguracionRadioBBDD.setNombre(tipoEquipoConfiguracionRadioDto.getNombre());
-		tipoEquipoConfiguracionRadioBBDD.setIte(tipoEquipoConfiguracionRadioDto.getIte());
-		tipoEquipoConfiguracionRadioBBDD = this.tipoEquipoConfiguracionRadioRepository.save(tipoEquipoConfiguracionRadioBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoEquipoConfiguracionRadioBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoEquipoConfiguracionRadioBBDD, TipoEquipoConfiguracionRadioDto.class);
-	}
-	
+		return this.modelMapperUtils.map(this.tipoEquipoConfiguracionRadioRepository.save(tipoEquipoConfiguracionRadio), TipoEquipoConfiguracionRadioDto.class);
+	}	
 }

@@ -98,38 +98,10 @@ public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TipoSubsistemaDto save(TipoSubsistemaDto tipoSubsistemaDto) {
+	public TipoSubsistemaDto saveUpdate(TipoSubsistemaDto tipoSubsistemaDto) {
 
 		TipoSubsistema tipoSubsistema = this.modelMapperUtils.map(tipoSubsistemaDto, TipoSubsistema.class);
-	    tipoSubsistema.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(), TipoSistema.class));
 		
-		tipoSubsistema = this.tipoSubsistemasRepository.save(tipoSubsistema);	
-		
-		log.info(LoggerConstants.LOG_CREATE, tipoSubsistema.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoSubsistema, TipoSubsistemaDto.class);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TipoSubsistemaDto update(TipoSubsistemaDto tipoSubsistemaDto) {
-
-		final TipoSubsistema tipoSubsistema = this.modelMapperUtils.map(tipoSubsistemaDto, TipoSubsistema.class);
-		
-		TipoSubsistema tipoSubsistemaBBDD = this.tipoSubsistemasRepository.findById(tipoSubsistema.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoSubsistemaBBDD.setNombre(tipoSubsistemaDto.getNombre());
-		tipoSubsistemaBBDD.setDescripcion(tipoSubsistemaDto.getDescripcion());
-		tipoSubsistemaBBDD.setInterfazOperacion(tipoSubsistemaDto.getInterfazOperacion());
-		tipoSubsistemaBBDD.setTipoSistema(this.modelMapperUtils.map(tipoSubsistemaDto.getTipoSistema(),TipoSistema.class));
-		tipoSubsistemaBBDD = this.tipoSubsistemasRepository.save(tipoSubsistemaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoSubsistemaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoSubsistemaBBDD, TipoSubsistemaDto.class);
+		return this.modelMapperUtils.map(this.tipoSubsistemasRepository.save(tipoSubsistema), TipoSubsistemaDto.class);
 	}
 }

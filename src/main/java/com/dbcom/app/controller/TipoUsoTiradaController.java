@@ -132,7 +132,7 @@ public final class TipoUsoTiradaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoUsoTiradaService.save(tipoUsoTiradaDto);
+			this.tipoUsoTiradaService.saveUpdate(tipoUsoTiradaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoUsoTiradaDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoUsoTiradaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoUsoTiradaService.update(tipoUsoTiradaDto);
+			this.tipoUsoTiradaService.saveUpdate(tipoUsoTiradaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoUsoTiradaDto.getId());			
 		}

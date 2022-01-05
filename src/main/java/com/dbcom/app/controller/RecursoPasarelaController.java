@@ -138,7 +138,7 @@ public final class RecursoPasarelaController {
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 			
 			} else {		
-				this.recursoPasarelaService.save(recursoPasarelaDto);
+				this.recursoPasarelaService.saveUpdate(recursoPasarelaDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 				log.info(LoggerConstants.LOG_SAVE, recursoPasarelaDto.getId());
 			}
@@ -233,7 +233,7 @@ public final class RecursoPasarelaController {
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 			
 			} else {
-				this.recursoPasarelaService.update(recursoPasarelaDto);
+				this.recursoPasarelaService.saveUpdate(recursoPasarelaDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 				log.info(LoggerConstants.LOG_UPDATE, recursoPasarelaDto.getId());			
 			}

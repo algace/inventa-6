@@ -93,36 +93,11 @@ public class RegionOperativaServiceImpl implements RegionOperativaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RegionOperativaDto save(RegionOperativaDto regionOperativaDto) {
+	public RegionOperativaDto saveUpdate(RegionOperativaDto regionOperativaDto) {
 
 		RegionOperativa regionOperativa = this.modelMapperUtils.map(regionOperativaDto, RegionOperativa.class);
-	    
-		regionOperativa = this.regionOperativaRepository.save(regionOperativa);	
 		
-		log.info(LoggerConstants.LOG_CREATE, regionOperativa.getNombre());		
-		
-		return this.modelMapperUtils.map(regionOperativa, RegionOperativaDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public RegionOperativaDto update(RegionOperativaDto regionOperativaDto) {
-
-		final RegionOperativa regionOperativa = this.modelMapperUtils.map(regionOperativaDto, RegionOperativa.class);
-		
-		RegionOperativa regionOperativaBBDD = this.regionOperativaRepository.findById(regionOperativa.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		regionOperativaBBDD.setNombre(regionOperativaDto.getNombre());
-		regionOperativaBBDD.setDescripcion(regionOperativaDto.getDescripcion());
-		regionOperativaBBDD = this.regionOperativaRepository.save(regionOperativaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, regionOperativaBBDD.getId());
-		
-		return this.modelMapperUtils.map(regionOperativaBBDD, RegionOperativaDto.class);
+		return this.modelMapperUtils.map(this.regionOperativaRepository.save(regionOperativa), RegionOperativaDto.class);
 	}
 	
 	/**

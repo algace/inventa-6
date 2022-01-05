@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoTiradaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoTiradaService extends GenericService<TipoTiradaDto, Short> {
+public interface TipoTiradaService {
 
 	/**
 	 * Creamos un tipo de tirada sin persistencia
@@ -41,13 +41,6 @@ public interface TipoTiradaService extends GenericService<TipoTiradaDto, Short> 
 	 * @param tipoTiradaDto Tipo de tirada a persistir
 	 * @return Tipo de tirada persistido
 	 */
-	TipoTiradaDto save(final TipoTiradaDto tipoTiradaDto);
-		
-	/**
-	 * Actualizamos el tipo de tirada pasado como parámetro
-	 * @param tipoTiradaDto Tipo de tirada a actualizar
-	 * @return Tipo de tirada actualizado
-	 */
-	TipoTiradaDto update(final TipoTiradaDto tipoTiradaDto);
+	TipoTiradaDto saveUpdate(final TipoTiradaDto tipoTiradaDto);
 	
 }

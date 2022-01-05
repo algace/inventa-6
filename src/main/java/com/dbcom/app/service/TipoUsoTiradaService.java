@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoUsoTiradaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoUsoTiradaService extends GenericService<TipoUsoTiradaDto, Short> {
+public interface TipoUsoTiradaService {
 
 	/**
 	 * Creamos un tipo de uso tirada sin persistencia
@@ -41,13 +41,6 @@ public interface TipoUsoTiradaService extends GenericService<TipoUsoTiradaDto, S
 	 * @param tipoUsoTiradaDto Tipo de uso tirada a persistir
 	 * @return Tipo de uso tirada persistido
 	 */
-	TipoUsoTiradaDto save(final TipoUsoTiradaDto tipoUsoTiradaDto);
-		
-	/**
-	 * Actualizamos el tipo de uso tirada pasado como parámetro
-	 * @param tipoUsoTiradaDto Tipo de uso tirada a actualizar
-	 * @return Tipo de uso tirada actualizado
-	 */
-	TipoUsoTiradaDto update(final TipoUsoTiradaDto tipoUsoTiradaDto);
+	TipoUsoTiradaDto saveUpdate(final TipoUsoTiradaDto tipoUsoTiradaDto);
 	
 }

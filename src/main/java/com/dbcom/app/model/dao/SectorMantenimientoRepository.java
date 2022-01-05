@@ -1,7 +1,5 @@
 package com.dbcom.app.model.dao;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +14,6 @@ import com.dbcom.app.model.entity.SectorMantenimiento;
 @Repository
 public interface SectorMantenimientoRepository extends JpaRepository<SectorMantenimiento, Long> {
 	
-	List<SectorMantenimiento> findByRegionMantenimiento(RegionMantenimiento regionMantenimiento);
+	public Long countByRegionMantenimiento(RegionMantenimiento regionMantenimiento);
 
 }

@@ -42,13 +42,6 @@ public interface TipoSistemaService {
 	 * @param tipoSistemaDto Tipo de sistema a persistir
 	 * @return Tipo de sistema persistido
 	 */
-	TipoSistemaDto save(final TipoSistemaDto tipoSistemaDto);
-	
-	/**
-	 * Actualizamos el tipo de sistema pasado como parámetro
-	 * @param tipoSistemaDto Tipo de sistema a actualizar
-	 * @return Tipo de sistema actualizado
-	 */
-	TipoSistemaDto update(final TipoSistemaDto tipoSistemaDto);
+	TipoSistemaDto saveUpdate(final TipoSistemaDto tipoSistemaDto);
 
 }

@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoCanalizacionDto;
  * 
  * @author jose.vallve
  */
-public interface TipoCanalizacionService extends GenericService<TipoCanalizacionDto, Short> {
+public interface TipoCanalizacionService {
 
 	/**
 	 * Creamos un tipo de canalización sin persistencia
@@ -41,13 +41,6 @@ public interface TipoCanalizacionService extends GenericService<TipoCanalizacion
 	 * @param tipoCanalizacionDto Tipo de canalización a persistir
 	 * @return Tipo de canalización persistido
 	 */
-	TipoCanalizacionDto save(final TipoCanalizacionDto tipoCanalizacionDto);
-		
-	/**
-	 * Actualizamos el tipo de canalización pasado como parámetro
-	 * @param tipoCanalizacionDto Tipo de canalización a actualizar
-	 * @return Tipo de canalización actualizado
-	 */
-	TipoCanalizacionDto update(final TipoCanalizacionDto tipoCanalizacionDto);
+	TipoCanalizacionDto saveUpdate(final TipoCanalizacionDto tipoCanalizacionDto);
 	
 }

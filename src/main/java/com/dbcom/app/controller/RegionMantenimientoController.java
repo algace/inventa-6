@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.SectorMantenimientoRepository;
 import com.dbcom.app.model.dto.RegionMantenimientoDto;
+import com.dbcom.app.model.entity.RegionMantenimiento;
 import com.dbcom.app.service.RegionMantenimientoService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +51,16 @@ public class RegionMantenimientoController {
 	public static final String MAP_READALL_REGIONES_MANTENIMIENTO = ControllerConstants.MAP_ACTION_SLASH + VIEW_REGIONES_MANTENIMIENTO;
 	
 	private final RegionMantenimientoService regionMantenimientoService;
+	private final SectorMantenimientoRepository sectorMantenimientoRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public RegionMantenimientoController(RegionMantenimientoService regionMantenimientoService) {
+	public RegionMantenimientoController(RegionMantenimientoService regionMantenimientoService,
+			SectorMantenimientoRepository sectorMantenimientoRepository,
+			ModelMapperUtils modelMapperUtils) {
 		this.regionMantenimientoService = regionMantenimientoService;
+		this.sectorMantenimientoRepository = sectorMantenimientoRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -129,7 +138,7 @@ public class RegionMantenimientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.regionMantenimientoService.save(regionMantenimientoDto);
+			this.regionMantenimientoService.saveUpdate(regionMantenimientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_MANTENIMIENTO);
 			log.info(LoggerConstants.LOG_SAVE, regionMantenimientoDto.getId());
 		}
@@ -220,7 +229,7 @@ public class RegionMantenimientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.regionMantenimientoService.update(regionMantenimientoDto);
+			this.regionMantenimientoService.saveUpdate(regionMantenimientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REGIONES_MANTENIMIENTO);
 			log.info(LoggerConstants.LOG_UPDATE, regionMantenimientoDto.getId());			
 		}
@@ -238,9 +247,19 @@ public class RegionMantenimientoController {
 	public String deleteGET(@PathVariable("id") final Long id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_REGION_MANTENIMIENTO, this.regionMantenimientoService.read(id));
+		RegionMantenimientoDto regionMantenimientoDto = this.regionMantenimientoService.read(id);
+		Long sectorMantenimientoAsignado = this.sectorMantenimientoRepository.countByRegionMantenimiento(this.modelMapperUtils.map(regionMantenimientoDto, RegionMantenimiento.class));
+		
+		model.addAttribute(ATTRIBUTE_REGION_MANTENIMIENTO, regionMantenimientoDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_REGION_MANTENIMIENTO_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_REGION_MANTENIMIENTO_NO_PERMITIDO_MENSAJE);
+		if (sectorMantenimientoAsignado > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

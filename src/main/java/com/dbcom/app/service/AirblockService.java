@@ -10,7 +10,7 @@ import com.dbcom.app.model.dto.AirblockDto;
  * 
  * @author eduardo.tubilleja
  */
-public interface AirblockService extends GenericService<AirblockDto, Long> {
+public interface AirblockService {
 
 	/**
 	 * Creamos un airblock sin persistencia
@@ -49,13 +49,6 @@ public interface AirblockService extends GenericService<AirblockDto, Long> {
 	 * @param airblockDto Airblock a persistir
 	 * @return Airblock persistido
 	 */
-	AirblockDto save(final AirblockDto airblockDto);
-		
-	/**
-	 * Actualizamos el airblock pasado como parámetro
-	 * @param airblockDto Airblock a actualizar
-	 * @return Airblock actualizado
-	 */
-	AirblockDto update(final AirblockDto airblockDto);
+	AirblockDto saveUpdate(final AirblockDto airblockDto);
 	
 }

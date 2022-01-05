@@ -15,8 +15,12 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.AmbitoRecursoRepository;
+import com.dbcom.app.model.dao.RecursoPasarelaRepository;
 import com.dbcom.app.model.dto.FuncionPasarelaDto;
+import com.dbcom.app.model.entity.FuncionPasarela;
 import com.dbcom.app.service.FuncionPasarelaService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,10 +48,19 @@ public final class FuncionPasarelaController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
 	private final FuncionPasarelaService funcionPasarelaService;
+	private final RecursoPasarelaRepository recursoPasarelaRepository;
+	private final AmbitoRecursoRepository ambitoRecursoRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public FuncionPasarelaController(FuncionPasarelaService funcionPasarelaService) {
+	public FuncionPasarelaController(FuncionPasarelaService funcionPasarelaService,
+			RecursoPasarelaRepository recursoPasarelaRepository,
+			AmbitoRecursoRepository ambitoRecursoRepository,
+			ModelMapperUtils modelMapperUtils) {
 		this.funcionPasarelaService = funcionPasarelaService;
+		this.recursoPasarelaRepository = recursoPasarelaRepository;
+		this.ambitoRecursoRepository = ambitoRecursoRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -127,7 +140,7 @@ public final class FuncionPasarelaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.funcionPasarelaService.save(funcionPasarelaDto);
+			this.funcionPasarelaService.saveUpdate(funcionPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, funcionPasarelaDto.getId());
 		}
@@ -219,7 +232,7 @@ public final class FuncionPasarelaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.funcionPasarelaService.update(funcionPasarelaDto);
+			this.funcionPasarelaService.saveUpdate(funcionPasarelaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, funcionPasarelaDto.getId());			
 		}
@@ -237,9 +250,20 @@ public final class FuncionPasarelaController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.funcionPasarelaService.read(id));
+		FuncionPasarelaDto funcionPasarelaDto = this.funcionPasarelaService.read(id);
+		Long recursoPasarelaAsignado = this.recursoPasarelaRepository.countByFuncionPasarela(this.modelMapperUtils.map(funcionPasarelaDto, FuncionPasarela.class));
+		Long ambitoRecursoAsignado = this.ambitoRecursoRepository.countByFuncionPasarela(this.modelMapperUtils.map(funcionPasarelaDto, FuncionPasarela.class));
+		
+		model.addAttribute(ATTRIBUTE_TIPO, funcionPasarelaDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_FUNCIONPASARELA_NO_PERMITIDO_MENSAJE);
+		if ((recursoPasarelaAsignado > 0) || (ambitoRecursoAsignado > 0)) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

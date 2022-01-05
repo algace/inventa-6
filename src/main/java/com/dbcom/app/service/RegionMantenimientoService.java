@@ -41,12 +41,5 @@ public interface RegionMantenimientoService {
 	 * @param RegionMantenimientoDto Region de mantenimiento a persistir
 	 * @return Region de mantenimiento persistida
 	 */
-	RegionMantenimientoDto save(final RegionMantenimientoDto regionMantenimientoDto);
-	
-	/**
-	 * Actualizamos la región de mantenimiento pasada como parámetro
-	 * @param regionMantenimientoDto Región de mantenimiento a actualizar
-	 * @return Región de mantenimiento actualizada
-	 */
-	RegionMantenimientoDto update(final RegionMantenimientoDto regionMantenimientoDto);
+	RegionMantenimientoDto saveUpdate(final RegionMantenimientoDto regionMantenimientoDto);
 }

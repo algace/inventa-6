@@ -28,14 +28,19 @@ public final class MessagesConstants {
 	
 	// Mensajes para los popups
 	public static String POPUP_ELIMINAR_APLICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_AIRBLOCK_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_AIRBLOCK_PREGUNTA;
 	public static String POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA;
+	public static String POPUP_ELIMINAR_CHASISPASARELA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
+	public static String POPUP_ELIMINAR_FUNCIONPASARELA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_PROPIETARIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA;
+	public static String POPUP_ELIMINAR_REGION_MANTENIMIENTO_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_REGION_MANTENIMIENTO_PREGUNTA;
+	public static String POPUP_ELIMINAR_REGION_OPERATIVA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_REGION_OPERATIVA_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_MANTENIMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA;
@@ -45,6 +50,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_CHASIS_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_CHASIS_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CONFICURACIONRADIOENLACE_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CONFICURACIONTIRADA_PREGUNTA;
@@ -55,6 +61,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_ENLACETT_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_EQUIPOCONFIGURACIONRADIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_ESTRUCTURA_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_INSTALACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_INTERFAZOPERACION_PREGUNTA;
@@ -66,12 +73,14 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_RADIOENLACE_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_RECURSOOPERATIVO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_RECURSORADIO_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_SECTORATC_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SUBSISTEMA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_SISTEMALOCAL_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_TIRADA_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_TOPOLOGIA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_TOPOLOGIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_UBICACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_USOANTENA_PREGUNTA;
@@ -87,6 +96,16 @@ public final class MessagesConstants {
     @Value("${html.label.eliminar.ambitoRecurso.pregunta}")
 	public void setMessagePopupEliminarAmbitoRecursoPregunta(final String texto) {
     	POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA = texto;
+	}
+    
+    @Value("${html.label.eliminar.chasisPasarela.no.permitido.mensaje}")
+	public void setMessagePopupEliminarChasisPasarelaNoPermitidoMensaje(final String texto) {
+    	POPUP_ELIMINAR_CHASISPASARELA_NO_PERMITIDO_MENSAJE = texto;
+	}
+    
+    @Value("${html.label.eliminar.airblock.no.permitido.mensaje}")
+	public void setMessagePopupEliminarAirblockNoPermitidoMensaje(final String texto) {
+    	POPUP_ELIMINAR_AIRBLOCK_NO_PERMITIDO_MENSAJE = texto;
 	}
     
     @Value("${html.label.eliminar.airblock.pregunta}")
@@ -109,6 +128,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA = texto;
 	}
 	
+	@Value("${html.label.eliminar.funcionPasarela.no.permitido.mensaje}")
+	public void setMessagePopupEliminarFuncionPasarelaNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_FUNCIONPASARELA_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.funcionPasarela.pregunta}")
 	public void setMessagePopupEliminarFuncionPasarelaPregunta(final String texto) {
 		POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA = texto;
@@ -124,9 +148,19 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA = texto;
 	}
 	
+	@Value("${html.label.eliminar.regionMantenimiento.no.permitido.mensaje}")
+	public void setMessagePopupEliminarRegionMantenimientoNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_REGION_MANTENIMIENTO_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.sectorATC.pregunta}")
 	public void setMessagePopupEliminarSectorATCPregunta(final String texto) {
 		POPUP_ELIMINAR_SECTORATC_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.regionOperativa.no.permitido.mensaje}")
+	public void setMessagePopupEliminarRegionOperativaNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_REGION_OPERATIVA_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.servicioRadio.pregunta}")
@@ -179,6 +213,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA = texto;
 	}
 	
+	@Value("${html.label.eliminar.tipoChasis.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoChasisNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_CHASIS_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoChasis.pregunta}")
 	public void setMessagePopupEliminarTipoChasisregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_CHASIS_PREGUNTA = texto;
@@ -224,6 +263,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_ESTRUCTURA_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoFuenteInformacion.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoFuenteInformacionNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoFuenteInformacion.pregunta}")
 	public void setMessagePopupEliminarTipoFuenteInformacionPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_PREGUNTA = texto;
@@ -279,13 +323,18 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_RECURSORADIO_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoSectorATC.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoSectorATCNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_SECTORATC_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoSectorATC.pregunta}")
 	public void setMessagePopupEliminarTipoSectorATCPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_SECTORATC_PREGUNTA = texto;
 	}
 
 	@Value("${html.label.eliminar.tipoSistema.no.permitido.mensaje}")
-	public void setMessagePopupEliminarTipoSistemaNoPermitidoAviso(final String texto) {
+	public void setMessagePopupEliminarTipoSistemaNoPermitidoMensaje(final String texto) {
 		POPUP_ELIMINAR_TIPO_SISTEMA_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
@@ -304,6 +353,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_SISTEMALOCAL_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoTopologia.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoTopologiaNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_TOPOLOGIA_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoTirada.pregunta}")
 	public void setMessagePopupEliminarTipoTiradaPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_TIRADA_PREGUNTA = texto;
@@ -330,7 +384,7 @@ public final class MessagesConstants {
 	}
 	
 	@Value("${html.label.eliminar.version.no.permitido.mensaje}")
-	public void setMessagePopupEliminarVersionNoPermitidoAviso(final String texto) {
+	public void setMessagePopupEliminarVersionNoPermitidoMensaje(final String texto) {
 		POPUP_ELIMINAR_VERSION_NO_PERMITIDO_MENSAJE = texto;
 	}
 	

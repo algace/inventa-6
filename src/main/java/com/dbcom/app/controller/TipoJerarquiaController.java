@@ -132,7 +132,7 @@ public final class TipoJerarquiaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoJerarquiaService.save(tipoJerarquiaDto);
+			this.tipoJerarquiaService.saveUpdate(tipoJerarquiaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoJerarquiaDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoJerarquiaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoJerarquiaService.update(tipoJerarquiaDto);
+			this.tipoJerarquiaService.saveUpdate(tipoJerarquiaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoJerarquiaDto.getId());			
 		}

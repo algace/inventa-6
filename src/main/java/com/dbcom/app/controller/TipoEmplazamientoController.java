@@ -132,7 +132,7 @@ public final class TipoEmplazamientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoEmplazamientoService.save(tipoEmplazamientoDto);
+			this.tipoEmplazamientoService.saveUpdate(tipoEmplazamientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoEmplazamientoDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoEmplazamientoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoEmplazamientoService.update(tipoEmplazamientoDto);
+			this.tipoEmplazamientoService.saveUpdate(tipoEmplazamientoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoEmplazamientoDto.getId());			
 		}

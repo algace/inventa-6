@@ -122,40 +122,12 @@ public class RedTTServiceImpl implements RedTTService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RedTTDto save(RedTTDto redTTDto) {
+	public RedTTDto saveUpdate(RedTTDto redTTDto) {
 
 		RedTT redTT = this.modelMapperUtils.map(redTTDto, RedTT.class);
 		redTT.setTipoTopologia(this.modelMapperUtils.map(redTTDto.getTipoTopologia(), TipoTopologia.class));
-		redTT = this.redTTRepository.save(redTT);
 		
-		log.info(LoggerConstants.LOG_CREATE, redTT.getNombre());		
-		
-		return this.modelMapperUtils.map(redTT, RedTTDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public RedTTDto update(RedTTDto redTTDto) {
-
-		final RedTT redTT = this.modelMapperUtils.map(redTTDto, RedTT.class);
-		
-		RedTT redTTBBDD = this.redTTRepository.findById(redTT.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		redTTBBDD.setNombre(redTTDto.getNombre());
-		redTTBBDD.setTipoTopologia(this.modelMapperUtils.map(redTTDto.getTipoTopologia(),TipoTopologia.class));
-		redTTBBDD.setObservaciones(redTTDto.getObservaciones());
-		
-		//Falta añadir los enlaces T/T asociados cuando se implemente la entidad EnlaceTT
-
-		redTTBBDD = this.redTTRepository.save(redTTBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, redTTBBDD.getId());
-		
-		return this.modelMapperUtils.map(redTTBBDD, RedTTDto.class);
+		return this.modelMapperUtils.map(this.redTTRepository.save(redTT), RedTTDto.class);
 	}
 
 	/**

@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoRecursoRadioDto;
  * 
  * @author jose.vallve
  */
-public interface TipoRecursoRadioService extends GenericService<TipoRecursoRadioDto, Short> {
+public interface TipoRecursoRadioService {
 
 	/**
 	 * Creamos un tipo de recurso radio sin persistencia
@@ -41,13 +41,6 @@ public interface TipoRecursoRadioService extends GenericService<TipoRecursoRadio
 	 * @param tipoRecursoRadioDto Tipo de recurso radio a persistir
 	 * @return Tipo de recurso radio persistido
 	 */
-	TipoRecursoRadioDto save(final TipoRecursoRadioDto tipoRecursoRadioDto);
-		
-	/**
-	 * Actualizamos el tipo de recurso radio pasado como parámetro
-	 * @param tipoRecursoRadioDto Tipo de recurso radio a actualizar
-	 * @return Tipo de recurso radio actualizado
-	 */
-	TipoRecursoRadioDto update(final TipoRecursoRadioDto tipoRecursoRadioDto);
+	TipoRecursoRadioDto saveUpdate(final TipoRecursoRadioDto tipoRecursoRadioDto);
 	
 }

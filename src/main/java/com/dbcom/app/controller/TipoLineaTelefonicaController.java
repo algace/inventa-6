@@ -132,7 +132,7 @@ public final class TipoLineaTelefonicaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoLineaTelefonicaService.save(tipoLineaTelefonicaDto);
+			this.tipoLineaTelefonicaService.saveUpdate(tipoLineaTelefonicaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoLineaTelefonicaDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoLineaTelefonicaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoLineaTelefonicaService.update(tipoLineaTelefonicaDto);
+			this.tipoLineaTelefonicaService.saveUpdate(tipoLineaTelefonicaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoLineaTelefonicaDto.getId());			
 		}

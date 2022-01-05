@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.RecursoPasarelaDto;
 
-public interface RecursoPasarelaService extends GenericService<RecursoPasarelaDto, Short>{
+public interface RecursoPasarelaService {
 
 	/**
 	 * Creamos un recurso sin persistencia
@@ -36,13 +36,6 @@ public interface RecursoPasarelaService extends GenericService<RecursoPasarelaDt
 	 * @param recursoPasarelaDto Recurso a persistir
 	 * @return Tipo de chasis persistido
 	 */
-	RecursoPasarelaDto save(final RecursoPasarelaDto recursoPasarelaDto);
-		
-	/**
-	 * Actualizamos el recurso pasado como parámetro
-	 * @param recursoPasarelaDto Recurso a actualizar
-	 * @return Recurso actualizado
-	 */
-	RecursoPasarelaDto update(final RecursoPasarelaDto recursoPasarelaDto);
+	RecursoPasarelaDto saveUpdate(final RecursoPasarelaDto recursoPasarelaDto);
 
 }

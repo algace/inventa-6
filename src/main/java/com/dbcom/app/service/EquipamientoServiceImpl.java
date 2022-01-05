@@ -57,6 +57,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public EquipamientoDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return EquipamientoDto.builder()
@@ -69,6 +70,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Long id) {			
 		
 		final Equipamiento equipamientoBBDD = this.equipamientoRepository.findById(id)
@@ -82,6 +84,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<EquipamientoLiteDto> readAll() {
 		
 		final List<Equipamiento> equipamientos = this.equipamientoRepository.findAll();
@@ -97,6 +100,23 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public List<EquipamientoLiteDto> readAllLite() {
+		
+		final List<Equipamiento> equipamientos = this.equipamientoRepository.findAll();
+		
+		final List<EquipamientoLiteDto> equipamientosLiteDto = new ArrayList<>(equipamientos.size());		
+		equipamientos.forEach(equipamiento -> equipamientosLiteDto.add(this.modelMapperUtils.map(equipamiento, EquipamientoLiteDto.class)));
+		
+		log.info(LoggerConstants.LOG_READALL);
+		
+		return equipamientosLiteDto;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public EquipamientoDto read(final Long id) {		
 		
 		final Equipamiento equipamiento = this.equipamientoRepository.findById(id)
@@ -133,6 +153,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public EquipamientoDto saveUpdate(final EquipamientoDto equipamientoDto) {	
 		
 		equipamientoDto.setDocumentos(filterListDocumentos(equipamientoDto.getDocumentos()));

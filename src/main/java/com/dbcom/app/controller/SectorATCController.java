@@ -162,6 +162,7 @@ public class SectorATCController {
 			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
 			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
 			
+			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
 			List<AirblockDto> allAirblocks = airblockService.readAll();
 			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
 			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
@@ -172,7 +173,7 @@ public class SectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.sectorATCService.save(sectorATCDto);
+			this.sectorATCService.saveUpdate(sectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, sectorATCDto.getId());
 		}
@@ -270,6 +271,7 @@ public class SectorATCController {
 			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
 			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
 			
+			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
 			List<AirblockDto> allAirblocks = airblockService.readAll();
 			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
 			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
@@ -280,7 +282,7 @@ public class SectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.sectorATCService.update(sectorATCDto);
+			this.sectorATCService.saveUpdate(sectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, sectorATCDto.getId());			
 		}

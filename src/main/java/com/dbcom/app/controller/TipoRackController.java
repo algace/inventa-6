@@ -132,7 +132,7 @@ public final class TipoRackController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoRackService.save(tipoRackDto);
+			this.tipoRackService.saveUpdate(tipoRackDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoRackDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoRackController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoRackService.update(tipoRackDto);
+			this.tipoRackService.saveUpdate(tipoRackDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoRackDto.getId());			
 		}

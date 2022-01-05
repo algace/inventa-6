@@ -10,7 +10,7 @@ import com.dbcom.app.model.dto.FrecuenciaDto;
  * 
  * @author eduardo.tubilleja
  */
-public interface FrecuenciaService extends GenericService<FrecuenciaDto, Long> {
+public interface FrecuenciaService {
 
 	/**
 	 * Creamos una frecuencia sin persistencia
@@ -42,13 +42,6 @@ public interface FrecuenciaService extends GenericService<FrecuenciaDto, Long> {
 	 * @param frecuenciaDto Frecuencia a persistir
 	 * @return Frecuencia persistido
 	 */
-	FrecuenciaDto save(final FrecuenciaDto frecuenciaDto);
-		
-	/**
-	 * Actualizamos la frecuencia pasada como parámetro
-	 * @param frecuenciaDto Frecuencia a actualizar
-	 * @return Frecuencia actualizado
-	 */
-	FrecuenciaDto update(final FrecuenciaDto frecuenciaDto);
+	FrecuenciaDto saveUpdate(final FrecuenciaDto frecuenciaDto);
 	
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.FuncionPasarelaDto;
 
-public interface FuncionPasarelaService extends GenericService<FuncionPasarelaDto, Short>{
+public interface FuncionPasarelaService {
 
 	/**
 	 * Creamos una función sin persistencia
@@ -36,12 +36,5 @@ public interface FuncionPasarelaService extends GenericService<FuncionPasarelaDt
 	 * @param FuncionPasarelaDto Funcion de pasarela a persistir
 	 * @return Tipo de chasis persistido
 	 */
-	FuncionPasarelaDto save(final FuncionPasarelaDto funcionPasarelaDto);
-		
-	/**
-	 * Actualizamos la función pasado como parámetro
-	 * @param FuncionPasarelaDto Función a actualizar
-	 * @return Función actualizada
-	 */
-	FuncionPasarelaDto update(final FuncionPasarelaDto funcionPasarelaDto);
+	FuncionPasarelaDto saveUpdate(final FuncionPasarelaDto funcionPasarelaDto);
 }

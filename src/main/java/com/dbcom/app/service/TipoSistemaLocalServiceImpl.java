@@ -38,6 +38,7 @@ public final class TipoSistemaLocalServiceImpl implements TipoSistemaLocalServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoSistemaLocalDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoSistemaLocalDto();
@@ -46,6 +47,7 @@ public final class TipoSistemaLocalServiceImpl implements TipoSistemaLocalServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoSistemaLocal tipoSistemaLocalBBDD = this.tipoSistemaLocalRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoSistemaLocalServiceImpl implements TipoSistemaLocalServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoSistemaLocalDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoSistemaLocalServiceImpl implements TipoSistemaLocalServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoSistemaLocalDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoSistemaLocalServiceImpl implements TipoSistemaLocalServic
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoSistemaLocalDto save(final TipoSistemaLocalDto tipoSistemaLocalDto) {		
+	@Override
+	public TipoSistemaLocalDto saveUpdate(final TipoSistemaLocalDto tipoSistemaLocalDto) {		
 		
-		TipoSistemaLocal tipoSistemaLocal = this.modelMapperUtils.map(tipoSistemaLocalDto, TipoSistemaLocal.class);
-	    
-		tipoSistemaLocal = this.tipoSistemaLocalRepository.save(tipoSistemaLocal);	
+		TipoSistemaLocal tipoSistemaLocal = this.modelMapperUtils.map(tipoSistemaLocalDto, TipoSistemaLocal.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoSistemaLocal.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoSistemaLocal, TipoSistemaLocalDto.class);
+		return this.modelMapperUtils.map(this.tipoSistemaLocalRepository.save(tipoSistemaLocal), TipoSistemaLocalDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoSistemaLocalDto update(final TipoSistemaLocalDto tipoSistemaLocalDto) {		
-		
-		final TipoSistemaLocal tipoSistemaLocal = this.modelMapperUtils.map(tipoSistemaLocalDto, TipoSistemaLocal.class);
-		
-		TipoSistemaLocal tipoSistemaLocalBBDD = this.tipoSistemaLocalRepository.findById(tipoSistemaLocal.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoSistemaLocalBBDD.setNombre(tipoSistemaLocalDto.getNombre());
-		tipoSistemaLocalBBDD = this.tipoSistemaLocalRepository.save(tipoSistemaLocalBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoSistemaLocalBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoSistemaLocalBBDD, TipoSistemaLocalDto.class);
-	}
-	
 }

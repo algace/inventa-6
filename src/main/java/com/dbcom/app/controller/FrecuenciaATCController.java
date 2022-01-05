@@ -130,7 +130,7 @@ public final class FrecuenciaATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.frecuenciaATCService.save(frecuenciaATCDto);
+			this.frecuenciaATCService.saveUpdate(frecuenciaATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_FRECUENCIASATC);
 			log.info(LoggerConstants.LOG_SAVE, frecuenciaATCDto.getId());
 		}
@@ -222,7 +222,7 @@ public final class FrecuenciaATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.frecuenciaATCService.update(frecuenciaATCDto);
+			this.frecuenciaATCService.saveUpdate(frecuenciaATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_FRECUENCIASATC);
 			log.info(LoggerConstants.LOG_UPDATE, frecuenciaATCDto.getId());			
 		}

@@ -10,7 +10,7 @@ import com.dbcom.app.model.dto.UsuarioDto;
  * 
  * @author jose.vallve
  */
-public interface UsuarioService extends GenericService<UsuarioDto, Long> {
+public interface UsuarioService {
 
 	/**
 	 * Creamos un usuario sin persistencia
@@ -42,13 +42,6 @@ public interface UsuarioService extends GenericService<UsuarioDto, Long> {
 	 * @param usuarioDto Usuario a persistir
 	 * @return Usuario persistido
 	 */
-	UsuarioDto save(final UsuarioDto usuarioDto);
-		
-	/**
-	 * Actualizamos el usuario pasado como parámetro
-	 * @param usuarioDto Usuario a actualizar
-	 * @return Usuario actualizado
-	 */
-	UsuarioDto update(final UsuarioDto usuarioDto);
+	UsuarioDto saveUpdate(final UsuarioDto usuarioDto);
 	
 }

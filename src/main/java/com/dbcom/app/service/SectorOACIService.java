@@ -41,13 +41,6 @@ public interface SectorOACIService {
 	 * @param sectorOACIDto Sector OACI a persistir
 	 * @return Sector OACI persistido
 	 */
-	SectorOACIDto save(final SectorOACIDto sectorOACIDto);
-	
-	/**
-	 * Actualizamos el sector OACI pasado como parámetro
-	 * @param sectorOACIDto Sector OACI a actualizar
-	 * @return Sector OACI actualizado
-	 */
-	SectorOACIDto update(final SectorOACIDto sectorOACIDto);
+	SectorOACIDto saveUpdate(final SectorOACIDto sectorOACIDto);
 
 }

@@ -36,6 +36,7 @@ public final class TipoChasisServiceImpl implements TipoChasisService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoChasisDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoChasisDto();
@@ -44,6 +45,7 @@ public final class TipoChasisServiceImpl implements TipoChasisService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoChasis tipoChasisBBDD = this.tipoChasisRepository.findById(id)
@@ -57,6 +59,7 @@ public final class TipoChasisServiceImpl implements TipoChasisService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoChasisDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -72,6 +75,7 @@ public final class TipoChasisServiceImpl implements TipoChasisService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoChasisDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -86,34 +90,11 @@ public final class TipoChasisServiceImpl implements TipoChasisService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoChasisDto save(final TipoChasisDto tipoChasisDto) {		
+	@Override
+	public TipoChasisDto saveUpdate(final TipoChasisDto tipoChasisDto) {		
 		
 		TipoChasis tipoChasis = this.modelMapperUtils.map(tipoChasisDto, TipoChasis.class);
-	    
-		tipoChasis = this.tipoChasisRepository.save(tipoChasis);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoChasis.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoChasis, TipoChasisDto.class);
+		return this.modelMapperUtils.map(this.tipoChasisRepository.save(tipoChasis), TipoChasisDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoChasisDto update(final TipoChasisDto tipoChasisDto) {		
-		
-		final TipoChasis tipoChasis = this.modelMapperUtils.map(tipoChasisDto, TipoChasis.class);
-		
-		TipoChasis tipoChasisBBDD = this.tipoChasisRepository.findById(tipoChasis.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoChasisBBDD.setNombre(tipoChasisDto.getNombre());
-		tipoChasisBBDD = this.tipoChasisRepository.save(tipoChasisBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoChasisBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoChasisBBDD, TipoChasisDto.class);
-	}
-
 }

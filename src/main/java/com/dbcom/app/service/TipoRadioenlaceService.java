@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoRadioenlaceDto;
  * 
  * @author jose.vallve
  */
-public interface TipoRadioenlaceService extends GenericService<TipoRadioenlaceDto, Short> {
+public interface TipoRadioenlaceService {
 
 	/**
 	 * Creamos un tipo de radioenlace sin persistencia
@@ -41,13 +41,6 @@ public interface TipoRadioenlaceService extends GenericService<TipoRadioenlaceDt
 	 * @param tipoRadioenlaceDto Tipo de radioenlace a persistir
 	 * @return Tipo de radioenlace persistido
 	 */
-	TipoRadioenlaceDto save(final TipoRadioenlaceDto tipoRadioenlaceDto);
-		
-	/**
-	 * Actualizamos el tipo de radioenlace pasado como parámetro
-	 * @param tipoRadioenlaceDto Tipo de radioenlace a actualizar
-	 * @return Tipo de radioenlace actualizado
-	 */
-	TipoRadioenlaceDto update(final TipoRadioenlaceDto tipoRadioenlaceDto);
+	TipoRadioenlaceDto saveUpdate(final TipoRadioenlaceDto tipoRadioenlaceDto);
 	
 }

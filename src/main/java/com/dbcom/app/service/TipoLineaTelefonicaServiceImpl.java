@@ -38,6 +38,7 @@ public final class TipoLineaTelefonicaServiceImpl implements TipoLineaTelefonica
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoLineaTelefonicaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoLineaTelefonicaDto();
@@ -46,6 +47,7 @@ public final class TipoLineaTelefonicaServiceImpl implements TipoLineaTelefonica
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoLineaTelefonica tipoLineaTelefonicaBBDD = this.tipoLineaTelefonicaRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoLineaTelefonicaServiceImpl implements TipoLineaTelefonica
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoLineaTelefonicaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoLineaTelefonicaServiceImpl implements TipoLineaTelefonica
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoLineaTelefonicaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoLineaTelefonicaServiceImpl implements TipoLineaTelefonica
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoLineaTelefonicaDto save(final TipoLineaTelefonicaDto tipoLineaTelefonicaDto) {		
+	@Override
+	public TipoLineaTelefonicaDto saveUpdate(final TipoLineaTelefonicaDto tipoLineaTelefonicaDto) {		
 		
 		TipoLineaTelefonica tipoLineaTelefonica = this.modelMapperUtils.map(tipoLineaTelefonicaDto, TipoLineaTelefonica.class);
-	    
-		tipoLineaTelefonica = this.tipoLineaTelefonicaRepository.save(tipoLineaTelefonica);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoLineaTelefonica.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoLineaTelefonica, TipoLineaTelefonicaDto.class);
+		return this.modelMapperUtils.map(this.tipoLineaTelefonicaRepository.save(tipoLineaTelefonica), TipoLineaTelefonicaDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoLineaTelefonicaDto update(final TipoLineaTelefonicaDto tipoLineaTelefonicaDto) {		
-		
-		final TipoLineaTelefonica tipoLineaTelefonica = this.modelMapperUtils.map(tipoLineaTelefonicaDto, TipoLineaTelefonica.class);
-		
-		TipoLineaTelefonica tipoLineaTelefonicaBBDD = this.tipoLineaTelefonicaRepository.findById(tipoLineaTelefonica.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoLineaTelefonicaBBDD.setNombre(tipoLineaTelefonicaDto.getNombre());
-		tipoLineaTelefonicaBBDD = this.tipoLineaTelefonicaRepository.save(tipoLineaTelefonicaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoLineaTelefonicaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoLineaTelefonicaBBDD, TipoLineaTelefonicaDto.class);
-	}
-	
 }

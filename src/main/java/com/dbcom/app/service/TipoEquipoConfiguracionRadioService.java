@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoEquipoConfiguracionRadioDto;
  * 
  * @author jose.vallve
  */
-public interface TipoEquipoConfiguracionRadioService extends GenericService<TipoEquipoConfiguracionRadioDto, Short> {
+public interface TipoEquipoConfiguracionRadioService {
 
 	/**
 	 * Creamos un tipo de equipo/configuración de radio sin persistencia
@@ -41,13 +41,5 @@ public interface TipoEquipoConfiguracionRadioService extends GenericService<Tipo
 	 * @param tipoEquipoConfiguracionRadioDto Tipo de equipo/configuración de radio a persistir
 	 * @return Tipo de equipo/configuración de radio persistido
 	 */
-	TipoEquipoConfiguracionRadioDto save(final TipoEquipoConfiguracionRadioDto tipoEquipoConfiguracionRadioDto);
-		
-	/**
-	 * Actualizamos el tipo de equipo/configuración de radio pasado como parámetro
-	 * @param tipoEquipoConfiguracionRadioDto Tipo de equipo/configuración de radio a actualizar
-	 * @return Tipo de equipo/configuración de radio actualizado
-	 */
-	TipoEquipoConfiguracionRadioDto update(final TipoEquipoConfiguracionRadioDto tipoEquipoConfiguracionRadioDto);
-	
+	TipoEquipoConfiguracionRadioDto saveUpdate(final TipoEquipoConfiguracionRadioDto tipoEquipoConfiguracionRadioDto);
 }

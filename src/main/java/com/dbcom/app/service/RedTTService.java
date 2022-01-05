@@ -42,14 +42,7 @@ public interface RedTTService {
 	 * @param redTTDto Red T/T a persistir
 	 * @return Red T/T persistida
 	 */
-	RedTTDto save(final RedTTDto redTTDto);
-		
-	/**
-	 * Actualizamos la red T/T pasada como parámetro
-	 * @param redTTDto Red T/T a actualizar
-	 * @return Red T/T actualizada
-	 */
-	RedTTDto update(final RedTTDto redTTDto);
+	RedTTDto saveUpdate(final RedTTDto redTTDto);
 	
 	/**
 	 * Obtenemos los tipos de topologías posibles para una red T/T poniendo su tipo de topología
