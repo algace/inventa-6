@@ -2,14 +2,11 @@ package com.dbcom.app.model.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Size;
 
@@ -51,7 +48,4 @@ public class Fotografia implements Serializable {
 	@Lob
 	private byte[] contenido;
 	
-	@ManyToOne(fetch = FetchType.LAZY,
-			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-	private Equipamiento equipamiento;
 }

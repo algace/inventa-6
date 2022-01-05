@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
+import com.dbcom.app.model.dto.TipoSubsistemaLiteDto;
 
 /**
  * Lógica para tipos de subsistemas
@@ -27,7 +28,7 @@ public interface TipoSubsistemaService {
 	 * Obtenemos un listado de los tipos de subsistemas
 	 * @return Listado
 	 */
-	List<TipoSubsistemaDto> readAll();
+	List<TipoSubsistemaLiteDto> readAll();
 	
 	/**
 	 * Obtenemos el tipo de subsistema con el id facilitado

@@ -2,8 +2,6 @@ package com.dbcom.app.model.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -46,7 +44,7 @@ public class Documento implements Serializable {
 	@SequenceGenerator(sequenceName = "documento_seq", initialValue = 1, allocationSize = 1 , name = "DOCUMENTO_SEQ")
 	private Long id;
 	
-	@Size(min = 1, max = 50, message = "{validation.min1max50}")
+	@Size(min = 1, max = 250, message = "{validation.min1max250}")
 	private String nombre;
 	 
 	@Size(max = 250, message = "{validation.max250}")

@@ -77,23 +77,59 @@
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 									        </div>										        	
 		       							 </div>
-		       							 <div class="row align-items-center" id="">
+		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.sistema}"></div> 
 									        <div class="col-sm-6">
-									            <input id="sistema" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
-									            	th:field="*{sistema}" th:disabled="${esCampoSoloLectura} ? 'true'">
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('sistema')}" th:errors="*{sistema}"></div>
-									        </div>	
+									            <input type="text" 
+									            	th:field="*{tipoSistema.nombre}" th:class="'form-control'" 
+									            	th:disabled="'true'">
+									            <input type="hidden" th:field="*{tipoSistema.id}" >
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistema.id')}" th:errors="*{tipoSistema.id}"></div>
+									        </div>
+									        <div class="col-sm-4" th:if="!${esCampoSoloLectura}">
+										        <div class="botonera-crud" align="left">
+													<a id="enlaceAgnadirSistema" class="button-crud" data-toggle="modal" data-target="#popupSeleccionarSistema" href="#">
+														<div>
+															<i class="far fa-plus-square icono-crud"></i>
+															<span class="text-crud" th:text="#{html.boton.agnadir}"/>
+														</div>
+													</a>
+														
+													<a class="button-crud" id="enlaceBorrarSistema">
+														<div>
+															<i class="far fa-times-circle icono-crud"></i>
+															<span class="text-crud" th:text="#{html.boton.eliminar}"/>
+														</div>
+													</a>
+												</div >	
+									        </div >
 		       							 </div>
-		       							 <div class="row align-items-center">
+		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.subsistema}"></div> 
 									        <div class="col-sm-6">
-									            <input id="subsistema" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'" 
-									            	th:field="*{subsistema}" th:disabled="${esCampoSoloLectura} ? 'true'">
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('subsistema')}" th:errors="*{subsistema}"></div>
-									        </div>	
+									            <input type="text" 
+									            	th:field="*{tipoSubsistema.nombre}" th:class="'form-control'" 
+									            	th:disabled="'true'">
+									            <input type="hidden" th:field="*{tipoSubsistema.id}" >
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSubsistema.id')}" th:errors="*{tipoSubsistema.id}"></div>
+									        </div>
+									        <div class="col-sm-4" th:if="!${esCampoSoloLectura}">
+										        <div class="botonera-crud" align="left">
+													<a id="enlaceAgnadirSistema" class="button-crud" data-toggle="modal" data-target="#popupSeleccionarSubsistema" href="#">
+														<div>
+															<i class="far fa-plus-square icono-crud"></i>
+															<span class="text-crud" th:text="#{html.boton.agnadir}"/>
+														</div>
+													</a>
+														
+													<a class="button-crud" id="enlaceBorrarSistema">
+														<div>
+															<i class="far fa-times-circle icono-crud"></i>
+															<span class="text-crud" th:text="#{html.boton.eliminar}"/>
+														</div>
+													</a>
+												</div >	
+									        </div >
 		       							 </div>
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.marca}"></div> 
@@ -200,18 +236,6 @@
 								</div>
 								<div id="collapseFotografias" class="collapse" aria-labelledby="headingFotografias" data-parent="#accordionFormulario">
 									<div class="card-body">
-										<!--<div align="left" th:hidden="${esCampoSoloLectura} ? 'true'">	
-											
-											<a id="enlaceAgnadirDocumento" role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupSubirDocumento" href="#"
-												th:text="#{html.boton.agnadirDocumento}"></a>	
-								
-											<button id="botonBorrarDocumento" type="button" class="btn btn-primary" disabled
-												th:text="#{html.boton.borrarDocumento}"></button>	
-											
-										</div>
-										
-										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
-										
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirFotografia', 
 											idButtonBorrar='botonBorrarFotografia', idInputSearch='searchFotografia', visible='true')"></div>
 										<table id="tablaFotografias" class="table table-striped table-bordered no-margin-top" style="width: 100%">
@@ -221,15 +245,6 @@
 													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr th:each="fotografia, item : *{fotografias}">
-													<td>
-														<a th:href="|@{${download}}/| + ${fotografia.id}" th:text="${fotografia.nombre}"></a>
-													</td>
-													<td th:text="${fotografia.descripcion}"></td>
-													<input type="hidden" th:field="*{fotografias[__${item.index}__].id}"> 
-												</tr>
-											</tbody>
 										</table>
 									</div>
 								</div>
@@ -249,18 +264,6 @@
 								</div>
 								<div id="collapseDocumentos" class="collapse" aria-labelledby="headingDocumentos" data-parent="#accordionFormulario">
 									<div class="card-body">
-										<!--<div align="left" th:hidden="${esCampoSoloLectura} ? 'true'">	
-											
-											<a id="enlaceAgnadirDocumento" role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupSubirDocumento" href="#"
-												th:text="#{html.boton.agnadirDocumento}"></a>	
-								
-											<button id="botonBorrarDocumento" type="button" class="btn btn-primary" disabled
-												th:text="#{html.boton.borrarDocumento}"></button>	
-											
-										</div>
-										
-										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
-										
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirDocumento', 
 											idButtonBorrar='botonBorrarDocumento', idInputSearch='searchDocumento', visible='true')"></div>
 										<table id="tablaDocumentos" class="table table-striped table-bordered no-margin-top" style="width: 100%">
@@ -307,6 +310,82 @@
 						<!--/* INICIO - Popup de eliminación */-->
 						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
 						<!--/* FIN - Popup de eliminación */-->
+						
+						<div id="popupSeleccionarSistema" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSeleccionarVersionTitulo" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+								        <h5 id="modalSeleccionarSistemaTitulo" class="modal-title" th:text="#{html.label.sistemas}"></h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								        	<span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
+								        </button>
+								    </div>
+								    <div class="modal-body">
+								    	<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarSistema', 
+											idButtonBorrar='botonBorrarSistema', idInputSearch='searchSistemas', visible='false')"></div>
+								    	<table id="tablaTiposSistemas" class="table table-striped table-bordered" style="width:100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="id"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="tipoSistemaDisponible : *{tiposSistemasDisponibles}">
+													<td th:text="${tipoSistemaDisponible.id}"></td>
+													<td th:text="${tipoSistemaDisponible.nombre}"></td>
+													<td th:text="${tipoSistemaDisponible.descripcion}"></td>
+												</tr>
+											</tbody>
+										</table>
+								    </div>
+								    <div class="modal-footer">
+								        <button id="botonAceptarSeleccionarSistema" type="button" class="btn btn-primary" data-dismiss="modal" disabled 
+								        	th:text="#{html.boton.aceptar}"></button>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{html.boton.cancelar}"></button>
+								    </div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="popupSeleccionarSubsistema" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSeleccionarVersionTitulo" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+								        <h5 id="modalSeleccionarSubsistemaTitulo" class="modal-title" th:text="#{html.label.subsistema}"></h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								        	<span aria-hidden="true"><i class="far fa-times-circle" aria-hidden="true"></i></span>
+								        </button>
+								    </div>
+								    <div class="modal-body">
+								    	<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarSubsistema', 
+											idButtonBorrar='botonBorrarSubsistema', idInputSearch='searchSubsistemas', visible='false')"></div>
+								    	<table id="tablaTiposSubsistemas" class="table table-striped table-bordered" style="width:100%">
+											<thead>
+												<tr>
+													<th class="th-sm" th:text="id"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
+													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="tipoSubsistemaDisponible : *{tiposSubsistemasDisponibles}">
+													<td th:text="${tipoSubsistemaDisponible.id}"></td>
+													<td th:text="${tipoSubsistemaDisponible.nombre}"></td>
+													<td th:text="${tipoSubsistemaDisponible.descripcion}"></td>
+												</tr>
+											</tbody>
+										</table>
+								    </div>
+								    <div class="modal-footer">
+								        <button id="botonAceptarSeleccionarSubsistema" type="button" class="btn btn-primary" data-dismiss="modal" disabled 
+								        	th:text="#{html.boton.aceptar}"></button>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{html.boton.cancelar}"></button>
+								    </div>
+								</div>
+							</div>
+						</div>
 			
 					</form>
 				</div>
@@ -315,7 +394,7 @@
 			
 			<!--/* INICIO - Popup de subir Fotografias */-->
 			<div id="popupSubirFotografia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSubirTitulo" aria-hidden="true">
-				<form id="formSubirFotografia" th:action="@{${uploadFotografia}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
+				<form id="formSubirFotografia" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
 					<input type="hidden" th:field="*{id}">
 					
 					<div class="modal-dialog modal-dialog-centered" role="document">
@@ -336,7 +415,7 @@
 											<input class="custom-file-input" type="file" id="fotografia"
 												name="fotografia" accept=".png,.jpg"
 												lang="es"
-												th:onchange="|validarTamagnoFichero(${ficheroTamagnoMax});|">
+												th:onchange="|validarTamagnoFotografia(${ficheroTamagnoMax});|">
 											<label class="custom-file-label" for="fotografia"></label>
 										</div>
 										<div id="errorFotografiaNoSeleccionado" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
@@ -353,8 +432,7 @@
 								<div class="row align-items-center text-sm-left text-sm-1">
 									<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 							        <div class="col-sm-10" >
-							       		<textarea id="descripcionFotografia" class="form-control" rows="3" style="resize: none;"
-									            	th:field="*{descripcionFotografia}"></textarea>
+							       		<textarea id="descripcionFotografia" class="form-control" rows="3" style="resize: none;"></textarea>
 									    <div id="errorDescripcionFotografia" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
 											th:text="#{validation.min1max250}"></div>
 							        </div>										        	
@@ -375,7 +453,7 @@
 						    	<!--/* FIN - Barra de progreso */-->
 						    </div>
 						    <div class="modal-footer">
-						        <button id="botonAceptarPopupSubirFotografia" class="btn btn-primary" 
+						        <button id="botonAceptarPopupSubirFotografia"  data-dismiss="modal" class="btn btn-primary" 
 						        	th:onclick="|return validarPopupFotografia();|" th:text="#{html.boton.aceptar}"></button>
 						        <button id="botonCancelarPopupSubirFotografia" type="button" class="btn btn-secondary" data-dismiss="modal" 
 						        	th:text="#{html.boton.cancelar}"></button>
@@ -388,7 +466,7 @@
 			
 			<!--/* INICIO - Popup de subir documentos */-->
 			<div id="popupSubirDocumento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSubirTitulo" aria-hidden="true">
-				<form id="formSubirDocumento" th:action="@{${uploadDocumento}}" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
+				<form id="formSubirDocumento" th:object="${equipamiento}" enctype="multipart/form-data"  method="post">
 					<input type="hidden" th:field="*{id}">
 					
 					<div class="modal-dialog modal-dialog-centered" role="document">
@@ -426,7 +504,7 @@
 								<div class="row align-items-center text-sm-left text-sm-1">
 									<div class="col-sm-2" th:text="#{html.label.tipo}"></div>
 							        <div class="col-sm-10" >
-							       		<select id="tipoDocumento" class="form-control" th:field="*{idTipoDocumento}">
+							       		<select id="tipoDocumento" class="form-control">
 											<option value=""></option>
 											<option th:each="tipoDocumento : *{tiposDocumento}" 
 									 		   	th:value="${tipoDocumento.id}" 
@@ -442,8 +520,7 @@
 								<div class="row align-items-center text-sm-left text-sm-1">
 									<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 							        <div class="col-sm-10" >
-							       		<textarea id="descripcionDocumento" class="form-control" rows="3" style="resize: none;"
-									            	th:field="*{descripcionDocumento}"></textarea>
+							       		<textarea id="descripcionDocumento" class="form-control" rows="3" style="resize: none;"></textarea>
 									    <div id="errorDescripcionDocumento" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
 											th:text="#{validation.min1max250}"></div>
 							        </div>										        	
@@ -493,14 +570,16 @@
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript" th:object="${equipamiento}">
 			/*<![CDATA[*/
+			var fotografias = [[${equipamiento.fotografias}]];
+			var fotografiasJson = JSON.stringify(fotografias);
 			var documentos = [[${equipamiento.documentos}]];
 			var documentosJson = JSON.stringify(documentos);
 			/*]]>*/
 			$('#collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>
 		<!--/* FIN - Apertura del menú */-->
-		
-		<script type="text/javascript" th:src="@{/js/equipamiento.js}"></script>
+		<script type="text/javascript" th:src="@{/js/tipoSubsistemas.js}"></script>
+		<script type="text/javascript" th:src="@{/js/documento.js}"></script>
 		<script type="text/javascript" th:src="@{/js/fotografia.js}"></script>
 		<!--/* FIN - JS */-->
 	

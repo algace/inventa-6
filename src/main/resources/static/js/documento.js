@@ -19,8 +19,6 @@ const ID_TIPO_DOCUMENTO = '#tipoDocumento';
 const ID_TABLA_DOCUMENTOS = '#tablaDocumentos';
 const ID_MODAL_DOCUMENTO = '#popupSubirDocumento';
 
-var rowNode;
-
 // INICIO - Máscara para campos numéricos
 // Permite números positivos y negativos entre 1 y 7 dígitos enteros y 2 dígitos decimales
 $("#ganancia, #perdida, #apertura, #diametro").mask('S#.S#S#S#.S#S#S0,00', {
@@ -36,24 +34,8 @@ $("#ganancia, #perdida, #apertura, #diametro").mask('S#.S#S#S#.S#S#S0,00', {
 });
 // FIN - Máscara para campos numéricos
 
-// Reset de los campos del formulario del popup de subir documento
-function resetFormPopupSubirDocumento() {
-	$('.custom-file-label').html('');
-	$(ID_FICHERO_DOC).value = "";
-	$(ID_FORM_SUBIR_DOCUMENTO)[0].reset();
-}
-
-// Icono aspa del popup de subir documento
-$(ID_BOTON_ASPA_POPUP_SUBIR_DOCUMENTO).on('click', function() {
-	resetFormPopupSubirDocumento();
-});
-
-// Botón Cancelar del popup de subir documento
-$(ID_BOTON_CANCELAR_POPUP_SUBIR_DOCUMENTO).on('click', function() {
-	resetFormPopupSubirDocumento();
-});
-
-var cont = documentos.length;
+var rowNode;
+var contdoc = documentos.length;
 
 // INICIO - Configuración de la tabla documentos
 var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
@@ -66,15 +48,19 @@ var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
         render: function(data, type, full, meta){
 			
 		   if (type == "display"){
-			   if (full.id){
-					cont++;
+			
+			   contdoc++;
+			   
+			   var result = data + '<input type="hidden" id="documentos' + contdoc + '.nombre" name="documentos[' + contdoc + '].nombre" value="' + full.nombre +'">' +
+	           '<input type="hidden" id="documentos' + contdoc + '.contenido" name="documentos[' + contdoc + '].contenido" value="' + full.contenido +'">' +
+	           '<input type="hidden" id="documentos' + contdoc + '.tipoDocumento.id" name="documentos[' + contdoc + '].tipoDocumento.id" value="' + full.tipoDocumento.id +'">' +
+	           '<input type="hidden" id="documentos' + contdoc + '.descripcion" name="documentos[' + contdoc + '].descripcion" value="' + full.descripcion +'">';
+	           
+			   if(full.id){
+			   		result = result + '<input type="hidden" id="documentos' + contdoc + '.id" name="documentos[' + contdoc + '].id" value="' + full.id +'">';
 			   }
-	           return data + '<div id="' + full.divId + '">'+ 
-	           '<input type="hidden" id="documentos' + cont + '.nombre" name="documentos[' + cont + '].nombre" value="' + full.nombre +'">' +
-	           '<input type="hidden" id="documentos' + cont + '.contenido" name="documentos[' + cont + '].contenido" value="' + full.contenido +'">' +
-	           '<input type="hidden" id="documentos' + cont + '.tipoDocumento.id" name="documentos[' + cont + '].tipoDocumento.id" value="' + full.tipoDocumento.id +'">' +
-	           '<input type="hidden" id="documentos' + cont + '.descripcion" name="documentos[' + cont + '].descripcion" value="' + full.descripcion +'">' +
-	           '</div>';
+	           
+	           return result;
            }else{
 			   return data;
 		   }
@@ -83,7 +69,8 @@ var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
 	columns: [
 			  {data: "nombre", name: "nombre", title: "Nombre"}, 
 			  {data: "tipoDocumento.nombre", name: "tipoDocumento", title: "Tipo Documento"}, 
-			  {data: "descripcion", name: "descripcion", title: "Descripción"}],
+			  {data: "descripcion", name: "descripcion", title: "Descripción"}
+	],
 	language: {
 	    'sProcessing':     'Procesando...',
 	    'sLengthMenu':     'Mostrar _MENU_ registros',
@@ -214,21 +201,10 @@ function validarDescripcion() {
 
 function insertDocumentInTable(){
 	
-	/*cont++;
-	var fileToClone = $(ID_FICHERO_DOC);
-	var file = fileToClone.clone();
-	file.attr("class", "")
-	file.attr("name","documentos[" + cont + "].documento");
-	file.attr("id","documentos" + cont + ".documento");
-	file.attr("style","display:none");*/
-
-	var divId = $(ID_FICHERO_DOC)[0].files[0].lastModified;
-	
-
 	$(ID_TABLA_DOCUMENTOS).DataTable()
 	.row
 	.add({
-		divId: divId,
+		id: null,
 		contenido: fileByteArray, 
 		nombre: $(ID_FICHERO_DOC)[0].files[0].name, 
 		descripcion: $('#descripcionDocumento').val(),
@@ -238,7 +214,6 @@ function insertDocumentInTable(){
 		}
 	}).draw();
 	
-	//$("#"+ divId).append(file);
 }
 
 function validarPopupDocumento() {
@@ -272,9 +247,9 @@ function validarPopupDocumento() {
 	return ((contador == 0) ? true : false);
 }
 
-var input = document.querySelector('input')
 var reader = new FileReader();
 var fileByteArray = [];
+
 // Seteamos el nombre del fichero en el input de selección del fichero
 $('input[type="file"]').on('change', function(e){
 	var nombre = e.target.files[0].name;    
@@ -292,45 +267,27 @@ $('input[type="file"]').on('change', function(e){
   }
 });
 
+// Reset de los campos del formulario del popup de subir documento
+function resetFormPopupSubirDocumento() {
+	$('.custom-file-label').html('');
+	$(ID_FICHERO_DOC).value = "";
+	$(ID_FORM_SUBIR_DOCUMENTO)[0].reset();
+}
+
+// Icono aspa del popup de subir documento
+$(ID_BOTON_ASPA_POPUP_SUBIR_DOCUMENTO).on('click', function() {
+	resetFormPopupSubirDocumento();
+});
+
+// Botón Cancelar del popup de subir documento
+$(ID_BOTON_CANCELAR_POPUP_SUBIR_DOCUMENTO).on('click', function() {
+	resetFormPopupSubirDocumento();
+});
+
 $(ID_MODAL_DOCUMENTO).on('show.bs.modal', function () {
 	resetFormPopupSubirDocumento();
 });
-// FIN - Validaciones subir fichero
 
-// INICIO - Subir archivo
-$(ID_FORM_SUBIR_DOCUMENTO).on('submit', function(e) {	 
-    e.preventDefault();
-    $.ajax({
-        xhr: function() {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener('progress', function(evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = ((evt.loaded / evt.total) * 100);
-                    $('.progress-bar').width(percentComplete + '%');
-                    $('.progress-bar').html(percentComplete + '%');
-                }  
-            }, false);
-            return xhr;
-        },
-        type: 'POST',
-        url: this.action,
-        data: new FormData(this),
-        contentType: false,
-        cache: false,
-        processData:false,
-        beforeSend: function() {
-            $('.progress-bar').width('0%');           
-            $(ID_BARRA_PROGRESO_DOC).removeAttr("hidden");           
-        },
-        success: function(response) {      
-        	// Recargamos la página ya que desde el backoffice no la recarga 
-        	// por hacer la subida del fichero con ajax 
-        	location.reload();              
-        },
-        error: function(e) {
-        }
-    });
-});
 
 
 

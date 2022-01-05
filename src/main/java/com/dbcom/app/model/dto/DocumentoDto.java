@@ -31,7 +31,7 @@ public final class DocumentoDto implements Serializable {
 
 	private Long id;
 	
-	@Size(min = 1, max = 50, message = "{validation.min1max50}")
+	@Size(min = 1, max = 250, message = "{validation.min1max250}")
 	private String nombre;
 	 
 	@Size(max = 250, message = "{validation.max250}")

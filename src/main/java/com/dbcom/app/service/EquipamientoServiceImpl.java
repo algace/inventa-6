@@ -2,12 +2,11 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
@@ -16,8 +15,9 @@ import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.EquipamientoRepository;
 import com.dbcom.app.model.dto.DocumentoDto;
 import com.dbcom.app.model.dto.EquipamientoDto;
+import com.dbcom.app.model.dto.EquipamientoLiteDto;
+import com.dbcom.app.model.dto.FotografiaDto;
 import com.dbcom.app.model.entity.AplicacionSW;
-import com.dbcom.app.model.entity.Documento;
 import com.dbcom.app.model.entity.Equipamiento;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -33,19 +33,25 @@ import lombok.extern.slf4j.Slf4j;
 public class EquipamientoServiceImpl implements EquipamientoService {
 	
 	private final AplicacionSWRepository aplicacionSWRepository;
-	private EquipamientoRepository equipamientoRepository;
+	private final EquipamientoRepository equipamientoRepository;
 	private final ModelMapperUtils  modelMapperUtils;
 	private final TipoDocumentoService tipoDocumentoService;
+	private final TipoSistemaService tipoSistemaService;
+	private final TipoSubsistemaService tipoSubsistemaService;
 
 	@Autowired
 	public EquipamientoServiceImpl(ModelMapperUtils modelMapper,
 			AplicacionSWRepository aplicacionSWRepository,
 			EquipamientoRepository equipamientoRepository,
-			TipoDocumentoService tipoDocumentoService) {
+			TipoDocumentoService tipoDocumentoService,
+			TipoSistemaService tipoSistemaService,
+			TipoSubsistemaService tipoSubsistemaService) {
 		this.modelMapperUtils = modelMapper;
 		this.aplicacionSWRepository = aplicacionSWRepository;
 		this.equipamientoRepository = equipamientoRepository;
 		this.tipoDocumentoService = tipoDocumentoService;
+		this.tipoSistemaService = tipoSistemaService;
+		this.tipoSubsistemaService = tipoSubsistemaService;
 	}
 	
 	/**
@@ -53,7 +59,11 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	 */
 	public EquipamientoDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return EquipamientoDto.builder().tiposDocumento(tipoDocumentoService.readAll()).build();
+		return EquipamientoDto.builder()
+				.tiposDocumento(tipoDocumentoService.readAll())
+				.tiposSistemasDisponibles(tipoSistemaService.readAll())
+				.tiposSubsistemasDisponibles(tipoSubsistemaService.readAll())
+				.build();
 	}
 
 	/**
@@ -72,12 +82,12 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<EquipamientoDto> readAll() {
+	public List<EquipamientoLiteDto> readAll() {
 		
 		final List<Equipamiento> equipamientos = this.equipamientoRepository.findAll();
 		
-		final List<EquipamientoDto> equipamientosDto = new ArrayList<>(equipamientos.size());		
-		equipamientos.forEach(equipamiento -> equipamientosDto.add(this.modelMapperUtils.map(equipamiento, EquipamientoDto.class)));
+		final List<EquipamientoLiteDto> equipamientosDto = new ArrayList<>(equipamientos.size());		
+		equipamientos.forEach(equipamiento -> equipamientosDto.add(this.modelMapperUtils.map(equipamiento, EquipamientoLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 		
@@ -94,6 +104,8 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	
 		final EquipamientoDto result = this.modelMapperUtils.map(equipamiento, EquipamientoDto.class);
 		result.setTiposDocumento(tipoDocumentoService.readAll());
+		result.setTiposSistemasDisponibles(tipoSistemaService.readAll());
+		result.setTiposSubsistemasDisponibles(tipoSubsistemaService.readAll());
 		
 		log.info(LoggerConstants.LOG_READ);		
 
@@ -117,76 +129,56 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 		return this.modelMapperUtils.mapAll2List(equipamiento, EquipamientoDto.class);
 	}
 	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	@Transactional
-	public EquipamientoDto save(final EquipamientoDto equipamientoDto) {		
+	public EquipamientoDto saveUpdate(final EquipamientoDto equipamientoDto) {	
+		
+		equipamientoDto.setDocumentos(filterListDocumentos(equipamientoDto.getDocumentos()));
+		equipamientoDto.setFotografias(filterListFotografias(equipamientoDto.getFotografias()));
 		
 		Equipamiento equipamiento = this.modelMapperUtils.map(equipamientoDto, Equipamiento.class);
-	    
-		equipamiento = this.equipamientoRepository.save(equipamiento);	
 		
-		log.info(LoggerConstants.LOG_CREATE, equipamiento.getNombre());		
-		
-		return this.modelMapperUtils.map(equipamiento, EquipamientoDto.class);
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public EquipamientoDto update(final EquipamientoDto equipamientoDto) {		
-		
-		Equipamiento equipamientoBBDD = this.equipamientoRepository.findById(equipamientoDto.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		equipamientoBBDD.setNombre(equipamientoDto.getNombre());
-		equipamientoBBDD.setSistema(equipamientoDto.getSistema());
-		equipamientoBBDD.setSubsistema(equipamientoDto.getSubsistema());		
-		equipamientoBBDD.setMarca(equipamientoDto.getMarca());
-		equipamientoBBDD.setModelo(equipamientoDto.getModelo());
-		equipamientoBBDD.setCaracteristicas(equipamientoDto.getCaracteristicas());
-		equipamientoBBDD.setEntradas(equipamientoDto.getEntradas());
-		equipamientoBBDD.setSalidas(equipamientoDto.getSalidas());
-		equipamientoBBDD.setGanancia(equipamientoDto.getGanancia());
-		equipamientoBBDD.setPerdida(equipamientoDto.getPerdida());
-		equipamientoBBDD.setNumeroPuertos(equipamientoDto.getNumeroPuertos());
-		equipamientoBBDD.setApertura(equipamientoDto.getApertura());
-		equipamientoBBDD.setDiametro(equipamientoDto.getDiametro());
-		equipamientoBBDD.setDescripcion(equipamientoDto.getDescripcion());
-		equipamientoBBDD.getDocumentos().removeAll(this.getDocumentosEliminar(equipamientoBBDD, equipamientoDto));
-		equipamientoBBDD = this.equipamientoRepository.save(equipamientoBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, equipamientoBBDD.getId());
-		
-		return this.modelMapperUtils.map(equipamientoBBDD, EquipamientoDto.class);
+		return this.modelMapperUtils.map(this.equipamientoRepository.save(equipamiento), EquipamientoDto.class);
 	}
 	
 	/**
-	 * Obtenemos los documentos persistidos que se quieren eliminar desde la vista
-	 * @param equipamientoBBDD Equipamiento almacenado
-	 * @param equipamientoDto Equipamiendo de la vista
-	 * @return Conjunto de documentos a eliminar
+	 * Procesa una lista de objetos DocumentosDto proveniente del front y elimina de esta lista los 
+	 * objetos que tienen un id null
+     * @param lista de objetos DocumentosDto provenientes del front 
+     * @return lista de objetos DocumentosDto filtrada 
 	 */
-	private Set<Documento> getDocumentosEliminar(final Equipamiento equipamientoBBDD, final EquipamientoDto equipamientoDto) {
+	private List<DocumentoDto> filterListDocumentos(List<DocumentoDto> listDocumentos) {
 		
-		// Documentos que no se han eliminado en la vista
-		final List<DocumentoDto> documentosDtoConservar = equipamientoDto.getDocumentos()
-																	.stream()
-																	.filter(documento -> null != documento.getId())
-																	.collect(Collectors.toList());
+		return listDocumentos.stream()
+                            .filter(documento -> !Objects.isNull(documento.getNombre()))
+                            .collect(Collectors.toList());
+	}
+	
+	/**
+	 * Procesa una lista de objetos FotografiaDto proveniente del front y elimina de esta lista los 
+	 * objetos que tienen un id null
+     * @param lista de objetos FotografiaDto provenientes del front 
+     * @return lista de objetos FotografiaDto filtrada 
+	 */
+	private List<FotografiaDto> filterListFotografias(List<FotografiaDto> listFotografias) {
 		
-		final Set<Documento> documentosConservar = this.modelMapperUtils.mapAll2Set(documentosDtoConservar, Documento.class);
+		return listFotografias.stream()
+                            .filter(fotografia -> !Objects.isNull(fotografia.getNombre()))
+                            .collect(Collectors.toList());
+	}
+
+	@Override
+	public EquipamientoDto setAllAttributesEquipamientoDto(EquipamientoDto equipamientoDto) {
 		
-		// Documentos que se eliminaron en la vista
-		return equipamientoBBDD.getDocumentos().stream()
-										.filter(documento -> (documentosConservar.stream()
-															.filter(documentoConservar -> documentoConservar
-																	.getId().longValue() == documento.getId().longValue())
-															.count()) < 1) 
-										.collect(Collectors.toSet());
+		equipamientoDto.setDocumentos(filterListDocumentos(equipamientoDto.getDocumentos()));
+		equipamientoDto.setFotografias(filterListFotografias(equipamientoDto.getFotografias()));
+		equipamientoDto.setTiposDocumento(tipoDocumentoService.readAll());
+		equipamientoDto.setTiposSistemasDisponibles(tipoSistemaService.readAll());
+		equipamientoDto.setTiposSubsistemasDisponibles(tipoSubsistemaService.readAll());
+		
+		return equipamientoDto;
 	}
 
 }

@@ -12,6 +12,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TipoSistemaRepository;
 import com.dbcom.app.model.dao.TipoSubsistemaRepository;
 import com.dbcom.app.model.dto.TipoSistemaDto;
+import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
 import com.dbcom.app.model.entity.TipoSistema;
 import com.dbcom.app.model.entity.TipoSubsistema;
@@ -63,12 +64,12 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoSistemaDto> readAll() {
+	public List<TipoSistemaLiteDto> readAll() {
 
         final List<TipoSistema> tiposSistemas = this.tipoSistemasRepository.findAll();
 		
-		final List<TipoSistemaDto> tiposSistemasDto = new ArrayList<>(tiposSistemas.size());		
-		tiposSistemas.forEach(tipoSistema -> tiposSistemasDto.add(this.modelMapperUtils.map(tipoSistema, TipoSistemaDto.class)));
+		final List<TipoSistemaLiteDto> tiposSistemasDto = new ArrayList<>(tiposSistemas.size());		
+		tiposSistemas.forEach(tipoSistema -> tiposSistemasDto.add(this.modelMapperUtils.map(tipoSistema, TipoSistemaLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 
