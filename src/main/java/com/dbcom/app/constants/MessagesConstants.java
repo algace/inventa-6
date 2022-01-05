@@ -83,6 +83,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_TOPOLOGIA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_TOPOLOGIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_UBICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_UNIDADFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_USOANTENA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_USOTIRADA_PREGUNTA;
 	public static String POPUP_ELIMINAR_VERSION_NO_PERMITIDO_MENSAJE;
@@ -371,6 +372,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.tipoUbicacion.pregunta}")
 	public void setMessagePopupEliminarTipoUbicacionPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_UBICACION_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.tipoUnidadFrecuencia.pregunta}")
+	public void setMessagePopupEliminarTipoUnidadFrecuenciaPregunta(final String texto) {
+		POPUP_ELIMINAR_TIPO_UNIDADFRECUENCIA_PREGUNTA = texto;
 	}
 	
 	@Value("${html.label.eliminar.tipoUsoAntena.pregunta}")
