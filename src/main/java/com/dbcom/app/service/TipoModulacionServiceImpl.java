@@ -38,6 +38,7 @@ public final class TipoModulacionServiceImpl implements TipoModulacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoModulacionDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoModulacionDto();
@@ -46,6 +47,7 @@ public final class TipoModulacionServiceImpl implements TipoModulacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoModulacion tipoModulacionBBDD = this.tipoModulacionRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoModulacionServiceImpl implements TipoModulacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoModulacionDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoModulacionServiceImpl implements TipoModulacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoModulacionDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,36 +92,11 @@ public final class TipoModulacionServiceImpl implements TipoModulacionService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoModulacionDto save(final TipoModulacionDto tipoModulacionDto) {		
+	@Override
+	public TipoModulacionDto saveUpdate(final TipoModulacionDto tipoModulacionDto) {		
 		
-		TipoModulacion tipoModulacion = this.modelMapperUtils.map(tipoModulacionDto, TipoModulacion.class);
-	    
-		tipoModulacion = this.tipoModulacionRepository.save(tipoModulacion);	
+		TipoModulacion tipoModulacion = this.modelMapperUtils.map(tipoModulacionDto, TipoModulacion.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoModulacion.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoModulacion, TipoModulacionDto.class);
+		return this.modelMapperUtils.map(this.tipoModulacionRepository.save(tipoModulacion), TipoModulacionDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoModulacionDto update(final TipoModulacionDto tipoModulacionDto) {		
-		
-		final TipoModulacion tipoModulacion = this.modelMapperUtils.map(tipoModulacionDto, TipoModulacion.class);
-		
-		TipoModulacion tipoModulacionBBDD = this.tipoModulacionRepository.findById(tipoModulacion.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoModulacionBBDD.setNombre(tipoModulacionDto.getNombre());
-		tipoModulacionBBDD.setDescripcionCorta(tipoModulacionDto.getDescripcionCorta());
-		tipoModulacionBBDD.setDescripcionLarga(tipoModulacionDto.getDescripcionLarga());
-		tipoModulacionBBDD = this.tipoModulacionRepository.save(tipoModulacionBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoModulacionBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoModulacionBBDD, TipoModulacionDto.class);
-	}
-	
 }

@@ -38,6 +38,7 @@ public final class TipoJerarquiaServiceImpl implements TipoJerarquiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoJerarquiaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoJerarquiaDto();
@@ -46,6 +47,7 @@ public final class TipoJerarquiaServiceImpl implements TipoJerarquiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoJerarquia tipoJerarquiaBBDD = this.tipoJerarquiaRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoJerarquiaServiceImpl implements TipoJerarquiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoJerarquiaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoJerarquiaServiceImpl implements TipoJerarquiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoJerarquiaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoJerarquiaServiceImpl implements TipoJerarquiaService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoJerarquiaDto save(final TipoJerarquiaDto tipoJerarquiaDto) {		
+	@Override
+	public TipoJerarquiaDto saveUpdate(final TipoJerarquiaDto tipoJerarquiaDto) {		
 		
-		TipoJerarquia tipoJerarquia = this.modelMapperUtils.map(tipoJerarquiaDto, TipoJerarquia.class);
-	    
-		tipoJerarquia = this.tipoJerarquiaRepository.save(tipoJerarquia);	
+		TipoJerarquia tipoJerarquia = this.modelMapperUtils.map(tipoJerarquiaDto, TipoJerarquia.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoJerarquia.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoJerarquia, TipoJerarquiaDto.class);
+		return this.modelMapperUtils.map(this.tipoJerarquiaRepository.save(tipoJerarquia), TipoJerarquiaDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoJerarquiaDto update(final TipoJerarquiaDto tipoJerarquiaDto) {		
-		
-		final TipoJerarquia tipoJerarquia = this.modelMapperUtils.map(tipoJerarquiaDto, TipoJerarquia.class);
-		
-		TipoJerarquia tipoJerarquiaBBDD = this.tipoJerarquiaRepository.findById(tipoJerarquia.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoJerarquiaBBDD.setNombre(tipoJerarquiaDto.getNombre());
-		tipoJerarquiaBBDD = this.tipoJerarquiaRepository.save(tipoJerarquiaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoJerarquiaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoJerarquiaBBDD, TipoJerarquiaDto.class);
-	}
-	
 }

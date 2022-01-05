@@ -132,7 +132,7 @@ public final class TipoPolarizacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoPolarizacionService.save(tipoPolarizacionDto);
+			this.tipoPolarizacionService.saveUpdate(tipoPolarizacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoPolarizacionDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoPolarizacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoPolarizacionService.update(tipoPolarizacionDto);
+			this.tipoPolarizacionService.saveUpdate(tipoPolarizacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoPolarizacionDto.getId());			
 		}

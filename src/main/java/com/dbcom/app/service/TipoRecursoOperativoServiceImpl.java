@@ -38,6 +38,7 @@ public final class TipoRecursoOperativoServiceImpl implements TipoRecursoOperati
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoRecursoOperativoDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoRecursoOperativoDto();
@@ -46,6 +47,7 @@ public final class TipoRecursoOperativoServiceImpl implements TipoRecursoOperati
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoRecursoOperativo tipoRecursoOperativoBBDD = this.tipoRecursoOperativoRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoRecursoOperativoServiceImpl implements TipoRecursoOperati
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoRecursoOperativoDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoRecursoOperativoServiceImpl implements TipoRecursoOperati
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoRecursoOperativoDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoRecursoOperativoServiceImpl implements TipoRecursoOperati
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoRecursoOperativoDto save(final TipoRecursoOperativoDto tipoRecursoOperativoDto) {		
+	@Override
+	public TipoRecursoOperativoDto saveUpdate(final TipoRecursoOperativoDto tipoRecursoOperativoDto) {		
 		
 		TipoRecursoOperativo tipoRecursoOperativo = this.modelMapperUtils.map(tipoRecursoOperativoDto, TipoRecursoOperativo.class);
-	    
-		tipoRecursoOperativo = this.tipoRecursoOperativoRepository.save(tipoRecursoOperativo);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoRecursoOperativo.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoRecursoOperativo, TipoRecursoOperativoDto.class);
+		return this.modelMapperUtils.map(this.tipoRecursoOperativoRepository.save(tipoRecursoOperativo), TipoRecursoOperativoDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoRecursoOperativoDto update(final TipoRecursoOperativoDto tipoRecursoOperativoDto) {		
-		
-		final TipoRecursoOperativo tipoRecursoOperativo = this.modelMapperUtils.map(tipoRecursoOperativoDto, TipoRecursoOperativo.class);
-		
-		TipoRecursoOperativo tipoRecursoOperativoBBDD = this.tipoRecursoOperativoRepository.findById(tipoRecursoOperativo.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoRecursoOperativoBBDD.setNombre(tipoRecursoOperativoDto.getNombre());
-		tipoRecursoOperativoBBDD = this.tipoRecursoOperativoRepository.save(tipoRecursoOperativoBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoRecursoOperativoBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoRecursoOperativoBBDD, TipoRecursoOperativoDto.class);
-	}
-	
 }

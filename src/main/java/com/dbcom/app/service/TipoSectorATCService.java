@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoSectorATCDto;
  * 
  * @author jose.vallve
  */
-public interface TipoSectorATCService extends GenericService<TipoSectorATCDto, Short> {
+public interface TipoSectorATCService {
 
 	/**
 	 * Creamos un tipo de sector ATC sin persistencia
@@ -41,13 +41,6 @@ public interface TipoSectorATCService extends GenericService<TipoSectorATCDto, S
 	 * @param tipoSectorATCDto Tipo de sector ATC a persistir
 	 * @return Tipo de sector ATC persistido
 	 */
-	TipoSectorATCDto save(final TipoSectorATCDto tipoSectorATCDto);
-		
-	/**
-	 * Actualizamos el tipo de sector ATC pasado como parámetro
-	 * @param tipoSectorATCDto Tipo de sector ATC a actualizar
-	 * @return Tipo de sector ATC actualizado
-	 */
-	TipoSectorATCDto update(final TipoSectorATCDto tipoSectorATCDto);
+	TipoSectorATCDto saveUpdate(final TipoSectorATCDto tipoSectorATCDto);
 	
 }

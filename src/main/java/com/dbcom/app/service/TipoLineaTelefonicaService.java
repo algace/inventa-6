@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoLineaTelefonicaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoLineaTelefonicaService extends GenericService<TipoLineaTelefonicaDto, Short> {
+public interface TipoLineaTelefonicaService {
 
 	/**
 	 * Creamos un tipo de línea telefónica sin persistencia
@@ -41,13 +41,5 @@ public interface TipoLineaTelefonicaService extends GenericService<TipoLineaTele
 	 * @param tipoLineaTelefonicaDto Tipo de línea telefónica a persistir
 	 * @return Tipo de línea telefónica persistido
 	 */
-	TipoLineaTelefonicaDto save(final TipoLineaTelefonicaDto tipoLineaTelefonicaDto);
-		
-	/**
-	 * Actualizamos el tipo de línea telefónica pasado como parámetro
-	 * @param tipoLineaTelefonicaDto Tipo de línea telefónica a actualizar
-	 * @return Tipo de línea telefónica actualizado
-	 */
-	TipoLineaTelefonicaDto update(final TipoLineaTelefonicaDto tipoLineaTelefonicaDto);
-	
+	TipoLineaTelefonicaDto saveUpdate(final TipoLineaTelefonicaDto tipoLineaTelefonicaDto);
 }

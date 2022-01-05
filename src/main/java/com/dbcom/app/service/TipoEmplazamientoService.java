@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoEmplazamientoDto;
  * 
  * @author jose.vallve
  */
-public interface TipoEmplazamientoService extends GenericService<TipoEmplazamientoDto, Short> {
+public interface TipoEmplazamientoService {
 
 	/**
 	 * Creamos un tipo de emplazamiento sin persistencia
@@ -41,13 +41,6 @@ public interface TipoEmplazamientoService extends GenericService<TipoEmplazamien
 	 * @param tipoEmplazamientoDto Tipo de emplazamiento a persistir
 	 * @return Tipo de emplazamiento persistido
 	 */
-	TipoEmplazamientoDto save(final TipoEmplazamientoDto tipoEmplazamientoDto);
-		
-	/**
-	 * Actualizamos el tipo de emplazamiento pasado como parámetro
-	 * @param tipoEmplazamientoDto Tipo de emplazamiento a actualizar
-	 * @return Tipo de emplazamiento actualizado
-	 */
-	TipoEmplazamientoDto update(final TipoEmplazamientoDto tipoEmplazamientoDto);
+	TipoEmplazamientoDto saveUpdate(final TipoEmplazamientoDto tipoEmplazamientoDto);
 
 }

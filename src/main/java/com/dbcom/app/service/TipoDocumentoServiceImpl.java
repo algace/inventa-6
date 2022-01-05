@@ -40,6 +40,7 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoDocumentoDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoDocumentoDto();
@@ -48,6 +49,7 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoDocumento tipoDocumentoBBDD = this.tipoDocumentoRepository.findById(id)
@@ -61,6 +63,7 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoDocumentoDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -76,6 +79,7 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoDocumentoDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -90,40 +94,18 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoDocumentoDto save(final TipoDocumentoDto tipoDocumentoDto) {		
+	@Override
+	public TipoDocumentoDto saveUpdate(final TipoDocumentoDto tipoDocumentoDto) {		
 		
-		TipoDocumento tipoDocumento = this.modelMapperUtils.map(tipoDocumentoDto, TipoDocumento.class);
-	    
-		tipoDocumento = this.tipoDocumentoRepository.save(tipoDocumento);	
+		TipoDocumento tipoDocumento = this.modelMapperUtils.map(tipoDocumentoDto, TipoDocumento.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoDocumento.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoDocumento, TipoDocumentoDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoDocumentoDto update(final TipoDocumentoDto tipoDocumentoDto) {		
-		
-		final TipoDocumento tipoDocumento = this.modelMapperUtils.map(tipoDocumentoDto, TipoDocumento.class);
-		
-		TipoDocumento tipoDocumentoBBDD = this.tipoDocumentoRepository.findById(tipoDocumento.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoDocumentoBBDD.setNombre(tipoDocumentoDto.getNombre());
-		tipoDocumentoBBDD.setDescripcion(tipoDocumentoDto.getDescripcion());
-		tipoDocumentoBBDD = this.tipoDocumentoRepository.save(tipoDocumentoBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoDocumentoBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoDocumentoBBDD, TipoDocumentoDto.class);
+		return this.modelMapperUtils.map(this.tipoDocumentoRepository.save(tipoDocumento), TipoDocumentoDto.class);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Page<TipoDocumentoDto> readAll(Pageable pageable) {
 	      final Page<TipoDocumento> tiposDocumento = this.tipoDocumentoRepository.findAll(pageable);	      
 	      return this.modelMapperUtils.mapAll2Page(tiposDocumento, pageable, 
@@ -133,6 +115,7 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Page<TipoDocumentoDto> readContainingNombre(final String texto, final Pageable pageable) {
 	      final Page<TipoDocumento> tiposDocumento = this.tipoDocumentoRepository.findByNombreContaining(texto, pageable);	
 	      return this.modelMapperUtils.mapAll2Page(tiposDocumento, pageable, 
@@ -142,6 +125,7 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Page<TipoDocumentoDto> readContainingDescripcion(final String texto, final Pageable pageable) {
 		final Page<TipoDocumento> tiposDocumento = this.tipoDocumentoRepository.findByDescripcionContaining(texto, pageable);	
 		return this.modelMapperUtils.mapAll2Page(tiposDocumento, pageable, 
@@ -151,6 +135,7 @@ public final class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Page<TipoDocumentoDto> readContainings(final String texto, final Pageable pageable) {
 		final Page<TipoDocumento> tiposDocumento = this.tipoDocumentoRepository.findByNombreContainingOrDescripcionContaining(texto, texto, pageable);	
 		return this.modelMapperUtils.mapAll2Page(tiposDocumento, pageable, 

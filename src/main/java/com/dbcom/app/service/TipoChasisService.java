@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.TipoChasisDto;
 
-public interface TipoChasisService extends GenericService<TipoChasisDto, Short>{
+public interface TipoChasisService {
 
 	/**
 	 * Creamos un tipo de chasis sin persistencia
@@ -36,12 +36,5 @@ public interface TipoChasisService extends GenericService<TipoChasisDto, Short>{
 	 * @param tipoChasisDto Tipo de chasis a persistir
 	 * @return Tipo de chasis persistido
 	 */
-	TipoChasisDto save(final TipoChasisDto tipoChasisDto);
-		
-	/**
-	 * Actualizamos el tipo de chasis pasado como parámetro
-	 * @param tipoChasisDto Tipo de chasis a actualizar
-	 * @return Tipo de chasis actualizado
-	 */
-	TipoChasisDto update(final TipoChasisDto tipoChasisDto);
+	TipoChasisDto saveUpdate(final TipoChasisDto tipoChasisDto);
 }

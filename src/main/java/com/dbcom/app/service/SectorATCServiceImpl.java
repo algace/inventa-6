@@ -19,11 +19,7 @@ import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
 import com.dbcom.app.model.dto.TipoFuenteInformacionLiteDto;
-import com.dbcom.app.model.entity.Airblock;
-import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.model.entity.SectorATC;
-import com.dbcom.app.model.entity.TipoFuenteInformacion;
-import com.dbcom.app.model.entity.TipoSectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -134,7 +130,8 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		
 		return this.modelMapperUtils.map(this.sectorATCRepository.save(sectorATC), SectorATCDto.class);
 	}
-	
+
+	@Override
 	public List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados){
 
 		List<AirblockDto> airblocks = new ArrayList<>();
@@ -147,7 +144,8 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	
 		return airblocks;
 	}
-	
+
+	@Override
 	public List<AirblockDto> listAirblocksNoSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados){
 
 		airblockSeleccionados.stream().forEach(airblock -> {
@@ -169,9 +167,6 @@ public final class SectorATCServiceImpl implements SectorATCService{
      * @param lista de objetos AirblockDto provenientes del front 
      * @return lista de objetos AirblockDto filtrada 
 	 */
-	
-	
-	//ponerlo en el save y en el update
 	private List<AirblockDto> filterListAirblock(List<AirblockDto> listAirblocks) {
 	
 		return listAirblocks.stream()

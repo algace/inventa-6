@@ -37,6 +37,7 @@ public final class FrecuenciaServiceImpl implements FrecuenciaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FrecuenciaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new FrecuenciaDto();
@@ -45,6 +46,7 @@ public final class FrecuenciaServiceImpl implements FrecuenciaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Long id) {			
 		
 		final Frecuencia frecuenciaBBDD = this.frecuenciaRepository.findById(id)
@@ -58,6 +60,7 @@ public final class FrecuenciaServiceImpl implements FrecuenciaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<FrecuenciaDto> readAll() {
 		
 		final List<Frecuencia> frecuencias = this.frecuenciaRepository.findAll();
@@ -73,6 +76,7 @@ public final class FrecuenciaServiceImpl implements FrecuenciaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FrecuenciaDto read(final Long id) {		
 		
 		final Frecuencia frecuencia = this.frecuenciaRepository.findById(id)
@@ -89,6 +93,7 @@ public final class FrecuenciaServiceImpl implements FrecuenciaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FrecuenciaDto saveUpdate(final FrecuenciaDto frecuenciaDto) {		
 		
 		Frecuencia frecuencia = this.modelMapperUtils.map(frecuenciaDto, Frecuencia.class);		

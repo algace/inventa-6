@@ -132,7 +132,7 @@ public final class TipoRecursoOperativoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoRecursoOperativoService.save(tipoRecursoOperativoDto);
+			this.tipoRecursoOperativoService.saveUpdate(tipoRecursoOperativoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoRecursoOperativoDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoRecursoOperativoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoRecursoOperativoService.update(tipoRecursoOperativoDto);
+			this.tipoRecursoOperativoService.saveUpdate(tipoRecursoOperativoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoRecursoOperativoDto.getId());			
 		}

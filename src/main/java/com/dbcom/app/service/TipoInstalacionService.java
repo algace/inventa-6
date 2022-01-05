@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoInstalacionDto;
  * 
  * @author jose.vallve
  */
-public interface TipoInstalacionService extends GenericService<TipoInstalacionDto, Short> {
+public interface TipoInstalacionService {
 
 	/**
 	 * Creamos un tipo de instalación sin persistencia
@@ -41,13 +41,5 @@ public interface TipoInstalacionService extends GenericService<TipoInstalacionDt
 	 * @param tipoInstalacionDto Tipo de instalación a persistir
 	 * @return Tipo de instalación persistido
 	 */
-	TipoInstalacionDto save(final TipoInstalacionDto tipoInstalacionDto);
-		
-	/**
-	 * Actualizamos el tipo de instalación pasado como parámetro
-	 * @param tipoInstalacionDto Tipo de instalación a actualizar
-	 * @return Tipo de instalación actualizado
-	 */
-	TipoInstalacionDto update(final TipoInstalacionDto tipoInstalacionDto);
-	
+	TipoInstalacionDto saveUpdate(final TipoInstalacionDto tipoInstalacionDto);
 }

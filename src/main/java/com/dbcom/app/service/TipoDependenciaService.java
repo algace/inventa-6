@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoDependenciaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoDependenciaService extends GenericService<TipoDependenciaDto, Short> {
+public interface TipoDependenciaService {
 
 	/**
 	 * Creamos un tipo de dependencia sin persistencia
@@ -41,13 +41,6 @@ public interface TipoDependenciaService extends GenericService<TipoDependenciaDt
 	 * @param tipoDependenciaDto Tipo de dependencia a persistir
 	 * @return Tipo de dependencia persistido
 	 */
-	TipoDependenciaDto save(final TipoDependenciaDto tipoDependenciaDto);
-		
-	/**
-	 * Actualizamos el tipo de dependencia pasado como parámetro
-	 * @param tipoDependenciaDto Tipo de dependencia a actualizar
-	 * @return Tipo de dependencia actualizado
-	 */
-	TipoDependenciaDto update(final TipoDependenciaDto tipoDependenciaDto);
+	TipoDependenciaDto saveUpdate(final TipoDependenciaDto tipoDependenciaDto);
 	
 }

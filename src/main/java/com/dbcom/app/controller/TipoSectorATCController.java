@@ -141,7 +141,7 @@ public final class TipoSectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoSectorATCService.save(tipoSectorATCDto);
+			this.tipoSectorATCService.saveUpdate(tipoSectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoSectorATCDto.getId());
 		}
@@ -233,7 +233,7 @@ public final class TipoSectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoSectorATCService.update(tipoSectorATCDto);
+			this.tipoSectorATCService.saveUpdate(tipoSectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoSectorATCDto.getId());			
 		}

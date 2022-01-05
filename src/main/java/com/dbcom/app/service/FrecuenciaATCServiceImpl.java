@@ -37,6 +37,7 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FrecuenciaATCDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new FrecuenciaATCDto();
@@ -45,6 +46,7 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Long id) {			
 		
 		final FrecuenciaATC frecuenciaATCBBDD = this.frecuenciaATCRepository.findById(id)
@@ -58,6 +60,7 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<FrecuenciaATCDto> readAll() {
 		
 		final List<FrecuenciaATC> frecuenciasATC = this.frecuenciaATCRepository.findAll();
@@ -73,6 +76,7 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FrecuenciaATCDto read(final Long id) {		
 		
 		final FrecuenciaATC frecuenciaATC = this.frecuenciaATCRepository.findById(id)
@@ -89,6 +93,7 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FrecuenciaATCDto saveUpdate(final FrecuenciaATCDto frecuenciaATCDto) {		
 		
 		FrecuenciaATC frecuenciaATC = this.modelMapperUtils.map(frecuenciaATCDto, FrecuenciaATC.class);

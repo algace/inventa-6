@@ -38,6 +38,7 @@ public final class TipoConfiguracionTiradaServiceImpl implements TipoConfiguraci
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoConfiguracionTiradaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoConfiguracionTiradaDto();
@@ -46,6 +47,7 @@ public final class TipoConfiguracionTiradaServiceImpl implements TipoConfiguraci
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoConfiguracionTirada tipoConfiguracionTiradaBBDD = this.tipoConfiguracionTiradaRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoConfiguracionTiradaServiceImpl implements TipoConfiguraci
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoConfiguracionTiradaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoConfiguracionTiradaServiceImpl implements TipoConfiguraci
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoConfiguracionTiradaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoConfiguracionTiradaServiceImpl implements TipoConfiguraci
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoConfiguracionTiradaDto save(final TipoConfiguracionTiradaDto tipoConfiguracionTiradaDto) {		
+	@Override
+	public TipoConfiguracionTiradaDto saveUpdate(final TipoConfiguracionTiradaDto tipoConfiguracionTiradaDto) {		
 		
-		TipoConfiguracionTirada tipoConfiguracionTirada = this.modelMapperUtils.map(tipoConfiguracionTiradaDto, TipoConfiguracionTirada.class);
-	    
-		tipoConfiguracionTirada = this.tipoConfiguracionTiradaRepository.save(tipoConfiguracionTirada);	
+		TipoConfiguracionTirada tipoConfiguracionTirada = this.modelMapperUtils.map(tipoConfiguracionTiradaDto, TipoConfiguracionTirada.class);		
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoConfiguracionTirada.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoConfiguracionTirada, TipoConfiguracionTiradaDto.class);
+		return this.modelMapperUtils.map(this.tipoConfiguracionTiradaRepository.save(tipoConfiguracionTirada), TipoConfiguracionTiradaDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoConfiguracionTiradaDto update(final TipoConfiguracionTiradaDto tipoConfiguracionTiradaDto) {		
-		
-		final TipoConfiguracionTirada tipoConfiguracionTirada = this.modelMapperUtils.map(tipoConfiguracionTiradaDto, TipoConfiguracionTirada.class);
-		
-		TipoConfiguracionTirada tipoConfiguracionTiradaBBDD = this.tipoConfiguracionTiradaRepository.findById(tipoConfiguracionTirada.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoConfiguracionTiradaBBDD.setNombre(tipoConfiguracionTiradaDto.getNombre());
-		tipoConfiguracionTiradaBBDD = this.tipoConfiguracionTiradaRepository.save(tipoConfiguracionTiradaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoConfiguracionTiradaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoConfiguracionTiradaBBDD, TipoConfiguracionTiradaDto.class);
-	}
-	
 }

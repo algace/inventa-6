@@ -38,6 +38,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoBandaFrecuenciaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoBandaFrecuenciaDto();
@@ -46,6 +47,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoBandaFrecuencia tipoBandaFrecuenciaBBDD = this.tipoBandaFrecuenciaRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoBandaFrecuenciaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoBandaFrecuenciaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,6 +92,7 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoBandaFrecuenciaDto saveUpdate(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto) {		
 		
 		TipoBandaFrecuencia tipoBandaFrecuencia = this.modelMapperUtils.map(tipoBandaFrecuenciaDto, TipoBandaFrecuencia.class);	

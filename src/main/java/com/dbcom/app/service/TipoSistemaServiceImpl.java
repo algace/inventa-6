@@ -79,15 +79,11 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TipoSistemaDto save(TipoSistemaDto tipoSistemaDto) {
+	public TipoSistemaDto saveUpdate(TipoSistemaDto tipoSistemaDto) {
 
-		TipoSistema tipoSistema = this.modelMapperUtils.map(tipoSistemaDto, TipoSistema.class);
-	    
-		tipoSistema = this.tipoSistemasRepository.save(tipoSistema);	
+		TipoSistema tipoSistema = this.modelMapperUtils.map(tipoSistemaDto, TipoSistema.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoSistema.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoSistema, TipoSistemaDto.class);
+		return this.modelMapperUtils.map(this.tipoSistemasRepository.save(tipoSistema), TipoSistemaDto.class);
 	}
 
 	/**
@@ -109,30 +105,4 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 		
 		return result;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TipoSistemaDto update(TipoSistemaDto tipoSistemaDto) {
-
-		final TipoSistema tipoSistema = this.modelMapperUtils.map(tipoSistemaDto, TipoSistema.class);
-		
-		TipoSistema tipoSistemaBBDD = this.tipoSistemasRepository.findById(tipoSistema.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoSistemaBBDD.setNombre(tipoSistemaDto.getNombre());
-		tipoSistemaBBDD.setDescripcion(tipoSistemaDto.getDescripcion());
-		tipoSistemaBBDD.setColor(tipoSistemaDto.getColor());
-		tipoSistemaBBDD.setColorTexto(tipoSistema.getColorTexto());
-		tipoSistemaBBDD.setCodigoFuncionRed(tipoSistema.getCodigoFuncionRed());
-		tipoSistemaBBDD.setTiposSubsistemas(tipoSistemaBBDD.getTiposSubsistemas());
-		tipoSistemaBBDD = this.tipoSistemasRepository.save(tipoSistemaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoSistemaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoSistemaBBDD, TipoSistemaDto.class);
-	}	
-
 }

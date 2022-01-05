@@ -41,12 +41,5 @@ public interface TipoSubsistemaService {
 	 * @param tipoSubsistemaDto Tipo de subsistema a persistir
 	 * @return Tipo de subsistema persistido
 	 */
-	TipoSubsistemaDto save(final TipoSubsistemaDto tipoSubsistemaDto);
-	
-	/**
-	 * Actualizamos el tipo de subsistema pasado como parámetro
-	 * @param tipoSubsistemaDto Tipo de sibsistema a actualizar
-	 * @return Tipo de subsistema actualizado
-	 */
-	TipoSubsistemaDto update(final TipoSubsistemaDto tipoSubsistemaDto);
+	TipoSubsistemaDto saveUpdate(final TipoSubsistemaDto tipoSubsistemaDto);
 }

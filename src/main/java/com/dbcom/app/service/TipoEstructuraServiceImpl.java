@@ -38,6 +38,7 @@ public final class TipoEstructuraServiceImpl implements TipoEstructuraService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoEstructuraDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoEstructuraDto();
@@ -46,6 +47,7 @@ public final class TipoEstructuraServiceImpl implements TipoEstructuraService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoEstructura tipoEstructuraBBDD = this.tipoEstructuraRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoEstructuraServiceImpl implements TipoEstructuraService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoEstructuraDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoEstructuraServiceImpl implements TipoEstructuraService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoEstructuraDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoEstructuraServiceImpl implements TipoEstructuraService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoEstructuraDto save(final TipoEstructuraDto tipoEstructuraDto) {		
+	@Override
+	public TipoEstructuraDto saveUpdate(final TipoEstructuraDto tipoEstructuraDto) {		
 		
 		TipoEstructura tipoEstructura = this.modelMapperUtils.map(tipoEstructuraDto, TipoEstructura.class);
-	    
-		tipoEstructura = this.tipoEstructuraRepository.save(tipoEstructura);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoEstructura.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoEstructura, TipoEstructuraDto.class);
+		return this.modelMapperUtils.map(this.tipoEstructuraRepository.save(tipoEstructura), TipoEstructuraDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoEstructuraDto update(final TipoEstructuraDto tipoEstructuraDto) {		
-		
-		final TipoEstructura tipoEstructura = this.modelMapperUtils.map(tipoEstructuraDto, TipoEstructura.class);
-		
-		TipoEstructura tipoEstructuraBBDD = this.tipoEstructuraRepository.findById(tipoEstructura.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoEstructuraBBDD.setNombre(tipoEstructuraDto.getNombre());
-		tipoEstructuraBBDD = this.tipoEstructuraRepository.save(tipoEstructuraBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoEstructuraBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoEstructuraBBDD, TipoEstructuraDto.class);
-	}
-	
 }

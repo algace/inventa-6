@@ -88,34 +88,10 @@ public final class TipoRecursoRadioServiceImpl implements TipoRecursoRadioServic
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoRecursoRadioDto save(final TipoRecursoRadioDto tipoRecursoRadioDto) {		
+	public TipoRecursoRadioDto saveUpdate(final TipoRecursoRadioDto tipoRecursoRadioDto) {		
 		
 		TipoRecursoRadio tipoRecursoRadio = this.modelMapperUtils.map(tipoRecursoRadioDto, TipoRecursoRadio.class);
-	    
-		tipoRecursoRadio = this.tipoRecursoRadioRepository.save(tipoRecursoRadio);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoRecursoRadio.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoRecursoRadio, TipoRecursoRadioDto.class);
+		return this.modelMapperUtils.map(this.tipoRecursoRadioRepository.save(tipoRecursoRadio), TipoRecursoRadioDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoRecursoRadioDto update(final TipoRecursoRadioDto tipoRecursoRadioDto) {		
-		
-		final TipoRecursoRadio tipoRecursoRadio = this.modelMapperUtils.map(tipoRecursoRadioDto, TipoRecursoRadio.class);
-		
-		TipoRecursoRadio tipoRecursoRadioBBDD = this.tipoRecursoRadioRepository.findById(tipoRecursoRadio.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoRecursoRadioBBDD.setNombre(tipoRecursoRadioDto.getNombre());
-		tipoRecursoRadioBBDD = this.tipoRecursoRadioRepository.save(tipoRecursoRadioBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoRecursoRadioBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoRecursoRadioBBDD, TipoRecursoRadioDto.class);
-	}
-	
 }

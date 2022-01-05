@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoModulacionDto;
  * 
  * @author jose.vallve
  */
-public interface TipoModulacionService extends GenericService<TipoModulacionDto, Short> {
+public interface TipoModulacionService {
 
 	/**
 	 * Creamos un tipo de modulación sin persistencia
@@ -41,13 +41,6 @@ public interface TipoModulacionService extends GenericService<TipoModulacionDto,
 	 * @param tipoModulacionDto Tipo de modulación a persistir
 	 * @return Tipo de modulación persistido
 	 */
-	TipoModulacionDto save(final TipoModulacionDto tipoModulacionDto);
-		
-	/**
-	 * Actualizamos el tipo de modulación pasado como parámetro
-	 * @param tipoModulacionDto Tipo de modulación a actualizar
-	 * @return Tipo de modulación actualizado
-	 */
-	TipoModulacionDto update(final TipoModulacionDto tipoModulacionDto);
+	TipoModulacionDto saveUpdate(final TipoModulacionDto tipoModulacionDto);
 
 }

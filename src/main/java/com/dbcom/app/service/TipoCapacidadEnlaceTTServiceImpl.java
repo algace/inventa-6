@@ -38,6 +38,7 @@ public final class TipoCapacidadEnlaceTTServiceImpl implements TipoCapacidadEnla
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoCapacidadEnlaceTTDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoCapacidadEnlaceTTDto();
@@ -46,6 +47,7 @@ public final class TipoCapacidadEnlaceTTServiceImpl implements TipoCapacidadEnla
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoCapacidadEnlaceTT tipoCapacidadEnlaceTTBBDD = this.tipoCapacidadEnlaceTTRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoCapacidadEnlaceTTServiceImpl implements TipoCapacidadEnla
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoCapacidadEnlaceTTDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoCapacidadEnlaceTTServiceImpl implements TipoCapacidadEnla
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoCapacidadEnlaceTTDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,6 +92,7 @@ public final class TipoCapacidadEnlaceTTServiceImpl implements TipoCapacidadEnla
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoCapacidadEnlaceTTDto saveUpdate(final TipoCapacidadEnlaceTTDto tipoCapacidadEnlaceTTDto) {		
 		
 		TipoCapacidadEnlaceTT tipoCapacidadEnlaceTT = this.modelMapperUtils.map(tipoCapacidadEnlaceTTDto, TipoCapacidadEnlaceTT.class);	

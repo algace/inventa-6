@@ -33,6 +33,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FuncionPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new FuncionPasarelaDto();
@@ -41,6 +42,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final FuncionPasarela FuncionPasarelaBBDD = this.funcionPasarelaRepository.findById(id)
@@ -54,6 +56,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<FuncionPasarelaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -69,6 +72,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FuncionPasarelaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -83,6 +87,7 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public FuncionPasarelaDto saveUpdate(final FuncionPasarelaDto funcionPasarelaDto) {		
 		
 		FuncionPasarela funcionPasarela = this.modelMapperUtils.map(funcionPasarelaDto, FuncionPasarela.class);

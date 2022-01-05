@@ -40,6 +40,7 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoTopologiaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoTopologiaDto();
@@ -48,6 +49,7 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoTopologia tipoTopologiaBBDD = this.tipoTopologiaRepository.findById(id)
@@ -61,6 +63,7 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoTopologiaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -76,6 +79,7 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoTopologiaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -90,34 +94,12 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoTopologiaDto save(final TipoTopologiaDto tipoTopologiaDto) {		
+	@Override
+	public TipoTopologiaDto saveUpdate(final TipoTopologiaDto tipoTopologiaDto) {		
 		
-		TipoTopologia tipoTopologia = this.modelMapperUtils.map(tipoTopologiaDto, TipoTopologia.class);
-	    
-		tipoTopologia = this.tipoTopologiaRepository.save(tipoTopologia);	
+		TipoTopologia tipoTopologia = this.modelMapperUtils.map(tipoTopologiaDto, TipoTopologia.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoTopologia.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoTopologia, TipoTopologiaDto.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoTopologiaDto update(final TipoTopologiaDto tipoTopologiaDto) {		
-		
-		final TipoTopologia tipoTopologia = this.modelMapperUtils.map(tipoTopologiaDto, TipoTopologia.class);
-		
-		TipoTopologia tipoTopologiaBBDD = this.tipoTopologiaRepository.findById(tipoTopologia.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoTopologiaBBDD.setNombre(tipoTopologiaDto.getNombre());
-		tipoTopologiaBBDD = this.tipoTopologiaRepository.save(tipoTopologiaBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoTopologiaBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoTopologiaBBDD, TipoTopologiaDto.class);
+		return this.modelMapperUtils.map(this.tipoTopologiaRepository.save(tipoTopologia), TipoTopologiaDto.class);
 	}
 
 	/**

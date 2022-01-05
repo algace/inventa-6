@@ -10,7 +10,7 @@ import com.dbcom.app.model.dto.VersionSWLiteDto;
  * 
  * @author jose.vallve
  */
-public interface VersionSWService extends GenericService<VersionSWDto, Long> {
+public interface VersionSWService {
 
 	/**
 	 * Creamos una versión sin persistencia
@@ -55,13 +55,6 @@ public interface VersionSWService extends GenericService<VersionSWDto, Long> {
 	 * @param versionSWDto Versión a persistir
 	 * @return Versión persistida
 	 */
-	VersionSWDto save(final VersionSWDto versionSWDto);
-		
-	/**
-	 * Actualizamos la versión pasada como parámetro
-	 * @param versionSWDto Versión a actualizar
-	 * @return Versión actualizada
-	 */
-	VersionSWDto update(final VersionSWDto versionSWDto);
+	VersionSWDto saveUpdate(final VersionSWDto versionSWDto);
 	
 }

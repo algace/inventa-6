@@ -132,7 +132,7 @@ public final class TipoInstalacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoInstalacionService.save(tipoInstalacionDto);
+			this.tipoInstalacionService.saveUpdate(tipoInstalacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoInstalacionDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoInstalacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoInstalacionService.update(tipoInstalacionDto);
+			this.tipoInstalacionService.saveUpdate(tipoInstalacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoInstalacionDto.getId());			
 		}

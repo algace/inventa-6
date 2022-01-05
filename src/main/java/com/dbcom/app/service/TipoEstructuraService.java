@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoEstructuraDto;
  * 
  * @author jose.vallve
  */
-public interface TipoEstructuraService extends GenericService<TipoEstructuraDto, Short> {
+public interface TipoEstructuraService {
 
 	/**
 	 * Creamos un tipo de estructura sin persistencia
@@ -41,13 +41,6 @@ public interface TipoEstructuraService extends GenericService<TipoEstructuraDto,
 	 * @param tipoEstructuraDto Tipo de estructura a persistir
 	 * @return Tipo de estructura persistido
 	 */
-	TipoEstructuraDto save(final TipoEstructuraDto tipoEstructuraDto);
-		
-	/**
-	 * Actualizamos el tipo de estructura pasado como parámetro
-	 * @param tipoEstructuraDto Tipo de estructura a actualizar
-	 * @return Tipo de estructura actualizado
-	 */
-	TipoEstructuraDto update(final TipoEstructuraDto tipoEstructuraDto);
+	TipoEstructuraDto saveUpdate(final TipoEstructuraDto tipoEstructuraDto);
 	
 }

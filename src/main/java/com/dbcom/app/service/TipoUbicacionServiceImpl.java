@@ -38,6 +38,7 @@ public final class TipoUbicacionServiceImpl implements TipoUbicacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoUbicacionDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoUbicacionDto();
@@ -46,6 +47,7 @@ public final class TipoUbicacionServiceImpl implements TipoUbicacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoUbicacion tipoUbicacionBBDD = this.tipoUbicacionRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoUbicacionServiceImpl implements TipoUbicacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoUbicacionDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoUbicacionServiceImpl implements TipoUbicacionService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoUbicacionDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoUbicacionServiceImpl implements TipoUbicacionService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoUbicacionDto save(final TipoUbicacionDto tipoUbicacionDto) {		
+	@Override
+	public TipoUbicacionDto saveUpdate(final TipoUbicacionDto tipoUbicacionDto) {		
 		
-		TipoUbicacion tipoUbicacion = this.modelMapperUtils.map(tipoUbicacionDto, TipoUbicacion.class);
-	    
-		tipoUbicacion = this.tipoUbicacionRepository.save(tipoUbicacion);	
+		TipoUbicacion tipoUbicacion = this.modelMapperUtils.map(tipoUbicacionDto, TipoUbicacion.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoUbicacion.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoUbicacion, TipoUbicacionDto.class);
+		return this.modelMapperUtils.map(this.tipoUbicacionRepository.save(tipoUbicacion), TipoUbicacionDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoUbicacionDto update(final TipoUbicacionDto tipoUbicacionDto) {		
-		
-		final TipoUbicacion tipoUbicacion = this.modelMapperUtils.map(tipoUbicacionDto, TipoUbicacion.class);
-		
-		TipoUbicacion tipoUbicacionBBDD = this.tipoUbicacionRepository.findById(tipoUbicacion.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoUbicacionBBDD.setNombre(tipoUbicacionDto.getNombre());
-		tipoUbicacionBBDD = this.tipoUbicacionRepository.save(tipoUbicacionBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoUbicacionBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoUbicacionBBDD, TipoUbicacionDto.class);
-	}
-	
 }

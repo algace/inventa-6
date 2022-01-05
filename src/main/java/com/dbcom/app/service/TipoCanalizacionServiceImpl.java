@@ -38,6 +38,7 @@ public final class TipoCanalizacionServiceImpl implements TipoCanalizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoCanalizacionDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoCanalizacionDto();
@@ -46,6 +47,7 @@ public final class TipoCanalizacionServiceImpl implements TipoCanalizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoCanalizacion tipoCanalizacionBBDD = this.tipoCanalizacionRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoCanalizacionServiceImpl implements TipoCanalizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoCanalizacionDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoCanalizacionServiceImpl implements TipoCanalizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoCanalizacionDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,6 +92,7 @@ public final class TipoCanalizacionServiceImpl implements TipoCanalizacionServic
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoCanalizacionDto saveUpdate(final TipoCanalizacionDto tipoCanalizacionDto) {		
 		
 		TipoCanalizacion tipoCanalizacion = this.modelMapperUtils.map(tipoCanalizacionDto, TipoCanalizacion.class);

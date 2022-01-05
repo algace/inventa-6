@@ -33,6 +33,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public PropietarioDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new PropietarioDto();
@@ -41,6 +42,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final Propietario propietarioBBDD = this.propietarioRepository.findById(id)
@@ -54,6 +56,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<PropietarioDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -69,6 +72,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public PropietarioDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -83,6 +87,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public PropietarioDto saveUpdate(final PropietarioDto propietarioDto) {		
 		
 		Propietario propietario = this.modelMapperUtils.map(propietarioDto, Propietario.class);

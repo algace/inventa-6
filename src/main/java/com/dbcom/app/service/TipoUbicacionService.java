@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoUbicacionDto;
  * 
  * @author jose.vallve
  */
-public interface TipoUbicacionService extends GenericService<TipoUbicacionDto, Short> {
+public interface TipoUbicacionService {
 
 	/**
 	 * Creamos un tipo de ubicación sin persistencia
@@ -41,13 +41,6 @@ public interface TipoUbicacionService extends GenericService<TipoUbicacionDto, S
 	 * @param tipoUbicacionDto Tipo de ubicación a persistir
 	 * @return Tipo de ubicación persistido
 	 */
-	TipoUbicacionDto save(final TipoUbicacionDto tipoUbicacionDto);
-		
-	/**
-	 * Actualizamos el tipo de ubicación pasado como parámetro
-	 * @param tipoUbicacionDto Tipo de ubicación a actualizar
-	 * @return Tipo de ubicación actualizado
-	 */
-	TipoUbicacionDto update(final TipoUbicacionDto tipoUbicacionDto);
+	TipoUbicacionDto saveUpdate(final TipoUbicacionDto tipoUbicacionDto);
 	
 }

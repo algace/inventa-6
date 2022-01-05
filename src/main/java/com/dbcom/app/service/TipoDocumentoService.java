@@ -12,7 +12,7 @@ import com.dbcom.app.model.dto.TipoDocumentoDto;
  * 
  * @author jose.vallve
  */
-public interface TipoDocumentoService extends GenericService<TipoDocumentoDto, Short> {
+public interface TipoDocumentoService {
 
 	/**
 	 * Creamos un tipo de documento sin persistencia
@@ -44,14 +44,7 @@ public interface TipoDocumentoService extends GenericService<TipoDocumentoDto, S
 	 * @param tipoDocumentoDto Tipo de documento a persistir
 	 * @return Tipo de documento persistido
 	 */
-	TipoDocumentoDto save(final TipoDocumentoDto tipoDocumentoDto);
-		
-	/**
-	 * Actualizamos el tipo de documento pasado como parámetro
-	 * @param tipoDocumentoDto Tipo de documento a actualizar
-	 * @return Tipo de documento actualizado
-	 */
-	TipoDocumentoDto update(final TipoDocumentoDto tipoDocumentoDto);
+	TipoDocumentoDto saveUpdate(final TipoDocumentoDto tipoDocumentoDto);
 	
 	/**
 	 * Paginación de los tipos de documento

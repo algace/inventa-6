@@ -37,6 +37,7 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public RecursoPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return RecursoPasarelaDto.builder().tiposChasisDisponibles(tipoChasisService.readAll())
@@ -46,6 +47,7 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final RecursoPasarela recursoPasarelaBBDD = this.recursoPasarelaRepository.findById(id)
@@ -59,6 +61,7 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<RecursoPasarelaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public RecursoPasarelaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -92,6 +96,7 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public RecursoPasarelaDto saveUpdate(final RecursoPasarelaDto recursoPasarelaDto) {		
 		
 		RecursoPasarela recursoPasarela = this.modelMapperUtils.map(recursoPasarelaDto, RecursoPasarela.class);

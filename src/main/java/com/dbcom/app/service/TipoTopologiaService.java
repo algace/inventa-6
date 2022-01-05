@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoTopologiaDto;
  * 
  * @author jose.vallve
  */
-public interface TipoTopologiaService extends GenericService<TipoTopologiaDto, Short> {
+public interface TipoTopologiaService {
 
 	/**
 	 * Creamos un tipo de topología sin persistencia
@@ -41,14 +41,7 @@ public interface TipoTopologiaService extends GenericService<TipoTopologiaDto, S
 	 * @param tipoTopologiaDto Tipo de topología a persistir
 	 * @return Tipo de topología persistido
 	 */
-	TipoTopologiaDto save(final TipoTopologiaDto tipoTopologiaDto);
-		
-	/**
-	 * Actualizamos el tipo de topología pasado como parámetro
-	 * @param tipoTopologiaDto Tipo de topología a actualizar
-	 * @return Tipo de topología actualizado
-	 */
-	TipoTopologiaDto update(final TipoTopologiaDto tipoTopologiaDto);
+	TipoTopologiaDto saveUpdate(final TipoTopologiaDto tipoTopologiaDto);
 	
 	/**
 	 * Obtenemos un listado de los tipos de topología teniendo en cuenta el tipo de topología por defecto

@@ -140,7 +140,7 @@ public final class TipoChasisController {
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 			
 			} else {		
-				this.tipoChasisService.save(tipoChasisDto);
+				this.tipoChasisService.saveUpdate(tipoChasisDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 				log.info(LoggerConstants.LOG_SAVE, tipoChasisDto.getId());
 			}
@@ -232,7 +232,7 @@ public final class TipoChasisController {
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 			
 			} else {
-				this.tipoChasisService.update(tipoChasisDto);
+				this.tipoChasisService.saveUpdate(tipoChasisDto);
 				vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 				log.info(LoggerConstants.LOG_UPDATE, tipoChasisDto.getId());			
 			}

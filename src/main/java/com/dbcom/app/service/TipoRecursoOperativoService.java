@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoRecursoOperativoDto;
  * 
  * @author jose.vallve
  */
-public interface TipoRecursoOperativoService extends GenericService<TipoRecursoOperativoDto, Short> {
+public interface TipoRecursoOperativoService {
 
 	/**
 	 * Creamos un tipo de recurso operativo sin persistencia
@@ -41,13 +41,5 @@ public interface TipoRecursoOperativoService extends GenericService<TipoRecursoO
 	 * @param tipoRecursoOperativoDto Tipo de recurso operativo a persistir
 	 * @return Tipo de recurso operativo persistido
 	 */
-	TipoRecursoOperativoDto save(final TipoRecursoOperativoDto tipoRecursoOperativoDto);
-		
-	/**
-	 * Actualizamos el tipo de recurso operativo pasado como parámetro
-	 * @param tipoRecursoOperativoDto Tipo de recurso operativo a actualizar
-	 * @return Tipo de recurso operativo actualizado
-	 */
-	TipoRecursoOperativoDto update(final TipoRecursoOperativoDto tipoRecursoOperativoDto);
-	
+	TipoRecursoOperativoDto saveUpdate(final TipoRecursoOperativoDto tipoRecursoOperativoDto);
 }

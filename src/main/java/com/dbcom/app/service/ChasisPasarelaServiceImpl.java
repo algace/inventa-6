@@ -37,6 +37,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ChasisPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return ChasisPasarelaDto.builder().tiposChasis(tipoChasisService.readAll()).build();
@@ -45,6 +46,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final ChasisPasarela chasisPasarelaBBDD = this.chasisPasarelaRepository.findById(id)
@@ -58,6 +60,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<ChasisPasarelaDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -69,7 +72,8 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 		
 		return chasisPasarelasDto;
 	}
-	
+
+	@Override
 	public List<ChasisPasarelaLiteDto> readAllLite() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -85,6 +89,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ChasisPasarelaDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -102,6 +107,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ChasisPasarelaDto saveUpdate(final ChasisPasarelaDto chasisPasarelaDto) {		
 		
 		ChasisPasarela chasisPasarela = this.modelMapperUtils.map(chasisPasarelaDto, ChasisPasarela.class);

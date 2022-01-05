@@ -38,6 +38,7 @@ public final class TipoInterfazOperacionServiceImpl implements TipoInterfazOpera
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoInterfazOperacionDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoInterfazOperacionDto();
@@ -46,6 +47,7 @@ public final class TipoInterfazOperacionServiceImpl implements TipoInterfazOpera
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoInterfazOperacion tipoInterfazOperacionBBDD = this.tipoInterfazOperacionRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoInterfazOperacionServiceImpl implements TipoInterfazOpera
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoInterfazOperacionDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoInterfazOperacionServiceImpl implements TipoInterfazOpera
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoInterfazOperacionDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoInterfazOperacionServiceImpl implements TipoInterfazOpera
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoInterfazOperacionDto save(final TipoInterfazOperacionDto tipoInterfazOperacionDto) {		
+	@Override
+	public TipoInterfazOperacionDto saveUpdate(final TipoInterfazOperacionDto tipoInterfazOperacionDto) {		
 		
-		TipoInterfazOperacion tipoInterfazOperacion = this.modelMapperUtils.map(tipoInterfazOperacionDto, TipoInterfazOperacion.class);
-	    
-		tipoInterfazOperacion = this.tipoInterfazOperacionRepository.save(tipoInterfazOperacion);	
+		TipoInterfazOperacion tipoInterfazOperacion = this.modelMapperUtils.map(tipoInterfazOperacionDto, TipoInterfazOperacion.class);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoInterfazOperacion.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoInterfazOperacion, TipoInterfazOperacionDto.class);
+		return this.modelMapperUtils.map(this.tipoInterfazOperacionRepository.save(tipoInterfazOperacion), TipoInterfazOperacionDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoInterfazOperacionDto update(final TipoInterfazOperacionDto tipoInterfazOperacionDto) {		
-		
-		final TipoInterfazOperacion tipoInterfazOperacion = this.modelMapperUtils.map(tipoInterfazOperacionDto, TipoInterfazOperacion.class);
-		
-		TipoInterfazOperacion tipoInterfazOperacionBBDD = this.tipoInterfazOperacionRepository.findById(tipoInterfazOperacion.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoInterfazOperacionBBDD.setNombre(tipoInterfazOperacionDto.getNombre());
-		tipoInterfazOperacionBBDD = this.tipoInterfazOperacionRepository.save(tipoInterfazOperacionBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoInterfazOperacionBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoInterfazOperacionBBDD, TipoInterfazOperacionDto.class);
-	}
-	
 }

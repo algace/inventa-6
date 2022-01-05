@@ -132,7 +132,7 @@ public final class TipoDocumentoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoDocumentoService.save(tipoDocumentoDto);
+			this.tipoDocumentoService.saveUpdate(tipoDocumentoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoDocumentoDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoDocumentoController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoDocumentoService.update(tipoDocumentoDto);
+			this.tipoDocumentoService.saveUpdate(tipoDocumentoDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoDocumentoDto.getId());			
 		}

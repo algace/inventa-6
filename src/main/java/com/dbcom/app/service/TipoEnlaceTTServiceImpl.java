@@ -38,6 +38,7 @@ public final class TipoEnlaceTTServiceImpl implements TipoEnlaceTTService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoEnlaceTTDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return new TipoEnlaceTTDto();
@@ -46,6 +47,7 @@ public final class TipoEnlaceTTServiceImpl implements TipoEnlaceTTService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Short id) {			
 		
 		final TipoEnlaceTT tipoEnlaceTTBBDD = this.tipoEnlaceTTRepository.findById(id)
@@ -59,6 +61,7 @@ public final class TipoEnlaceTTServiceImpl implements TipoEnlaceTTService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<TipoEnlaceTTDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -74,6 +77,7 @@ public final class TipoEnlaceTTServiceImpl implements TipoEnlaceTTService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TipoEnlaceTTDto read(final Short id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -88,34 +92,11 @@ public final class TipoEnlaceTTServiceImpl implements TipoEnlaceTTService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public TipoEnlaceTTDto save(final TipoEnlaceTTDto tipoEnlaceTTDto) {		
+	@Override
+	public TipoEnlaceTTDto saveUpdate(final TipoEnlaceTTDto tipoEnlaceTTDto) {		
 		
 		TipoEnlaceTT tipoEnlaceTT = this.modelMapperUtils.map(tipoEnlaceTTDto, TipoEnlaceTT.class);
-	    
-		tipoEnlaceTT = this.tipoEnlaceTTRepository.save(tipoEnlaceTT);	
 		
-		log.info(LoggerConstants.LOG_CREATE, tipoEnlaceTT.getNombre());		
-		
-		return this.modelMapperUtils.map(tipoEnlaceTT, TipoEnlaceTTDto.class);
+		return this.modelMapperUtils.map(this.tipoEnlaceTTRepository.save(tipoEnlaceTT), TipoEnlaceTTDto.class);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public TipoEnlaceTTDto update(final TipoEnlaceTTDto tipoEnlaceTTDto) {		
-		
-		final TipoEnlaceTT tipoEnlaceTT = this.modelMapperUtils.map(tipoEnlaceTTDto, TipoEnlaceTT.class);
-		
-		TipoEnlaceTT tipoEnlaceTTBBDD = this.tipoEnlaceTTRepository.findById(tipoEnlaceTT.getId())
-				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
-		
-		// Actualizamos el registro de bbdd
-		tipoEnlaceTTBBDD.setNombre(tipoEnlaceTTDto.getNombre());
-		tipoEnlaceTTBBDD = this.tipoEnlaceTTRepository.save(tipoEnlaceTTBBDD);		
-		
-		log.info(LoggerConstants.LOG_UPDATE, tipoEnlaceTTBBDD.getId());
-		
-		return this.modelMapperUtils.map(tipoEnlaceTTBBDD, TipoEnlaceTTDto.class);
-	}
-	
 }

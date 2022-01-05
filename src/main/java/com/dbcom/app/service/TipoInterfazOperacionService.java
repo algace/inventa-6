@@ -9,7 +9,7 @@ import com.dbcom.app.model.dto.TipoInterfazOperacionDto;
  * 
  * @author jose.vallve
  */
-public interface TipoInterfazOperacionService extends GenericService<TipoInterfazOperacionDto, Short> {
+public interface TipoInterfazOperacionService {
 
 	/**
 	 * Creamos un tipo de interfaz operación sin persistencia
@@ -41,13 +41,6 @@ public interface TipoInterfazOperacionService extends GenericService<TipoInterfa
 	 * @param tipoInterfazOperacionDto Tipo de interfaz operación a persistir
 	 * @return Tipo de interfaz operación persistido
 	 */
-	TipoInterfazOperacionDto save(final TipoInterfazOperacionDto tipoInterfazOperacionDto);
-		
-	/**
-	 * Actualizamos el tipo de interfaz operación pasado como parámetro
-	 * @param tipoInterfazOperacionDto Tipo de interfaz operación a actualizar
-	 * @return Tipo de interfaz operación actualizado
-	 */
-	TipoInterfazOperacionDto update(final TipoInterfazOperacionDto tipoInterfazOperacionDto);
+	TipoInterfazOperacionDto saveUpdate(final TipoInterfazOperacionDto tipoInterfazOperacionDto);
 	
 }

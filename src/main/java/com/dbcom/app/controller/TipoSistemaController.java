@@ -132,7 +132,7 @@ public class TipoSistemaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 	
 		} else {		
-			this.tiposSistemasService.save(tipoSistemaDto);
+			this.tiposSistemasService.saveUpdate(tipoSistemaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS_SISTEMAS);
 			log.info(LoggerConstants.LOG_SAVE, tipoSistemaDto.getId());
 		}
@@ -227,7 +227,7 @@ public class TipoSistemaController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tiposSistemasService.update(tipoSistemaDto);
+			this.tiposSistemasService.saveUpdate(tipoSistemaDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS_SISTEMAS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoSistemaDto.getId());			
 		}

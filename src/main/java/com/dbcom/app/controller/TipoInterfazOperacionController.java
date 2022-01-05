@@ -132,7 +132,7 @@ public final class TipoInterfazOperacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.tipoInterfazOperacionService.save(tipoInterfazOperacionDto);
+			this.tipoInterfazOperacionService.saveUpdate(tipoInterfazOperacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, tipoInterfazOperacionDto.getId());
 		}
@@ -224,7 +224,7 @@ public final class TipoInterfazOperacionController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.tipoInterfazOperacionService.update(tipoInterfazOperacionDto);
+			this.tipoInterfazOperacionService.saveUpdate(tipoInterfazOperacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, tipoInterfazOperacionDto.getId());			
 		}

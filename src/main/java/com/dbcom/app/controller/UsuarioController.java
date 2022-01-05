@@ -133,7 +133,7 @@ public final class UsuarioController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.usuarioService.save(usuarioDto);
+			this.usuarioService.saveUpdate(usuarioDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_USUARIOS);
 			log.info(LoggerConstants.LOG_SAVE, usuarioDto.getId());
 		}
@@ -225,7 +225,7 @@ public final class UsuarioController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.usuarioService.update(usuarioDto);
+			this.usuarioService.saveUpdate(usuarioDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_USUARIOS);
 			log.info(LoggerConstants.LOG_UPDATE, usuarioDto.getId());			
 		}

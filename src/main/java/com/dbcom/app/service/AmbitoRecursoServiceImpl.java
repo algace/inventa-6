@@ -12,7 +12,6 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AmbitoRecursoRepository;
 import com.dbcom.app.model.dto.AmbitoRecursoDto;
 import com.dbcom.app.model.entity.AmbitoRecurso;
-import com.dbcom.app.model.entity.FuncionPasarela;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +35,7 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public AmbitoRecursoDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		return AmbitoRecursoDto.builder().funcionPasarelas(funcionPasarelasService.readAll()).build();
@@ -44,6 +44,7 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void delete(final Long id) {			
 		
 		final AmbitoRecurso ambitoRecursoBBDD = this.ambitoRecursoRepository.findById(id)
@@ -57,6 +58,7 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<AmbitoRecursoDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
@@ -72,6 +74,7 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public AmbitoRecursoDto read(final Long id) {	
 		
 		log.info(LoggerConstants.LOG_READ);		
@@ -89,6 +92,7 @@ public final class AmbitoRecursoServiceImpl implements AmbitoRecursoService{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public AmbitoRecursoDto saveUpdate(final AmbitoRecursoDto ambitoRecursoDto) {		
 		
 		AmbitoRecurso ambitoRecurso = this.modelMapperUtils.map(ambitoRecursoDto, AmbitoRecurso.class);
