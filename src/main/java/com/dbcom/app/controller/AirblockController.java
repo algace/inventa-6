@@ -15,11 +15,8 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
-import com.dbcom.app.model.entity.Airblock;
 import com.dbcom.app.service.AirblockService;
-import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,16 +49,10 @@ public final class AirblockController {
 	public static final String MAP_READALL_AIRBLOCKS = ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCKS;
 
 	private final AirblockService airblockService;
-	private final SectorATCRepository sectorATCRepository;
-	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public AirblockController(AirblockService airblockService,
-			SectorATCRepository sectorATCRepository,
-			ModelMapperUtils  modelMapperUtils) {
+	public AirblockController(AirblockService airblockService) {
 		this.airblockService = airblockService;
-		this.sectorATCRepository = sectorATCRepository;
-		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -255,19 +246,11 @@ public final class AirblockController {
 	public String deleteGET(@PathVariable("id") final Long id, final Model model) {
 		
 		// Contenido
-		AirblockDto airblockDto = this.airblockService.read(id);
-		Long tipoSectorAsignado = this.sectorATCRepository.countByAirblocks(this.modelMapperUtils.map(airblockDto, Airblock.class));
-		
-		model.addAttribute(ATTRIBUTE_AIRBLOCK, airblockDto);
+		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_AIRBLOCK_PREGUNTA);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
 				MessagesConstants.POPUP_ELIMINAR_AIRBLOCK_NO_PERMITIDO_MENSAJE);
-		if (tipoSectorAsignado > 0) {
-			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
-		} else {
-			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
-		}
 
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
