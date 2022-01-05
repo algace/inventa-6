@@ -17,7 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -68,15 +67,10 @@ public final class SectorATC implements Serializable{
 	@NotNull(message = "{validation.notNull}")
 	private TipoFuenteInformacion tipoFuenteInformacion;
 	
-	@Max(999)
-	@NotNull(message = "{validation.notNull}")
 	private Integer flMin;
 	
-	@Max(999)
-	@NotNull(message = "{validation.notNull}")
 	private Integer flMax;
 	
-	@Size(min = 1, max = 70, message = "{validation.min1max70}")
 	private String descripcion;
 	
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

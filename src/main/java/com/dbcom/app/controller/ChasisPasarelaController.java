@@ -15,9 +15,12 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.TarjetaPasarelaRepository;
 import com.dbcom.app.model.dto.ChasisPasarelaDto;
+import com.dbcom.app.model.entity.ChasisPasarela;
 import com.dbcom.app.service.ChasisPasarelaService;
 import com.dbcom.app.service.TipoChasisService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,11 +49,18 @@ public final class ChasisPasarelaController {
 
 	private final ChasisPasarelaService chasisPasarelaService;
 	private final TipoChasisService tipoChasisService;
+	private final TarjetaPasarelaRepository tarjetaPasarelaRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public ChasisPasarelaController(ChasisPasarelaService chasisPasarelaService, TipoChasisService tipoChasisService) {
+	public ChasisPasarelaController(ChasisPasarelaService chasisPasarelaService,
+			TipoChasisService tipoChasisService,
+			TarjetaPasarelaRepository tarjetaPasarelaRepository,
+			ModelMapperUtils modelMapperUtils) {
 		this.chasisPasarelaService = chasisPasarelaService;
 		this.tipoChasisService = tipoChasisService;
+		this.tarjetaPasarelaRepository = tarjetaPasarelaRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -247,9 +257,19 @@ public final class ChasisPasarelaController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.chasisPasarelaService.read(id));
+		ChasisPasarelaDto chasisPasarelaDto = this.chasisPasarelaService.read(id);
+		Long tarjetaAsignada = this.tarjetaPasarelaRepository.countByChasisPasarelas(this.modelMapperUtils.map(chasisPasarelaDto, ChasisPasarela.class));
+		
+		model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_CHASISPASARELA_NO_PERMITIDO_MENSAJE);
+		if (tarjetaAsignada > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
