@@ -85,7 +85,7 @@
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoUnidadFrecuencia.id}">											    	
-											    	<option th:each="tipoUnidadFrecuencia : ${tiposUnidadFrecuencia}" th:value="${tipoUnidadFrecuencia.id}" th:text="${tipoUnidadFrecuencia.nombre}"></option>
+											    	<option th:each="tipoUnidad : ${tiposUnidadFrecuencia}" th:value="${tipoUnidad.id}" th:text="${tipoUnidad.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoUnidadFrecuencia.id')}" th:errors="*{tipoUnidadFrecuencia.id}"></div>
 									        </div>
@@ -106,7 +106,7 @@
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoBandaFrecuencia.id}">											    	
-											    	<option th:each="tipoBandaFrecuencia : ${tiposBandaFrecuencia}" th:value="${tipoBandaFrecuencia.id}" th:text="${tipoBandaFrecuencia.nombre}"></option>
+											    	<option th:each="tipoBanda : ${tiposBandaFrecuencia}" th:value="${tipoBanda.id}" th:text="${tipoBanda.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoBandaFrecuencia.id')}" th:errors="*{tipoBandaFrecuencia.id}"></div>
 									        </div>
@@ -132,7 +132,7 @@
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoFuenteInformacion.id}">											    	
-											    	<option th:each="tipoFuenteInformacion : ${tiposFuenteInformacion}" th:value="${tipoFuenteInformacion.id}" th:text="${tipoFuenteInformacion.nombre}"></option>
+											    	<option th:each="tipoFuente : ${tiposFuenteInformacion}" th:value="${tipoFuente.id}" th:text="${tipoFuente.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoFuenteInformacion.id')}" th:errors="*{tipoFuenteInformacion.id}"></div>
 									        </div>
@@ -168,6 +168,10 @@
 							<!--/* Botón Aceptar */-->							
 							<input type="submit" class="btn btn-primary" 
 								th:value="#{html.boton.aceptar}" th:hidden="${estaBotonAceptarActivo} ? 'false' : 'true'">
+							
+							<!--/* Botón Eliminar */-->							
+							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
+								th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 
 						</div>
 						<!--/* FIN - Botonera */-->
@@ -202,7 +206,6 @@
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/jquery-mask-plugin/1.14.15/dist/jquery.mask.js}"></script>
-		<script type="text/javascript" th:src="@{/js/frecuencia.js}"></script>
 		
 		<!--/* INICIO - Apertura del menú */-->
 		<script th:inline="javascript">
