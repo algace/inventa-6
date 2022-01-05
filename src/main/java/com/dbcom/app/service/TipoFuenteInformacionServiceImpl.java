@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
@@ -124,10 +123,10 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoFuenteInformacionDto> getTipoFuenteInformacionConValorPorDefecto() {
+	public List<TipoFuenteInformacionDto> getTiposFuenteInformacionConValorPorDefecto(String nombreFuenteInformacion) {
 
 		TipoFuenteInformacion primerTipoFuenteInformacion;
-		TipoFuenteInformacion tipoFuenteInformacionPorDefecto = tipoFuenteInformacionRepository.findByNombre(ApplicationConstants.FUENTE_DATOS_POR_DEFECTO);
+		TipoFuenteInformacion tipoFuenteInformacionPorDefecto = tipoFuenteInformacionRepository.findByNombre(nombreFuenteInformacion);
 		List<TipoFuenteInformacion> listaTiposFuenteInformacion = new ArrayList<TipoFuenteInformacion>();
 		
 		if (tipoFuenteInformacionPorDefecto != null) {

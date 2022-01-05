@@ -45,4 +45,20 @@ public interface TipoUnidadFrecuenciaService extends GenericService<TipoUnidadFr
 	 */
 	TipoUnidadFrecuenciaDto update(final TipoUnidadFrecuenciaDto tipoUnidadFrecuenciaDto);
 	
+	/**
+	 * Obtenemos un listado de los tipos de unidad de frecuencia teniendo en cuenta el tipo de unidad por defecto
+	 * Si el tipo de unidad por defecto existe en BBDD se debe poner el primero de la lista. Si no existe en BBDD
+	 * se deberá poner como primer elemento de la lista un tipo de unidad de frecuencia con sus campos vacíos
+	 * @return Listado
+	 */
+	List<TipoUnidadFrecuenciaDto> getTipoFuenteInformacionConValorPorDefecto(String nombreUnidadFrecuencia);
+	
+	/**
+	 * Obtenemos un listado de los tipos de unidades de frecuencia teniendo en cuenta el tipo de unidad por defecto
+	 * que se recibirá como parámetro
+	 * Si el tipo de unidad por defecto existe en BBDD se debe poner el primero de la lista. Si no existe en BBDD
+	 * se deberá poner como primer elemento de la lista un tipo de unidad de frecuencia con sus campos vacíos
+	 * @return Listado
+	 */
+	List<TipoUnidadFrecuenciaDto> getTiposUnidadFrecuenciaConValorPorDefecto(String nombreUnidadFrecuencia);
 }

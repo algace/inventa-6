@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.FrecuenciaDto;
 import com.dbcom.app.service.FrecuenciaService;
+import com.dbcom.app.service.TipoBandaFrecuenciaService;
+import com.dbcom.app.service.TipoFuenteInformacionService;
+import com.dbcom.app.service.TipoUnidadFrecuenciaService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +34,9 @@ public final class FrecuenciaController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_FRECUENCIA = "frecuencia";
+	private static final String ATTRIBUTE_TIPOS_FUENTE_INFORMACION = "tiposFuenteInformacion";
+	private static final String ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA = "tiposUnidadFrecuencia";
+	private static final String ATTRIBUTE_TIPOS_BANDA_FRECUENCIA = "tiposBandaFrecuencia";
 
 	// Vistas	
 	private static final String VIEW_FRECUENCIA = ControllerConstants.MAP_PATH_MENU + ATTRIBUTE_FRECUENCIA;
@@ -48,10 +55,19 @@ public final class FrecuenciaController {
 	public static final String MAP_READALL_FRECUENCIAS = ControllerConstants.MAP_ACTION_SLASH + VIEW_FRECUENCIAS;
 
 	private final FrecuenciaService frecuenciaService;
-	
+	private final TipoUnidadFrecuenciaService tipoUnidadFrecuenciaService;
+	private final TipoBandaFrecuenciaService tipoBandaFrecuenciaService;
+	private final TipoFuenteInformacionService tipoFuenteInformacionService;
+		
 	@Autowired
-	public FrecuenciaController(FrecuenciaService frecuenciaService) {
+	public FrecuenciaController(FrecuenciaService frecuenciaService,
+			TipoUnidadFrecuenciaService tipoUnidadFrecuenciaService,
+			TipoBandaFrecuenciaService tipoBandaFrecuenciaService,
+			TipoFuenteInformacionService tipoFuenteInformacionService) {
 		this.frecuenciaService = frecuenciaService;
+		this.tipoUnidadFrecuenciaService = tipoUnidadFrecuenciaService;
+		this.tipoBandaFrecuenciaService = tipoBandaFrecuenciaService;
+		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 	}
 	
 	/**
@@ -86,6 +102,15 @@ public final class FrecuenciaController {
 
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_FRECUENCIA, this.frecuenciaService.create());
+		
+		//Obtenemos los tipos de unidades de frecuencia
+		model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
+		
+		//Obtenemos los tipos de bandas de frecuencia
+		model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
+
+		//Obtenemos los tipos de fuentes de información
+		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -126,6 +151,15 @@ public final class FrecuenciaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_FRECUENCIA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIAS);
 		
+			//Obtenemos los tipos de unidades de frecuencia
+			model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
+
+			//Obtenemos los tipos de bandas de frecuencia
+			model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
+
+			//Obtenemos los tipos de fuentes de información
+			model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
+			
 			vista = VIEW_FRECUENCIA;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
@@ -178,6 +212,15 @@ public final class FrecuenciaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_FRECUENCIA, this.frecuenciaService.read(id));
 		
+		//Obtenemos los tipos de unidades de frecuencia
+		model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
+
+		//Obtenemos los tipos de bandas de frecuencia
+		model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
+
+		//Obtenemos los tipos de fuentes de información
+		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
+
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -218,6 +261,15 @@ public final class FrecuenciaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_FRECUENCIA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIAS);
 			
+			//Obtenemos los tipos de unidades de frecuencia
+			model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
+
+			//Obtenemos los tipos de bandas de frecuencia
+			model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
+
+			//Obtenemos los tipos de fuentes de información
+			model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
+
 			vista = VIEW_FRECUENCIA;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		

@@ -14,4 +14,5 @@ import com.dbcom.app.model.entity.TipoBandaFrecuencia;
 @Repository
 public interface TipoBandaFrecuenciaRepository extends JpaRepository<TipoBandaFrecuencia, Short> {
 	
+	public TipoBandaFrecuencia findByNombre(String nombre);
 }

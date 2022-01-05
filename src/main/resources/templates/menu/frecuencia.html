@@ -9,12 +9,15 @@
 		<!--/* INICIO - CSS */-->
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
 		
 		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/formulario.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/botoneraTabla.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/dataTable.css}">
 		<!--/* FIN - CSS */-->
 		
 		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
@@ -70,52 +73,80 @@
 										<div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
 									        <div class="col-sm-6">
-									            <input id="usuario" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
+									            <input id="nombre" type="text" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 									        </div>										        	
 		       							 </div>
+		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.unidad}"></div> 
+									        <div class="col-sm-2" th:text="#{html.label.unidad}"></div>
 									        <div class="col-sm-6">
-									            <input id="local" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
-		       							 </div>
+											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoUnidadFrecuencia.id}">											    	
+											    	<option th:each="tipoUnidadFrecuencia : ${tiposUnidadFrecuencia}" th:value="${tipoUnidadFrecuencia.id}" th:text="${tipoUnidadFrecuencia.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoUnidadFrecuencia.id')}" th:errors="*{tipoUnidadFrecuencia.id}"></div>
+									        </div>
+									     </div>
+									     
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.valor}"></div> 
+											<div class="col-sm-2" th:text="#{html.label.valor}"></div>
 									        <div class="col-sm-6">
-									            <input id="contrasegna" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
+									            <input id="valor" type="number" 
+									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:field="*{valor}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></div>
+									        </div>										        	
 		       							 </div>
+		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.banda}"></div> 
+									        <div class="col-sm-2" th:text="#{html.label.banda}"></div>
 									        <div class="col-sm-6">
-									            <input id="repetirContrasegna" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
-		       							 </div>
+											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoBandaFrecuencia.id}">											    	
+											    	<option th:each="tipoBandaFrecuencia : ${tiposBandaFrecuencia}" th:value="${tipoBandaFrecuencia.id}" th:text="${tipoBandaFrecuencia.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoBandaFrecuencia.id')}" th:errors="*{tipoBandaFrecuencia.id}"></div>
+									        </div>
+									     </div>
+									     
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.fechaPublicacion}"></div> 
-									        <div class="col-sm-6">
-									            <input id="apellidos" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
+											<div class="col-sm-2" th:text="#{html.label.fechaPublicacion}"></div>
+											<div class="col-sm-6">
+								                <div class="input-group date" id="datetimepickerFecha" data-target-input="nearest">
+								                    <input type="text" data-target="#datetimepickerFecha" 
+								                    	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+								                    	th:field="*{fechaPublicacion}" th:disabled="${esCampoSoloLectura} ? 'true'"/>
+								                    <div class="input-group-append" data-target="#datetimepickerFecha" data-toggle="datetimepicker">
+								                        <div class="input-group-text"><i class="far fa-calendar"></i></div>
+								                    </div>
+								                </div>
+									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('fechaPublicacion')}" th:errors="*{fechaPublicacion}"></div>
+									        </div>
 		       							 </div>
+		       							 
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.fuenteDatos}"></div> 
+									        <div class="col-sm-2" th:text="#{html.label.tipoFuenteInformacion}"></div>
 									        <div class="col-sm-6">
-									            <input id="apellidos" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
-		       							 </div>
+											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoFuenteInformacion.id}">											    	
+											    	<option th:each="tipoFuenteInformacion : ${tiposFuenteInformacion}" th:value="${tipoFuenteInformacion.id}" th:text="${tipoFuenteInformacion.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoFuenteInformacion.id')}" th:errors="*{tipoFuenteInformacion.id}"></div>
+									        </div>
+									     </div>
+									     
 		       							 <div class="row align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.observaciones}"></div> 
+											<div class="col-sm-2" th:text="#{html.label.observaciones}"></div>
 									        <div class="col-sm-6">
-									            <input id="apellidos" type="text"
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"> 
-									        </div>	
+									            <input id="observaciones" type="text" 
+									            	class="form-control"
+									            	th:field="*{observaciones}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									        </div>										        	
 		       							 </div>
+		       							 
 									</div>
 								</div>
 							</div>
@@ -164,6 +195,8 @@
 		<!--/* INICIO - JS */-->
 		<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/momentjs/2.24.0/min/moment-with-locales.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>			
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-select/js/dataTables.select.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
@@ -177,6 +210,6 @@
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
-				
+		<script type="text/javascript" th:src="@{/js/frecuencia.js}"></script>
 	</body>
 </html>

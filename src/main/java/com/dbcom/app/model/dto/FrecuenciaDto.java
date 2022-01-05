@@ -1,7 +1,14 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,22 +36,26 @@ public final class FrecuenciaDto implements Serializable {
 	@Size(min = 1, max = 70, message = "{validation.min1max70}")
 	private String nombre;
 	 
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
-	private String valor;
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private TipoUnidadFrecuenciaLiteDto tipoUnidadFrecuencia;
+	
+	@NotNull(message = "{validation.notNull}")
+	@NumberFormat(pattern = "###,###.##")
+	private Double valor;
 
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
-	private String unidad;
-
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
-	private String banda;
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private TipoBandaFrecuenciaLiteDto tipoBandaFrecuencia;
 	
-	@Size(max = 250, message = "{validation.max250}")
-	private String fechaPublicacion;
+	@NotNull(message = "{validation.notNull}")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fechaPublicacion;
 	
-	@Size(max = 250, message = "{validation.max250}")
-	private String fuente;
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private TipoFuenteInformacionLiteDto tipoFuenteInformacion;
 	
-	@Size(max = 250, message = "{validation.max250}")
 	private String observaciones;
 	
 }

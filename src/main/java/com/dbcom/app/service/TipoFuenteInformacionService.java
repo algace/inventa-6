@@ -52,10 +52,11 @@ public interface TipoFuenteInformacionService extends GenericService<TipoFuenteI
 	
 	/**
 	 * Obtenemos un listado de los tipos de fuentes de información teniendo en cuenta el tipo de fuente por defecto
+	 * que se recibirá como parámetro
 	 * Si el tipo de fuente por defecto existe en BBDD se debe poner el primero de la lista. Si no existe en BBDD
-	 * se deberá poner como primer elemento de la lista un tipo de fuente de informacióncon sus campos vacíos
+	 * se deberá poner como primer elemento de la lista un tipo de fuente de información con sus campos vacíos
 	 * @return Listado
 	 */
-	List<TipoFuenteInformacionDto> getTipoFuenteInformacionConValorPorDefecto();
+	List<TipoFuenteInformacionDto> getTiposFuenteInformacionConValorPorDefecto(String nombreFuenteInformacion);
 	
 }

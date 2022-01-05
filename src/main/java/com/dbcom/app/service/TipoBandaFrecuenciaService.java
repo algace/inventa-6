@@ -50,4 +50,12 @@ public interface TipoBandaFrecuenciaService extends GenericService<TipoBandaFrec
 	 */
 	TipoBandaFrecuenciaDto update(final TipoBandaFrecuenciaDto tipoBandaFrecuenciaDto);
 	
+	/**
+	 * Obtenemos un listado de los tipos de bandas de frecuencia teniendo en cuenta el tipo de banda por defecto
+	 * que se recibirá como parámetro
+	 * Si el tipo de banda por defecto existe en BBDD se debe poner el primero de la lista. Si no existe en BBDD
+	 * se deberá poner como primer elemento de la lista un tipo de banda de frecuencia con sus campos vacíos
+	 * @return Listado
+	 */
+	List<TipoBandaFrecuenciaDto> getTiposBandaFrecuenciaConValorPorDefecto(String nombreBandaFrecuencia);
 }

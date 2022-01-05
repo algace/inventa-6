@@ -13,4 +13,5 @@ import com.dbcom.app.model.entity.TipoUnidadFrecuencia;
 @Repository
 public interface TipoUnidadFrecuenciaRepository extends JpaRepository<TipoUnidadFrecuencia, Short> {
 
+	public TipoUnidadFrecuencia findByNombre(String nombre);
 }

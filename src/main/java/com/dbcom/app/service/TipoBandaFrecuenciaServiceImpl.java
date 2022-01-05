@@ -2,6 +2,7 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,6 +117,27 @@ public final class TipoBandaFrecuenciaServiceImpl implements TipoBandaFrecuencia
 		log.info(LoggerConstants.LOG_UPDATE, tipoBandaFrecuenciaBBDD.getId());
 		
 		return this.modelMapperUtils.map(tipoBandaFrecuenciaBBDD, TipoBandaFrecuenciaDto.class);
+	}
+
+	@Override
+	public List<TipoBandaFrecuenciaDto> getTiposBandaFrecuenciaConValorPorDefecto(String nombreBandaFrecuencia) {
+
+		TipoBandaFrecuencia primerTipoBandaFrecuencia;
+		TipoBandaFrecuencia tipoBandaFrecuenciaPorDefecto = tipoBandaFrecuenciaRepository.findByNombre(nombreBandaFrecuencia);
+		List<TipoBandaFrecuencia> listaTiposBandaFrecuencia = new ArrayList<TipoBandaFrecuencia>();
+		
+		if (tipoBandaFrecuenciaPorDefecto != null) {
+			primerTipoBandaFrecuencia = tipoBandaFrecuenciaPorDefecto;
+		} else {
+			primerTipoBandaFrecuencia = TipoBandaFrecuencia.builder().build();
+		}
+		listaTiposBandaFrecuencia.add(primerTipoBandaFrecuencia);
+		listaTiposBandaFrecuencia.addAll(tipoBandaFrecuenciaRepository.findAll()
+				                                          .stream()
+				                                          .filter(tipoBandaFrecuencia -> !tipoBandaFrecuencia.equals(primerTipoBandaFrecuencia))
+				                                          .collect(Collectors.toList()));
+		
+		return this.modelMapperUtils.mapAll2List(listaTiposBandaFrecuencia, TipoBandaFrecuenciaDto.class);
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
@@ -152,7 +153,7 @@ public class SectorATCController {
 			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
 			
 			//se recupera la lista de tipos de fuentes de informacion con el valor por defecto
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTipoFuenteInformacionConValorPorDefecto());
+			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC));
 			sectorATCDto.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTiposFuenteInformacion().get(0), TipoFuenteInformacionLiteDto.class));
 			
 			//se recupera la lista de regiones operativas con el valor por defecto
@@ -260,7 +261,7 @@ public class SectorATCController {
 			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
 			
 			//se recupera la lista de tipos de fuentes de informacion con el valor por defecto
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTipoFuenteInformacionConValorPorDefecto());
+			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC));
 			sectorATCDto.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTiposFuenteInformacion().get(0), TipoFuenteInformacionLiteDto.class));
 			
 			//se recupera la lista de regiones operativas con el valor por defecto

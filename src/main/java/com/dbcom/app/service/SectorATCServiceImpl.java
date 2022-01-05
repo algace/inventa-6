@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
@@ -59,7 +60,7 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		log.info(LoggerConstants.LOG_CREATE);
 				
 		List<RegionOperativaDto> listaRegionesDisponibles = regionOperativaService.getRegionesOperativasConValorPorDefecto();
-		List<TipoFuenteInformacionDto> listaTiposFuenteInformacionDisponibles = tipoFuenteInformacionService.getTipoFuenteInformacionConValorPorDefecto();
+		List<TipoFuenteInformacionDto> listaTiposFuenteInformacionDisponibles = tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC);
 		
 		return  SectorATCDto.builder()
 				.tiposSectorATC(tipoSectorATCService.readAll())

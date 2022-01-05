@@ -112,10 +112,10 @@ public final class FrecuenciaServiceImpl implements FrecuenciaService {
 		// Actualizamos el registro de bbdd
 		frecuenciaBBDD.setNombre(frecuenciaBBDD.getNombre());
 		frecuenciaBBDD.setValor(frecuenciaBBDD.getValor());
-		frecuenciaBBDD.setUnidad(frecuenciaBBDD.getUnidad());		
-		frecuenciaBBDD.setBanda(frecuenciaBBDD.getBanda());
+		frecuenciaBBDD.setTipoUnidadFrecuencia(frecuenciaBBDD.getTipoUnidadFrecuencia());
+		frecuenciaBBDD.setTipoBandaFrecuencia(frecuenciaBBDD.getTipoBandaFrecuencia());
 		frecuenciaBBDD.setFechaPublicacion(frecuenciaBBDD.getFechaPublicacion());
-		frecuenciaBBDD.setFuente(frecuenciaBBDD.getFuente());
+		frecuenciaBBDD.setTipoFuenteInformacion(frecuenciaBBDD.getTipoFuenteInformacion());
 		frecuenciaBBDD.setObservaciones(frecuenciaBBDD.getObservaciones());
 		frecuenciaBBDD = this.frecuenciaRepository.save(frecuenciaBBDD);		
 		

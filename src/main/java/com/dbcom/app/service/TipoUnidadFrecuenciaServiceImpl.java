@@ -2,6 +2,7 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +101,48 @@ public class TipoUnidadFrecuenciaServiceImpl implements TipoUnidadFrecuenciaServ
 		log.info(LoggerConstants.LOG_UPDATE, tipoUnidadFrecuenciaBBDD.getId());
 		
 		return this.modelMapperUtils.map(tipoUnidadFrecuenciaBBDD, TipoUnidadFrecuenciaDto.class);
+	}
+
+	@Override
+	public List<TipoUnidadFrecuenciaDto> getTipoFuenteInformacionConValorPorDefecto(String nombreUnidadFrecuencia) {
+
+		TipoUnidadFrecuencia primerTipoUnidadFrecuencia;
+		TipoUnidadFrecuencia tipoUnidadFrecuenciaPorDefecto = tipoUnidadFrecuenciaRepository.findByNombre(nombreUnidadFrecuencia);
+		List<TipoUnidadFrecuencia> listaTiposUnidadFrecuencia = new ArrayList<TipoUnidadFrecuencia>();
+		
+		if (tipoUnidadFrecuenciaPorDefecto != null) {
+			primerTipoUnidadFrecuencia = tipoUnidadFrecuenciaPorDefecto;
+		} else {
+			primerTipoUnidadFrecuencia = TipoUnidadFrecuencia.builder().build();
+		}
+		listaTiposUnidadFrecuencia.add(primerTipoUnidadFrecuencia);
+		listaTiposUnidadFrecuencia.addAll(tipoUnidadFrecuenciaRepository.findAll()
+				                                          .stream()
+				                                          .filter(tipoUnidadFrecuencia -> !tipoUnidadFrecuencia.equals(primerTipoUnidadFrecuencia))
+				                                          .collect(Collectors.toList()));
+
+		return this.modelMapperUtils.mapAll2List(listaTiposUnidadFrecuencia, TipoUnidadFrecuenciaDto.class);
+	}
+
+	@Override
+	public List<TipoUnidadFrecuenciaDto> getTiposUnidadFrecuenciaConValorPorDefecto(String nombreUnidadFrecuencia) {
+
+		TipoUnidadFrecuencia primerTipoUnidadFrecuencia;
+		TipoUnidadFrecuencia tipoUnidadFrecuenciaPorDefecto = tipoUnidadFrecuenciaRepository.findByNombre(nombreUnidadFrecuencia);
+		List<TipoUnidadFrecuencia> listaTiposUnidadFrecuencia = new ArrayList<TipoUnidadFrecuencia>();
+		
+		if (tipoUnidadFrecuenciaPorDefecto != null) {
+			primerTipoUnidadFrecuencia = tipoUnidadFrecuenciaPorDefecto;
+		} else {
+			primerTipoUnidadFrecuencia = TipoUnidadFrecuencia.builder().build();
+		}
+		listaTiposUnidadFrecuencia.add(primerTipoUnidadFrecuencia);
+		listaTiposUnidadFrecuencia.addAll(tipoUnidadFrecuenciaRepository.findAll()
+				                                          .stream()
+				                                          .filter(tipoUnidadFrecuencia -> !tipoUnidadFrecuencia.equals(primerTipoUnidadFrecuencia))
+				                                          .collect(Collectors.toList()));
+		
+		return this.modelMapperUtils.mapAll2List(listaTiposUnidadFrecuencia, TipoUnidadFrecuenciaDto.class);
 	}
 
 }
