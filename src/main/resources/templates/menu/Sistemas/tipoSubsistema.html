@@ -114,15 +114,18 @@
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
 									        </div>										        	
 		       							 </div>
-		       							 <div class="row  align-items-center">
-											<div class="col-sm-2" th:text="#{html.label.interfazOperacion}"></div>
+		       							 <div class="row align-items-center">
+									        <div class="col-sm-2" th:text="#{html.label.interfazOperacion}"></div>
 									        <div class="col-sm-6">
-									            <input type="text"
-									            	th:class="form-control"
-									            	th:field="*{interfazOperacion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('interfazOperacion')}" th:errors="*{interfazOperacion}"></div>
-									        </div>										        	
-		       							 </div>							
+											    <select th:class="form-control" 
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoInterfazOperacion.id}">
+											    	<option th:value="0"></option>
+											    	<option th:each="tipoInterfazOperacion : *{tiposInterfazOperacion}" th:value="${tipoInterfazOperacion.id}" th:text="${tipoInterfazOperacion.nombre}"></option>
+											    </select>
+											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoInterfazOperacion.id')}" th:errors="*{tipoInterfazOperacion.id}"></div>
+									        </div>
+									     </div>
+									     							
 									</div>
 								</div>
 							</div>

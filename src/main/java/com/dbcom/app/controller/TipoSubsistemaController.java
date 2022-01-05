@@ -17,6 +17,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
+import com.dbcom.app.service.TipoInterfazOperacionService;
 import com.dbcom.app.service.TipoSistemaService;
 import com.dbcom.app.service.TipoSubsistemaService;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -51,14 +52,17 @@ public class TipoSubsistemaController {
 	public static final String MAP_READALL_TIPOS_SUBSISTEMAS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS_SUBSISTEMAS;
 		
 	private final TipoSubsistemaService tiposSubsistemasService;
+	private final TipoInterfazOperacionService tipoInterfazOperacionService;
 	private final TipoSistemaService tiposSistemasService;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public TipoSubsistemaController(TipoSubsistemaService tiposSubsistemasService,
+			TipoInterfazOperacionService tipoInterfazOperacionService,
 			TipoSistemaService tiposSistemasService,
 			ModelMapperUtils modelMapper) {
 		this.tiposSubsistemasService = tiposSubsistemasService;
+		this.tipoInterfazOperacionService = tipoInterfazOperacionService;
 		this.tiposSistemasService = tiposSistemasService;
 		this.modelMapperUtils = modelMapper;
 	}
@@ -134,6 +138,10 @@ public class TipoSubsistemaController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO_SUBSISTEMA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
+			
+			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y poner a null el id de tipo de interfaz de operación
+			tipoSubsistemaDto.setTiposInterfazOperacion(tipoInterfazOperacionService.readAll());
+			tipoSubsistemaDto.getTipoInterfazOperacion().setId(null);
 			
 			//Se debe recuperar de nuevo la lista de sistemas disponibles y poner a null el id del sistema
 			tipoSubsistemaDto.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
@@ -231,6 +239,10 @@ public class TipoSubsistemaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO_SUBSISTEMA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
 		
+			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y poner a null el id de tipo de interfaz de operación
+			tipoSubsistemaDto.setTiposInterfazOperacion(tipoInterfazOperacionService.readAll());
+			tipoSubsistemaDto.getTipoInterfazOperacion().setId(null);
+			
 			//Se debe recuperar de nuevo la lista de sistemas disponibles y poner a null el id del sistema
 			tipoSubsistemaDto.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
 			tipoSubsistemaDto.getTipoSistema().setId(null);

@@ -47,7 +47,7 @@ public class TipoSubsistema implements Serializable {
 	
 	private String descripcion;
 	
-	private String interfazOperacion;
+	private TipoInterfazOperacion tipoInterfazOperacion;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="sistema_id")

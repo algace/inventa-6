@@ -40,11 +40,14 @@ public class TipoSubsistemaDto implements Serializable {
 	
 	private String descripcion;
 	
-	private String interfazOperacion;
+	private TipoInterfazOperacionDto tipoInterfazOperacion;
 	
 	@NotNull(message = "{validation.notNull}")
 	@Valid
 	private TipoSistemaLiteDto tipoSistema;
+	
+	@Builder.Default
+	private List<TipoInterfazOperacionDto> tiposInterfazOperacion = new ArrayList<>();
 	
 	@Builder.Default
 	private List<TipoSistemaLiteDto> tiposSistemasDisponibles = new ArrayList<>();
