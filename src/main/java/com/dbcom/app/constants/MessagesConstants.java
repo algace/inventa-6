@@ -33,6 +33,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_AMBITORECURSO_PREGUNTA;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA;
+	public static String POPUP_ELIMINAR_EQUIPAMIENTO_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_FRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_NO_PERMITIDO_MENSAJE;
@@ -122,6 +123,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_APLICACION_PREGUNTA = texto;
 	}
 
+	@Value("${html.label.eliminar.equipamiento.no.permitido.mensaje}")
+	public void setMessagePopupEliminarEquipamientoNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_EQUIPAMIENTO_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.equipamiento.pregunta}")
 	public void setMessagePopupEliminarEquipamientoPregunta(final String texto) {
 		POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA = texto;

@@ -17,6 +17,7 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dto.EquipamientoDto;
 import com.dbcom.app.service.EquipamientoService;
 import com.dbcom.app.service.TipoDocumentoService;
@@ -51,11 +52,14 @@ public final class EquipamientoController {
 	public static final String MAP_READALL_EQUIPAMIENTOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTOS;
 
 	private final EquipamientoService equipamientoService;
+	private final AplicacionSWRepository aplicacionSWRepository;
 	
 	@Autowired
 	public EquipamientoController(EquipamientoService equipamientoService,
-			TipoDocumentoService tipoDocumentoService) {
+			TipoDocumentoService tipoDocumentoService,
+			AplicacionSWRepository aplicacionSWRepository) {
 		this.equipamientoService = equipamientoService;
+		this.aplicacionSWRepository = aplicacionSWRepository;
 	}
 	
 	/**
@@ -267,9 +271,19 @@ public final class EquipamientoController {
 	public String deleteGET(@PathVariable("id") final Long id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.read(id));
+		EquipamientoDto equipamientoDto = this.equipamientoService.read(id);
+		Long equipamientoAsignado = this.aplicacionSWRepository.countAplicacionesWithEquipamiento(equipamientoDto.getId());
+		
+		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, equipamientoDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_EQUIPAMIENTO_NO_PERMITIDO_MENSAJE);
+		if (equipamientoAsignado > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
