@@ -48,6 +48,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_SECTORATC_PREGUNTA;
 	public static String POPUP_ELIMINAR_SERVICIORADIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TARJETAPASARELA_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CANALIZACION_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_CAPACIDADENLACETT_PREGUNTA;
@@ -84,6 +85,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_TIPO_TOPOLOGIA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_TOPOLOGIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_UBICACION_PREGUNTA;
+	public static String POPUP_ELIMINAR_TIPO_UNIDADFRECUENCIA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_TIPO_UNIDADFRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_USOANTENA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_USOTIRADA_PREGUNTA;
@@ -205,6 +207,11 @@ public final class MessagesConstants {
 		POPUP_ELIMINAR_TIPO_DOCUMENTO_AVISO = texto;
 	}
 
+	@Value("${html.label.eliminar.tipoBandaFrecuencia.no.permitido.mensaje}")
+	public void setMessagePopupEliminarTipoBandaFrecuenciaNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
 	@Value("${html.label.eliminar.tipoBandaFrecuencia.pregunta}")
 	public void setMessagePopupEliminarTipoBandaFrecuenciaPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_PREGUNTA = texto;
@@ -378,6 +385,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.tipoUbicacion.pregunta}")
 	public void setMessagePopupEliminarTipoUbicacionPregunta(final String texto) {
 		POPUP_ELIMINAR_TIPO_UBICACION_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.unidadFrecuencia.no.permitido.mensaje}")
+	public void setMessagePopupEliminarUnidadFrecuenciaNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_TIPO_UNIDADFRECUENCIA_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.tipoUnidadFrecuencia.pregunta}")

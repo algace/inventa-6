@@ -15,6 +15,7 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.FrecuenciaRepository;
 import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
 import com.dbcom.app.model.entity.TipoFuenteInformacion;
@@ -53,14 +54,17 @@ public final class TipoFuenteInformacionController {
 
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
 	private final SectorATCRepository sectorATCRepository;
+	private final FrecuenciaRepository frecuenciaRepository;
 	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
 	public TipoFuenteInformacionController(TipoFuenteInformacionService tipoFuenteInformacionService,
 			SectorATCRepository sectorATCRepository,
+			FrecuenciaRepository frecuenciaRepository,
 			ModelMapperUtils  modelMapperUtils) {
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 		this.sectorATCRepository = sectorATCRepository;
+		this.frecuenciaRepository = frecuenciaRepository;
 		this.modelMapperUtils = modelMapperUtils;
 	}
 	
@@ -252,14 +256,15 @@ public final class TipoFuenteInformacionController {
 		
 		// Contenido
 		TipoFuenteInformacionDto tipoFuenteInformacionDto = this.tipoFuenteInformacionService.read(id);
-		Long tipoFuenteInformacionAsignado = this.sectorATCRepository.countByTipoFuenteInformacion(this.modelMapperUtils.map(tipoFuenteInformacionDto, TipoFuenteInformacion.class));
-				
+		Long tipoFuenteInformacionAsignadoSector = this.sectorATCRepository.countByTipoFuenteInformacion(this.modelMapperUtils.map(tipoFuenteInformacionDto, TipoFuenteInformacion.class));
+		Long tipoFuenteInformacionAsignadoFrecuencia = this.frecuenciaRepository.countByTipoFuenteInformacion(this.modelMapperUtils.map(tipoFuenteInformacionDto, TipoFuenteInformacion.class));
+		
 		model.addAttribute(ATTRIBUTE_TIPO, tipoFuenteInformacionDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_PREGUNTA);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_FUENTEINFORMACION_NO_PERMITIDO_MENSAJE);
-		if (tipoFuenteInformacionAsignado > 0) {
+		if ((tipoFuenteInformacionAsignadoSector > 0) || (tipoFuenteInformacionAsignadoFrecuencia > 0)) {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
 		} else {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
