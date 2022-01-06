@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.FrecuenciaRepository;
 import com.dbcom.app.model.dto.TipoUnidadFrecuenciaDto;
+import com.dbcom.app.model.entity.TipoUnidadFrecuencia;
 import com.dbcom.app.service.TipoUnidadFrecuenciaService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,10 +52,16 @@ public class TipoUnidadFrecuenciaController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;
 	
 	private final TipoUnidadFrecuenciaService tipoUnidadFrecuenciaService;
+	private final FrecuenciaRepository frecuenciaRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public TipoUnidadFrecuenciaController(TipoUnidadFrecuenciaService tipoUnidadFrecuenciaService) {
+	public TipoUnidadFrecuenciaController(TipoUnidadFrecuenciaService tipoUnidadFrecuenciaService,
+			FrecuenciaRepository frecuenciaRepository,
+			ModelMapperUtils modelMapperUtils) {
 		this.tipoUnidadFrecuenciaService = tipoUnidadFrecuenciaService;
+		this.frecuenciaRepository = frecuenciaRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 
 	
@@ -243,9 +252,19 @@ public class TipoUnidadFrecuenciaController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.tipoUnidadFrecuenciaService.read(id));
+		TipoUnidadFrecuenciaDto tipoUnidadFrecuenciaDto = this.tipoUnidadFrecuenciaService.read(id);
+		Long tipoUnidadFrecuenciaAsignado = this.frecuenciaRepository.countByTipoUnidadFrecuencia(this.modelMapperUtils.map(tipoUnidadFrecuenciaDto, TipoUnidadFrecuencia.class));
+		
+		model.addAttribute(ATTRIBUTE_TIPO, tipoUnidadFrecuenciaDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_UNIDADFRECUENCIA_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_TIPO_UNIDADFRECUENCIA_NO_PERMITIDO_MENSAJE);
+		if (tipoUnidadFrecuenciaAsignado > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
