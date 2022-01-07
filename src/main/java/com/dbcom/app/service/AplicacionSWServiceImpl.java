@@ -18,8 +18,6 @@ import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 import com.dbcom.app.model.dto.EquipamientoLiteDto;
 import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
-import com.dbcom.app.model.entity.Equipamiento;
-import com.dbcom.app.model.entity.VersionSW;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;

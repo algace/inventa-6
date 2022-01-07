@@ -10,8 +10,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import com.dbcom.app.model.entity.TipoSubsistema;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -62,5 +60,5 @@ public class EquipamientoLiteDto implements Serializable {
 	
 	@NotEmpty(message = "{validation.notNull}")
 	@Valid
-	private TipoSubsistema tipoSubsistema;
+	private TipoSubsistemaLiteDto tipoSubsistema;
 }
