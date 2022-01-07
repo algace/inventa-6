@@ -1,6 +1,11 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -35,18 +40,37 @@ public final class FrecuenciaATCDto implements Serializable {
 	@Size(max = 250, message = "{validation.max250}")
 	private String descripcion;
 
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
-	private String tipoServicio;
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private ServicioRadioDto tipoServicio;
 	
-	private Boolean frecuenciaBackup;
+	@NotNull(message = "{validation.notNull}")
+	private String frecuenciaBackup;
 	
-	@Size(max = 250, message = "{validation.max250}")
-	private String titular;
+	@NotNull(message = "{validation.notNull}")
+	@Valid
+	private PropietarioDto titular;
 	
-	@Size(max = 250, message = "{validation.max250}")
-	private String docOACI;
+	//@Size(max = 250, message = "{validation.max250}")
+	//private String docOACI;
+	
+	private String docOACITipo;
+	
+	private String docOACIRadio;
+	
+	@Max(999)
+	private Integer docOACIFL;
+	
+	private String docOACILatitud;
+
+	private String docOACILongitud;
 	
 	@Size(max = 250, message = "{validation.max250}")
 	private String observaciones;
+	
+	
+	private List<PropietarioDto> titularesDisponibles;
+	
+	private List<ServicioRadioDto> tiposServicioDisponibles;
 	
 }

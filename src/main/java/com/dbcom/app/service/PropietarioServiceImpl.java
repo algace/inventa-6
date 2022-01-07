@@ -2,10 +2,12 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
@@ -93,5 +95,29 @@ public class PropietarioServiceImpl implements PropietarioService{
 		Propietario propietario = this.modelMapperUtils.map(propietarioDto, Propietario.class);
 		
 		return this.modelMapperUtils.map(this.propietarioRepository.save(propietario), PropietarioDto.class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<PropietarioDto> getPropietariosConValorPorDefecto() {
+
+		Propietario primerPropietario;
+		Propietario propietarioPorDefecto = propietarioRepository.findByPropietario(ApplicationConstants.PROPIETARIO_POR_DEFECTO);
+		List<Propietario> listaPropietarios = new ArrayList<Propietario>();
+		
+		if (propietarioPorDefecto != null) {
+			primerPropietario = propietarioPorDefecto;
+		} else {
+			primerPropietario = Propietario.builder().build();
+		}
+		listaPropietarios.add(primerPropietario);
+		listaPropietarios.addAll(propietarioRepository.findAll()
+				                                          .stream()
+				                                          .filter(prop -> !prop.equals(primerPropietario))
+				                                          .collect(Collectors.toList()));
+		
+		return this.modelMapperUtils.mapAll2List(listaPropietarios, PropietarioDto.class);
 	}
 }

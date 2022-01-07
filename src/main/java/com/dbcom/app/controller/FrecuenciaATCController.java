@@ -16,7 +16,11 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.FrecuenciaATCDto;
+import com.dbcom.app.model.dto.PropietarioDto;
 import com.dbcom.app.service.FrecuenciaATCService;
+import com.dbcom.app.service.PropietarioService;
+import com.dbcom.app.service.ServicioRadioService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,11 +52,21 @@ public final class FrecuenciaATCController {
 	public static final String MAP_READALL_FRECUENCIASATC = ControllerConstants.MAP_ACTION_SLASH + VIEW_FRECUENCIAS;
 
 	private final FrecuenciaATCService frecuenciaATCService;
+	private final PropietarioService propietarioService;
+	private final ModelMapperUtils  modelMapperUtils;
+	private final ServicioRadioService servicioRadioService;
 	
 	@Autowired
-	public FrecuenciaATCController(FrecuenciaATCService frecuenciaATCService) {
+	public FrecuenciaATCController(FrecuenciaATCService frecuenciaATCService, 
+								   PropietarioService propietarioService,
+								   ModelMapperUtils  modelMapperUtils,
+								   ServicioRadioService servicioRadioService) {
 		this.frecuenciaATCService = frecuenciaATCService;
+		this.propietarioService = propietarioService;
+		this.modelMapperUtils = modelMapperUtils;
+		this.servicioRadioService = servicioRadioService;
 	}
+	
 	
 	/**
 	 * Obtenemos un listado de las frecuenciasATC
@@ -126,6 +140,13 @@ public final class FrecuenciaATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_FRECUENCIAATC);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIASATC);
 		
+			//se recupera la lista de servicios de radio
+			frecuenciaATCDto.setTiposServicioDisponibles(servicioRadioService.readAll());
+			
+			//se recupera la lista de propietarios con el valor por defecto
+			frecuenciaATCDto.setTitularesDisponibles(propietarioService.getPropietariosConValorPorDefecto());
+			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioDto.class));
+			
 			vista = VIEW_FRECUENCIAATC;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
@@ -217,6 +238,14 @@ public final class FrecuenciaATCController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_FRECUENCIAATC);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIASATC);
+			
+			//se recupera la lista de servicios de radio
+			frecuenciaATCDto.setTiposServicioDisponibles(servicioRadioService.readAll());
+			
+			//se recupera la lista de propietarios con el valor por defecto
+			frecuenciaATCDto.setTitularesDisponibles(propietarioService.getPropietariosConValorPorDefecto());
+			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioDto.class));
+			
 			
 			vista = VIEW_FRECUENCIAATC;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
