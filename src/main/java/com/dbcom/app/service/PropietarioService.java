@@ -37,4 +37,13 @@ public interface PropietarioService {
 	 * @return Propietario persistido
 	 */
 	PropietarioDto saveUpdate(final PropietarioDto propietarioDto);
+	
+	/**
+	 * Obtenemos un listado de los propietarios teniendo en cuenta el propietario por defecto
+	 * Si el propietario por defecto existe en BBDD se debe poner el primero de la lista. Si no existe en BBDD
+	 * se deberá poner como primer elemento de la lista un propietario con sus campos vacíos
+	 * @return Listado
+	 */
+	
+	List<PropietarioDto> getPropietariosConValorPorDefecto();
 }

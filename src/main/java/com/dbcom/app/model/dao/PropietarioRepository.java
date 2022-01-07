@@ -8,4 +8,5 @@ import com.dbcom.app.model.entity.Propietario;
 @Repository
 public interface PropietarioRepository extends JpaRepository<Propietario, Short>{
 
+	public Propietario findByPropietario(String propietario);
 }
