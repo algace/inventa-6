@@ -44,10 +44,10 @@ function gestionarCambioUnidad(unidad) {
 			switch (unidadPrevia) {
 				case 'KHz':
 					if (unidadActual == "MHz") {
-						valor = valor * 0.001;				
+						valor = (valor * 0.001).toFixed(3);				
 					}
 					if (unidadActual == "GHz") {
-						valor = valor * 0.000001;
+						valor = (valor * 0.000001).toFixed(6);
 					}
 					break;
 				case 'MHz':
@@ -55,7 +55,7 @@ function gestionarCambioUnidad(unidad) {
 						valor = valor * 1000;				
 					}
 					if (unidadActual == "GHz") {
-						valor = valor * 0.001;
+						valor = (valor * 0.001).toFixed(6);
 					}
 					break;
 				case 'GHz':
@@ -69,6 +69,9 @@ function gestionarCambioUnidad(unidad) {
 			}
 		
 			//Actualizacion del valor
+			if (valor % 1 == 0) {
+				valor = Math.round(valor);
+			}
 			$("#valor").val(valor);
 		
 			//Actualización del nombre
