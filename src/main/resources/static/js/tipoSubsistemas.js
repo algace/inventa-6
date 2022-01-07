@@ -66,7 +66,7 @@ var tabla_tipos_sistemas = $(ID_TABLA_TIPOS_SISTEMAS).DataTable({
 $(ID_BOTON_BORRAR_SISTEMA).on('click', function () {
 	
 	document.getElementById(ID_INPUT_HIDDEN_ID_SISTEMA).value = "";
-	document.getElementById(ID_INPUT_NOMBRE_SISTEMA).value = "";
+	document.getElementById(ID_INPUT_NOMBRE_SISTEMA).defaultValue = "";
 	
 });
 
@@ -74,7 +74,7 @@ $(ID_BOTON_BORRAR_SISTEMA).on('click', function () {
 $(ID_BOTON_ACEPTAR_SELECCIONAR_SISTEMA).on('click', function () {
 
 	document.getElementById(ID_INPUT_HIDDEN_ID_SISTEMA).value = rowElement[0];
-	document.getElementById(ID_INPUT_NOMBRE_SISTEMA).value = rowElement[1];
+	document.getElementById(ID_INPUT_NOMBRE_SISTEMA).defaultValue = rowElement[1];
 	
 });
 

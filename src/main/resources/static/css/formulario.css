@@ -6,6 +6,10 @@
 }
 /* FIN - Color de fondo para campos obligatorios */
 
+.campo-disabled {
+    background-color: #e9ecef !important;
+}
+
 .accordionFormulario .card .card-header{
 	padding: 0px 5px 0px 10px;
 	background-color: #007bff;
