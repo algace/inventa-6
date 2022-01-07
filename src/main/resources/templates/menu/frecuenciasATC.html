@@ -11,11 +11,11 @@
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
-		
+
 		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
-		<link rel="stylesheet" type="text/css" th:href="@{/css/dataTable.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/botoneraTabla.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/dataTable.css}">
 		<!--/* FIN - CSS */-->
 		
 		<link rel="shortcut icon" type="image/png" th:href="@{/images/anagrama_inventa.png}">	
@@ -43,41 +43,42 @@
 					<!--/* INICIO - Migas de pan */-->
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-					    	<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
-					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.frecuenciasATC}"></li>
+							<li class="breadcrumb-item"><a href="#" class="breadcrumb-a" th:text="#{html.menu.gestionBBDD}"></a></li>
+					    	<li class="breadcrumb-item"><a th:href="@{${volver}}" class="breadcrumb-a" th:text="#{html.menu.frecuenciasATC}"></a></li>
+					    	<li class="breadcrumb-item active" aria-current="page" th:text="#{html.menu.frecuenciaATC}"></li>
 					  	</ol>
 					</nav>
 					<!--/* FIN - Migas de pan */-->
-				
+			
 					<div th:replace="fragments/botoneraTabla :: botoneraTabla"></div>
-												 
+			 
 					<table id="tablaResultados" class="table table-striped table-bordered" style="width: 100%">
 						<thead>
 					    	<tr>
-					      		<th hidden="true">
+					      		<th class="th-sm"  hidden="true">
 					    		<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
-					      		<th class="th-sm" th:text="#{html.tabla.cabecera.dependencia}"></th>
-					      		<th class="th-sm" th:text="#{html.tabla.cabecera.tipo}"></th>
+					    		<th class="th-sm" th:text="#{html.tabla.cabecera.dependencia}"></th>
+					    		<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
 					    	</tr>
 					  	</thead>
 					  	<tbody>			 
 						  	<tr th:each="frecuenciaATC : ${lista}" th:id="${frecuenciaATC.id}">
-						  		<td hidden="true" th:text="${frecuencia.id}"></td>
+						  		<td hidden="true" th:text="${frecuenciaATC.id}"></td>
 						  		<td th:text="${frecuenciaATC.nombre}"></td>
 						  		<td th:text="${frecuenciaATC.dependencia}"></td>
-						  		<td th:text="${frecuenciaATC.tipo}"></td>
+						  		<td th:text="${frecuenciaATC.descripcion}"></td>
 						  	</tr>			
 						</tbody>
 						<tfoot>
 							<tr>
 					      		<th hidden="true">
 					    		<th th:text="#{html.tabla.pie.nombre}"></th>
-					      		<th th:text="#{html.tabla.pie.dependencia}"></th>
-					      		<th th:text="#{html.tabla.pie.tipo}"></th>
+					    		<th th:text="#{html.tabla.pie.dependencia}"></th>
+					    		<th th:text="#{html.tabla.pie.descripcion}"></th>
 					    	</tr>
 						</tfoot>
 					</table>
-			
+	
 				</div>
 			</div>
 			<!--/* FIN - Contenido */-->

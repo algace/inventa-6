@@ -14,5 +14,6 @@ public final class ApplicationConstants {
 	public static final String FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA = "AIP";
 	public static final String UNIDAD_FRECUENCIA_POR_DEFECTO = "KHz";
 	public static final String TIPO_BANDA_FRECUENCIA_POR_DEFECTO = "LF";
+	public static final String PROPIETARIO_POR_DEFECTO = "Otros";
 
 }

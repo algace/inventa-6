@@ -1,11 +1,17 @@
 package com.dbcom.app.model.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -43,16 +49,32 @@ public class FrecuenciaATC implements Serializable {
 	@Size(max = 250, message = "{validation.max250}")
 	private String descripcion;
 
-	@Size(min = 1, max = 50, message = "{validation.min1max70}")
-	private String tipoServicio;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="servicioRadio_id")
+	@NotNull(message = "{validation.notNull}")
+	private ServicioRadio tipoServicio;
 	
-	private Boolean frecuenciaBackup;
+	@NotNull(message = "{validation.notNull}")
+	private String frecuenciaBackup;
 	
-	@Size(max = 250, message = "{validation.max250}")
-	private String titular;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="titular_id")
+	@NotNull(message = "{validation.notNull}")
+	private Propietario titular;
 	
-	@Size(max = 250, message = "{validation.max250}")
-	private String docOACI;
+	//@Size(max = 250, message = "{validation.max250}")
+	//private String docOACI;
+	
+	private String docOACITipo;
+	
+	private String docOACIRadio;
+	
+	@Max(999)
+	private Integer docOACIFL;
+	
+	private String docOACILatitud;
+
+	private String docOACILongitud;
 	
 	@Size(max = 250, message = "{validation.max250}")
 	private String observaciones;
