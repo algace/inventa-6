@@ -74,9 +74,9 @@
 											<div class="col-sm-2" th:text="#{html.label.nombre}"></div>
 									        <div class="col-sm-6">
 									            <input id="nombre" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{nombre}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
-									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+									            	class="form-control campo-disabled"
+									            	th:field="*{nombre}"
+									            	onkeypress="return false;"> 
 									        </div>										        	
 		       							 </div>
 		       							 
@@ -84,7 +84,8 @@
 									        <div class="col-sm-2" th:text="#{html.label.unidad}"></div>
 									        <div class="col-sm-6">
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
-											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoUnidadFrecuencia.id}">											    	
+											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoUnidadFrecuencia.id}"
+											    	onchange="gestionarCambioUnidad(this);">											    	
 											    	<option th:each="tipoUnidad : ${tiposUnidadFrecuencia}" th:value="${tipoUnidad.id}" th:text="${tipoUnidad.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoUnidadFrecuencia.id')}" th:errors="*{tipoUnidadFrecuencia.id}"></div>
@@ -96,7 +97,8 @@
 									        <div class="col-sm-6">
 									            <input id="valor" type="number" 
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-									            	th:field="*{valor}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            	th:field="*{valor}" th:disabled="${esCampoSoloLectura} ? 'true'"
+									            	onkeyup="cambioValor(this)"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></div>
 									        </div>										        	
 		       							 </div>

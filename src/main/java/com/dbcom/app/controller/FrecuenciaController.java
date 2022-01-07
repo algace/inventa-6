@@ -103,14 +103,9 @@ public final class FrecuenciaController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_FRECUENCIA, this.frecuenciaService.create());
 		
-		//Obtenemos los tipos de unidades de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
-		
-		//Obtenemos los tipos de bandas de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
-
-		//Obtenemos los tipos de fuentes de información
-		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
+		// Obtenemos las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
+		// de fuentes de información y se añaden al modelo para que se muestren en las listas desplegables
+		obtenerListasParametrizaciones(model);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -184,15 +179,10 @@ public final class FrecuenciaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_FRECUENCIA, this.frecuenciaService.read(id));
 		
-		//Obtenemos los tipos de unidades de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
-
-		//Obtenemos los tipos de bandas de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
-
-		//Obtenemos los tipos de fuentes de información
-		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
-
+		// Obtenemos las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
+		// de fuentes de información y se añaden al modelo para que se muestren en las listas desplegables
+		obtenerListasParametrizaciones(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -221,15 +211,10 @@ public final class FrecuenciaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_FRECUENCIA, this.frecuenciaService.read(id));
 		
-		//Obtenemos los tipos de unidades de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
-
-		//Obtenemos los tipos de bandas de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
-
-		//Obtenemos los tipos de fuentes de información
-		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
-
+		// Obtenemos las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
+		// de fuentes de información y se añaden al modelo para que se muestren en las listas desplegables
+		obtenerListasParametrizaciones(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -270,15 +255,10 @@ public final class FrecuenciaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_FRECUENCIA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIAS);
 			
-			//Obtenemos los tipos de unidades de frecuencia
-			model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
-
-			//Obtenemos los tipos de bandas de frecuencia
-			model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
-
-			//Obtenemos los tipos de fuentes de información
-			model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
-
+			// Obtenemos las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
+			// de fuentes de información y se añaden al modelo para que se muestren en las listas desplegables
+			obtenerListasParametrizaciones(model);
+			
 			vista = VIEW_FRECUENCIA;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
@@ -316,15 +296,10 @@ public final class FrecuenciaController {
 				.concat(ControllerConstants.MAP_ACTION_SLASH).concat(String.valueOf(id)));
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIAS);
 					
-		//Obtenemos los tipos de unidades de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
-
-		//Obtenemos los tipos de bandas de frecuencia
-		model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
-
-		//Obtenemos los tipos de fuentes de información
-		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
-
+		// Obtenemos las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
+		// de fuentes de información y se añaden al modelo para que se muestren en las listas desplegables
+		obtenerListasParametrizaciones(model);
+				
 		log.info(LoggerConstants.LOG_DELETE);
 		
 		return VIEW_FRECUENCIA;		
@@ -340,6 +315,24 @@ public final class FrecuenciaController {
 		this.frecuenciaService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_FRECUENCIAS);		
+	}
+	
+	/**
+	 * Obtiene las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
+	 * de fuentes de información y las añade al modelo para que se muestren en las listas desplegables
+	 * @param model Modelo
+	 */
+	private void obtenerListasParametrizaciones(final Model model) {
+		
+		//Obtenemos los tipos de unidades de frecuencia
+		model.addAttribute(ATTRIBUTE_TIPOS_UNIDAD_FRECUENCIA, this.tipoUnidadFrecuenciaService.getTiposUnidadFrecuenciaConValorPorDefecto(ApplicationConstants.UNIDAD_FRECUENCIA_POR_DEFECTO));
+				
+		//Obtenemos los tipos de bandas de frecuencia
+		model.addAttribute(ATTRIBUTE_TIPOS_BANDA_FRECUENCIA, this.tipoBandaFrecuenciaService.getTiposBandaFrecuenciaConValorPorDefecto(ApplicationConstants.TIPO_BANDA_FRECUENCIA_POR_DEFECTO));
+
+		//Obtenemos los tipos de fuentes de información
+		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_FRECUENCIA));
+
 	}
 	
 }
