@@ -82,8 +82,8 @@
 											<div class="col-sm-2" th:text="#{html.label.sistema}"></div> 
 									        <div class="col-sm-6">
 									            <input type="text" 
-									            	th:field="*{tipoSistema.nombre}" th:class="'form-control'" 
-									            	th:disabled="'true'">
+									            	th:field="*{tipoSistema.nombre}" th:class="'form-control campo-disabled'" 
+									            	onkeypress="return false;">
 									            <input type="hidden" th:field="*{tipoSistema.id}" >
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoSistema.id')}" th:errors="*{tipoSistema.id}"></div>
 									        </div>
