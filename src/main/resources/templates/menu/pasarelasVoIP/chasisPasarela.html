@@ -78,7 +78,7 @@
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoChasis.id}">
 											    	<option th:value="0"></option>
-											    	<option th:each="chasis : *{tiposChasis}" th:value="${chasis.id}" th:text="${chasis.nombre}"></option>
+											    	<option th:each="chasis : ${listaTiposChasis}" th:value="${chasis.id}" th:text="${chasis.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoChasis.id')}" th:errors="*{tipoChasis.id}"></div>
 									            <!--<input id="tipoChasis" type="text" 

@@ -1,6 +1,5 @@
 package com.dbcom.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.dbcom.app.model.dao.ChasisPasarelaRepository;
 import com.dbcom.app.model.dto.ChasisPasarelaDto;
 import com.dbcom.app.model.dto.ChasisPasarelaLiteDto;
 import com.dbcom.app.model.entity.ChasisPasarela;
-import com.dbcom.app.model.entity.TipoChasis;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +22,13 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	
 	private final ModelMapperUtils modelMapperUtils;
 	private final ChasisPasarelaRepository chasisPasarelaRepository;
-	private final TipoChasisService tipoChasisService;
+//	private final TipoChasisService tipoChasisService;
 	
 	@Autowired
-	public ChasisPasarelaServiceImpl(ModelMapperUtils modelMapper, ChasisPasarelaRepository chasisPasarelaRepository,
-			TipoChasisService tipoChasisService) {
+	public ChasisPasarelaServiceImpl(ModelMapperUtils modelMapper, ChasisPasarelaRepository chasisPasarelaRepository) {
 		this.modelMapperUtils = modelMapper;
 		this.chasisPasarelaRepository = chasisPasarelaRepository;
-		this.tipoChasisService = tipoChasisService;
+//		this.tipoChasisService = tipoChasisService;
 	}
 	
 	/**
@@ -40,7 +37,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 	@Override
 	public ChasisPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return ChasisPasarelaDto.builder().tiposChasis(tipoChasisService.readAll()).build();
+		return ChasisPasarelaDto.builder().build();
 	}
 	
 	/**
@@ -65,12 +62,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 		
 		log.info(LoggerConstants.LOG_READALL);
 
-		final List<ChasisPasarela> chasisPasarelas = this.chasisPasarelaRepository.findAll();
-
-		final List<ChasisPasarelaDto> chasisPasarelasDto = new ArrayList<>(chasisPasarelas.size());		
-		chasisPasarelas.forEach(chasisPasarela -> chasisPasarelasDto.add(this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaDto.class)));
-		
-		return chasisPasarelasDto;
+		return this.modelMapperUtils.mapAll2List(this.chasisPasarelaRepository.findAll(), ChasisPasarelaDto.class);
 	}
 
 	@Override
@@ -78,12 +70,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 		
 		log.info(LoggerConstants.LOG_READALL);
 
-		final List<ChasisPasarela> chasisPasarelas = this.chasisPasarelaRepository.findAll();
-
-		final List<ChasisPasarelaLiteDto> chasisPasarelasDto = new ArrayList<>(chasisPasarelas.size());		
-		chasisPasarelas.forEach(chasisPasarela -> chasisPasarelasDto.add(this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaLiteDto.class)));
-		
-		return chasisPasarelasDto;
+		return this.modelMapperUtils.mapAll2List(this.chasisPasarelaRepository.findAll(), ChasisPasarelaLiteDto.class);
 	}
 	
 	/**
@@ -98,8 +85,7 @@ public final class ChasisPasarelaServiceImpl implements ChasisPasarelaService{
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
 		ChasisPasarelaDto chasis = this.modelMapperUtils.map(chasisPasarela, ChasisPasarelaDto.class);
-		chasis.setTiposChasis(tipoChasisService.readAll());
-
+		
 		return chasis; 
 
 	}
