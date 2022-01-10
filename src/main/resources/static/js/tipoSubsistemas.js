@@ -8,6 +8,8 @@ const ID_BOTON_ACEPTAR_SELECCIONAR_SISTEMA = '#botonAceptarSeleccionarSistema';
 const ID_MODAL_SISTEMAS = '#popupSeleccionarSistema';
 const ID_INPUT_HIDDEN_ID_SISTEMA = 'tipoSistema.id';
 const ID_INPUT_NOMBRE_SISTEMA = 'tipoSistema.nombre';
+const ID_INPUT_SEARCH_SELECCIONAR_SISTEMA = '#searchSistemas';
+const ID_INPUT_SEARCH_SELECCIONAR_SUBSISTEMA = '#searchSubsistemas';
 
 var rowElement = null;
 var idElement  = null;
@@ -163,3 +165,17 @@ $(ID_MODAL_SUBSISTEMASS).on('show.bs.modal', function () {
 	$(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable().rows().deselect();
 	$(ID_BOTON_ACEPTAR_SELECCIONAR_SUBSISTEMAS).attr('disabled', 'disabled');
 })
+
+$(ID_INPUT_SEARCH_SELECCIONAR_SISTEMA).on('keyup change', function() {
+    tabla_tipos_sistemas.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
+
+$(ID_INPUT_SEARCH_SELECCIONAR_SUBSISTEMA).on('keyup change', function() {
+    tabla_tipos_subsistemas.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});

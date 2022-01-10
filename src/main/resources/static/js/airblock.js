@@ -20,6 +20,7 @@ $("#ganancia, #perdida, #apertura, #diametro").mask('S#.S#S#S#.S#S#S0,00', {
 // FIN - Máscara para campos numéricos
 
 const ID_TABLA_SECTORES_ATC = '#tablaSectoresATC';
+const ID_INPUT_SEARCH_SECTORES_ATC = '#searchSectoresATC';
 
 // INICIO - Configuración de la tabla Aplicacion
 var tabla_sectores_atc = $(ID_TABLA_SECTORES_ATC).DataTable({
@@ -58,7 +59,7 @@ var tabla_sectores_atc = $(ID_TABLA_SECTORES_ATC).DataTable({
 
 // FIN - Configuración de la tabla Aplicacion
 
-$("#search").on('keyup change', function() {
+$(ID_INPUT_SEARCH_SECTORES_ATC).on('keyup change', function() {
     tabla_sectores_atc.columns()
     	.data()
     	.search(this.value)

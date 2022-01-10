@@ -3,5 +3,39 @@
 /* INICIO - Texto del botón de seleccionar archivos */
 .custom-file-input ~ .custom-file-label::after {
     content: "Seleccionar";
+    font-size: 14px;
+}
+
+.custom-file {
+    height: calc(1.5em + 0.45rem + 2px);
+}
+
+
+.custom-file-label {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+    height: calc(1.5em + 0.45rem + 2px) !important;
+    background-color: #FFFFEC !important;
+    padding: 0.375rem 5.75rem 0.375rem 0.75rem;
+    
+}
+
+.custom-file-label::after {
+	height: calc(1.5em + 0.54rem + 1px) !important;
 }
 /* FIN - Texto del botón de seleccionar archivos */
+
+.label-modal-doc {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.modal .modal-body .row select {
+	padding: 4px 10px;
+	height: calc(1em + 0.75rem + 2px);
+}
+
+.modal .modal-body .row {
+	padding-top: 5px;
+}
