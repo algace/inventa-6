@@ -237,7 +237,7 @@
 								<div id="collapseFotografias" class="collapse" aria-labelledby="headingFotografias" data-parent="#accordionFormulario">
 									<div class="card-body">
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirFotografia', 
-											idButtonBorrar='botonBorrarFotografia', idInputSearch='searchFotografia', visible='true')"></div>
+											idButtonBorrar='botonBorrarFotografia', idInputSearch='searchFotografias', visible='true')"></div>
 										<table id="tablaFotografias" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
 												<tr>
@@ -265,7 +265,7 @@
 								<div id="collapseDocumentos" class="collapse" aria-labelledby="headingDocumentos" data-parent="#accordionFormulario">
 									<div class="card-body">
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSubirDocumento', 
-											idButtonBorrar='botonBorrarDocumento', idInputSearch='searchDocumento', visible='true')"></div>
+											idButtonBorrar='botonBorrarDocumento', idInputSearch='searchDocumentos', visible='true')"></div>
 										<table id="tablaDocumentos" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
 												<tr>
@@ -418,10 +418,10 @@
           					
 						    	<!--/* INICIO - Fichero */-->
 								<div class="row align-items-center text-sm-left text-sm-1">
-									<div class="col-sm-2" th:text="#{html.label.fichero}"></div>
+									<div class="col-sm-2 label-modal-doc" th:text="#{html.label.fichero}"></div>
 									<div class="col-sm-10" >
 							       		<div class="custom-file">
-											<input class="custom-file-input" type="file" id="fotografia"
+											<input class="custom-file-input form-control-sm campo-obligatorio" type="file" id="fotografia"
 												name="fotografia" accept=".png,.jpg"
 												lang="es"
 												th:onchange="|validarTamagnoFotografia(${ficheroTamagnoMax});|">
@@ -439,9 +439,9 @@
 								
 					       		<!--/* INICIO - Descripción */-->
 								<div class="row align-items-center text-sm-left text-sm-1">
-									<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
+									<div class="col-sm-2 label-modal-doc" th:text="#{html.label.descripcion}"></div>
 							        <div class="col-sm-10" >
-							       		<textarea id="descripcionFotografia" class="form-control" rows="3" style="resize: none;"></textarea>
+							       		<textarea id="descripcionFotografia" class="form-control campo-obligatorio" rows="3" style="resize: none;"></textarea>
 									    <div id="errorDescripcionFotografia" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
 											th:text="#{validation.min1max250}"></div>
 							        </div>										        	
@@ -450,7 +450,7 @@
 					       		
 					       		<!--/* INICIO - Texto tamaño */-->
 					       		<div class="row align-items-center text-sm-right text-sm-1">
-					       			<div class="col-sm-12" th:text="#{html.label.ficheroTamagnoMaximo}"></div>
+					       			<div class="col-sm-12 label-modal-doc" th:text="#{html.label.ficheroTamagnoMaximo}"></div>
 					       		</div>
 					       		<!--/* FIN - Texto tamaño */-->
 						    	
@@ -490,10 +490,10 @@
           					
 						    	<!--/* INICIO - Fichero */-->
 								<div class="row align-items-center text-sm-left text-sm-1">
-									<div class="col-sm-2" th:text="#{html.label.fichero}"></div>
+									<div class="col-sm-2 label-modal-doc" th:text="#{html.label.fichero}"></div>
 									<div class="col-sm-10" >
 							       		<div class="custom-file">
-											<input class="custom-file-input" type="file" id="fichero"
+											<input class="custom-file-input form-control-sm campo-obligatorio" type="file" id="fichero"
 												name="fichero" accept=".doc,.docx,.ods,.odt,.pdf,.xls,.xlsx"
 												lang="es"
 												th:onchange="|validarTamagnoFichero(${ficheroTamagnoMax});|">
@@ -511,9 +511,9 @@
 								
 								<!--/* INICIO - Tipo */-->
 								<div class="row align-items-center text-sm-left text-sm-1">
-									<div class="col-sm-2" th:text="#{html.label.tipo}"></div>
+									<div class="col-sm-2 label-modal-doc" th:text="#{html.label.tipo}"></div>
 							        <div class="col-sm-10" >
-							       		<select id="tipoDocumento" class="form-control">
+							       		<select id="tipoDocumento" class="form-control campo-obligatorio">
 											<option value=""></option>
 											<option th:each="tipoDocumento : *{tiposDocumento}" 
 									 		   	th:value="${tipoDocumento.id}" 
@@ -527,9 +527,9 @@
 					       		
 					       		<!--/* INICIO - Descripción */-->
 								<div class="row align-items-center text-sm-left text-sm-1">
-									<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
+									<div class="col-sm-2 label-modal-doc" th:text="#{html.label.descripcion}"></div>
 							        <div class="col-sm-10" >
-							       		<textarea id="descripcionDocumento" class="form-control" rows="3" style="resize: none;"></textarea>
+							       		<textarea id="descripcionDocumento" class="form-control campo-obligatorio" rows="3" style="resize: none;"></textarea>
 									    <div id="errorDescripcionDocumento" class="alert alert-danger col-md-12" role="alert" hidden="hidden"
 											th:text="#{validation.min1max250}"></div>
 							        </div>										        	
@@ -538,7 +538,7 @@
 					       		
 					       		<!--/* INICIO - Texto tamaño */-->
 					       		<div class="row align-items-center text-sm-right text-sm-1">
-					       			<div class="col-sm-12" th:text="#{html.label.ficheroTamagnoMaximo}"></div>
+					       			<div class="col-sm-12 label-modal-doc" th:text="#{html.label.ficheroTamagnoMaximo}"></div>
 					       		</div>
 					       		<!--/* FIN - Texto tamaño */-->
 						    	

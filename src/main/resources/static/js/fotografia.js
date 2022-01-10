@@ -12,6 +12,7 @@ const ID_FOTOGRAFIA_FOTO = '#fotografia';
 const ID_FORM_SUBIR_FOTOGRAFIA = '#formSubirFotografia';
 const ID_TABLA_FOTOGRAFIAS = '#tablaFotografias';
 const ID_MODAL_FOTOGRAFIA = '#popupSubirFotografia';
+const ID_INPUT_SEARCH_FOTOGRAFIAS = '#searchFotografias';
 
 var contfoto = fotografias.length;
 
@@ -220,4 +221,11 @@ $(ID_BOTON_CANCELAR_POPUP_SUBIR_FOTOGRAFIA).on('click', function() {
 
 $(ID_MODAL_FOTOGRAFIA).on('show.bs.modal', function () {
 	resetFormPopupSubirFotografia();
+});
+
+$(ID_INPUT_SEARCH_FOTOGRAFIAS).on('keyup change', function() {
+    tabla_fotografias.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
 });
