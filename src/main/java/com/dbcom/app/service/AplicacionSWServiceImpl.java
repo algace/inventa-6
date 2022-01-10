@@ -32,17 +32,12 @@ import lombok.extern.slf4j.Slf4j;
 public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	
 	private final AplicacionSWRepository aplicacionSWRepository;
-	private final EquipamientoService equipamientoService;
-	private final VersionSWService versionSWService;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public AplicacionSWServiceImpl(AplicacionSWRepository aplicacionSWRepository, 
-			EquipamientoService equipamientoService, VersionSWService versionSWService,
 			ModelMapperUtils modelMapper) {
 		this.aplicacionSWRepository = aplicacionSWRepository;
-		this.equipamientoService = equipamientoService;
-		this.versionSWService = versionSWService;
 		this.modelMapperUtils = modelMapper;
 	}
 
@@ -52,10 +47,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	@Override
 	public AplicacionSWDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return AplicacionSWDto.builder()
-				              .versionesSWNoIncluidas(this.modelMapperUtils.mapAll2List(versionSWService.readAll(),VersionSWLiteDto.class))
-				              .equipamientosNoIncluidos(this.modelMapperUtils.mapAll2List(equipamientoService.readAll(),EquipamientoLiteDto.class))
-				              .build();
+		return AplicacionSWDto.builder().build();
 	}
 
 	/**
@@ -76,14 +68,9 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	@Override
 	public List<AplicacionSWLiteDto> readAll() {
 		
-		final List<AplicacionSW> aplicacionesSW = this.aplicacionSWRepository.findAll();
-		
-		final List<AplicacionSWLiteDto> aplicacionesSWLiteDto = new ArrayList<>(aplicacionesSW.size());		
-		aplicacionesSW.forEach(aplicacionSW -> aplicacionesSWLiteDto.add(this.modelMapperUtils.map(aplicacionSW, AplicacionSWLiteDto.class)));
-		
 		log.info(LoggerConstants.LOG_READALL);
 
-		return aplicacionesSWLiteDto;
+		return this.modelMapperUtils.mapAll2List(this.aplicacionSWRepository.findAll(), AplicacionSWLiteDto.class);
 	}
 	
 	/**
@@ -97,9 +84,6 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	
 		final AplicacionSWDto result = this.modelMapperUtils.map(aplicacionSW, AplicacionSWDto.class);
 		
-		// Insertamos los equipamientos y las versiones que no tiene por si las quiere añadir
-		result.setVersionesSWNoIncluidas(this.modelMapperUtils.mapAll2List(this.versionSWService.readNotContains(id),VersionSWLiteDto.class));
-		result.setEquipamientosNoIncluidos(this.modelMapperUtils.mapAll2List(this.equipamientoService.readNotContains(id),EquipamientoLiteDto.class));
 		log.info(LoggerConstants.LOG_READ);		
 
 		return result; 

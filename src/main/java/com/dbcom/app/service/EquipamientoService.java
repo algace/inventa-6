@@ -49,7 +49,7 @@ public interface EquipamientoService {
 	 * @param id Identificador de la aplicación
 	 * @return Equipamientos
 	 */
-	List<EquipamientoDto> readNotContains(final Long id);
+	List<EquipamientoLiteDto> readNotContains(final Long id);
 	
 	/**
 	 * Persistimos el equipamiento pasado como parámetro

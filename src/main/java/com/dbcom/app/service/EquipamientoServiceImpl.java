@@ -136,7 +136,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<EquipamientoDto> readNotContains(Long id) {
+	public List<EquipamientoLiteDto> readNotContains(Long id) {
 
 		final AplicacionSW aplicacionSW = this.aplicacionSWRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
@@ -146,7 +146,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 		final List<Equipamiento> equipamiento = this.equipamientoRepository.findAll();
 		equipamiento.removeAll(aplicacionSW.getEquipamientos());
 		
-		return this.modelMapperUtils.mapAll2List(equipamiento, EquipamientoDto.class);
+		return this.modelMapperUtils.mapAll2List(equipamiento, EquipamientoLiteDto.class);
 	}
 	
 

@@ -2,8 +2,6 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -123,7 +121,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<VersionSWDto> readNotContains(final Long id) {	
+	public List<VersionSWLiteDto> readNotContains(final Long id) {	
 		
 		final AplicacionSW aplicacionSW = this.aplicacionSWRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
@@ -133,7 +131,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		final List<VersionSW> versionesSW = this.versionSWRepository.findAll();
 		versionesSW.removeAll(aplicacionSW.getVersionesSW());
 		
-		return this.modelMapperUtils.mapAll2List(versionesSW, VersionSWDto.class);
+		return this.modelMapperUtils.mapAll2List(versionesSW, VersionSWLiteDto.class);
 
 	}
 		

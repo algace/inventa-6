@@ -266,7 +266,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="equipamientoNoIncluido, item : *{equipamientosNoIncluidos}">
+												<tr th:each="equipamientoNoIncluido, item : ${listaEquipamientosDisponibles}">
 													<td th:text="${equipamientoNoIncluido.id}"></td>
 													<td th:text="${equipamientoNoIncluido.nombre}"></td>
 													<td th:text="${equipamientoNoIncluido.marca}"></td>
@@ -311,7 +311,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="versionSWNoIncluida, item : *{versionesSWNoIncluidas}">
+												<tr th:each="versionSWNoIncluida, item : ${listaVersionesDisponibles}">
 													<td th:text="${versionSWNoIncluida.id}"></td>
 													<td th:text="${versionSWNoIncluida.nombre}"></td>
 													<td th:text="${versionSWNoIncluida.descripcion}"></td>
