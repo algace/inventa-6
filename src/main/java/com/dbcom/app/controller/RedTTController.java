@@ -16,10 +16,8 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.RedTTDto;
-import com.dbcom.app.model.dto.TipoTopologiaLiteDto;
 import com.dbcom.app.service.RedTTService;
 import com.dbcom.app.service.TipoTopologiaService;
-import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +31,7 @@ public class RedTTController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_REDTT = "redTT";
+	private static final String ATTRIBUTE_TIPOS_TOPOLOGIA = "listaTiposTopologiaDisponibles";
 
 	// Vistas	
 	private static final String VIEW_REDTT= ControllerConstants.MAP_PATH_MENU + ATTRIBUTE_REDTT;
@@ -52,15 +51,12 @@ public class RedTTController {
 	
 	private final RedTTService redTTService;
 	private final TipoTopologiaService tipoTopologiaService;
-	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public RedTTController(RedTTService redTTService,
-			TipoTopologiaService tipoTopologiaService,
-			ModelMapperUtils  modelMapperUtils) {
+			TipoTopologiaService tipoTopologiaService) {
 		this.redTTService = redTTService;
 		this.tipoTopologiaService = tipoTopologiaService;
-		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -95,6 +91,10 @@ public class RedTTController {
 
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_REDTT, this.redTTService.create());
+		
+		//Obtenemos la lista de tipos de topología y la añadimos al modelo
+		obtenerListasTiposObjetos(model);
+		
 		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
 		
 		// Activación de los botones necesarios
@@ -136,9 +136,8 @@ public class RedTTController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_REDTT);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_REDESTT);
 			
-			//Se debe recuperar de nuevo la lista de tipos de topologías disponibles y establecer el tipo de topología
-			redTTDto.setTiposTopologiaDisponibles(tipoTopologiaService.getTiposTopologiasConValorPorDefecto());
-			redTTDto.setTipoTopologia(this.modelMapperUtils.map(redTTDto.getTiposTopologiaDisponibles().get(0), TipoTopologiaLiteDto.class));
+			//Obtenemos la lista de tipos de topología y la añadimos al modelo
+			obtenerListasTiposObjetos(model);
 			
 			model.addAttribute(ATTRIBUTE_REDTT, redTTDto);
 			
@@ -166,6 +165,9 @@ public class RedTTController {
 		
 		// Contenido
 		model.addAttribute(ATTRIBUTE_REDTT, this.redTTService.read(id));
+		
+		//Obtenemos la lista de tipos de topología y la añadimos al modelo
+		obtenerListasTiposObjetos(model);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -195,6 +197,9 @@ public class RedTTController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_REDTT, this.redTTService.read(id));
 		
+		//Obtenemos la lista de tipos de topología y la añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -235,10 +240,8 @@ public class RedTTController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_REDTT);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_REDESTT);
 		
-			//Se debe recuperar de nuevo la lista de tipos de topologías disponibles y establecer el tipo de topología
-			//En este caso el tipo de topología que tiene asociado sera el primero de la lista
-			redTTDto.setTiposTopologiaDisponibles(redTTService.getTiposTopologiasConAsociadaPrimero(redTTDto));
-			redTTDto.setTipoTopologia(this.modelMapperUtils.map(redTTDto.getTiposTopologiaDisponibles().get(0), TipoTopologiaLiteDto.class));
+			//Obtenemos la lista de tipos de topología y la añadimos al modelo
+			obtenerListasTiposObjetos(model);
 			
 			vista = VIEW_REDTT;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
@@ -265,6 +268,9 @@ public class RedTTController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_APLICACION_PREGUNTA);
 		
+		//Obtenemos la lista de tipos de topología y la añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -291,5 +297,15 @@ public class RedTTController {
 		this.redTTService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_REDESTT);		
+	}
+	
+	/**
+	 * Obtiene la listas de tipos de chasis y se añaden al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerListasTiposObjetos(final Model model) {
+		
+		//Obtenemos los tipos de chasis
+		model.addAttribute(ATTRIBUTE_TIPOS_TOPOLOGIA, this.tipoTopologiaService.getTiposTopologiasConValorPorDefecto());
 	}
 }

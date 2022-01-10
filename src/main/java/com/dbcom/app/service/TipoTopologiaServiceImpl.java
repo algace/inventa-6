@@ -13,6 +13,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TipoTopologiaRepository;
 import com.dbcom.app.model.dto.TipoTopologiaDto;
+import com.dbcom.app.model.dto.TipoTopologiaLiteDto;
 import com.dbcom.app.model.entity.TipoTopologia;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -106,7 +107,7 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoTopologiaDto> getTiposTopologiasConValorPorDefecto() {
+	public List<TipoTopologiaLiteDto> getTiposTopologiasConValorPorDefecto() {
 
 		TipoTopologia primerTipoTopologia;
 		TipoTopologia tipoTopologiaPorDefecto = tipoTopologiaRepository.findByNombre(ApplicationConstants.TIPO_TOPOLOGIA_POR_DEFECTO);
@@ -123,7 +124,7 @@ public final class TipoTopologiaServiceImpl implements TipoTopologiaService {
 				                                          .filter(tipoTopologia -> !tipoTopologia.equals(primerTipoTopologia))
 				                                          .collect(Collectors.toList()));
 		
-		return this.modelMapperUtils.mapAll2List(listaTiposTopologia, TipoTopologiaDto.class);
+		return this.modelMapperUtils.mapAll2List(listaTiposTopologia, TipoTopologiaLiteDto.class);
 	}
 	
 }
