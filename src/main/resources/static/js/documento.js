@@ -18,6 +18,7 @@ const ID_FORM_SUBIR_DOCUMENTO = '#formSubirDocumento';
 const ID_TIPO_DOCUMENTO = '#tipoDocumento';
 const ID_TABLA_DOCUMENTOS = '#tablaDocumentos';
 const ID_MODAL_DOCUMENTO = '#popupSubirDocumento';
+const ID_INPUT_SEARCH_DOCUMENTOS = '#searchDocumentos';
 
 // INICIO - Máscara para campos numéricos
 // Permite números positivos y negativos entre 1 y 7 dígitos enteros y 2 dígitos decimales
@@ -286,6 +287,13 @@ $(ID_BOTON_CANCELAR_POPUP_SUBIR_DOCUMENTO).on('click', function() {
 
 $(ID_MODAL_DOCUMENTO).on('show.bs.modal', function () {
 	resetFormPopupSubirDocumento();
+});
+
+$(ID_INPUT_SEARCH_DOCUMENTOS).on('keyup change', function() {
+    tabla_documentos.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
 });
 
 

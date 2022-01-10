@@ -133,15 +133,6 @@
 								</div>
 								<div id="collapseEquipamiento" class="collapse" aria-labelledby="headingEquipamiento" data-parent="#accordionFormulario">
 									<div class="card-body">
-									
-										<!--<div align="left" th:hidden="${esCampoSoloLectura} ? 'true'">	
-											<a id="enlaceAgnadirEquipamiento" role="button" class="btn btn-primary"
-												th:text="#{html.boton.agnadir}" th:href="@{${agnadir}}"></a>	
-											<button id="botonBorrarEquipamiento" class="btn btn-primary" disabled
-												th:text="#{html.boton.borrar}"></button>	
-										</div>-->	
-										
-										<!--<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', 
 											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchEquipamientos', visible=!${esCampoSoloLectura})"></div>
 										
@@ -177,18 +168,6 @@
 								</div>
 								<div id="collapseVersiones" class="collapse" aria-labelledby="headingVersiones" data-parent="#accordionFormulario">
 									<div class="card-body">
-										<!--<div align="left" th:hidden="${esCampoSoloLectura} ? 'true'">	
-
-											<a id="enlaceAgnadirVersion" role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupSeleccionarVersion" href="#"
-												th:text="#{html.boton.agnadirVersion}"></a>	
-								
-											<button id="botonBorrarVersion" type="button" class="btn btn-primary" disabled
-												th:text="#{html.boton.borrarVersion}"></button>	
-											
-										</div>
-											
-										<br th:hidden="${esCampoSoloLectura} ? 'true'">-->
-										
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarVersion', 
 										idButtonBorrar='botonBorrarVersion', idInputSearch='searchVersiones', visible=!${esCampoSoloLectura})"></div>
 										

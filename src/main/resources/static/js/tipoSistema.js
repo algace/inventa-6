@@ -1,8 +1,11 @@
 /*!
  * Funciones propias de tipoSistema.html
  */
+document.getElementById("color").value = "#ffffff";
 
 const ID_TABLA_TIPOS_SUBSISTEMAS = '#tablaTiposSubsistemas';
+const ID_INPUT_SEARCH_SUBSISTEMA = '#searchSubsistemas';
+
 
 // INICIO - Máscara para campo numérico
 // Permite números positivos y negativos entre 1 y 7 dígitos enteros y 2 dígitos decimales
@@ -53,5 +56,10 @@ var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
 	}
  });
  
- document.getElementById("color").value = "#ffffff";
+ $(ID_INPUT_SEARCH_SUBSISTEMA).on('keyup change', function() {
+    tabla_tipos_subsistemas.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
 
