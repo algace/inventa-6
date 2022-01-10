@@ -12,6 +12,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.FrecuenciaATCRepository;
 import com.dbcom.app.model.dto.FrecuenciaATCDto;
 import com.dbcom.app.model.dto.PropietarioDto;
+import com.dbcom.app.model.dto.PropietarioLiteDto;
 import com.dbcom.app.model.entity.FrecuenciaATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -49,10 +50,10 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	public FrecuenciaATCDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		
-		List<PropietarioDto> listPropietariosDisponibles = propietarioService.getPropietariosConValorPorDefecto();
+		List<PropietarioLiteDto> listPropietariosDisponibles = propietarioService.getPropietariosConValorPorDefecto();
 		
 		return new FrecuenciaATCDto().builder()
-				.titular(this.modelMapperUtils.map(listPropietariosDisponibles.get(0), PropietarioDto.class))
+				.titular(this.modelMapperUtils.map(listPropietariosDisponibles.get(0), PropietarioLiteDto.class))
 				.titularesDisponibles(listPropietariosDisponibles)
 				.tiposServicioDisponibles(servicioRadioService.readAll())
 				.build();

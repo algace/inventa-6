@@ -17,6 +17,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.FrecuenciaATCDto;
 import com.dbcom.app.model.dto.PropietarioDto;
+import com.dbcom.app.model.dto.PropietarioLiteDto;
 import com.dbcom.app.service.FrecuenciaATCService;
 import com.dbcom.app.service.PropietarioService;
 import com.dbcom.app.service.ServicioRadioService;
@@ -145,7 +146,7 @@ public final class FrecuenciaATCController {
 			
 			//se recupera la lista de propietarios con el valor por defecto
 			frecuenciaATCDto.setTitularesDisponibles(propietarioService.getPropietariosConValorPorDefecto());
-			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioDto.class));
+			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioLiteDto.class));
 			
 			vista = VIEW_FRECUENCIAATC;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
@@ -244,7 +245,7 @@ public final class FrecuenciaATCController {
 			
 			//se recupera la lista de propietarios con el valor por defecto
 			frecuenciaATCDto.setTitularesDisponibles(propietarioService.getPropietariosConValorPorDefecto());
-			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioDto.class));
+			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioLiteDto.class));
 			
 			
 			vista = VIEW_FRECUENCIAATC;
