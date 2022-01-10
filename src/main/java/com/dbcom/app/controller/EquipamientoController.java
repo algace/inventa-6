@@ -110,7 +110,7 @@ public final class EquipamientoController {
 		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.create());
 		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
 		
-		//Obtenemos la lista de tipos de documento y la añadimos al modelo
+		//Obtenemos la lista de tipos de sistemas, subsistemas y documentos y las añadimos al modelo
 		obtenerListasTiposObjetos(model);
 		
 		// Activación de los botones necesarios

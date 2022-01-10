@@ -1,7 +1,6 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = {"tipoChasis", "funcionPasarela", "tiposChasisDisponibles", "funcionesPasarelaDisponibles"})
+@EqualsAndHashCode(exclude = {"tipoChasis", "funcionPasarela"})
 @AllArgsConstructor
 @NoArgsConstructor
 public final class RecursoPasarelaDto implements Serializable{
@@ -44,8 +43,4 @@ public final class RecursoPasarelaDto implements Serializable{
 	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCarga;
 	
-	private List<TipoChasisDto> tiposChasisDisponibles;
-	
-	private List<FuncionPasarelaDto> funcionesPasarelaDisponibles;
-
 }

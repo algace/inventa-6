@@ -1,6 +1,5 @@
 package com.dbcom.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,12 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	
 	private final ModelMapperUtils modelMapperUtils;
 	private final RecursoPasarelaRepository recursoPasarelaRepository;
-	private final TipoChasisService tipoChasisService;
-	private final FuncionPasarelaService funcionPasarelaService;
 	
 	@Autowired
-	public RecursoPasarelaServiceImpl(ModelMapperUtils modelMapper, RecursoPasarelaRepository recursoPasarelaRepository,
-			TipoChasisService tipoChasisService, FuncionPasarelaService funcionPasarelaService) {
+	public RecursoPasarelaServiceImpl(ModelMapperUtils modelMapper, 
+			RecursoPasarelaRepository recursoPasarelaRepository) {
 		this.modelMapperUtils = modelMapper;
 		this.recursoPasarelaRepository = recursoPasarelaRepository;
-		this.tipoChasisService = tipoChasisService;
-		this.funcionPasarelaService = funcionPasarelaService;
 	}
 	
 	/**
@@ -40,8 +35,7 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 	@Override
 	public RecursoPasarelaDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return RecursoPasarelaDto.builder().tiposChasisDisponibles(tipoChasisService.readAll())
-										   .funcionesPasarelaDisponibles(funcionPasarelaService.readAll()).build();
+		return RecursoPasarelaDto.builder().build();
 	}
 	
 	/**
@@ -66,12 +60,7 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 		
 		log.info(LoggerConstants.LOG_READALL);
 
-		final List<RecursoPasarela> recursoPasarelas = this.recursoPasarelaRepository.findAll();
-
-		final List<RecursoPasarelaDto> recursoPasarelasDto = new ArrayList<>(recursoPasarelas.size());		
-		recursoPasarelas.forEach(recursoPasarela -> recursoPasarelasDto.add(this.modelMapperUtils.map(recursoPasarela, RecursoPasarelaDto.class)));
-		
-		return recursoPasarelasDto;
+		return this.modelMapperUtils.mapAll2List(this.recursoPasarelaRepository.findAll(), RecursoPasarelaDto.class);
 	}
 	
 	/**
@@ -85,12 +74,8 @@ public final class RecursoPasarelaServiceImpl implements RecursoPasarelaService{
 		final RecursoPasarela recursoPasarela = this.recursoPasarelaRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
-		RecursoPasarelaDto chasis = this.modelMapperUtils.map(recursoPasarela, RecursoPasarelaDto.class);
-		chasis.setTiposChasisDisponibles(tipoChasisService.readAll());
-		chasis.setFuncionesPasarelaDisponibles(funcionPasarelaService.readAll());
-
-		return chasis; 
-
+		return this.modelMapperUtils.map(recursoPasarela, RecursoPasarelaDto.class);
+		
 	}
 			
 	/**
