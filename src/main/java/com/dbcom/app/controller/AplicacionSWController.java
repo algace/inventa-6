@@ -148,7 +148,7 @@ public final class AplicacionSWController {
 			aplicacionDto.setVersionesSW(aplicacionService.listVersionesSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
 			
 			//se recupera la lista de equipamientos tratando correctamente los que ya hayan sido seleccionados
-			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAllLite();
+			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAll();
 			aplicacionDto.setEquipamientos(aplicacionService.listEquipamientosSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
 			
 			//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
@@ -257,7 +257,7 @@ public final class AplicacionSWController {
 			aplicacionDto.setVersionesSW(aplicacionService.listVersionesSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
 			
 			//se recupera la lista de equipamientos tratando correctamente los que ya hayan sido seleccionados
-			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAllLite();
+			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAll();
 			aplicacionDto.setEquipamientos(aplicacionService.listEquipamientosSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
 			
 			//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
