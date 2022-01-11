@@ -37,6 +37,6 @@ public final class ChasisPasarelaDto implements Serializable{
 	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCargaLimite;
 	
-	private List<TipoChasisDto> tiposChasis;
+	private List<TipoChasisLiteDto> tiposChasis;
 
 }

@@ -32,6 +32,6 @@ public final class AmbitoRecursoDto implements Serializable{
 	@Valid
 	private FuncionPasarelaLiteDto funcionPasarela;
 	
-	private List<FuncionPasarelaDto> funcionPasarelas;
+	private List<FuncionPasarelaLiteDto> funcionPasarelas;
 
 }

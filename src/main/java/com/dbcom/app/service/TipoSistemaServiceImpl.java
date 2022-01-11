@@ -14,6 +14,7 @@ import com.dbcom.app.model.dao.TipoSubsistemaRepository;
 import com.dbcom.app.model.dto.TipoSistemaDto;
 import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
+import com.dbcom.app.model.dto.TipoSubsistemaLiteDto;
 import com.dbcom.app.model.entity.TipoSistema;
 import com.dbcom.app.model.entity.TipoSubsistema;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -102,7 +103,7 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 		
 		// Insertamos los tipos de subsistemas que tiene asociados este tipo de sistema
 		final List<TipoSubsistema> tiposSubsistemasAsociados = this.tipoSubsistemasRepository.findByTipoSistema(tipoSistema);
-		result.setTiposSubsistemas(this.modelMapperUtils.mapAll2List(tiposSubsistemasAsociados, TipoSubsistemaDto.class));
+		result.setTiposSubsistemas(this.modelMapperUtils.mapAll2List(tiposSubsistemasAsociados, TipoSubsistemaLiteDto.class));
 		
 		return result;
 	}

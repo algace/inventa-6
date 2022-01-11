@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.TipoChasisDto;
+import com.dbcom.app.model.dto.TipoChasisLiteDto;
 
 public interface TipoChasisService {
 
@@ -22,7 +23,7 @@ public interface TipoChasisService {
 	 * Obtenemos un listado de los tipos de chasis
 	 * @return Listado
 	 */
-	List<TipoChasisDto> readAll();
+	List<TipoChasisLiteDto> readAll();
 	
 	/**
 	 * Obtenemos el tipo de chasis con el id facilitado

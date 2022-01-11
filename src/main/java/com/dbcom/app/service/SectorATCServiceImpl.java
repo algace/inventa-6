@@ -55,8 +55,8 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	public SectorATCDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
 				
-		List<RegionOperativaDto> listaRegionesDisponibles = regionOperativaService.getRegionesOperativasConValorPorDefecto();
-		List<TipoFuenteInformacionDto> listaTiposFuenteInformacionDisponibles = tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC);
+		List<RegionOperativaLiteDto> listaRegionesDisponibles = regionOperativaService.getRegionesOperativasConValorPorDefecto();
+		List<TipoFuenteInformacionLiteDto> listaTiposFuenteInformacionDisponibles = tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC);
 		
 		return  SectorATCDto.builder()
 				.tiposSectorATC(tipoSectorATCService.readAll())

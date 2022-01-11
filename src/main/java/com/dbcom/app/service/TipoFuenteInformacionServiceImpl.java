@@ -12,6 +12,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TipoFuenteInformacionRepository;
 import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
+import com.dbcom.app.model.dto.TipoFuenteInformacionLiteDto;
 import com.dbcom.app.model.entity.TipoFuenteInformacion;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -63,14 +64,14 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoFuenteInformacionDto> readAll() {
+	public List<TipoFuenteInformacionLiteDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
 
 		final List<TipoFuenteInformacion> tiposFuenteInformacion = this.tipoFuenteInformacionRepository.findAll();
 
-		final List<TipoFuenteInformacionDto> tiposFuenteInformacionDto = new ArrayList<>(tiposFuenteInformacion.size());		
-		tiposFuenteInformacion.forEach(tipoFuenteInformacion -> tiposFuenteInformacionDto.add(this.modelMapperUtils.map(tipoFuenteInformacion, TipoFuenteInformacionDto.class)));
+		final List<TipoFuenteInformacionLiteDto> tiposFuenteInformacionDto = new ArrayList<>(tiposFuenteInformacion.size());		
+		tiposFuenteInformacion.forEach(tipoFuenteInformacion -> tiposFuenteInformacionDto.add(this.modelMapperUtils.map(tipoFuenteInformacion, TipoFuenteInformacionLiteDto.class)));
 		
 		return tiposFuenteInformacionDto;
 	}
@@ -105,7 +106,7 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoFuenteInformacionDto> getTiposFuenteInformacionConValorPorDefecto(String nombreFuenteInformacion) {
+	public List<TipoFuenteInformacionLiteDto> getTiposFuenteInformacionConValorPorDefecto(String nombreFuenteInformacion) {
 
 		TipoFuenteInformacion primerTipoFuenteInformacion;
 		TipoFuenteInformacion tipoFuenteInformacionPorDefecto = tipoFuenteInformacionRepository.findByNombre(nombreFuenteInformacion);
@@ -122,7 +123,7 @@ public final class TipoFuenteInformacionServiceImpl implements TipoFuenteInforma
 				                                          .filter(tipoFuenteInformacion -> !tipoFuenteInformacion.equals(primerTipoFuenteInformacion))
 				                                          .collect(Collectors.toList()));
 		
-		return this.modelMapperUtils.mapAll2List(listaTiposFuenteInformacion, TipoFuenteInformacionDto.class);
+		return this.modelMapperUtils.mapAll2List(listaTiposFuenteInformacion, TipoFuenteInformacionLiteDto.class);
 	}
 	
 }

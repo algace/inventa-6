@@ -13,6 +13,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TipoChasisRepository;
 import com.dbcom.app.model.dto.TipoChasisDto;
+import com.dbcom.app.model.dto.TipoChasisLiteDto;
 import com.dbcom.app.model.entity.TipoChasis;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -60,14 +61,14 @@ public final class TipoChasisServiceImpl implements TipoChasisService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoChasisDto> readAll() {
+	public List<TipoChasisLiteDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
 
 		final List<TipoChasis> tiposChasis = this.tipoChasisRepository.findAll();
 
-		final List<TipoChasisDto> tiposChasisDto = new ArrayList<>(tiposChasis.size());		
-		tiposChasis.forEach(tipoChasis -> tiposChasisDto.add(this.modelMapperUtils.map(tipoChasis, TipoChasisDto.class)));
+		final List<TipoChasisLiteDto> tiposChasisDto = new ArrayList<>(tiposChasis.size());		
+		tiposChasis.forEach(tipoChasis -> tiposChasisDto.add(this.modelMapperUtils.map(tipoChasis, TipoChasisLiteDto.class)));
 		
 		return tiposChasisDto;
 	}

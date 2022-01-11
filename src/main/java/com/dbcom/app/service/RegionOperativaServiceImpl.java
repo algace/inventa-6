@@ -13,6 +13,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.RegionOperativaRepository;
 import com.dbcom.app.model.dto.RegionOperativaDto;
+import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -61,12 +62,12 @@ public class RegionOperativaServiceImpl implements RegionOperativaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<RegionOperativaDto> readAll() {
+	public List<RegionOperativaLiteDto> readAll() {
 
 		final List<RegionOperativa> regionesMantenimiento = this.regionOperativaRepository.findAll();
 		
-		final List<RegionOperativaDto> regionesMantenimientoDto = new ArrayList<>(regionesMantenimiento.size());		
-		regionesMantenimiento.forEach(regionMantenimiento -> regionesMantenimientoDto.add(this.modelMapperUtils.map(regionMantenimiento, RegionOperativaDto.class)));
+		final List<RegionOperativaLiteDto> regionesMantenimientoDto = new ArrayList<>(regionesMantenimiento.size());		
+		regionesMantenimiento.forEach(regionMantenimiento -> regionesMantenimientoDto.add(this.modelMapperUtils.map(regionMantenimiento, RegionOperativaLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 
@@ -104,7 +105,7 @@ public class RegionOperativaServiceImpl implements RegionOperativaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<RegionOperativaDto> getRegionesOperativasConValorPorDefecto() {
+	public List<RegionOperativaLiteDto> getRegionesOperativasConValorPorDefecto() {
 
 		RegionOperativa primerRegionOperativa;
 		RegionOperativa regionOperativaPorDefecto = regionOperativaRepository.findByNombre(ApplicationConstants.REGION_OPERATIVA_POR_DEFECTO);
@@ -121,7 +122,7 @@ public class RegionOperativaServiceImpl implements RegionOperativaService {
 				                                          .filter(regionOperativa -> !regionOperativa.equals(primerRegionOperativa))
 				                                          .collect(Collectors.toList()));
 		
-		return this.modelMapperUtils.mapAll2List(listaRegiones, RegionOperativaDto.class);
+		return this.modelMapperUtils.mapAll2List(listaRegiones, RegionOperativaLiteDto.class);
 	}
 
 }

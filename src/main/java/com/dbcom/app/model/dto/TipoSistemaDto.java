@@ -54,5 +54,5 @@ public class TipoSistemaDto implements Serializable {
 	private Double codigoFuncionRed;
 	
 	@Builder.Default
-	private List<TipoSubsistemaDto> tiposSubsistemas = new ArrayList<>();
+	private List<TipoSubsistemaLiteDto> tiposSubsistemas = new ArrayList<>();
 }

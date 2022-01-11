@@ -56,11 +56,11 @@ public final class SectorATCDto implements Serializable{
 	
 	private String airblockList;
 	
-	private List<TipoSectorATCDto> tiposSectorATC;
+	private List<TipoSectorATCLiteDto> tiposSectorATC;
 	
-	private List<TipoFuenteInformacionDto> tiposFuenteInformacion;
+	private List<TipoFuenteInformacionLiteDto> tiposFuenteInformacion;
 	
-	private List<RegionOperativaDto> regionesOperativas;
+	private List<RegionOperativaLiteDto> regionesOperativas;
 	
 	@Builder.Default	
 	private List<AirblockDto> airblocks = new ArrayList<>(); 

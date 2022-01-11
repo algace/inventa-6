@@ -44,8 +44,8 @@ public final class RecursoPasarelaDto implements Serializable{
 	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCarga;
 	
-	private List<TipoChasisDto> tiposChasisDisponibles;
+	private List<TipoChasisLiteDto> tiposChasisDisponibles;
 	
-	private List<FuncionPasarelaDto> funcionesPasarelaDisponibles;
+	private List<FuncionPasarelaLiteDto> funcionesPasarelaDisponibles;
 
 }

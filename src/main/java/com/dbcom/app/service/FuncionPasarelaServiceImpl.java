@@ -11,6 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.FuncionPasarelaRepository;
 import com.dbcom.app.model.dto.FuncionPasarelaDto;
+import com.dbcom.app.model.dto.FuncionPasarelaLiteDto;
 import com.dbcom.app.model.entity.FuncionPasarela;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -57,14 +58,14 @@ public final class FuncionPasarelaServiceImpl implements FuncionPasarelaService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<FuncionPasarelaDto> readAll() {
+	public List<FuncionPasarelaLiteDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
 
 		final List<FuncionPasarela> funcionPasarelas = this.funcionPasarelaRepository.findAll();
 
-		final List<FuncionPasarelaDto> funcionPasarelasDto = new ArrayList<>(funcionPasarelas.size());		
-		funcionPasarelas.forEach(funcionPasarela -> funcionPasarelasDto.add(this.modelMapperUtils.map(funcionPasarela, FuncionPasarelaDto.class)));
+		final List<FuncionPasarelaLiteDto> funcionPasarelasDto = new ArrayList<>(funcionPasarelas.size());		
+		funcionPasarelas.forEach(funcionPasarela -> funcionPasarelasDto.add(this.modelMapperUtils.map(funcionPasarela, FuncionPasarelaLiteDto.class)));
 		
 		return funcionPasarelasDto;
 	}

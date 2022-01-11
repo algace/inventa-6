@@ -16,6 +16,7 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.RegionOperativaDto;
+import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorOACIDto;
 import com.dbcom.app.service.RegionOperativaService;
 import com.dbcom.app.service.SectorOACIService;
@@ -137,7 +138,7 @@ public class SectorOACIController {
 		
 			//Se debe recuperar de nuevo la lista de regiones operativas disponibles 
 			//y poner a null el id de la región operativa
-			sectorOACIDto.setRegionesOperativasDisponibles(this.modelMapperUtils.mapAll2List(this.regionOperativaService.readAll(),RegionOperativaDto.class));
+			sectorOACIDto.setRegionesOperativasDisponibles(this.modelMapperUtils.mapAll2List(this.regionOperativaService.readAll(),RegionOperativaLiteDto.class));
 			sectorOACIDto.getRegionOperativa().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_OACI, sectorOACIDto);
 			
@@ -234,7 +235,7 @@ public class SectorOACIController {
 		
 			//Se debe recuperar de nuevo la lista de regiones operativas disponibles 
 			//y poner a null el id de la región operativa
-			sectorOACIDto.setRegionesOperativasDisponibles(this.modelMapperUtils.mapAll2List(this.regionOperativaService.readAll(),RegionOperativaDto.class));
+			sectorOACIDto.setRegionesOperativasDisponibles(this.modelMapperUtils.mapAll2List(this.regionOperativaService.readAll(),RegionOperativaLiteDto.class));
 			sectorOACIDto.getRegionOperativa().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_OACI, sectorOACIDto);
 			

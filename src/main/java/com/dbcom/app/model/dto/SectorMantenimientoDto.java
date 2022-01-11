@@ -46,6 +46,6 @@ public class SectorMantenimientoDto implements Serializable {
 	private RegionMantenimientoLiteDto regionMantenimiento;
 	
 	@Builder.Default
-	private List<RegionMantenimientoDto> regionesMantenimientoDisponibles = new ArrayList<>();
+	private List<RegionMantenimientoLiteDto> regionesMantenimientoDisponibles = new ArrayList<>();
 
 }

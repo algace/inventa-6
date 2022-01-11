@@ -71,6 +71,6 @@ public final class FrecuenciaATCDto implements Serializable {
 	
 	private List<PropietarioLiteDto> titularesDisponibles;
 	
-	private List<ServicioRadioDto> tiposServicioDisponibles;
+	private List<ServicioRadioLiteDto> tiposServicioDisponibles;
 	
 }

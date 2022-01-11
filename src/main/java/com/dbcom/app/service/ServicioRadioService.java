@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.ServicioRadioDto;
+import com.dbcom.app.model.dto.ServicioRadioLiteDto;
 
 public interface ServicioRadioService {
 	
@@ -23,7 +24,7 @@ public interface ServicioRadioService {
 	 * Obtenemos un listado de los servicios de radio
 	 * @return Listado
 	 */
-	List<ServicioRadioDto> readAll();
+	List<ServicioRadioLiteDto> readAll();
 	
 	/**
 	 * Obtenemos el servicio de radio con el id facilitado

@@ -16,6 +16,7 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.RegionMantenimientoDto;
+import com.dbcom.app.model.dto.RegionMantenimientoLiteDto;
 import com.dbcom.app.model.dto.SectorMantenimientoDto;
 import com.dbcom.app.service.RegionMantenimientoService;
 import com.dbcom.app.service.SectorMantenimientoService;
@@ -136,7 +137,7 @@ public class SectorMantenimientoController {
 		
 			//Se debe recuperar de nuevo la lista de regiones de mantenimiento disponibles 
 			//y poner a null el id de la región de mantemiento
-			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoDto.class));
+			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoLiteDto.class));
 			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
 			
@@ -233,7 +234,7 @@ public class SectorMantenimientoController {
 		
 			//Se debe recuperar de nuevo la lista de regiones de mantenimiento disponibles 
 			//y poner a null el id de la región de mantemiento
-			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoDto.class));
+			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoLiteDto.class));
 			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
 			

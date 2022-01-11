@@ -50,6 +50,6 @@ public class SectorOACIDto  implements Serializable {
 	private String coordenadas;
 	
 	@Builder.Default
-	private List<RegionOperativaDto> regionesOperativasDisponibles = new ArrayList<>();
+	private List<RegionOperativaLiteDto> regionesOperativasDisponibles = new ArrayList<>();
 
 }
