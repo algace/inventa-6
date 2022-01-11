@@ -15,6 +15,7 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.VersionSWRepository;
 import com.dbcom.app.model.dto.VersionSWDto;
 import com.dbcom.app.service.VersionSWService;
 
@@ -30,6 +31,7 @@ public final class VersionControllerSW {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_VERSION = "versionSW";
+	private static final String ATTRIBUTE_APLICACIONES_ASOCIADAS = "listaAplicacionesSW";
 
 	// Vistas	
 	private static final String VIEW_VERSION = ControllerConstants.MAP_PATH_MENU_CONTROLVERSIONESSW + ATTRIBUTE_VERSION;
@@ -48,10 +50,13 @@ public final class VersionControllerSW {
 	public static final String MAP_READALL_VERSIONES = ControllerConstants.MAP_ACTION_SLASH + VIEW_VERSIONES;
 
 	private final VersionSWService versionService;
+	private final VersionSWRepository versionSWRepository;
 	
 	@Autowired
-	public VersionControllerSW(VersionSWService versionService) {
+	public VersionControllerSW(VersionSWService versionService,
+			VersionSWRepository versionSWRepository) {
 		this.versionService = versionService;
+		this.versionSWRepository = versionSWRepository;
 	}
 	
 	/**
@@ -151,6 +156,9 @@ public final class VersionControllerSW {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_VERSION, this.versionService.read(id));
 		
+		//Obtenemos la lista de aplicaciones SW que tienen asociada esta versión
+		obtenerAplicacionesAsociadas(model, id);
+		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -180,6 +188,9 @@ public final class VersionControllerSW {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_VERSION, this.versionService.read(id));
 		
+		//Obtenemos la lista de aplicaciones SW que tienen asociada esta versión
+		obtenerAplicacionesAsociadas(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -222,6 +233,9 @@ public final class VersionControllerSW {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_VERSION);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_VERSIONES);
 		
+			//Obtenemos la lista de aplicaciones SW que tienen asociada esta versión
+			obtenerAplicacionesAsociadas(model, versionDto.getId());
+			
 			vista = VIEW_VERSION;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
@@ -250,6 +264,9 @@ public final class VersionControllerSW {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
 				MessagesConstants.POPUP_ELIMINAR_VERSION_NO_PERMITIDO_MENSAJE);
 		
+		//Obtenemos la lista de aplicaciones SW que tienen asociada esta versión
+		obtenerAplicacionesAsociadas(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -279,4 +296,12 @@ public final class VersionControllerSW {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_VERSIONES);
 	}
 	
+	/**
+	 * Obtiene la lista de aplicaciones SW que tienen asociada la versión y se añade al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerAplicacionesAsociadas(final Model model, final Long id) {
+		
+		model.addAttribute(ATTRIBUTE_APLICACIONES_ASOCIADAS, this.versionSWRepository.findAplicacionesWithVersion(id));
+	}
 }

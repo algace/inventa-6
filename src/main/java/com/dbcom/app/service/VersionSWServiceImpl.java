@@ -11,7 +11,6 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.VersionSWRepository;
-import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 import com.dbcom.app.model.dto.VersionSWDto;
 import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
@@ -108,10 +107,6 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		log.info(LoggerConstants.LOG_READ);
 		
 		final VersionSWDto result = this.modelMapperUtils.map(versionSW, VersionSWDto.class);
-		
-		// Insertamos las aplicaciones que tienen asociada esta versión
-		final List<AplicacionSW> aplicacionesSWAsociadas = this.versionSWRepository.findAplicacionesWithVersion(id);
-		result.setAplicacionesSW(this.modelMapperUtils.mapAll2List(aplicacionesSWAsociadas, AplicacionSWLiteDto.class));
 		
 		return result;
 
