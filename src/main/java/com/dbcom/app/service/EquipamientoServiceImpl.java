@@ -1,6 +1,5 @@
 package com.dbcom.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,23 +34,14 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	private final AplicacionSWRepository aplicacionSWRepository;
 	private final EquipamientoRepository equipamientoRepository;
 	private final ModelMapperUtils  modelMapperUtils;
-	private final TipoDocumentoService tipoDocumentoService;
-	private final TipoSistemaService tipoSistemaService;
-	private final TipoSubsistemaService tipoSubsistemaService;
 
 	@Autowired
 	public EquipamientoServiceImpl(ModelMapperUtils modelMapper,
 			AplicacionSWRepository aplicacionSWRepository,
-			EquipamientoRepository equipamientoRepository,
-			TipoDocumentoService tipoDocumentoService,
-			TipoSistemaService tipoSistemaService,
-			TipoSubsistemaService tipoSubsistemaService) {
+			EquipamientoRepository equipamientoRepository) {
 		this.modelMapperUtils = modelMapper;
 		this.aplicacionSWRepository = aplicacionSWRepository;
 		this.equipamientoRepository = equipamientoRepository;
-		this.tipoDocumentoService = tipoDocumentoService;
-		this.tipoSistemaService = tipoSistemaService;
-		this.tipoSubsistemaService = tipoSubsistemaService;
 	}
 	
 	/**
@@ -60,11 +50,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	@Override
 	public EquipamientoDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
-		return EquipamientoDto.builder()
-				.tiposDocumento(tipoDocumentoService.readAll())
-				.tiposSistemasDisponibles(tipoSistemaService.readAll())
-				.tiposSubsistemasDisponibles(tipoSubsistemaService.readAll())
-				.build();
+		return EquipamientoDto.builder().build();
 	}
 
 	/**
@@ -87,30 +73,9 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	@Override
 	public List<EquipamientoLiteDto> readAll() {
 		
-		final List<Equipamiento> equipamientos = this.equipamientoRepository.findAll();
-		
-		final List<EquipamientoLiteDto> equipamientosDto = new ArrayList<>(equipamientos.size());		
-		equipamientos.forEach(equipamiento -> equipamientosDto.add(this.modelMapperUtils.map(equipamiento, EquipamientoLiteDto.class)));
-		
 		log.info(LoggerConstants.LOG_READALL);
 		
-		return equipamientosDto;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<EquipamientoLiteDto> readAllLite() {
-		
-		final List<Equipamiento> equipamientos = this.equipamientoRepository.findAll();
-		
-		final List<EquipamientoLiteDto> equipamientosLiteDto = new ArrayList<>(equipamientos.size());		
-		equipamientos.forEach(equipamiento -> equipamientosLiteDto.add(this.modelMapperUtils.map(equipamiento, EquipamientoLiteDto.class)));
-		
-		log.info(LoggerConstants.LOG_READALL);
-		
-		return equipamientosLiteDto;
+		return this.modelMapperUtils.mapAll2List(this.equipamientoRepository.findAll(), EquipamientoLiteDto.class);
 	}
 	
 	/**
@@ -123,9 +88,6 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 	
 		final EquipamientoDto result = this.modelMapperUtils.map(equipamiento, EquipamientoDto.class);
-		result.setTiposDocumento(tipoDocumentoService.readAll());
-		result.setTiposSistemasDisponibles(tipoSistemaService.readAll());
-		result.setTiposSubsistemasDisponibles(tipoSubsistemaService.readAll());
 		
 		log.info(LoggerConstants.LOG_READ);		
 
@@ -136,7 +98,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<EquipamientoDto> readNotContains(Long id) {
+	public List<EquipamientoLiteDto> readNotContains(Long id) {
 
 		final AplicacionSW aplicacionSW = this.aplicacionSWRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
@@ -146,7 +108,7 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 		final List<Equipamiento> equipamiento = this.equipamientoRepository.findAll();
 		equipamiento.removeAll(aplicacionSW.getEquipamientos());
 		
-		return this.modelMapperUtils.mapAll2List(equipamiento, EquipamientoDto.class);
+		return this.modelMapperUtils.mapAll2List(equipamiento, EquipamientoLiteDto.class);
 	}
 	
 
@@ -195,9 +157,6 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 		
 		equipamientoDto.setDocumentos(filterListDocumentos(equipamientoDto.getDocumentos()));
 		equipamientoDto.setFotografias(filterListFotografias(equipamientoDto.getFotografias()));
-		equipamientoDto.setTiposDocumento(tipoDocumentoService.readAll());
-		equipamientoDto.setTiposSistemasDisponibles(tipoSistemaService.readAll());
-		equipamientoDto.setTiposSubsistemasDisponibles(tipoSubsistemaService.readAll());
 		
 		return equipamientoDto;
 	}

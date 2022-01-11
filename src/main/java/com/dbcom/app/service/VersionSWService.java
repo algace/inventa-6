@@ -48,7 +48,7 @@ public interface VersionSWService {
 	 * @param id Identificador de la aplicación
 	 * @return Versiones
 	 */
-	List<VersionSWDto> readNotContains(final Long id);
+	List<VersionSWLiteDto> readNotContains(final Long id);
 	
 	/**
 	 * Persistimos la versión pasada como parámetro

@@ -1,7 +1,6 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -36,7 +35,5 @@ public final class ChasisPasarelaDto implements Serializable{
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCargaLimite;
-	
-	private List<TipoChasisLiteDto> tiposChasis;
 
 }

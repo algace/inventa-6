@@ -134,7 +134,7 @@
 								<div id="collapseEquipamiento" class="collapse" aria-labelledby="headingEquipamiento" data-parent="#accordionFormulario">
 									<div class="card-body">
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', 
-											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchEquipamientos', visible='true')"></div>
+											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchEquipamientos', visible=!${esCampoSoloLectura})"></div>
 										
 										<table id="tablaEquipamiento" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
@@ -169,7 +169,7 @@
 								<div id="collapseVersiones" class="collapse" aria-labelledby="headingVersiones" data-parent="#accordionFormulario">
 									<div class="card-body">
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarVersion', 
-										idButtonBorrar='botonBorrarVersion', idInputSearch='searchVersiones', visible='true')"></div>
+										idButtonBorrar='botonBorrarVersion', idInputSearch='searchVersiones', visible=!${esCampoSoloLectura})"></div>
 										
 										<table id="tablaVersiones" class="table table-striped table-bordered no-margin-top" style="width:100%">
 											<thead>
@@ -245,7 +245,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="equipamientoNoIncluido, item : *{equipamientosNoIncluidos}">
+												<tr th:each="equipamientoNoIncluido, item : ${listaEquipamientosDisponibles}">
 													<td th:text="${equipamientoNoIncluido.id}"></td>
 													<td th:text="${equipamientoNoIncluido.nombre}"></td>
 													<td th:text="${equipamientoNoIncluido.marca}"></td>
@@ -290,7 +290,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="versionSWNoIncluida, item : *{versionesSWNoIncluidas}">
+												<tr th:each="versionSWNoIncluida, item : ${listaVersionesDisponibles}">
 													<td th:text="${versionSWNoIncluida.id}"></td>
 													<td th:text="${versionSWNoIncluida.nombre}"></td>
 													<td th:text="${versionSWNoIncluida.descripcion}"></td>

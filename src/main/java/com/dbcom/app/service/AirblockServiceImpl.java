@@ -12,8 +12,6 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AirblockRepository;
 import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
-import com.dbcom.app.model.dto.SectorATCDto;
-import com.dbcom.app.model.dto.SectorATCLiteDto;
 import com.dbcom.app.model.entity.Airblock;
 import com.dbcom.app.model.entity.SectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -106,10 +104,7 @@ public final class AirblockServiceImpl implements AirblockService {
 		log.info(LoggerConstants.LOG_READ);	
 		
 		final AirblockDto result = this.modelMapperUtils.map(airblock, AirblockDto.class);
-		
-		final List<SectorATC> sectoresATCAsociados = this.airblockRepository.findSectoresATCWithAirbloks(id);
-		result.setSectoresATCList(this.modelMapperUtils.mapAll2List(sectoresATCAsociados, SectorATCLiteDto.class));
-		
+
 		return result; 		
 		
 	}

@@ -82,24 +82,15 @@ public final class EquipamientoDto implements Serializable {
 	@Valid
 	private TipoSistemaLiteDto tipoSistema;
 	
-	@Builder.Default
-	private List<TipoSistemaLiteDto> tiposSistemasDisponibles = new ArrayList<>();
-	
 	@NotNull(message = "{validation.notNull}")
 	@Valid
 	private TipoSubsistemaLiteDto tipoSubsistema;
-	
-	@Builder.Default
-	private List<TipoSubsistemaLiteDto> tiposSubsistemasDisponibles = new ArrayList<>();
 	
 	@Builder.Default
 	private List<AplicacionSWDto> aplicaciones = new ArrayList<>();
 	
 	@Builder.Default
 	private List<DocumentoDto> documentos = new ArrayList<>();
-	
-	@Builder.Default
-	private List<TipoDocumentoDto> tiposDocumento = new ArrayList<>();
 	
 	@Builder.Default
 	private List<FotografiaDto> fotografias = new ArrayList<>();

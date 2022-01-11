@@ -32,12 +32,6 @@ public interface EquipamientoService {
 	List<EquipamientoLiteDto> readAll();
 	
 	/**
-	 * Obtenemos un listado de los equipamientos Lite
-	 * @return Listado
-	 */
-	List<EquipamientoLiteDto> readAllLite();
-	
-	/**
 	 * Obtenemos el equipamiento con el id facilitado
 	 * @param id Identificador
 	 * @return Equipamiento
@@ -49,7 +43,7 @@ public interface EquipamientoService {
 	 * @param id Identificador de la aplicación
 	 * @return Equipamientos
 	 */
-	List<EquipamientoDto> readNotContains(final Long id);
+	List<EquipamientoLiteDto> readNotContains(final Long id);
 	
 	/**
 	 * Persistimos el equipamiento pasado como parámetro

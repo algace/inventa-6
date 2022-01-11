@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = {"equipamientos", "versionesSW", "equipamientosNoIncluidos", "versionesSWNoIncluidas"})
+@EqualsAndHashCode(exclude = {"equipamientos", "versionesSW"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -57,13 +57,4 @@ public final class AplicacionSWDto implements Serializable {
 	@Builder.Default	
 	private List<EquipamientoLiteDto> equipamientos = new ArrayList<>();
 	
-	/**
-	 * Versiones que no posee la aplicación
-	 */
-	@Builder.Default	
-	private List<VersionSWLiteDto> versionesSWNoIncluidas = new ArrayList<>();
-	
-	@Builder.Default	
-	private List<EquipamientoLiteDto> equipamientosNoIncluidos = new ArrayList<>();
-
 }
