@@ -1,8 +1,6 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -46,10 +44,4 @@ public class TipoSubsistemaDto implements Serializable {
 	@Valid
 	private TipoSistemaLiteDto tipoSistema;
 	
-	@Builder.Default
-	private List<TipoInterfazOperacionDto> tiposInterfazOperacion = new ArrayList<>();
-	
-	@Builder.Default
-	private List<TipoSistemaLiteDto> tiposSistemasDisponibles = new ArrayList<>();
-
 }

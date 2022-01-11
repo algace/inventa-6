@@ -120,7 +120,7 @@
 											    <select th:class="form-control" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoInterfazOperacion.id}">
 											    	<option th:value="0"></option>
-											    	<option th:each="tipoInterfazOperacion : *{tiposInterfazOperacion}" th:value="${tipoInterfazOperacion.id}" th:text="${tipoInterfazOperacion.nombre}"></option>
+											    	<option th:each="tipoInterfazOperacion : ${listaTiposInterfazOperacion}" th:value="${tipoInterfazOperacion.id}" th:text="${tipoInterfazOperacion.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoInterfazOperacion.id')}" th:errors="*{tipoInterfazOperacion.id}"></div>
 									        </div>
@@ -184,7 +184,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="tipoSistemaDisponible : *{tiposSistemasDisponibles}">
+												<tr th:each="tipoSistemaDisponible : ${listaTiposSistemas}">
 													<td th:text="${tipoSistemaDisponible.id}"></td>
 													<td th:text="${tipoSistemaDisponible.nombre}"></td>
 													<td th:text="${tipoSistemaDisponible.descripcion}"></td>
