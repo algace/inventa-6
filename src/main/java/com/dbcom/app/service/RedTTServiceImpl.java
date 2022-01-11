@@ -10,6 +10,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.RedTTRepository;
 import com.dbcom.app.model.dto.RedTTDto;
+import com.dbcom.app.model.dto.RedTTLiteDto;
 import com.dbcom.app.model.entity.RedTT;
 import com.dbcom.app.model.entity.TipoTopologia;
 import com.dbcom.app.utils.ModelMapperUtils;
@@ -66,11 +67,11 @@ public class RedTTServiceImpl implements RedTTService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<RedTTDto> readAll() {
+	public List<RedTTLiteDto> readAll() {
 
 		log.info(LoggerConstants.LOG_READALL);
 
-		return this.modelMapperUtils.mapAll2List(this.redTTRepository.findAll(), RedTTDto.class);
+		return this.modelMapperUtils.mapAll2List(this.redTTRepository.findAll(), RedTTLiteDto.class);
 	}
 
 	/**
