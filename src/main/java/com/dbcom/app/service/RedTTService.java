@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.RedTTDto;
+import com.dbcom.app.model.dto.RedTTLiteDto;
 
 /**
  * Lógica para aplicaciones
@@ -27,7 +28,7 @@ public interface RedTTService {
 	 * Obtenemos un listado de las redes T/T
 	 * @return Listado
 	 */
-	List<RedTTDto> readAll();
+	List<RedTTLiteDto> readAll();
 	
 	/**
 	 * Obtenemos la red T/T con el id facilitado

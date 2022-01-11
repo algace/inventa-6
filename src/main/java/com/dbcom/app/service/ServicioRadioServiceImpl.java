@@ -11,6 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.ServicioRadioRepository;
 import com.dbcom.app.model.dto.ServicioRadioDto;
+import com.dbcom.app.model.dto.ServicioRadioLiteDto;
 import com.dbcom.app.model.entity.ServicioRadio;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -57,14 +58,14 @@ public class ServicioRadioServiceImpl implements ServicioRadioService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<ServicioRadioDto> readAll() {
+	public List<ServicioRadioLiteDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
 
 		final List<ServicioRadio> serviciosRadio = this.servicioRadioRepository.findAll();
 
-		final List<ServicioRadioDto> serviciosRadioDto = new ArrayList<>(serviciosRadio.size());		
-		serviciosRadio.forEach(servicioRadio -> serviciosRadioDto.add(this.modelMapperUtils.map(servicioRadio, ServicioRadioDto.class)));
+		final List<ServicioRadioLiteDto> serviciosRadioDto = new ArrayList<>(serviciosRadio.size());		
+		serviciosRadio.forEach(servicioRadio -> serviciosRadioDto.add(this.modelMapperUtils.map(servicioRadio, ServicioRadioLiteDto.class)));
 		
 		return serviciosRadioDto;
 	}

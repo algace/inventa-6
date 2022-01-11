@@ -11,6 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TipoSectorATCRepository;
 import com.dbcom.app.model.dto.TipoSectorATCDto;
+import com.dbcom.app.model.dto.TipoSectorATCLiteDto;
 import com.dbcom.app.model.entity.TipoSectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -62,14 +63,14 @@ public final class TipoSectorATCServiceImpl implements TipoSectorATCService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<TipoSectorATCDto> readAll() {
+	public List<TipoSectorATCLiteDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
 
 		final List<TipoSectorATC> tiposSectorATC = this.tipoSectorATCRepository.findAll();
 
-		final List<TipoSectorATCDto> tiposSectorATCDto = new ArrayList<>(tiposSectorATC.size());		
-		tiposSectorATC.forEach(tipoSectorATC -> tiposSectorATCDto.add(this.modelMapperUtils.map(tipoSectorATC, TipoSectorATCDto.class)));
+		final List<TipoSectorATCLiteDto> tiposSectorATCDto = new ArrayList<>(tiposSectorATC.size());		
+		tiposSectorATC.forEach(tipoSectorATC -> tiposSectorATCDto.add(this.modelMapperUtils.map(tipoSectorATC, TipoSectorATCLiteDto.class)));
 		
 		return tiposSectorATCDto;
 	}

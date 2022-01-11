@@ -104,7 +104,7 @@ public final class AirblockServiceImpl implements AirblockService {
 		log.info(LoggerConstants.LOG_READ);	
 		
 		final AirblockDto result = this.modelMapperUtils.map(airblock, AirblockDto.class);
-		
+
 		return result; 		
 		
 	}

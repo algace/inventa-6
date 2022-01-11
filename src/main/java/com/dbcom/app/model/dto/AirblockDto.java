@@ -48,5 +48,5 @@ public final class AirblockDto implements Serializable {
 	
 	@Size(max = 250, message = "{validation.max250}")
 	private String sectoresATC;
-	
+
 }

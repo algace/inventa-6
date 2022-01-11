@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.FuncionPasarelaDto;
+import com.dbcom.app.model.dto.FuncionPasarelaLiteDto;
 
 public interface FuncionPasarelaService {
 
@@ -22,7 +23,7 @@ public interface FuncionPasarelaService {
 	 * Obtenemos un listado de las funciones
 	 * @return Listado
 	 */
-	List<FuncionPasarelaDto> readAll();
+	List<FuncionPasarelaLiteDto> readAll();
 	
 	/**
 	 * Obtenemos la función con el id facilitado

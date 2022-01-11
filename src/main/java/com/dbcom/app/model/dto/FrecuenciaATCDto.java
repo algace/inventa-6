@@ -41,14 +41,14 @@ public final class FrecuenciaATCDto implements Serializable {
 
 	@NotNull(message = "{validation.notNull}")
 	@Valid
-	private ServicioRadioDto tipoServicio;
+	private ServicioRadioLiteDto tipoServicio;
 	
 	@NotNull(message = "{validation.notNull}")
 	private String frecuenciaBackup;
 	
 	@NotNull(message = "{validation.notNull}")
 	@Valid
-	private PropietarioDto titular;
+	private PropietarioLiteDto titular;
 	
 	//@Size(max = 250, message = "{validation.max250}")
 	//private String docOACI;

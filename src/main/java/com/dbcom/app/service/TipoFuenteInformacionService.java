@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.TipoFuenteInformacionDto;
+import com.dbcom.app.model.dto.TipoFuenteInformacionLiteDto;
 
 /**
  * Lógica para tipos de fuente de información
@@ -27,7 +28,7 @@ public interface TipoFuenteInformacionService {
 	 * Obtenemos un listado de los tipos de fuente de información
 	 * @return Listado
 	 */
-	List<TipoFuenteInformacionDto> readAll();
+	List<TipoFuenteInformacionLiteDto> readAll();
 	
 	/**
 	 * Obtenemos el tipo de fuente de información con el id facilitado
@@ -50,6 +51,6 @@ public interface TipoFuenteInformacionService {
 	 * se deberá poner como primer elemento de la lista un tipo de fuente de información con sus campos vacíos
 	 * @return Listado
 	 */
-	List<TipoFuenteInformacionDto> getTiposFuenteInformacionConValorPorDefecto(String nombreFuenteInformacion);
+	List<TipoFuenteInformacionLiteDto> getTiposFuenteInformacionConValorPorDefecto(String nombreFuenteInformacion);
 	
 }

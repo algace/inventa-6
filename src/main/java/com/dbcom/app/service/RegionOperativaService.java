@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.RegionOperativaDto;
+import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 
 /**
  * Lógica para regiones operativas
@@ -27,7 +28,7 @@ public interface RegionOperativaService {
 	 * Obtenemos un listado de las regiones operativas
 	 * @return Listado
 	 */
-	List<RegionOperativaDto> readAll();
+	List<RegionOperativaLiteDto> readAll();
 	
 	/**
 	 * Obtenemos la región operativa con el id facilitado
@@ -49,5 +50,5 @@ public interface RegionOperativaService {
 	 * se deberá poner como primer elemento de la lista una región con sus campos vacíos
 	 * @return Listado
 	 */
-	List<RegionOperativaDto> getRegionesOperativasConValorPorDefecto();
+	List<RegionOperativaLiteDto> getRegionesOperativasConValorPorDefecto();
 }

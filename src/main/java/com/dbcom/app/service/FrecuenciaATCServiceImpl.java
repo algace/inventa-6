@@ -11,6 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.FrecuenciaATCRepository;
 import com.dbcom.app.model.dto.FrecuenciaATCDto;
+import com.dbcom.app.model.dto.FrecuenciaATCLiteDto;
 import com.dbcom.app.model.entity.FrecuenciaATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -63,12 +64,12 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<FrecuenciaATCDto> readAll() {
+	public List<FrecuenciaATCLiteDto> readAll() {
 		
 		final List<FrecuenciaATC> frecuenciasATC = this.frecuenciaATCRepository.findAll();
 		
-		final List<FrecuenciaATCDto> frecuenciasATCDto = new ArrayList<>(frecuenciasATC.size());		
-		frecuenciasATC.forEach(frecuenciaATC -> frecuenciasATCDto.add(this.modelMapperUtils.map(frecuenciaATC, FrecuenciaATCDto.class)));
+		final List<FrecuenciaATCLiteDto> frecuenciasATCDto = new ArrayList<>(frecuenciasATC.size());		
+		frecuenciasATC.forEach(frecuenciaATC -> frecuenciasATCDto.add(this.modelMapperUtils.map(frecuenciaATC, FrecuenciaATCLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 		

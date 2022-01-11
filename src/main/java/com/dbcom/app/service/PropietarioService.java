@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.PropietarioDto;
+import com.dbcom.app.model.dto.PropietarioLiteDto;
 
 public interface PropietarioService {
 
@@ -22,7 +23,7 @@ public interface PropietarioService {
 	 * Obtenemos un listado de propietarios
 	 * @return Listado
 	 */
-	List<PropietarioDto> readAll();
+	List<PropietarioLiteDto> readAll();
 	
 	/**
 	 * Obtenemos el propietario con el id facilitado
@@ -45,5 +46,5 @@ public interface PropietarioService {
 	 * @return Listado
 	 */
 	
-	List<PropietarioDto> getPropietariosConValorPorDefecto();
+	List<PropietarioLiteDto> getPropietariosConValorPorDefecto();
 }

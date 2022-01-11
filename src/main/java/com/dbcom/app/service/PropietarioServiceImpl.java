@@ -13,6 +13,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.PropietarioRepository;
 import com.dbcom.app.model.dto.PropietarioDto;
+import com.dbcom.app.model.dto.PropietarioLiteDto;
 import com.dbcom.app.model.entity.Propietario;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -59,14 +60,14 @@ public class PropietarioServiceImpl implements PropietarioService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PropietarioDto> readAll() {
+	public List<PropietarioLiteDto> readAll() {
 		
 		log.info(LoggerConstants.LOG_READALL);
 
 		final List<Propietario> propietarios = this.propietarioRepository.findAll();
 
-		final List<PropietarioDto> propietariosDto = new ArrayList<>(propietarios.size());		
-		propietarios.forEach(propietario -> propietariosDto.add(this.modelMapperUtils.map(propietario, PropietarioDto.class)));
+		final List<PropietarioLiteDto> propietariosDto = new ArrayList<>(propietarios.size());		
+		propietarios.forEach(propietario -> propietariosDto.add(this.modelMapperUtils.map(propietario, PropietarioLiteDto.class)));
 		
 		return propietariosDto;
 	}
@@ -101,7 +102,7 @@ public class PropietarioServiceImpl implements PropietarioService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PropietarioDto> getPropietariosConValorPorDefecto() {
+	public List<PropietarioLiteDto> getPropietariosConValorPorDefecto() {
 
 		Propietario primerPropietario;
 		Propietario propietarioPorDefecto = propietarioRepository.findByPropietario(ApplicationConstants.PROPIETARIO_POR_DEFECTO);
@@ -118,6 +119,6 @@ public class PropietarioServiceImpl implements PropietarioService{
 				                                          .filter(prop -> !prop.equals(primerPropietario))
 				                                          .collect(Collectors.toList()));
 		
-		return this.modelMapperUtils.mapAll2List(listaPropietarios, PropietarioDto.class);
+		return this.modelMapperUtils.mapAll2List(listaPropietarios, PropietarioLiteDto.class);
 	}
 }

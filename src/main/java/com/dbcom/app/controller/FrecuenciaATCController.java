@@ -245,7 +245,7 @@ public final class FrecuenciaATCController {
 			//Obtenemos las listas de tipos de servicios de radio y de titulares y las añadimos al modelo
 			obtenerListasTiposObjetos(model);
 			frecuenciaATCDto.setTitular(frecuenciaATCDto.getTitular());
-			
+
 			vista = VIEW_FRECUENCIAATC;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		

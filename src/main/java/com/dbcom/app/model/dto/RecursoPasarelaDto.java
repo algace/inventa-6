@@ -42,5 +42,5 @@ public final class RecursoPasarelaDto implements Serializable{
 	@Max(999)
 	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCarga;
-	
+
 }

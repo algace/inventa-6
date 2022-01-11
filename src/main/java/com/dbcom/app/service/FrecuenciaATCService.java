@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.FrecuenciaATCDto;
+import com.dbcom.app.model.dto.FrecuenciaATCLiteDto;
 
 
 /**
@@ -28,7 +29,7 @@ public interface FrecuenciaATCService {
 	 * Obtenemos un listado de las frecuenciasATC
 	 * @return Listado
 	 */
-	List<FrecuenciaATCDto> readAll();
+	List<FrecuenciaATCLiteDto> readAll();
 	
 	/**
 	 * Obtenemos la frecuenciaATC con el id facilitado
