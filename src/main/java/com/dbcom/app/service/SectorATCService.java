@@ -43,6 +43,4 @@ public interface SectorATCService {
 	 */
     List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> listAirblock);
      
-    List<AirblockDto> listAirblocksNoSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados);
-	
 }

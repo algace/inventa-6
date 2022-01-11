@@ -19,15 +19,12 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.AirblockDto;
-import com.dbcom.app.model.dto.RegionOperativaLiteDto;
 import com.dbcom.app.model.dto.SectorATCDto;
-import com.dbcom.app.model.dto.TipoFuenteInformacionLiteDto;
 import com.dbcom.app.service.AirblockService;
 import com.dbcom.app.service.RegionOperativaService;
 import com.dbcom.app.service.SectorATCService;
 import com.dbcom.app.service.TipoFuenteInformacionService;
 import com.dbcom.app.service.TipoSectorATCService;
-import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +33,10 @@ import lombok.extern.slf4j.Slf4j;
 public class SectorATCController {
 	// Atributos de la vista
 	private static final String ATTRIBUTE_TIPO = "sectorATC";
+	private static final String ATTRIBUTE_REGIONES_OPERATIVAS = "listaRegionesOperativas";
+	private static final String ATTRIBUTE_TIPOS_SECTOR_ATC = "listaTiposSectoresATC";
+	private static final String ATTRIBUTE_TIPOS_FUENTE_INFORMACION = "listaTiposFuenteInformacion";
+	private static final String ATTRIBUTE_AIRBLOCKS_DISPONIBLES = "listaAirblocksDisponibles";
 
 	// Vistas	
 	private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + ATTRIBUTE_TIPO;
@@ -57,7 +58,6 @@ public class SectorATCController {
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
 	private final TipoSectorATCService tipoSectorATCService;
 	private final RegionOperativaService regionOperativaService;
-	private final ModelMapperUtils  modelMapperUtils;
 	private final AirblockService airblockService;
 	
 	
@@ -66,13 +66,11 @@ public class SectorATCController {
 			TipoFuenteInformacionService tipoFuenteInformacionService,
 			TipoSectorATCService tipoSectorATCService,
 			RegionOperativaService regionOperativaService,
-			ModelMapperUtils  modelMapperUtils,
 			AirblockService airblockService) {
 		this.sectorATCService = sectorATCService;
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 		this.tipoSectorATCService = tipoSectorATCService;
 		this.regionOperativaService = regionOperativaService;
-		this.modelMapperUtils = modelMapperUtils;
 		this.airblockService = airblockService;
 	}
 	
@@ -110,6 +108,10 @@ public class SectorATCController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_TIPO, this.sectorATCService.create());
 		
+		// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
+		// y airblocks disponibles y se añaden al modelo
+		obtenerListasTiposObjetos(model, null);
+					
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -149,21 +151,13 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
-			
-			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
-			
-			//se recupera la lista de tipos de fuentes de informacion con el valor por defecto
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC));
-			sectorATCDto.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTiposFuenteInformacion().get(0), TipoFuenteInformacionLiteDto.class));
-			
-			//se recupera la lista de regiones operativas con el valor por defecto
-			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
-			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
+			// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
+			// y airblocks disponibles y se añaden al modelo
+			obtenerListasTiposObjetos(model, null);
 			
 			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
 			List<AirblockDto> allAirblocks = airblockService.readAll();
 			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
-			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
 			
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
@@ -191,6 +185,10 @@ public class SectorATCController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO, this.sectorATCService.read(id));
 		
+		// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
+		// y airblocks disponibles y se añaden al modelo
+		obtenerListasTiposObjetos(model, null);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -219,6 +217,10 @@ public class SectorATCController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO, this.sectorATCService.read(id));
 		
+		// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
+		// y airblocks disponibles y se añaden al modelo
+		obtenerListasTiposObjetos(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -259,21 +261,14 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 		
-			sectorATCDto.setTiposSectorATC(tipoSectorATCService.readAll());
-			
-			//se recupera la lista de tipos de fuentes de informacion con el valor por defecto
-			sectorATCDto.setTiposFuenteInformacion(tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC));
-			sectorATCDto.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTiposFuenteInformacion().get(0), TipoFuenteInformacionLiteDto.class));
-			
-			//se recupera la lista de regiones operativas con el valor por defecto
-			sectorATCDto.setRegionesOperativas(regionOperativaService.getRegionesOperativasConValorPorDefecto());
-			sectorATCDto.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionesOperativas().get(0), RegionOperativaLiteDto.class));
+			// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
+			// y airblocks disponibles y se añaden al modelo
+			obtenerListasTiposObjetos(model, sectorATCDto.getId());
 			
 			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
 			List<AirblockDto> allAirblocks = airblockService.readAll();
 			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
-			sectorATCDto.setAirblocksNoIncluidos(sectorATCService.listAirblocksNoSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
-
+		
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
 			vista = VIEW_TIPO;
@@ -302,6 +297,10 @@ public class SectorATCController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_SECTORATC_PREGUNTA);
 		
+		// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
+		// y airblocks disponibles y se añaden al modelo
+		obtenerListasTiposObjetos(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -330,5 +329,28 @@ public class SectorATCController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 	}
 	
-	
+	/**
+	 * Obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativasç
+	 * y airblocks disponibles y se añaden al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerListasTiposObjetos(final Model model, final Short id) {
+		
+		//Obtenemos la lista con las regiones operativas
+		model.addAttribute(ATTRIBUTE_REGIONES_OPERATIVAS, this.regionOperativaService.getRegionesOperativasConValorPorDefecto());
+				
+		//Obtenemos los tipos de sectores ATC
+		model.addAttribute(ATTRIBUTE_TIPOS_SECTOR_ATC, this.tipoSectorATCService.readAll());
+		
+		//Obtenemos los tipos de tpos de información
+		model.addAttribute(ATTRIBUTE_TIPOS_FUENTE_INFORMACION, this.tipoFuenteInformacionService.getTiposFuenteInformacionConValorPorDefecto(ApplicationConstants.FUENTE_INFORMACION_POR_DEFECTO_SECTOR_ATC));
+		
+		//Obtenermos la lista de airblocks disponibles
+		if (id == null) {
+			model.addAttribute(ATTRIBUTE_AIRBLOCKS_DISPONIBLES, this.airblockService.readAll());
+		} else {
+			model.addAttribute(ATTRIBUTE_AIRBLOCKS_DISPONIBLES, this.airblockService.readNotContains(id));
+		}
+		
+	}
 }
