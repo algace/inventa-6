@@ -125,7 +125,7 @@
 												th:disabled="${esCampoSoloLectura} ? 'true'"
 												th:field="*{tipoServicio.id}">
 												<option th:value="0"></option>
-												<option th:each="tiposServicio : *{tiposServicioDisponibles}"
+												<option th:each="tiposServicio : ${listaServiciosRadio}"
 													th:value="${tiposServicio.id}" th:text="${tiposServicio.servicio}">
 												</option>
 											</select>
@@ -161,7 +161,7 @@
 											<select
 												th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
 												th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{titular.id}">
-												<option th:each="titulares : *{titularesDisponibles}"
+												<option th:each="titulares : ${listaTitulares}"
 													th:value="${titulares.id}" th:text="${titulares.propietario}"></option>
 											</select>
 											<div class="alert alert-danger" role="alert"

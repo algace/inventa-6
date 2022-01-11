@@ -1,7 +1,6 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -67,10 +66,5 @@ public final class FrecuenciaATCDto implements Serializable {
 	
 	@Size(max = 250, message = "{validation.max250}")
 	private String observaciones;
-	
-	
-	private List<PropietarioDto> titularesDisponibles;
-	
-	private List<ServicioRadioDto> tiposServicioDisponibles;
 	
 }
