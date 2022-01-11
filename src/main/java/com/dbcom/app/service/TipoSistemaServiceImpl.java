@@ -100,10 +100,21 @@ public class TipoSistemaServiceImpl implements TipoSistemaService {
 		
 		final TipoSistemaDto result = this.modelMapperUtils.map(tipoSistema, TipoSistemaDto.class);
 		
-		// Insertamos los tipos de subsistemas que tiene asociados este tipo de sistema
-		final List<TipoSubsistema> tiposSubsistemasAsociados = this.tipoSubsistemasRepository.findByTipoSistema(tipoSistema);
-		result.setTiposSubsistemas(this.modelMapperUtils.mapAll2List(tiposSubsistemasAsociados, TipoSubsistemaDto.class));
-		
 		return result;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<TipoSubsistemaDto> obtenerSubsistemasAsociados(Long id) {
+		
+		final TipoSistema tipoSistema = this.tipoSistemasRepository.findById(id)
+				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+	
+		log.info(LoggerConstants.LOG_READ);
+		
+		final List<TipoSubsistema> tiposSubsistemasAsociados = this.tipoSubsistemasRepository.findByTipoSistema(tipoSistema);
+		return this.modelMapperUtils.mapAll2List(tiposSubsistemasAsociados, TipoSubsistemaDto.class);
 	}
 }

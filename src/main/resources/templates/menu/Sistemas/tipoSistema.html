@@ -150,7 +150,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="tipoSubsistema, item : *{tiposSubsistemas}">
+												<tr th:each="tipoSubsistema, item : ${listaTiposSubsistema}">
 													<td th:text="${tipoSubsistema.nombre}"></td>
 													<td th:text="${tipoSubsistema.descripcion}"></td>
 												</tr>
@@ -182,11 +182,11 @@
 
 							<!--/* Botón Eliminar */-->							
 							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
-								th:if="*{tiposSubsistemas==null or tiposSubsistemas.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								th:if="${listaTiposSubsistema==null or listaTiposSubsistema.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 								
 							<!--/* Botón Eliminar No Permitido */-->
 							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminarNoPermitido" href="#"
-								th:if="*{tiposSubsistemas!=null and !tiposSubsistemas.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								th:if="${listaTiposSubsistema!=null and !listaTiposSubsistema.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 	
 						</div>
 						<!--/* FIN - Botonera */-->

@@ -30,6 +30,7 @@ public class TipoSistemaController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_TIPO_SISTEMA = "tipoSistema";
+	private static final String ATTRIBUTE_LISTA_TIPOS_SUBSISTEMAS = "listaTiposSubsistema";
 	
 	// Vistas	
 	private static final String VIEW_TIPO_SISTEMA = ControllerConstants.MAP_PATH_MENU_SISTEMAS + ATTRIBUTE_TIPO_SISTEMA;
@@ -152,6 +153,9 @@ public class TipoSistemaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO_SISTEMA, this.tiposSistemasService.read(id));
 		
+		// Obtenemos la lista de tipos de subsistemas y la añadimos al modelo
+		obtenerTiposSubsistemas(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -181,6 +185,9 @@ public class TipoSistemaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO_SISTEMA, this.tiposSistemasService.read(id));
 		
+		// Obtenemos la lista de tipos de subsistemas y la añadimos al modelo
+		obtenerTiposSubsistemas(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -251,6 +258,9 @@ public class TipoSistemaController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_SISTEMA_NO_PERMITIDO_MENSAJE);
 		
+		// Obtenemos la lista de tipos de subsistemas y la añadimos al modelo
+		obtenerTiposSubsistemas(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -278,5 +288,14 @@ public class TipoSistemaController {
 		this.tiposSistemasService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS_SISTEMAS);		
+	}
+	
+	/**
+	 * Obtiene la lista de tipos de subsistemas y se añade al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerTiposSubsistemas(final Model model, final Long id) {
+		
+		model.addAttribute(ATTRIBUTE_LISTA_TIPOS_SUBSISTEMAS, this.tiposSistemasService.obtenerSubsistemasAsociados(id));
 	}
 }

@@ -1,8 +1,6 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,7 +10,6 @@ import org.springframework.format.annotation.NumberFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -21,8 +18,6 @@ import lombok.NoArgsConstructor;
  * @author neoris
  */
 @Data
-//Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "tiposSubsistemas")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,6 +48,4 @@ public class TipoSistemaDto implements Serializable {
 	@NumberFormat(pattern = "###,###.##")
 	private Double codigoFuncionRed;
 	
-	@Builder.Default
-	private List<TipoSubsistemaDto> tiposSubsistemas = new ArrayList<>();
 }
