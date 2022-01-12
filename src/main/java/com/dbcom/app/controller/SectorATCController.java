@@ -2,16 +2,21 @@ package com.dbcom.app.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dbcom.app.constants.ApplicationConstants;
 import com.dbcom.app.constants.ControllerConstants;
@@ -53,12 +58,18 @@ public class SectorATCController {
 			+ ControllerConstants.MAP_ACTION_MODIFICAR;
 	public static final String MAP_READ_TIPO = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO;
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
+	
+	public static final String MAP_INSERT_AIRBLOCK = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO + 
+			ControllerConstants.MAP_ACTION_INSERTAR_AIRBLOCK + ControllerConstants.MAP_ACTION_SLASH;
+	public static final String MAP_DELETE_AIRBLOCK = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPO + 
+			ControllerConstants.MAP_ACTION_DELETE_AIRBLOCK + ControllerConstants.MAP_ACTION_SLASH;
 
 	private final SectorATCService sectorATCService;
 	private final TipoFuenteInformacionService tipoFuenteInformacionService;
 	private final TipoSectorATCService tipoSectorATCService;
 	private final RegionOperativaService regionOperativaService;
 	private final AirblockService airblockService;
+	private final HttpServletRequest request;
 	
 	
 	@Autowired
@@ -66,12 +77,14 @@ public class SectorATCController {
 			TipoFuenteInformacionService tipoFuenteInformacionService,
 			TipoSectorATCService tipoSectorATCService,
 			RegionOperativaService regionOperativaService,
-			AirblockService airblockService) {
+			AirblockService airblockService,
+			HttpServletRequest request) {
 		this.sectorATCService = sectorATCService;
 		this.tipoFuenteInformacionService = tipoFuenteInformacionService;
 		this.tipoSectorATCService = tipoSectorATCService;
 		this.regionOperativaService = regionOperativaService;
 		this.airblockService = airblockService;
+		this.request = request;
 	}
 	
 	/**
@@ -117,6 +130,7 @@ public class SectorATCController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.FALSE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
@@ -146,6 +160,7 @@ public class SectorATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.FALSE);
 			
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
@@ -194,6 +209,7 @@ public class SectorATCController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_TIPOS);
@@ -226,6 +242,10 @@ public class SectorATCController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.URL_INSERT_AIRBLOCKS_SECTORES_ATC, this.request.getContextPath() + MAP_INSERT_AIRBLOCK);
+		model.addAttribute(ControllerConstants.URL_DELETE_AIRBLOCKS_SECTORES_ATC, this.request.getContextPath() + MAP_DELETE_AIRBLOCK);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
@@ -260,6 +280,10 @@ public class SectorATCController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
+			
+			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+			model.addAttribute(ControllerConstants.URL_INSERT_AIRBLOCKS_SECTORES_ATC, this.request.getContextPath() + MAP_INSERT_AIRBLOCK);
+			model.addAttribute(ControllerConstants.URL_DELETE_AIRBLOCKS_SECTORES_ATC, this.request.getContextPath() + MAP_DELETE_AIRBLOCK);
 		
 			// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
 			// y airblocks disponibles y se añaden al modelo
@@ -306,6 +330,9 @@ public class SectorATCController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.URL_INSERT_AIRBLOCKS_SECTORES_ATC, this.request.getContextPath() + MAP_INSERT_AIRBLOCK);
+		model.addAttribute(ControllerConstants.URL_DELETE_AIRBLOCKS_SECTORES_ATC, this.request.getContextPath() + MAP_DELETE_AIRBLOCK);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_TIPO
@@ -327,6 +354,20 @@ public class SectorATCController {
 		this.sectorATCService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
+	}
+	
+	@ResponseBody
+	@PostMapping(value = MAP_INSERT_AIRBLOCK + "/{idSectorATC}/{idAirblock}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> insertAirblock(@PathVariable("idSectorATC") final Short idSectorATC, @PathVariable("idAirblock") final Long idAirblock) {
+		
+		return ResponseEntity.ok(this.sectorATCService.insertAirblock(idSectorATC, idAirblock));					
+	}
+	
+	@ResponseBody
+	@DeleteMapping(value = MAP_DELETE_AIRBLOCK + "/{idSectorATC}/{idAirblock}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> deleteAirblock(@PathVariable("idSectorATC") final Short idSectorATC, @PathVariable("idAirblock") final Long idAirblock) {
+		
+		return ResponseEntity.ok(this.sectorATCService.deleteAirblock(idSectorATC, idAirblock));					
 	}
 	
 	/**

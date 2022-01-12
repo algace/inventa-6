@@ -42,5 +42,9 @@ public interface SectorATCService {
 	 * métodos internos para tratar las listas de Airblocks de manera correcta según hayan sido seleccionados o no.
 	 */
     List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> listAirblock);
+    
+	Long insertAirblock(Short idSectorATC, Long idAirblock);
+	
+	Long deleteAirblock(Short idSectorATC, Long idAirblock);
      
 }

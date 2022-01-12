@@ -161,7 +161,7 @@
 							</div>
 							<!--/* FIN - Información general */-->
 							<!--/* INICIO - Airblock */-->
-							<div class="card">
+							<div class="card" th:if="${cardsVisible}">
 								<div id="headingAirblocks" class="card-header">
 									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseAirblocks" aria-expanded="false"
 										aria-controls="collapseAirblocks">
@@ -295,6 +295,8 @@
 			/*<![CDATA[*/
 			var airblocks = [[${sectorATC.airblocks}]];
 			var airblocksJson = JSON.stringify(airblocks);
+			var urlInsertAirblock = [[${urlInsertAirblock}]];
+			var urlDeleteAirblock = [[${urlDeleteAirblock}]];
 			/*]]>*/
 			$('#collapseSectoresEspacioAereo, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>

@@ -63,11 +63,20 @@ public final class ControllerConstants {
 	public static final String MAP_ACTION_INSERT_EQUIPAMIENTO = MAP_ACTION_SLASH + "insertEquipamiento";
 	public static final String MAP_ACTION_DELETE_EQUIPAMIENTO = MAP_ACTION_SLASH + "deleteEquipamiento";
 	
+	//Acciones para mapas Sectores ATC
+	public static final String MAP_ACTION_INSERTAR_AIRBLOCK = MAP_ACTION_SLASH + "insertAirblock";
+	public static final String MAP_ACTION_DELETE_AIRBLOCK = MAP_ACTION_SLASH + "deleteAirblock";
+	
+	
 	// Constantes URL's relaciones AplicacionesSW
 	public static final String URL_INSERT_VERSIONES_APLICACIONES = "urlInsertVersion";
 	public static final String URL_DELETE_VERSIONES_APLICACIONES = "urlDeleteVersion";
 	public static final String URL_INSERT_EQUIPAMIENTOS_APLICACIONES = "urlInsertEquipamiento";
 	public static final String URL_DELETE_EQUIPAMIENTOS_APLICACIONES = "urlDeleteEquipamiento";
+	
+	// Constantes URL's relaciones Sectores ATC
+	public static final String URL_INSERT_AIRBLOCKS_SECTORES_ATC = "urlInsertAirblock";
+	public static final String URL_DELETE_AIRBLOCKS_SECTORES_ATC = "urlDeleteAirblock";
 	
 	// Rutas de las plantillas para mapas
 	public static final String MAP_PATH_MENU = "menu" + MAP_ACTION_SLASH;

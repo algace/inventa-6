@@ -342,7 +342,7 @@ public final class AplicacionSWController {
 	}
 	
 	@ResponseBody
-	@DeleteMapping(value = MAP_DELETE_VERSION+ "/{idAplicacionSW}/{idVersionSW}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	@DeleteMapping(value = MAP_DELETE_VERSION + "/{idAplicacionSW}/{idVersionSW}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
 	public ResponseEntity<Long> deleteVersionSW(@PathVariable("idAplicacionSW") final Long idAplicacionSW, @PathVariable("idVersionSW") final Long idVersionSW) {
 		
 		return ResponseEntity.ok(this.aplicacionService.deleteVersionSW(idAplicacionSW, idVersionSW));					

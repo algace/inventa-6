@@ -1,3 +1,4 @@
+const ID_SECTOR_ATC = '#id';
 const ID_DATETIMEPICKER_FECHA = '#datetimepickerFecha';
 const ID_BOTON_BORRAR_AIRBLOCK = '#botonBorrarAirblock';
 const ID_BOTON_ACEPTAR_SELECCIONAR_AIRBLOCK = '#botonAceptarSeleccionarAirblock';
@@ -6,10 +7,6 @@ const ID_TABLA_SELECCIONAR_AIRBLOCK = '#tablaSeleccionarAirblock';
 const ID_MODAL_AIRBLOCK = "#popupSeleccionarAirblock";
 const ID_INPUT_SEARCH_AIRBLOCKS = "#searchAirblock";
 const ID_INPUT_SEARCH_SELECCIONAR_AIRBLOCKS = "#searchSeleccionarAirblock";
-
-
-
-
 
 var rowElement = null;
 var idElement  = null;
@@ -34,16 +31,6 @@ var tabla_airblocks = $(ID_TABLA_AIRBLOCKS).DataTable({
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
-    },{ 
-		targets: 1,
-        render: function(data, type, full, meta){
-		   if (type == "display"){
-			   var valueId = idElement != null ? idElement : full.id;
-	           return data + '<input type="hidden" id="airblocks' + valueId +'.id" name="airblocks['+ valueId + '].id" value="' + valueId + '">';
-           }else{
-			   return data;
-		   }
-        }
     }],
 	columns: [
 	  {data: "id"},
@@ -158,6 +145,58 @@ var tabla_seleccionar_airblocks =  $(ID_TABLA_SELECCIONAR_AIRBLOCK).DataTable({
 
 // Botón Borrar
 $(ID_BOTON_BORRAR_AIRBLOCK).on('click', function () {
+	deleteAirblock($(ID_SECTOR_ATC).val(), rowElement.id);
+});
+
+// Botón Aceptar del popup
+$(ID_BOTON_ACEPTAR_SELECCIONAR_AIRBLOCK).on('click', function () {
+	insertAirblock($(ID_SECTOR_ATC).val(), rowElement[0]);
+});
+
+function addAirblockToSectorATCTable(){
+	
+	// 1. Eliminamos la fila de la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_AIRBLOCK).DataTable()
+		.row(rowNode)
+		.remove()
+		.draw();
+	
+	// 2. Insertamos la fila eliminada, en la tabla de versiones
+	$(ID_TABLA_AIRBLOCKS).DataTable()
+		.row
+		.add({id: rowElement[0], 
+			nombre: rowElement[1],
+		    flMin: 	rowElement[2], 
+		    flMax: rowElement[3],
+			descripcion: rowElement[4]
+		}).draw();
+	
+	// 3. Deseleccionamos todas las filas de la tabla de versiones
+	$(ID_TABLA_AIRBLOCKS).DataTable().rows().deselect();
+	// 4. Deshabilitamos el botón aceptar
+	$(ID_TABLA_SELECCIONAR_AIRBLOCK).attr('disabled', 'disabled');
+}
+
+function insertAirblock(idSectorATC, idAirblock){
+
+    $.ajax({
+        type: 'POST',
+        url: urlInsertAirblock + idSectorATC + "/" + idAirblock,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			addAirblockToSectorATCTable();   
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
+
+function deleteAirblockToSectorATCTable(){
 	
 	if (tabla_airblocks.rows('.selected').any()){
 		// 1. Eliminamos la fila de la tabla de versiones
@@ -180,34 +219,26 @@ $(ID_BOTON_BORRAR_AIRBLOCK).on('click', function () {
 		// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
 		$(ID_TABLA_SELECCIONAR_AIRBLOCK).DataTable().rows().deselect();
 	}
-	
-});
+}
 
-// Botón Aceptar del popup
-$(ID_BOTON_ACEPTAR_SELECCIONAR_AIRBLOCK).on('click', function () {
+function deleteAirblock(idSectorATC, idAirblock){
 
-	// 1. Eliminamos la fila de la tabla de versiones del popup
-	$(ID_TABLA_SELECCIONAR_AIRBLOCK).DataTable()
-		.row(rowNode)
-		.remove()
-		.draw();
-	
-	// 2. Insertamos la fila eliminada, en la tabla de versiones
-	$(ID_TABLA_AIRBLOCKS).DataTable()
-		.row
-		.add({id: rowElement[0], 
-			nombre: rowElement[1],
-		    flMin: 	rowElement[2], 
-		    flMax: rowElement[3],
-			descripcion: rowElement[4]
-		}).draw();
-	
-	// 3. Deseleccionamos todas las filas de la tabla de versiones
-	$(ID_TABLA_AIRBLOCKS).DataTable().rows().deselect();
-	// 4. Deshabilitamos el botón aceptar
-	$(ID_TABLA_SELECCIONAR_AIRBLOCK).attr('disabled', 'disabled');
-	
-});
+    $.ajax({
+        type: 'DELETE',
+        url: urlDeleteAirblock + idSectorATC + "/" + idAirblock,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			deleteAirblockToSectorATCTable();     
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
 
 $(ID_MODAL_AIRBLOCK).on('show.bs.modal', function () {
 	$(ID_BOTON_ACEPTAR_SELECCIONAR_AIRBLOCK).attr('disabled', 'disabled');

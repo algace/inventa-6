@@ -14,6 +14,7 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
 import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
+import com.dbcom.app.model.entity.Airblock;
 import com.dbcom.app.model.entity.SectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -28,7 +29,7 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	
 	@Autowired
 	public SectorATCServiceImpl(ModelMapperUtils modelMapper,
-									   SectorATCRepository sectorATCRepository) {
+							    SectorATCRepository sectorATCRepository) {
 		this.modelMapperUtils = modelMapper;
 		this.sectorATCRepository = sectorATCRepository;
 	}
@@ -125,5 +126,40 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		return listAirblocks.stream()
                             .filter(version -> !Objects.isNull(version.getId()))
                             .collect(Collectors.toList());
+	}
+	
+	@Override
+	public Long insertAirblock(Short idSectorATC, Long idAirblock) {
+		
+		SectorATC sectorATC = sectorATCRepository.findById(idSectorATC)
+		.map(sectorATCBD -> {
+			
+			sectorATCBD.getAirblocks().add(Airblock.builder().id(idAirblock).build());
+			
+			return sectorATCBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		this.sectorATCRepository.save(sectorATC);
+		
+		return idAirblock;
+	}
+	
+	@Override
+	public Long deleteAirblock(Short idSectorATC, Long idAirblock) {
+		
+		SectorATC sectorATC = sectorATCRepository.findById(idSectorATC)
+		.map(sectorATCBD -> {
+			
+			sectorATCBD.setAirblocks(sectorATCBD.getAirblocks().stream().filter(airblock -> airblock.getId() != idAirblock).collect(Collectors.toSet()));
+			
+			return sectorATCBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		this.sectorATCRepository.save(sectorATC);
+		
+		
+		return idAirblock;
 	}
 }
