@@ -140,7 +140,6 @@ public class TipoSubsistemaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
 			
 			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y de tipos de sistemas disponibles
-			//Se debe poner a null el id de tipo de interfaz de operación y el id del sistema
 			obtenerListasTiposObjetos(model);
 			model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, tipoSubsistemaDto);
 			
@@ -242,7 +241,6 @@ public class TipoSubsistemaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
 		
 			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y de tipos de sistemas disponibles
-			//Se debe poner a null el id de tipo de interfaz de operación y el id del sistema
 			obtenerListasTiposObjetos(model);
 			model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, tipoSubsistemaDto);
 			
