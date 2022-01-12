@@ -135,9 +135,7 @@ public class SectorOACIController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_SECTORES_OACI);
 		
 			//Se debe recuperar de nuevo la lista de regiones operativas disponibles 
-			//y poner a null el id de la región operativa
 			obtenerRegionesOperativas(model);
-			sectorOACIDto.getRegionOperativa().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_OACI, sectorOACIDto);
 			
 			vista = VIEW_SECTOR_OACI;
@@ -235,9 +233,7 @@ public class SectorOACIController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_SECTORES_OACI);
 		
 			//Se debe recuperar de nuevo la lista de regiones operativas disponibles 
-			//y poner a null el id de la región operativa
 			obtenerRegionesOperativas(model);
-			sectorOACIDto.getRegionOperativa().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_OACI, sectorOACIDto);
 			
 			vista = VIEW_SECTOR_OACI;
