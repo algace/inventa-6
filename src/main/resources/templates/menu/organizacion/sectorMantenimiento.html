@@ -82,8 +82,8 @@
 											<div class="col-sm-2" th:text="#{html.label.regionMantenimiento}"></div> 
 									        <div class="col-sm-6">
 									            <input type="text" 
-									            	th:field="*{regionMantenimiento.nombre}" th:class="'form-control'" 
-									            	th:disabled="'true'">
+									            	th:field="*{regionMantenimiento.nombre}" th:class="'form-control campo-disabled'" 
+									            	onkeypress="return false;">
 									            <input type="hidden" th:field="*{regionMantenimiento.id}" >
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('regionMantenimiento.id')}" th:errors="*{regionMantenimiento.id}"></div>
 									        </div>

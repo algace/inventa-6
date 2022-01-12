@@ -134,9 +134,7 @@ public class SectorMantenimientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_SECTORES_MANTENIMIENTO);
 		
 			//Se debe recuperar de nuevo la lista de regiones de mantenimiento disponibles 
-			//y poner a null el id de la región de mantemiento
 			obtenerRegionesMantenimiento(model);
-			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
 			
 			vista = VIEW_SECTOR_MANTENIMIENTO;
@@ -234,9 +232,7 @@ public class SectorMantenimientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_SECTORES_MANTENIMIENTO);
 		
 			// Obtenemos la lista de regiones de mantenimiento y la añadimos al modelo
-			// y se pone a null el id de la región de mantemiento
 			obtenerRegionesMantenimiento(model);
-			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
 			
 			vista = VIEW_SECTOR_MANTENIMIENTO;
