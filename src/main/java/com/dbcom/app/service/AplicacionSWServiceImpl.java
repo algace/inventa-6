@@ -1,7 +1,6 @@
 package com.dbcom.app.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dto.AplicacionSWDto;
 import com.dbcom.app.model.dto.AplicacionSWLiteDto;
-import com.dbcom.app.model.dto.EquipamientoLiteDto;
-import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
 import com.dbcom.app.model.entity.Equipamiento;
 import com.dbcom.app.model.entity.VersionSW;
@@ -161,7 +158,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		.map(aplicacionBD -> {
 			
 			aplicacionBD.getEquipamientos().add(Equipamiento.builder().id(idEquipamiento).build());
-			
+				
 			return aplicacionBD;
 			
 		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
@@ -196,39 +193,6 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		aplicacionDto.setVersionesSW(aplicacionSWDtoBd.getVersionesSW());
 		aplicacionDto.setEquipamientos(aplicacionSWDtoBd.getEquipamientos());
 		
-	}
-	
-
-	private List<VersionSWLiteDto> listVersionesNoSeleccionadas(List<VersionSWLiteDto> allVersiones,
-			List<VersionSWLiteDto> versionesSeleccionadas) {
-		
-		versionesSeleccionadas.stream().forEach(version -> {
-			List<VersionSWLiteDto> list = allVersiones.stream().filter(vSW -> version.getId() == vSW.getId()).collect(Collectors.toList());
-			if(!list.isEmpty()){
-				Optional<VersionSWLiteDto> optVersiones = list.stream().findFirst();
-				if(optVersiones.isPresent()) {
-					allVersiones.remove(optVersiones.get());
-				}
-			};
-		});
-		
-		return allVersiones;
-	}
-
-	private List<EquipamientoLiteDto> listEquipamientosNoSeleccionados(List<EquipamientoLiteDto> allEquipamientos,
-			List<EquipamientoLiteDto> equipamientosSeleccionados) {
-		
-		equipamientosSeleccionados.stream().forEach(equipamiento -> {
-			List<EquipamientoLiteDto> list = allEquipamientos.stream().filter(eQ -> equipamiento.getId() == eQ.getId()).collect(Collectors.toList());
-			if(!list.isEmpty()){
-				Optional<EquipamientoLiteDto> optEquipamientos = list.stream().findFirst();
-				if(optEquipamientos.isPresent()) {
-					allEquipamientos.remove(optEquipamientos.get());
-				}
-			};
-		});
-		
-		return allEquipamientos;
 	}
 	
 }

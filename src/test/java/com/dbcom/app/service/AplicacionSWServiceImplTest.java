@@ -33,7 +33,7 @@ class AplicacionSWServiceImplTest {
 				.hora(LocalTime.now())
 				.build();
 		
-		Assertions.assertEquals(aplicacionSWService.saveUpdate(aplicacionSWDto).getId(), aplicacionSWDto.getId());
+		Assertions.assertEquals(aplicacionSWService.save(aplicacionSWDto).getId(), aplicacionSWDto.getId());
 	}
 	
 }
