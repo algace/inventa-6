@@ -65,7 +65,7 @@
 											<div class="text-tab-accordion" ><span th:text="#{html.label.informacionGeneral}"></span></div  >
 											<div class="icon-tab-accordion"><i class="fas fa-sort-down"></i></div >
 										</div >
-									</button>
+									</button> 
 								</div>							
 								<div id="collapseInformacionGeneral" class="collapse show" aria-labelledby="headingInformacionGeneral" data-parent="#accordionFormulario">
 									<div class="card-body formulario-padding">
@@ -121,7 +121,7 @@
 							<!--/* FIN - Información general */-->
 							
 							<!--/* INICIO - Equipamiento */-->	
-							<div class="card">
+							<div class="card" th:if="${cardsVisible}">
 								<div id="headingEquipamiento" class="card-header">
 									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseEquipamiento" aria-expanded="false"
 										aria-controls="collapseEquipamiento">
@@ -134,7 +134,7 @@
 								<div id="collapseEquipamiento" class="collapse" aria-labelledby="headingEquipamiento" data-parent="#accordionFormulario">
 									<div class="card-body">
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarEquipamiento', 
-											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchEquipamientos', visible='true')"></div>
+											idButtonBorrar='botonBorrarEquipamiento', idInputSearch='searchEquipamientos', visible=!${esCampoSoloLectura})"></div>
 										
 										<table id="tablaEquipamiento" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
@@ -156,7 +156,7 @@
 							<!--/* FIN - Equipamiento */-->
 							
 							<!--/* INICIO - Versiones */-->
-							<div class="card">
+							<div class="card" th:if="${cardsVisible}">
 								<div id="headingVersiones" class="card-header">
 									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseVersiones" aria-expanded="false"
 										aria-controls="collapseVersiones">
@@ -169,7 +169,7 @@
 								<div id="collapseVersiones" class="collapse" aria-labelledby="headingVersiones" data-parent="#accordionFormulario">
 									<div class="card-body">
 										<div th:replace="fragments/botoneraTablaFormulario :: botoneraTablaFormulario(popupTarget='#popupSeleccionarVersion', 
-										idButtonBorrar='botonBorrarVersion', idInputSearch='searchVersiones', visible='true')"></div>
+										idButtonBorrar='botonBorrarVersion', idInputSearch='searchVersiones', visible=!${esCampoSoloLectura})"></div>
 										
 										<table id="tablaVersiones" class="table table-striped table-bordered no-margin-top" style="width:100%">
 											<thead>
@@ -337,6 +337,10 @@
 			var equipamientosJson = JSON.stringify(equipamientos);
 			var versionesSW = [[${aplicacionSW.versionesSW}]];
 			var versionesSWJson = JSON.stringify(versionesSW);
+			var urlInsertVersion = [[${urlInsertVersion}]];
+			var urlDeleteVersion = [[${urlDeleteVersion}]];
+			var urlInsertEquipamiento = [[${urlInsertEquipamiento}]];
+			var urlDeleteEquipamiento = [[${urlDeleteEquipamiento}]];
 			/*]]>*/
 			$('#collapseControlVersionesSW, #collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>

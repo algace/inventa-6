@@ -46,7 +46,7 @@ public final class DocumentoController {
 	 * @param descripcionDocumento Descripción
 	 * @param fichero Fichero a subir
 	 */
-	@PostMapping(MAP_UPLOAD_DOCUMENTO + "djjdjd")
+	@PostMapping(MAP_UPLOAD_DOCUMENTO)
 	public void subirFichero(@RequestParam("id") final Long id, 
 							   @RequestParam("idTipoDocumento") final Short idTipoDocumento,
 							   @RequestParam("descripcionDocumento") final String descripcionDocumento,
@@ -72,4 +72,5 @@ public final class DocumentoController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNombre() + "\"")
                 .body(new ByteArrayResource(documento.getContenido()));
     }	
+	
 }

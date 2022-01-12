@@ -295,7 +295,3 @@ $(ID_INPUT_SEARCH_DOCUMENTOS).on('keyup change', function() {
     	.search(this.value)
         .draw();
 });
-
-
-
-

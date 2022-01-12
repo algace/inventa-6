@@ -1,7 +1,7 @@
 /*!
  * Funciones propias de aplicacion.html
  */
-
+const ID_APLICACION = '#id';
 const ID_BOTON_BORRAR_VERSION = '#botonBorrarVersion';
 const ID_BOTON_ACEPTAR_SELECCIONAR_VERSION = '#botonAceptarSeleccionarVersion';
 const ID_TABLA_EQUIPAMIENTOS = '#tablaEquipamiento';
@@ -52,16 +52,6 @@ var tabla_versiones = $(ID_TABLA_VERSIONES).DataTable({
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
-    },{ 
-		targets: 1,
-        render: function(data, type, full, meta){
-		   if (type == "display"){
-			   var valueId = idElement != null ? idElement : full.id;
-	           return data + '<input type="hidden" id="versionesSW' + valueId +'.id" name="versionesSW['+ valueId + '].id" value="' + valueId + '">';
-           }else{
-			   return data;
-		   }
-        }
     }],
 	columns: [
 	  {data: "id"},
@@ -167,8 +157,61 @@ var tabla_seleccionar_versiones =  $(ID_TABLA_SELECCIONAR_VERSION).DataTable({
 
 // Botón Borrar
 $(ID_BOTON_BORRAR_VERSION).on('click', function () {
+	deleteVersion($(ID_APLICACION).val(), rowElement.id);
+});
+
+// Botón Aceptar del popup
+$(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).on('click', function () {
+	insertVersion($(ID_APLICACION).val(), rowElement[0]);
+});
+
+$(ID_MODAL_VERSION).on('show.bs.modal', function () {
+	$(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).attr('disabled', 'disabled');
+})
+
+function addVersionToAplicacionTable(){
+		// 1. Eliminamos la fila de la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_VERSION).DataTable()
+		.row(rowNode)
+		.remove()
+		.draw();
 	
-	if (tabla_versiones.rows('.selected').any()){
+	// 2. Insertamos la fila eliminada, en la tabla de versiones
+	$(ID_TABLA_VERSIONES).DataTable()
+		.row
+		.add({id: rowElement[0], 
+			nombre: rowElement[1], 
+			descripcion: rowElement[2]})
+		.draw();
+	
+	// 3. Deseleccionamos todas las filas de la tabla de versiones
+	$(ID_TABLA_VERSIONES).DataTable().rows().deselect();
+	// 4. Deshabilitamos el botón aceptar
+	$(ID_TABLA_SELECCIONAR_VERSION).attr('disabled', 'disabled');
+}
+
+function insertVersion(idAplicacionSW, idVersionSW){
+
+    $.ajax({
+        type: 'POST',
+        url: urlInsertVersion + idAplicacionSW + "/" + idVersionSW,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			addVersionToAplicacionTable();   
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
+
+function deleteVersionToAplicacionTable(){
+	
+		if (tabla_versiones.rows('.selected').any()){
 		// 1. Eliminamos la fila de la tabla de versiones
 		$(ID_TABLA_VERSIONES).DataTable()
 		.row(rowNode)
@@ -187,36 +230,26 @@ $(ID_BOTON_BORRAR_VERSION).on('click', function () {
 		// 3. Deseleccionamos todas las filas de la tabla de versiones del popup
 		$(ID_TABLA_SELECCIONAR_VERSION).DataTable().rows().deselect();
 	}
-	
-});
+}
 
-// Botón Aceptar del popup
-$(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).on('click', function () {
+function deleteVersion(idAplicacionSW, idVersionSW){
 
-	// 1. Eliminamos la fila de la tabla de versiones del popup
-	$(ID_TABLA_SELECCIONAR_VERSION).DataTable()
-		.row(rowNode)
-		.remove()
-		.draw();
-	
-	// 2. Insertamos la fila eliminada, en la tabla de versiones
-	$(ID_TABLA_VERSIONES).DataTable()
-		.row
-		.add({id: rowElement[0], 
-			nombre: rowElement[1], 
-			descripcion: rowElement[2]})
-		.draw();
-	
-	// 3. Deseleccionamos todas las filas de la tabla de versiones
-	$(ID_TABLA_VERSIONES).DataTable().rows().deselect();
-	// 4. Deshabilitamos el botón aceptar
-	$(ID_TABLA_SELECCIONAR_VERSION).attr('disabled', 'disabled');
-	
-});
-
-$(ID_MODAL_VERSION).on('show.bs.modal', function () {
-	$(ID_BOTON_ACEPTAR_SELECCIONAR_VERSION).attr('disabled', 'disabled');
-})
+    $.ajax({
+        type: 'DELETE',
+        url: urlDeleteVersion + idAplicacionSW + "/" + idVersionSW,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			deleteVersionToAplicacionTable();     
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
 
 	
 
@@ -229,16 +262,6 @@ var tabla_equipamiento = $(ID_TABLA_EQUIPAMIENTOS).DataTable({
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
-    },{ 
-		targets: 1,
-        render: function(data, type, full, meta){
-		   if (type == "display"){
-			   var valueId = idElement != null ? idElement : full.id;
-	           return data + '<input type="hidden" id="equipamientos' + valueId +'.id" name="equipamientos['+ valueId + '].id" value="' + valueId + '">';
-           }else{
-			   return data;
-		   }
-        }
     }],
 	columns: [
 			  {data: "id"},
@@ -349,6 +372,62 @@ var tabla_seleccionar_equipamiento = $(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTa
 
 // Botón Borrar
 $(ID_BOTON_BORRAR_EQUIPAMIENTO).on('click', function () {
+	deleteEquipamiento($(ID_APLICACION).val(), rowElement.id);
+});
+
+// Botón Aceptar del popup
+$(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
+	insertarEquipamiento($(ID_APLICACION).val(), rowElement[0]);
+});
+
+function addEquipamientoToAplicacionTable(){
+	// 1. Eliminamos la fila de la tabla de versiones del popup
+	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable()
+		.row(rowNode)
+		.remove()
+		.draw();
+		
+
+	// 2. Insertamos la fila eliminada, en la tabla de versiones
+	$(ID_TABLA_EQUIPAMIENTOS).DataTable()
+		.row
+		.add({id: rowElement[0], 
+			nombre: rowElement[1], 
+			marca: rowElement[2], 
+			modelo: rowElement[3], 
+			entradas: rowElement[4],
+			salidas: rowElement[5],
+			ganancia: rowElement[6],
+			perdida: rowElement[7]})
+		.draw();
+	
+	// 3. Deseleccionamos todas las filas de la tabla de versiones
+	$(ID_TABLA_EQUIPAMIENTOS).DataTable().rows().deselect();
+	
+	// 4. Deshabilitamos el botón aceptar
+	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
+}
+
+function insertarEquipamiento(idAplicacionSW, idEquipamiento){
+
+    $.ajax({
+        type: 'POST',
+        url: urlInsertEquipamiento + idAplicacionSW + "/" + idEquipamiento,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			addEquipamientoToAplicacionTable();   
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
+
+function deleteEquipamientoToAplicacionTable(){
 	
 	if(tabla_equipamiento.rows('.selected').any()){
 		// 1. Eliminamos la fila de la tabla de versiones
@@ -378,37 +457,26 @@ $(ID_BOTON_BORRAR_EQUIPAMIENTO).on('click', function () {
 		// 4. Deshabilitamos el botón borrar
 		$(ID_BOTON_BORRAR_EQUIPAMIENTO).attr('disabled', 'disabled');
 	}
-});
+}
 
-// Botón Aceptar del popup
-$(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).on('click', function () {
+function deleteEquipamiento(idAplicacionSW, idEquipamiento){
 
-	// 1. Eliminamos la fila de la tabla de versiones del popup
-	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).DataTable()
-		.row(rowNode)
-		.remove()
-		.draw();
-		
-
-	// 2. Insertamos la fila eliminada, en la tabla de versiones
-	$(ID_TABLA_EQUIPAMIENTOS).DataTable()
-		.row
-		.add({id: rowElement[0], 
-			nombre: rowElement[1], 
-			marca: rowElement[2], 
-			modelo: rowElement[3], 
-			entradas: rowElement[4],
-			salidas: rowElement[5],
-			ganancia: rowElement[6],
-			perdida: rowElement[7]})
-		.draw();
-	
-	// 3. Deseleccionamos todas las filas de la tabla de versiones
-	$(ID_TABLA_EQUIPAMIENTOS).DataTable().rows().deselect();
-	
-	// 4. Deshabilitamos el botón aceptar
-	$(ID_TABLA_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
-});
+    $.ajax({
+        type: 'DELETE',
+        url: urlDeleteEquipamiento + idAplicacionSW + "/" + idEquipamiento,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			deleteEquipamientoToAplicacionTable();    
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
 
 $(ID_MODAL_EQUIPAMIENTO).on('show.bs.modal', function () {
 	$(ID_BOTON_ACEPTAR_SELECCIONAR_EQUIPAMIENTO).attr('disabled', 'disabled');
