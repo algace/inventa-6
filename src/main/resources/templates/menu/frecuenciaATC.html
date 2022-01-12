@@ -106,7 +106,7 @@
 										<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 										<div class="col-sm-6">
 											<textarea id="descripcion"
-												th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
+												th:class="form-control"
 												th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'">
 											</textarea>
 											<div class="alert alert-danger" role="alert"
@@ -156,7 +156,7 @@
 
 								<div class="card-body formulario-padding">
 									<div class="row align-items-center">
-										<div class="col-sm-2" th:text="#{html.label.propietario}"></div>
+										<div class="col-sm-2" th:text="#{html.label.titular}"></div>
 										<div class="col-sm-6">
 											<select
 												th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
@@ -244,7 +244,7 @@
 										<div class="col-sm-2" th:text="#{html.label.observaciones}"></div>
 										<div class="col-sm-6">
 											<textarea id="observaciones" rows="3" style="resize: none;"
-												th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
+												th:class="form-control"
 												th:field="*{observaciones}"
 												th:disabled="${esCampoSoloLectura} ? 'true'"> </textarea>
 											<div class="alert alert-danger" role="alert"
