@@ -15,6 +15,7 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.AirblockRepository;
 import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.service.AirblockService;
 
@@ -30,6 +31,7 @@ public final class AirblockController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_AIRBLOCK = "airblock";
+	private static final String ATTRIBUTE_SECTORES_ATC = "listaSectoresATC";
 
 	// Vistas	
 	private static final String VIEW_AIRBLOCK = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + ATTRIBUTE_AIRBLOCK;
@@ -49,10 +51,13 @@ public final class AirblockController {
 	public static final String MAP_READALL_AIRBLOCKS = ControllerConstants.MAP_ACTION_SLASH + VIEW_AIRBLOCKS;
 
 	private final AirblockService airblockService;
+	private final AirblockRepository airblockRepository;
 	
 	@Autowired
-	public AirblockController(AirblockService airblockService) {
+	public AirblockController(AirblockService airblockService,
+			AirblockRepository airblockRepository) {
 		this.airblockService = airblockService;
+		this.airblockRepository = airblockRepository;
 	}
 	
 	/**
@@ -153,6 +158,9 @@ public final class AirblockController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
 		
+		// Obtenemos la lista de los sectores ATC que tienen asociado el airblock y se añade al modelo
+		obtenerListaSectoresATC(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -182,6 +190,9 @@ public final class AirblockController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
 		
+		// Obtenemos la lista de los sectores ATC que tienen asociado el airblock y se añade al modelo
+		obtenerListaSectoresATC(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -247,6 +258,7 @@ public final class AirblockController {
 		
 		// Contenido
 		model.addAttribute(ATTRIBUTE_AIRBLOCK, this.airblockService.read(id));
+		obtenerListaSectoresATC(model, id);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_AIRBLOCK_PREGUNTA);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
@@ -281,4 +293,13 @@ public final class AirblockController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_AIRBLOCKS);		
 	}
 	
+	/**
+	 * Obtiene la lista de sectores ATC asociados al airblock y se añade al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerListaSectoresATC(final Model model, final Long id) {
+		
+		model.addAttribute(ATTRIBUTE_SECTORES_ATC, this.airblockRepository.findSectoresATCWithAirbloks(id));
+	
+	}
 }

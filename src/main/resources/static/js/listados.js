@@ -286,3 +286,10 @@ $("#tablaResultadosConSplit tfoot input").on('keyup change', function() {
     	.search(this.value)
         .draw();
 });
+
+$("#search").on('keyup change', function() {
+    table_con_split.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});

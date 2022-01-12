@@ -3,7 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.RedTTDto;
-import com.dbcom.app.model.dto.TipoTopologiaDto;
+import com.dbcom.app.model.dto.RedTTLiteDto;
 
 /**
  * Lógica para aplicaciones
@@ -28,7 +28,7 @@ public interface RedTTService {
 	 * Obtenemos un listado de las redes T/T
 	 * @return Listado
 	 */
-	List<RedTTDto> readAll();
+	List<RedTTLiteDto> readAll();
 	
 	/**
 	 * Obtenemos la red T/T con el id facilitado
@@ -43,14 +43,5 @@ public interface RedTTService {
 	 * @return Red T/T persistida
 	 */
 	RedTTDto saveUpdate(final RedTTDto redTTDto);
-	
-	/**
-	 * Obtenemos los tipos de topologías posibles para una red T/T poniendo su tipo de topología
-	 * asociado el primero de la lista
-	 * @param redTTDto Red T/T
-	 * @return lista de tipos de topologías disponibles con el tipo de topología asociado a la red T/T
-	 *         el primero de la lista
-	 */
-	List<TipoTopologiaDto> getTiposTopologiasConAsociadaPrimero(RedTTDto redTTDto);
 	
 }

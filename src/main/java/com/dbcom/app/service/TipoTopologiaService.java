@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.TipoTopologiaDto;
+import com.dbcom.app.model.dto.TipoTopologiaLiteDto;
 
 /**
  * Lógica para tipos de topología
@@ -49,5 +50,5 @@ public interface TipoTopologiaService {
 	 * se deberá poner como primer elemento de la lista una topología con sus campos vacíos
 	 * @return Listado
 	 */
-	List<TipoTopologiaDto> getTiposTopologiasConValorPorDefecto();
+	List<TipoTopologiaLiteDto> getTiposTopologiasConValorPorDefecto();
 }

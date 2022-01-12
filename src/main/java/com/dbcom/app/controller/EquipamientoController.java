@@ -21,6 +21,8 @@ import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dto.EquipamientoDto;
 import com.dbcom.app.service.EquipamientoService;
 import com.dbcom.app.service.TipoDocumentoService;
+import com.dbcom.app.service.TipoSistemaService;
+import com.dbcom.app.service.TipoSubsistemaService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +36,10 @@ public final class EquipamientoController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_EQUIPAMIENTO = "equipamiento";
+	private static final String ATTRIBUTE_TIPOS_SISTEMA = "listaTiposSistemaDisponibles";
+	private static final String ATTRIBUTE_TIPOS_SUBSISTEMA = "listaTiposSubsistemaDisponibles";
+	private static final String ATTRIBUTE_TIPOS_DOCUMENTO = "listaTiposDocumento";
+	
 
 	// Vistas	
 	private static final String VIEW_EQUIPAMIENTO = ControllerConstants.MAP_PATH_MENU + ATTRIBUTE_EQUIPAMIENTO;
@@ -53,13 +59,21 @@ public final class EquipamientoController {
 
 	private final EquipamientoService equipamientoService;
 	private final AplicacionSWRepository aplicacionSWRepository;
+	private final TipoSistemaService tipoSistemaService;
+	private final TipoSubsistemaService tipoSubsistemaService;
+	private final TipoDocumentoService tipoDocumentoService;
 	
 	@Autowired
 	public EquipamientoController(EquipamientoService equipamientoService,
-			TipoDocumentoService tipoDocumentoService,
-			AplicacionSWRepository aplicacionSWRepository) {
+			AplicacionSWRepository aplicacionSWRepository,
+			TipoSistemaService tipoSistemaService,
+			TipoSubsistemaService tipoSubsistemaService,
+			TipoDocumentoService tipoDocumentoService) {
 		this.equipamientoService = equipamientoService;
 		this.aplicacionSWRepository = aplicacionSWRepository;
+		this.tipoSistemaService = tipoSistemaService;
+		this.tipoSubsistemaService = tipoSubsistemaService;
+		this.tipoDocumentoService = tipoDocumentoService;
 	}
 	
 	/**
@@ -95,6 +109,9 @@ public final class EquipamientoController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.create());
 		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
+		
+		//Obtenemos la lista de tipos de sistemas, subsistemas y documentos y las añadimos al modelo
+		obtenerListasTiposObjetos(model);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -200,6 +217,9 @@ public final class EquipamientoController {
 	
 		// Contenido
 		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.read(id));
+		
+		//Obtenemos las listas de tipos de sistemas, subsistemas y documentos y las añadimos al modelo
+		obtenerListasTiposObjetos(model);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -313,4 +333,20 @@ public final class EquipamientoController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_EQUIPAMIENTOS);		
 	}
 	
+	/**
+	 * Obtiene la listas de tipos de sistemas, subsistemas y documentos y se añaden al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerListasTiposObjetos(final Model model) {
+		
+		//Obtenemos los tipos de sistema disponibles
+		model.addAttribute(ATTRIBUTE_TIPOS_SISTEMA, this.tipoSistemaService.readAll());
+		
+		//Obtenemos los tipos de subsistema disponibles
+		model.addAttribute(ATTRIBUTE_TIPOS_SUBSISTEMA, this.tipoSubsistemaService.readAll());
+		
+		//Obtenemos los tipos de documento disponibles
+		model.addAttribute(ATTRIBUTE_TIPOS_DOCUMENTO, this.tipoDocumentoService.readAll());
+	
+	}
 }

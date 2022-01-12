@@ -50,9 +50,4 @@ public class RedTTDto implements Serializable {
 	@Builder.Default
 	private List<FotografiaDto> fotografias = new ArrayList<>();
 	
-	@Builder.Default
-	private List<TipoTopologiaDto> tiposTopologiaDisponibles = new ArrayList<>();
-	
-	@Builder.Default
-	private List<EnlaceTTDto> enlacesTTDisponibles = new ArrayList<>();
 }

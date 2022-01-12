@@ -2,8 +2,6 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,6 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
 import com.dbcom.app.model.dao.VersionSWRepository;
-import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 import com.dbcom.app.model.dto.VersionSWDto;
 import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
@@ -111,10 +108,6 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		
 		final VersionSWDto result = this.modelMapperUtils.map(versionSW, VersionSWDto.class);
 		
-		// Insertamos las aplicaciones que tienen asociada esta versión
-		final List<AplicacionSW> aplicacionesSWAsociadas = this.versionSWRepository.findAplicacionesWithVersion(id);
-		result.setAplicacionesSW(this.modelMapperUtils.mapAll2List(aplicacionesSWAsociadas, AplicacionSWLiteDto.class));
-		
 		return result;
 
 	}
@@ -123,7 +116,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<VersionSWDto> readNotContains(final Long id) {	
+	public List<VersionSWLiteDto> readNotContains(final Long id) {	
 		
 		final AplicacionSW aplicacionSW = this.aplicacionSWRepository.findById(id)
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
@@ -133,7 +126,7 @@ public final class VersionSWServiceImpl implements VersionSWService {
 		final List<VersionSW> versionesSW = this.versionSWRepository.findAll();
 		versionesSW.removeAll(aplicacionSW.getVersionesSW());
 		
-		return this.modelMapperUtils.mapAll2List(versionesSW, VersionSWDto.class);
+		return this.modelMapperUtils.mapAll2List(versionesSW, VersionSWLiteDto.class);
 
 	}
 		

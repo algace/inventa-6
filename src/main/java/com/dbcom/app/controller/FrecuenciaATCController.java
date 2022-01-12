@@ -16,11 +16,9 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.FrecuenciaATCDto;
-import com.dbcom.app.model.dto.PropietarioDto;
 import com.dbcom.app.service.FrecuenciaATCService;
 import com.dbcom.app.service.PropietarioService;
 import com.dbcom.app.service.ServicioRadioService;
-import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +32,8 @@ public final class FrecuenciaATCController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_FRECUENCIAATC = "frecuenciaATC";
+	private static final String ATTRIBUTE_TIPOS_SERVICIO_RADIO = "listaServiciosRadio";
+	private static final String ATTRIBUTE_LISTA_TITULARES = "listaTitulares";
 
 	// Vistas	
 	private static final String VIEW_FRECUENCIAATC = ControllerConstants.MAP_PATH_MENU + ATTRIBUTE_FRECUENCIAATC;
@@ -53,17 +53,14 @@ public final class FrecuenciaATCController {
 
 	private final FrecuenciaATCService frecuenciaATCService;
 	private final PropietarioService propietarioService;
-	private final ModelMapperUtils  modelMapperUtils;
 	private final ServicioRadioService servicioRadioService;
 	
 	@Autowired
 	public FrecuenciaATCController(FrecuenciaATCService frecuenciaATCService, 
 								   PropietarioService propietarioService,
-								   ModelMapperUtils  modelMapperUtils,
 								   ServicioRadioService servicioRadioService) {
 		this.frecuenciaATCService = frecuenciaATCService;
 		this.propietarioService = propietarioService;
-		this.modelMapperUtils = modelMapperUtils;
 		this.servicioRadioService = servicioRadioService;
 	}
 	
@@ -101,6 +98,9 @@ public final class FrecuenciaATCController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_FRECUENCIAATC, this.frecuenciaATCService.create());
 		
+		//Obtenemos las listas de tipos de servicios de radio y de titulares y las añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -140,12 +140,9 @@ public final class FrecuenciaATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_FRECUENCIAATC);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIASATC);
 		
-			//se recupera la lista de servicios de radio
-			frecuenciaATCDto.setTiposServicioDisponibles(servicioRadioService.readAll());
-			
-			//se recupera la lista de propietarios con el valor por defecto
-			frecuenciaATCDto.setTitularesDisponibles(propietarioService.getPropietariosConValorPorDefecto());
-			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioDto.class));
+			//Obtenemos las listas de tipos de servicios de radio y de titulares y las añadimos al modelo
+			obtenerListasTiposObjetos(model);
+			frecuenciaATCDto.setTitular(frecuenciaATCDto.getTitular());
 			
 			vista = VIEW_FRECUENCIAATC;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
@@ -171,6 +168,9 @@ public final class FrecuenciaATCController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_FRECUENCIAATC, this.frecuenciaATCService.read(id));
 		
+		//Obtenemos las listas de tipos de servicios de radio y de titulares y las añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -199,6 +199,9 @@ public final class FrecuenciaATCController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_FRECUENCIAATC, this.frecuenciaATCService.read(id));
 		
+		//Obtenemos las listas de tipos de servicios de radio y de titulares y las añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -239,14 +242,10 @@ public final class FrecuenciaATCController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_FRECUENCIAATC);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_FRECUENCIASATC);
 			
-			//se recupera la lista de servicios de radio
-			frecuenciaATCDto.setTiposServicioDisponibles(servicioRadioService.readAll());
-			
-			//se recupera la lista de propietarios con el valor por defecto
-			frecuenciaATCDto.setTitularesDisponibles(propietarioService.getPropietariosConValorPorDefecto());
-			frecuenciaATCDto.setTitular(this.modelMapperUtils.map(frecuenciaATCDto.getTitularesDisponibles().get(0), PropietarioDto.class));
-			
-			
+			//Obtenemos las listas de tipos de servicios de radio y de titulares y las añadimos al modelo
+			obtenerListasTiposObjetos(model);
+			frecuenciaATCDto.setTitular(frecuenciaATCDto.getTitular());
+
 			vista = VIEW_FRECUENCIAATC;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
@@ -273,6 +272,9 @@ public final class FrecuenciaATCController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_EQUIPAMIENTO_PREGUNTA);
 
+		//Obtenemos las listas de tipos de servicios de radio y de titulares y las añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -300,5 +302,17 @@ public final class FrecuenciaATCController {
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_FRECUENCIASATC);		
 	}
-	
+
+	/**
+	 * Obtiene las listas de tipos de servicios de radio y de titulares y se añaden al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerListasTiposObjetos(final Model model) {
+		
+		//Obtenemos la lista de tipos de servicios de radio
+		model.addAttribute(ATTRIBUTE_TIPOS_SERVICIO_RADIO, this.servicioRadioService.readAll());
+		
+		//Obtenemos la lista de titulares
+		model.addAttribute(ATTRIBUTE_LISTA_TITULARES, this.propietarioService.getPropietariosConValorPorDefecto());
+	}
 }

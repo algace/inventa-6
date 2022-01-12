@@ -199,7 +199,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="regionOperativaDisponible : *{regionesOperativasDisponibles}">
+												<tr th:each="regionOperativaDisponible : ${listaRegionesOperativas}">
 													<td th:text="${regionOperativaDisponible.id}"></td>
 													<td th:text="${regionOperativaDisponible.nombre}"></td>
 													<td th:text="${regionOperativaDisponible.descripcion}"></td>

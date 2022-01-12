@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.TipoSectorATCDto;
+import com.dbcom.app.model.dto.TipoSectorATCLiteDto;
 
 /**
  * Lógica para tipos de sector ATC
@@ -27,7 +28,7 @@ public interface TipoSectorATCService {
 	 * Obtenemos un listado de los tipos de sector ATC
 	 * @return Listado
 	 */
-	List<TipoSectorATCDto> readAll();
+	List<TipoSectorATCLiteDto> readAll();
 	
 	/**
 	 * Obtenemos el tipo de sector ATC con el id facilitado

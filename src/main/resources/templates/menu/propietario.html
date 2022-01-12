@@ -76,7 +76,7 @@
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
 									            <input id="descripcion" type="text" 
-									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
+									            	th:class="form-control"
 									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
 									        </div>										        	
@@ -106,7 +106,12 @@
 
 							<!--/* Botón Eliminar */-->							
 							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
-								th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								th:if="${estaBotonEliminarNoPermitidoActivo} ? 'false' : 'true'" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								
+							<!--/* Botón Eliminar No Permitido */-->
+							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminarNoPermitido" href="#"
+								th:if="${estaBotonEliminarNoPermitidoActivo} ? 'true' : 'false'" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+
 						</div>
 						<!--/* FIN - Botonera */-->
 						
@@ -117,6 +122,10 @@
 						<!--/* INICIO - Popup de eliminación */-->
 						<div th:replace="fragments/popups/popupEliminar :: popupEliminar"></div>
 						<!--/* FIN - Popup de eliminación */-->
+						
+						<!--/* INICIO - Popup de avsio de eliminación no permitida */-->
+						<div th:replace="fragments/popups/popupEliminarNoPermitido :: popupEliminarNoPermitido"></div>
+						<!--/* FIN - Popup de avsio de eliminación no permitida */-->
 			
 					</form>
 				</div>

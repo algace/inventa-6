@@ -117,7 +117,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="aplicacionSW, item : *{aplicacionesSW}">
+												<tr th:each="aplicacionSW, item : ${listaAplicacionesSW}">
 													<td th:text="${aplicacionSW.nombre}"></td>
 													<td th:text="${aplicacionSW.archivo}"></td>
 													<td th:text="${aplicacionSW.fecha}"></td>
@@ -150,11 +150,11 @@
 
 							<!--/* Botón Eliminar */-->
 							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
-								th:if="*{aplicacionesSW==null or aplicacionesSW.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								th:if="${listaAplicacionesSW==null or listaAplicacionesSW.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 									
 							<!--/* Botón Eliminar No Permitido */-->
 							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminarNoPermitido" href="#"
-								th:if="*{aplicacionesSW!=null and !aplicacionesSW.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								th:if="${listaAplicacionesSW!=null and !listaAplicacionesSW.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 								
 						</div>
 						<!--/* FIN - Botonera */-->

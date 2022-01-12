@@ -15,11 +15,9 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.RegionMantenimientoDto;
 import com.dbcom.app.model.dto.SectorMantenimientoDto;
 import com.dbcom.app.service.RegionMantenimientoService;
 import com.dbcom.app.service.SectorMantenimientoService;
-import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +31,7 @@ public class SectorMantenimientoController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_SECTOR_MANTENIMIENTO = "sectorMantenimiento";
+	private static final String ATTRIBUTE_REGIONES_MANTENIMIENTO = "listaRegionesMantenimiento";
 		
 	// Vistas	
 	private static final String VIEW_SECTOR_MANTENIMIENTO = ControllerConstants.MAP_PATH_MENU_ORGANIZACION + ATTRIBUTE_SECTOR_MANTENIMIENTO;
@@ -52,15 +51,12 @@ public class SectorMantenimientoController {
 		
 	private final SectorMantenimientoService sectorMantenimientoService;
 	private final RegionMantenimientoService regionMantenimientoService;
-	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public SectorMantenimientoController(SectorMantenimientoService sectorMantenimientoService,
-			RegionMantenimientoService regionMantenimientoService,
-			ModelMapperUtils  modelMapperUtils) {
+			RegionMantenimientoService regionMantenimientoService) {
 		this.sectorMantenimientoService = sectorMantenimientoService;
 		this.regionMantenimientoService = regionMantenimientoService;
-		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -95,6 +91,9 @@ public class SectorMantenimientoController {
 
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, this.sectorMantenimientoService.create());
+		
+		// Obtenemos la lista de regiones de mantenimiento y la añadimos al modelo
+		obtenerRegionesMantenimiento(model);
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -136,7 +135,7 @@ public class SectorMantenimientoController {
 		
 			//Se debe recuperar de nuevo la lista de regiones de mantenimiento disponibles 
 			//y poner a null el id de la región de mantemiento
-			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoDto.class));
+			obtenerRegionesMantenimiento(model);
 			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
 			
@@ -192,6 +191,9 @@ public class SectorMantenimientoController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, this.sectorMantenimientoService.read(id));
 		
+		// Obtenemos la lista de regiones de mantenimiento y la añadimos al modelo
+		obtenerRegionesMantenimiento(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -231,9 +233,9 @@ public class SectorMantenimientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_SECTOR_MANTENIMIENTO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_SECTORES_MANTENIMIENTO);
 		
-			//Se debe recuperar de nuevo la lista de regiones de mantenimiento disponibles 
-			//y poner a null el id de la región de mantemiento
-			sectorMantenimientoDto.setRegionesMantenimientoDisponibles(this.modelMapperUtils.mapAll2List(this.regionMantenimientoService.readAll(),RegionMantenimientoDto.class));
+			// Obtenemos la lista de regiones de mantenimiento y la añadimos al modelo
+			// y se pone a null el id de la región de mantemiento
+			obtenerRegionesMantenimiento(model);
 			sectorMantenimientoDto.getRegionMantenimiento().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_MANTENIMIENTO, sectorMantenimientoDto);
 			
@@ -291,4 +293,12 @@ public class SectorMantenimientoController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_SECTORES_MANTENIMIENTO);		
 	}
 	
+	/**
+	 * Obtiene la lista de regiones de mantenimiento y se añade al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerRegionesMantenimiento(final Model model) {
+		
+		model.addAttribute(ATTRIBUTE_REGIONES_MANTENIMIENTO, this.regionMantenimientoService.readAll());
+	}
 }

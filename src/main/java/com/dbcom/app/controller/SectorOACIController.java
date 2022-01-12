@@ -15,11 +15,9 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.RegionOperativaDto;
 import com.dbcom.app.model.dto.SectorOACIDto;
 import com.dbcom.app.service.RegionOperativaService;
 import com.dbcom.app.service.SectorOACIService;
-import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +31,7 @@ public class SectorOACIController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_SECTOR_OACI = "sectorOACI";
+	private static final String ATTRIBUTE_REGIONES_OPERATIVAS = "listaRegionesOperativas";
 			
 	// Vistas	
 	private static final String VIEW_SECTOR_OACI = ControllerConstants.MAP_PATH_MENU_SECTORESESPACIOAEREO + ATTRIBUTE_SECTOR_OACI;
@@ -52,15 +51,12 @@ public class SectorOACIController {
 	
 	private final SectorOACIService sectorOACIService;
 	private final RegionOperativaService regionOperativaService;
-	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public SectorOACIController(SectorOACIService sectorOACIService,
-			RegionOperativaService regionOperativaService,
-			ModelMapperUtils modelMapper) {
+			RegionOperativaService regionOperativaService) {
 		this.sectorOACIService = sectorOACIService;
 		this.regionOperativaService = regionOperativaService;
-		this.modelMapperUtils = modelMapper;
 	}
 	
 	
@@ -97,6 +93,9 @@ public class SectorOACIController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_SECTOR_OACI, this.sectorOACIService.create());
 		
+		// Obtenemos la lista de regiones operativas y la añadimos al modelo
+		obtenerRegionesOperativas(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -137,7 +136,7 @@ public class SectorOACIController {
 		
 			//Se debe recuperar de nuevo la lista de regiones operativas disponibles 
 			//y poner a null el id de la región operativa
-			sectorOACIDto.setRegionesOperativasDisponibles(this.modelMapperUtils.mapAll2List(this.regionOperativaService.readAll(),RegionOperativaDto.class));
+			obtenerRegionesOperativas(model);
 			sectorOACIDto.getRegionOperativa().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_OACI, sectorOACIDto);
 			
@@ -193,6 +192,9 @@ public class SectorOACIController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_SECTOR_OACI, this.sectorOACIService.read(id));
 		
+		// Obtenemos la lista de regiones operativas y la añadimos al modelo
+		obtenerRegionesOperativas(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -234,7 +236,7 @@ public class SectorOACIController {
 		
 			//Se debe recuperar de nuevo la lista de regiones operativas disponibles 
 			//y poner a null el id de la región operativa
-			sectorOACIDto.setRegionesOperativasDisponibles(this.modelMapperUtils.mapAll2List(this.regionOperativaService.readAll(),RegionOperativaDto.class));
+			obtenerRegionesOperativas(model);
 			sectorOACIDto.getRegionOperativa().setId(null);
 			model.addAttribute(ATTRIBUTE_SECTOR_OACI, sectorOACIDto);
 			
@@ -290,5 +292,14 @@ public class SectorOACIController {
 		this.sectorOACIService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_SECTORES_OACI);		
+	}
+	
+	/**
+	 * Obtiene la lista de regiones operativas y se añade al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerRegionesOperativas(final Model model) {
+		
+		model.addAttribute(ATTRIBUTE_REGIONES_OPERATIVAS, this.regionOperativaService.readAll());
 	}
 }

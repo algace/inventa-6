@@ -28,6 +28,8 @@ public final class RecursoPasarelaController {
 	
 	// Atributos de la vista
 		private static final String ATTRIBUTE_TIPO = "recursoPasarela";
+		private static final String ATTRIBUTE_TIPOS_CHASIS = "listaTiposChasis";
+		private static final String ATTRIBUTE_FUNCIONES_PASARELA = "listaFuncionesPasarela";
 
 		// Vistas	
 		private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + ATTRIBUTE_TIPO;
@@ -91,6 +93,9 @@ public final class RecursoPasarelaController {
 			// Creamos el registro
 			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.create());
 			
+			//Obtenemos las listas de tipos de chasis y de funciones de pasarela y las añadimos al modelo
+			obtenerListasTiposObjetos(model);
+			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -130,8 +135,9 @@ public final class RecursoPasarelaController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 				
-				recursoPasarelaDto.setTiposChasisDisponibles(tipoChasisService.readAll());
-				recursoPasarelaDto.setFuncionesPasarelaDisponibles(funcionPasarelaService.readAll());
+				//Obtenemos las listas de tipos de chasis y de funciones de pasarela y las añadimos al modelo
+				obtenerListasTiposObjetos(model);
+				
 				model.addAttribute(ATTRIBUTE_TIPO, recursoPasarelaDto);
 			
 				vista = VIEW_TIPO;
@@ -157,6 +163,9 @@ public final class RecursoPasarelaController {
 			
 			// Contenido
 			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
+			
+			//Obtenemos las listas de tipos de chasis y de funciones de pasarela y las añadimos al modelo
+			obtenerListasTiposObjetos(model);
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -185,6 +194,9 @@ public final class RecursoPasarelaController {
 			
 			// Contenido
 			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
+			
+			//Obtenemos las listas de tipos de chasis y de funciones de pasarela y las añadimos al modelo
+			obtenerListasTiposObjetos(model);
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
@@ -226,8 +238,8 @@ public final class RecursoPasarelaController {
 				model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 				model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 				
-				recursoPasarelaDto.setTiposChasisDisponibles(tipoChasisService.readAll());
-				recursoPasarelaDto.setFuncionesPasarelaDisponibles(funcionPasarelaService.readAll());
+				//Obtenemos las listas de tipos de chasis y de funciones de pasarela y las añadimos al modelo
+				obtenerListasTiposObjetos(model);
 				
 				vista = VIEW_TIPO;
 				log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
@@ -254,6 +266,9 @@ public final class RecursoPasarelaController {
 			model.addAttribute(ATTRIBUTE_TIPO, this.recursoPasarelaService.read(id));
 			model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 					MessagesConstants.POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA);
+			
+			//Obtenemos las listas de tipos de chasis y de funciones de pasarela y las añadimos al modelo
+			obtenerListasTiposObjetos(model);
 			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
@@ -283,4 +298,17 @@ public final class RecursoPasarelaController {
 			return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 		}
 
+		/**
+		 * Obtiene la listas de tipos de chasis y de funciones de pasarela y se añaden al modelo
+		 * @param model Modelo
+		 */
+		private void obtenerListasTiposObjetos(final Model model) {
+			
+			//Obtenemos los tipos de chasis
+			model.addAttribute(ATTRIBUTE_TIPOS_CHASIS, this.tipoChasisService.readAll());
+			
+			//Obtenemos las funciones de pasarela
+			model.addAttribute(ATTRIBUTE_FUNCIONES_PASARELA, this.funcionPasarelaService.readAll());
+		
+		}
 }

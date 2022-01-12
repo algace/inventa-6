@@ -1,6 +1,5 @@
 package com.dbcom.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 public class SectorOACIServiceImpl implements SectorOACIService {
 
 	private final SectorOACIRepository sectorOACIRepository;
-	private final RegionOperativaService regionOperativaService;
 	private final RegionOperativaRepository regionOperativaRepository;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public SectorOACIServiceImpl(SectorOACIRepository sectorOACIRepository,
-			RegionOperativaService regionOperativaService,
 			RegionOperativaRepository regionOperativaRepository,
 			ModelMapperUtils modelMapper) {
 		this.sectorOACIRepository = sectorOACIRepository;
-		this.regionOperativaService = regionOperativaService;
 		this.regionOperativaRepository = regionOperativaRepository;
 		this.modelMapperUtils = modelMapper;
 	}
@@ -56,7 +52,6 @@ public class SectorOACIServiceImpl implements SectorOACIService {
 		}
 		
 		return SectorOACIDto.builder()
-				            .regionesOperativasDisponibles(regionOperativaService.readAll())
 				            .regionOperativa(this.modelMapperUtils.map(regionOperativa,RegionOperativaLiteDto.class))
 				            .build();
 	}
@@ -81,14 +76,8 @@ public class SectorOACIServiceImpl implements SectorOACIService {
 	@Override
 	public List<SectorOACIDto> readAll() {
 
-		final List<SectorOACI> sectoresOACI = this.sectorOACIRepository.findAll();
-		
-		final List<SectorOACIDto> sectoresOACIDto = new ArrayList<>(sectoresOACI.size());
-		sectoresOACI.forEach(sectorOACI -> sectoresOACIDto.add(this.modelMapperUtils.map(sectorOACI, SectorOACIDto.class)));
-		
-		log.info(LoggerConstants.LOG_READALL);
+		return this.modelMapperUtils.mapAll2List(this.sectorOACIRepository.findAll(), SectorOACIDto.class);
 
-		return sectoresOACIDto;
 	}
 
 	/**
@@ -103,7 +92,6 @@ public class SectorOACIServiceImpl implements SectorOACIService {
 		log.info(LoggerConstants.LOG_READ);
 		
 		final SectorOACIDto result = this.modelMapperUtils.map(sectorOACI, SectorOACIDto.class);
-		result.setRegionesOperativasDisponibles(regionOperativaService.readAll());
 		
 		return result;
 	}

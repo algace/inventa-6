@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.FrecuenciaATCRepository;
 import com.dbcom.app.model.dto.ServicioRadioDto;
+import com.dbcom.app.model.entity.ServicioRadio;
 import com.dbcom.app.service.ServicioRadioService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,10 +46,16 @@ public final class ServicioRadioController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
 	private final ServicioRadioService servicioRadioService;
+	private final FrecuenciaATCRepository frecuenciaATCRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public ServicioRadioController(ServicioRadioService servicioRadioService) {
+	public ServicioRadioController(ServicioRadioService servicioRadioService,
+			FrecuenciaATCRepository frecuenciaATCRepository,
+			ModelMapperUtils modelMapperUtils) {
 		this.servicioRadioService = servicioRadioService;
+		this.frecuenciaATCRepository = frecuenciaATCRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -236,9 +245,19 @@ public final class ServicioRadioController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.servicioRadioService.read(id));
+		ServicioRadioDto servicioRadioDto = this.servicioRadioService.read(id);
+		Long servicioRadioAsignado = this.frecuenciaATCRepository.countByTipoServicio(this.modelMapperUtils.map(servicioRadioDto, ServicioRadio.class));
+		
+		model.addAttribute(ATTRIBUTE_TIPO, servicioRadioDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_SERVICIORADIO_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_SERVICIORADIO_NO_PERMITIDO_MENSAJE);
+		if (servicioRadioAsignado > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

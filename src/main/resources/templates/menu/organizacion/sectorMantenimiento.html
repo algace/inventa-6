@@ -172,7 +172,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="regionMantenimientoDisponible : *{regionesMantenimientoDisponibles}">
+												<tr th:each="regionMantenimientoDisponible : ${listaRegionesMantenimiento}">
 													<td th:text="${regionMantenimientoDisponible.id}"></td>
 													<td th:text="${regionMantenimientoDisponible.nombre}"></td>
 													<td th:text="${regionMantenimientoDisponible.descripcion}"></td>

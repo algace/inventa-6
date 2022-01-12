@@ -1,8 +1,6 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -21,7 +19,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = {"regionMantenimiento", "regionesMantenimientoDisponibles"})
+@EqualsAndHashCode(exclude = {"regionMantenimiento"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -45,7 +43,4 @@ public class SectorMantenimientoDto implements Serializable {
 	@Valid
 	private RegionMantenimientoLiteDto regionMantenimiento;
 	
-	@Builder.Default
-	private List<RegionMantenimientoDto> regionesMantenimientoDisponibles = new ArrayList<>();
-
 }

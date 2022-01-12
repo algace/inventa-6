@@ -11,6 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.RegionMantenimientoRepository;
 import com.dbcom.app.model.dto.RegionMantenimientoDto;
+import com.dbcom.app.model.dto.RegionMantenimientoLiteDto;
 import com.dbcom.app.model.entity.RegionMantenimiento;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -59,12 +60,12 @@ public class RegionMantenimientoServiceImpl implements RegionMantenimientoServic
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<RegionMantenimientoDto> readAll() {
+	public List<RegionMantenimientoLiteDto> readAll() {
 
 		final List<RegionMantenimiento> regionesMantenimiento = this.regionMantenimientoRepository.findAll();
 		
-		final List<RegionMantenimientoDto> regionesMantenimientoDto = new ArrayList<>(regionesMantenimiento.size());		
-		regionesMantenimiento.forEach(regionMantenimiento -> regionesMantenimientoDto.add(this.modelMapperUtils.map(regionMantenimiento, RegionMantenimientoDto.class)));
+		final List<RegionMantenimientoLiteDto> regionesMantenimientoDto = new ArrayList<>(regionesMantenimiento.size());		
+		regionesMantenimiento.forEach(regionMantenimiento -> regionesMantenimientoDto.add(this.modelMapperUtils.map(regionMantenimiento, RegionMantenimientoLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 

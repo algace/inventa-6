@@ -8,6 +8,9 @@
 		<!--/* INICIO - CSS */-->
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.13.0/css/all.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-bs4/css/dataTables.bootstrap4.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables.net-select-bs4/css/select.bootstrap4.min.css}">
 		
 		<link rel="stylesheet" type="text/css" th:href="@{/css/menu.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/breadcrumb.css}">
@@ -149,7 +152,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="sectorATC, item : *{sectoresATCList}">
+												<tr th:each="sectorATC, item : ${listaSectoresATC}">
 													<td th:text="${sectorATC.nombre}"></td>
 													<td th:text="${sectorATC.tipoFuenteInformacion.nombre}"></td>
 											  		<td th:text="${sectorATC.fechaPublicacion}"></td>
@@ -185,11 +188,11 @@
 
 							<!--/* Botón Eliminar */-->							
 							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminar" href="#"
-								th:if="*{sectoresATCList==null or sectoresATCList.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								th:if="${listaSectoresATC==null or listaSectoresATC.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 								
 							<!--/* Botón Eliminar No Permitido */-->
 							<a role="button" class="btn btn-primary" data-toggle="modal" data-target="#popupEliminarNoPermitido" href="#"
-								th:if="*{sectoresATCList!=null and !sectoresATCList.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
+								th:if="${listaSectoresATC!=null and !listaSectoresATC.isEmpty()}" th:text="#{html.boton.eliminar}" th:hidden="${estaBotonEliminarActivo} ? 'false' : 'true'"></a>
 
 						</div>
 						<!--/* FIN - Botonera */-->

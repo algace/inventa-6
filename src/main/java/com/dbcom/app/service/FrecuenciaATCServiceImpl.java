@@ -11,7 +11,7 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.FrecuenciaATCRepository;
 import com.dbcom.app.model.dto.FrecuenciaATCDto;
-import com.dbcom.app.model.dto.PropietarioDto;
+import com.dbcom.app.model.dto.FrecuenciaATCLiteDto;
 import com.dbcom.app.model.entity.FrecuenciaATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
@@ -28,18 +28,12 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	
 	private FrecuenciaATCRepository frecuenciaATCRepository;
 	private final ModelMapperUtils  modelMapperUtils;
-	private final PropietarioService propietarioService;
-	private final ServicioRadioService servicioRadioService;
 
 	@Autowired
 	public FrecuenciaATCServiceImpl(ModelMapperUtils modelMapper,
-			FrecuenciaATCRepository frecuenciaATCRepository,
-			PropietarioService propietarioService,
-			ServicioRadioService servicioRadioService) {
+			FrecuenciaATCRepository frecuenciaATCRepository) {
 		this.modelMapperUtils = modelMapper;
 		this.frecuenciaATCRepository = frecuenciaATCRepository;
-		this.propietarioService = propietarioService;
-		this.servicioRadioService = servicioRadioService;
 	}
 	
 	/**
@@ -49,13 +43,7 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	public FrecuenciaATCDto create() {		
 		log.info(LoggerConstants.LOG_CREATE);
 		
-		List<PropietarioDto> listPropietariosDisponibles = propietarioService.getPropietariosConValorPorDefecto();
-		
-		return new FrecuenciaATCDto().builder()
-				.titular(this.modelMapperUtils.map(listPropietariosDisponibles.get(0), PropietarioDto.class))
-				.titularesDisponibles(listPropietariosDisponibles)
-				.tiposServicioDisponibles(servicioRadioService.readAll())
-				.build();
+		return FrecuenciaATCDto.builder().build();
 	}
 
 	/**
@@ -76,12 +64,12 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<FrecuenciaATCDto> readAll() {
+	public List<FrecuenciaATCLiteDto> readAll() {
 		
 		final List<FrecuenciaATC> frecuenciasATC = this.frecuenciaATCRepository.findAll();
 		
-		final List<FrecuenciaATCDto> frecuenciasATCDto = new ArrayList<>(frecuenciasATC.size());		
-		frecuenciasATC.forEach(frecuenciaATC -> frecuenciasATCDto.add(this.modelMapperUtils.map(frecuenciaATC, FrecuenciaATCDto.class)));
+		final List<FrecuenciaATCLiteDto> frecuenciasATCDto = new ArrayList<>(frecuenciasATC.size());		
+		frecuenciasATC.forEach(frecuenciaATC -> frecuenciasATCDto.add(this.modelMapperUtils.map(frecuenciaATC, FrecuenciaATCLiteDto.class)));
 		
 		log.info(LoggerConstants.LOG_READALL);
 		
@@ -98,8 +86,6 @@ public final class FrecuenciaATCServiceImpl implements FrecuenciaATCService {
 				.orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 	
 		final FrecuenciaATCDto result = this.modelMapperUtils.map(frecuenciaATC, FrecuenciaATCDto.class);
-		result.setTitularesDisponibles(propietarioService.readAll());
-		result.setTiposServicioDisponibles(servicioRadioService.readAll());
 		
 		log.info(LoggerConstants.LOG_READ);		
 

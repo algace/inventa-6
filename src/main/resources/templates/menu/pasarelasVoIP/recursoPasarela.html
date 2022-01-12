@@ -79,7 +79,7 @@
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoChasis.id}">
 											    	<option th:value="0"></option>
-											    	<option th:each="tipoChasisDisponible : *{tiposChasisDisponibles}" th:value="${tipoChasisDisponible.id}" th:text="${tipoChasisDisponible.nombre}"></option>
+											    	<option th:each="tipoChasisDisponible : ${listaTiposChasis}" th:value="${tipoChasisDisponible.id}" th:text="${tipoChasisDisponible.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('tipoChasis.id')}" th:errors="*{tipoChasis.id}"></div>									           
 									        </div>
@@ -91,7 +91,7 @@
 											    <select th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{funcionPasarela.id}">
 											    	<option th:value="0"></option>
-											    	<option th:each="funcionPasarelaDiponible : *{funcionesPasarelaDisponibles}" th:value="${funcionPasarelaDiponible.id}" th:text="${funcionPasarelaDiponible.nombre}"></option>
+											    	<option th:each="funcionPasarelaDiponible : ${listaFuncionesPasarela}" th:value="${funcionPasarelaDiponible.id}" th:text="${funcionPasarelaDiponible.nombre}"></option>
 											    </select>
 											    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('funcionPasarela.id')}" th:errors="*{funcionPasarela.id}"></div>  
 									        </div>

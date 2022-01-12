@@ -15,8 +15,11 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dao.FrecuenciaATCRepository;
 import com.dbcom.app.model.dto.PropietarioDto;
+import com.dbcom.app.model.entity.Propietario;
 import com.dbcom.app.service.PropietarioService;
+import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,10 +47,16 @@ public class PropietarioController {
 	public static final String MAP_READALL_TIPOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_TIPOS;	
 
 	private final PropietarioService propietarioService;
+	private final FrecuenciaATCRepository frecuenciaATCRepository;
+	private final ModelMapperUtils modelMapperUtils;
 	
 	@Autowired
-	public PropietarioController(PropietarioService propietarioService) {
+	public PropietarioController(PropietarioService propietarioService,
+			FrecuenciaATCRepository frecuenciaATCRepository,
+			ModelMapperUtils modelMapperUtils) {
 		this.propietarioService = propietarioService;
+		this.frecuenciaATCRepository = frecuenciaATCRepository;
+		this.modelMapperUtils = modelMapperUtils;
 	}
 	
 	/**
@@ -237,9 +246,19 @@ public class PropietarioController {
 	public String deleteGET(@PathVariable("id") final Short id, final Model model) {
 		
 		// Contenido
-		model.addAttribute(ATTRIBUTE_TIPO, this.propietarioService.read(id));
+		PropietarioDto propietarioDto = this.propietarioService.read(id);
+		Long porpietarioAsignado = this.frecuenciaATCRepository.countByTitular(this.modelMapperUtils.map(propietarioDto, Propietario.class));
+		
+		model.addAttribute(ATTRIBUTE_TIPO, propietarioDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_PROPIETARIO_PREGUNTA);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_NO_PERMITIDO_MENSAJE, 
+				MessagesConstants.POPUP_ELIMINAR_PROPIETARIO_NO_PERMITIDO_MENSAJE);
+		if (porpietarioAsignado > 0) {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.TRUE);
+		} else {
+			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_NO_PERMITIDO_ACTIVO, Boolean.FALSE);
+		}
 		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);

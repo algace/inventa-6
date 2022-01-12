@@ -3,6 +3,7 @@ package com.dbcom.app.service;
 import java.util.List;
 
 import com.dbcom.app.model.dto.RegionMantenimientoDto;
+import com.dbcom.app.model.dto.RegionMantenimientoLiteDto;
 
 /**
  * Lógica para regiones de mantenimiento
@@ -27,7 +28,7 @@ public interface RegionMantenimientoService {
 	 * Obtenemos un listado de las regiones de mantenimiento
 	 * @return Listado
 	 */
-	List<RegionMantenimientoDto> readAll();
+	List<RegionMantenimientoLiteDto> readAll();
 	
 	/**
 	 * Obtenemos la región de mantenimiento con el id facilitado

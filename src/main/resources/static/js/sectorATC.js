@@ -98,6 +98,14 @@ $("#tablaAirblocks tfoot input").on('keyup change', function() {
     	.search(this.value)
         .draw();
 });
+
+$(ID_INPUT_SEARCH_AIRBLOCKS).on('keyup change', function() {
+    tabla_airblocks.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
+
 // FIN - Configuración de la tabla Versiones
 // Configuración de la tabla del popup para seleccionar Versiones
 var tabla_seleccionar_airblocks =  $(ID_TABLA_SELECCIONAR_AIRBLOCK).DataTable({

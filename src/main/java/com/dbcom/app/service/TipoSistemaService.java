@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dbcom.app.model.dto.TipoSistemaDto;
 import com.dbcom.app.model.dto.TipoSistemaLiteDto;
+import com.dbcom.app.model.dto.TipoSubsistemaDto;
 
 /**
  * Lógica para tipos de sistemas
@@ -44,4 +45,11 @@ public interface TipoSistemaService {
 	 */
 	TipoSistemaDto saveUpdate(final TipoSistemaDto tipoSistemaDto);
 
+	/**
+	 * Obtenemos la lista de tipos de subsistemas asociados al tipo de sistema cuyo 
+	 * id se recibe por parámetro
+	 * @param id Id de un tipo de sistema
+	 * @return lista de los tipos de subsistemas asociados al tipo de sistema
+	 */
+	List<TipoSubsistemaDto> obtenerSubsistemasAsociados(Long id);
 }

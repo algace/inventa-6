@@ -30,6 +30,7 @@ public final class ChasisPasarelaController {
 	
 	// Atributos de la vista
 	private static final String ATTRIBUTE_TIPO = "chasisPasarela";
+	private static final String ATTRIBUTE_TIPOS_CHASIS = "listaTiposChasis";
 
 	// Vistas	
 	private static final String VIEW_TIPO = ControllerConstants.MAP_PATH_MENU_PASARELASVOIP + ATTRIBUTE_TIPO;
@@ -97,6 +98,9 @@ public final class ChasisPasarelaController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_TIPO, this.chasisPasarelaService.create());
 		
+		//Obtenemos la lista de tipos de chasis y se añade al modelo
+		obtenerTiposChasis(model);
+		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -136,9 +140,11 @@ public final class ChasisPasarelaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 			
-			chasisPasarelaDto.setTiposChasis(tipoChasisService.readAll());
 			model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
 		
+			//Obtenemos la lista de tipos de chasis y se añade al modelo
+			obtenerTiposChasis(model);
+			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
@@ -163,6 +169,9 @@ public final class ChasisPasarelaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO, this.chasisPasarelaService.read(id));
 		
+		//Obtenemos la lista de tipos de chasis y se añade al modelo
+		obtenerTiposChasis(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -191,6 +200,9 @@ public final class ChasisPasarelaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO, this.chasisPasarelaService.read(id));
 		
+		//Obtenemos la lista de tipos de chasis y se añade al modelo
+		obtenerTiposChasis(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -231,9 +243,10 @@ public final class ChasisPasarelaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS);
 			
-			chasisPasarelaDto.setTiposChasis(tipoChasisService.readAll());
 			model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
 		
+			//Obtenemos la lista de tipos de chasis y se añade al modelo
+			obtenerTiposChasis(model);
 			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
@@ -260,6 +273,9 @@ public final class ChasisPasarelaController {
 		ChasisPasarelaDto chasisPasarelaDto = this.chasisPasarelaService.read(id);
 		Long tarjetaAsignada = this.tarjetaPasarelaRepository.countByChasisPasarelas(this.modelMapperUtils.map(chasisPasarelaDto, ChasisPasarela.class));
 		
+		//Obtenemos la lista de tipos de chasis y se añade al modelo
+		obtenerTiposChasis(model);
+				
 		model.addAttribute(ATTRIBUTE_TIPO, chasisPasarelaDto);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_CHASISPASARELA_PREGUNTA);
@@ -299,4 +315,13 @@ public final class ChasisPasarelaController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);		
 	}
 
+	/**
+	 * Obtiene la lista de tipos de chasis y se añade al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerTiposChasis(final Model model) {
+		
+		model.addAttribute(ATTRIBUTE_TIPOS_CHASIS, this.tipoChasisService.readAll());
+	
+	}
 }

@@ -15,12 +15,10 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
 import com.dbcom.app.service.TipoInterfazOperacionService;
 import com.dbcom.app.service.TipoSistemaService;
 import com.dbcom.app.service.TipoSubsistemaService;
-import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +32,8 @@ public class TipoSubsistemaController {
 
 	// Atributos de la vista
 	private static final String ATTRIBUTE_TIPO_SUBSISTEMA = "tipoSubsistema";
+	private static final String ATTRIBUTE_TIPOS_INTERFAZ_OPERACION = "listaTiposInterfazOperacion";
+	private static final String ATTRIBUTE_TIPOS_SISTEMAS = "listaTiposSistemas";
 		
 	// Vistas	
 	private static final String VIEW_TIPO_SUBSISTEMA = ControllerConstants.MAP_PATH_MENU_SISTEMAS + ATTRIBUTE_TIPO_SUBSISTEMA;
@@ -54,17 +54,14 @@ public class TipoSubsistemaController {
 	private final TipoSubsistemaService tiposSubsistemasService;
 	private final TipoInterfazOperacionService tipoInterfazOperacionService;
 	private final TipoSistemaService tiposSistemasService;
-	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public TipoSubsistemaController(TipoSubsistemaService tiposSubsistemasService,
 			TipoInterfazOperacionService tipoInterfazOperacionService,
-			TipoSistemaService tiposSistemasService,
-			ModelMapperUtils modelMapper) {
+			TipoSistemaService tiposSistemasService) {
 		this.tiposSubsistemasService = tiposSubsistemasService;
 		this.tipoInterfazOperacionService = tipoInterfazOperacionService;
 		this.tiposSistemasService = tiposSistemasService;
-		this.modelMapperUtils = modelMapper;
 	}
 	
 	/**
@@ -100,6 +97,9 @@ public class TipoSubsistemaController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, this.tiposSubsistemasService.create());
 		
+		//Obtenemos las listas de tipos de interfaz de operación y de sistemas disponibles y las añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -139,12 +139,10 @@ public class TipoSubsistemaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_TIPO_SUBSISTEMA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
 			
-			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y poner a null el id de tipo de interfaz de operación
-			tipoSubsistemaDto.setTiposInterfazOperacion(tipoInterfazOperacionService.readAll());
+			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y de tipos de sistemas disponibles
+			//Se debe poner a null el id de tipo de interfaz de operación y el id del sistema
+			obtenerListasTiposObjetos(model);
 			tipoSubsistemaDto.getTipoInterfazOperacion().setId(null);
-			
-			//Se debe recuperar de nuevo la lista de sistemas disponibles y poner a null el id del sistema
-			tipoSubsistemaDto.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
 			tipoSubsistemaDto.getTipoSistema().setId(null);
 			model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, tipoSubsistemaDto);
 			
@@ -172,6 +170,9 @@ public class TipoSubsistemaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, this.tiposSubsistemasService.read(id));
 		
+		//Obtenemos la lista de tipos de interfaz de operación y la añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -200,6 +201,9 @@ public class TipoSubsistemaController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, this.tiposSubsistemasService.read(id));
 		
+		//Obtenemos la lista de tipos de interfaz de operación y la añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -239,12 +243,10 @@ public class TipoSubsistemaController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO_SUBSISTEMA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SUBSISTEMAS);
 		
-			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y poner a null el id de tipo de interfaz de operación
-			tipoSubsistemaDto.setTiposInterfazOperacion(tipoInterfazOperacionService.readAll());
+			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y de tipos de sistemas disponibles
+			//Se debe poner a null el id de tipo de interfaz de operación y el id del sistema
+			obtenerListasTiposObjetos(model);
 			tipoSubsistemaDto.getTipoInterfazOperacion().setId(null);
-			
-			//Se debe recuperar de nuevo la lista de sistemas disponibles y poner a null el id del sistema
-			tipoSubsistemaDto.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
 			tipoSubsistemaDto.getTipoSistema().setId(null);
 			model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, tipoSubsistemaDto);
 			
@@ -274,6 +276,9 @@ public class TipoSubsistemaController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_TIPO_SUBSISTEMA_PREGUNTA);
 		
+		//Obtenemos la lista de tipos de interfaz de operación y la añadimos al modelo
+		obtenerListasTiposObjetos(model);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -302,4 +307,16 @@ public class TipoSubsistemaController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS_SUBSISTEMAS);		
 	}
 	
+	/**
+	 * Obtiene la listas de tipos de interfaz de operación y de tipos de sistemas disponibles y se añaden al modelo
+	 * @param model Modelo
+	 */
+	private void obtenerListasTiposObjetos(final Model model) {
+		
+		//Obtenemos la lista de tipos de interfaz de operación
+		model.addAttribute(ATTRIBUTE_TIPOS_INTERFAZ_OPERACION, this.tipoInterfazOperacionService.readAll());
+		
+		//Obtenemos la lista de tipos de sistemas disponibles
+		model.addAttribute(ATTRIBUTE_TIPOS_SISTEMAS, this.tiposSistemasService.readAll());
+	}
 }

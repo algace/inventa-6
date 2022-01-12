@@ -22,6 +22,8 @@ import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.AplicacionSWDto;
 import com.dbcom.app.service.AplicacionSWService;
+import com.dbcom.app.service.EquipamientoService;
+import com.dbcom.app.service.VersionSWService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +37,8 @@ public final class AplicacionSWController {
 	
 	// Atributos de la vista
 	private static final String ATTRIBUTE_APLICACION = "aplicacionSW";
+	private static final String ATTRIBUTE_EQUIPAMIENTOS_DISPONIBLES = "listaEquipamientosDisponibles";
+	private static final String ATTRIBUTE_VERSIONES_DISPONIBLES = "listaVersionesDisponibles";
 
 	// Vistas	
 	private static final String VIEW_APLICACION = ControllerConstants.MAP_PATH_MENU_CONTROLVERSIONESSW + ATTRIBUTE_APLICACION;
@@ -63,11 +67,18 @@ public final class AplicacionSWController {
 			ControllerConstants.MAP_ACTION_DELETE_EQUIPAMIENTO + ControllerConstants.MAP_ACTION_SLASH;
 	
 	private final AplicacionSWService aplicacionService;
+	private final EquipamientoService equipamientoService;
+	private final VersionSWService versionSWService;
 	private final HttpServletRequest request;
 	
 	@Autowired
-	public AplicacionSWController(AplicacionSWService aplicacionService, HttpServletRequest request) {
+	public AplicacionSWController(AplicacionSWService aplicacionService, 
+								  EquipamientoService equipamientoService,
+								  VersionSWService versionSWService,
+								  HttpServletRequest request) {
 		this.aplicacionService = aplicacionService;
+		this.equipamientoService = equipamientoService;
+		this.versionSWService = versionSWService;
 		this.request = request;
 	}
 	
@@ -169,6 +180,9 @@ public final class AplicacionSWController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_APLICACION, this.aplicacionService.read(id));
 		
+		//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
+		obtenerListasObjetosDisponibles(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -198,6 +212,9 @@ public final class AplicacionSWController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_APLICACION, this.aplicacionService.read(id));
 		
+		//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
+		obtenerListasObjetosDisponibles(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -248,7 +265,12 @@ public final class AplicacionSWController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_APLICACION);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_APLICACIONES);
 			
+
 			aplicacionService.setAllAttributesListEquipamientoDto(aplicacionDto);
+
+			
+			//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
+			obtenerListasObjetosDisponibles(model, aplicacionDto.getId());
 		
 			vista = VIEW_APLICACION;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
@@ -275,6 +297,9 @@ public final class AplicacionSWController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_POPUP_ELIMINAR_PREGUNTA, 
 				MessagesConstants.POPUP_ELIMINAR_APLICACION_PREGUNTA);
 		
+		//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
+		obtenerListasObjetosDisponibles(model, id);
+				
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
@@ -308,6 +333,7 @@ public final class AplicacionSWController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_APLICACIONES);		
 	}
 	
+
 	@ResponseBody
 	@PostMapping(value = MAP_INSERT_VERSION + "/{idAplicacionSW}/{idVersionSW}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
 	public ResponseEntity<Long> insertVersionSW(@PathVariable("idAplicacionSW") final Long idAplicacionSW, @PathVariable("idVersionSW") final Long idVersionSW) {
@@ -336,4 +362,28 @@ public final class AplicacionSWController {
 		return ResponseEntity.ok(this.aplicacionService.deleteEquipamiento(idAplicacionSW, idEquipamiento));					
 	}
 	
+
+	/**
+	 * Obtiene las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
+	 * de fuentes de información y las añade al modelo para que se muestren en las listas desplegables
+	 * @param model Modelo
+	 */
+	private void obtenerListasObjetosDisponibles(final Model model, final Long id) {
+		
+		//Obtenemos los equipamientos disponibles
+		if (id == null) {
+			model.addAttribute(ATTRIBUTE_EQUIPAMIENTOS_DISPONIBLES, this.equipamientoService.readAll());
+		} else {
+			model.addAttribute(ATTRIBUTE_EQUIPAMIENTOS_DISPONIBLES, this.equipamientoService.readNotContains(id));
+		}
+		
+		//Obtenemos las versiones disponibles
+		if (id == null) {
+			model.addAttribute(ATTRIBUTE_VERSIONES_DISPONIBLES, this.versionSWService.readAll());
+		} else {
+			model.addAttribute(ATTRIBUTE_VERSIONES_DISPONIBLES, this.versionSWService.readNotContains(id));
+		}
+
+	}
+
 }

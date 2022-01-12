@@ -1,8 +1,6 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -18,7 +16,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = {"regionOperativa", "regionesOperativasDisponibles"})
+@EqualsAndHashCode(exclude = {"regionOperativa"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,7 +47,4 @@ public class SectorOACIDto  implements Serializable {
 	
 	private String coordenadas;
 	
-	@Builder.Default
-	private List<RegionOperativaDto> regionesOperativasDisponibles = new ArrayList<>();
-
 }

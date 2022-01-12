@@ -1,6 +1,5 @@
 package com.dbcom.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.TipoSubsistemaRepository;
-import com.dbcom.app.model.dto.TipoInterfazOperacionDto;
-import com.dbcom.app.model.dto.TipoSistemaLiteDto;
 import com.dbcom.app.model.dto.TipoSubsistemaDto;
 import com.dbcom.app.model.dto.TipoSubsistemaLiteDto;
 import com.dbcom.app.model.entity.TipoSubsistema;
@@ -24,18 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 
 	private final TipoSubsistemaRepository tipoSubsistemasRepository;
-	private final TipoSistemaService tiposSistemasService;
-	private final TipoInterfazOperacionService tiposInterfazOperacionService;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public TipoSubsistemaServiceImpl(TipoSubsistemaRepository tipoSubsistemasRepository,
-			TipoSistemaService tiposSistemasService,
-			TipoInterfazOperacionService tiposInterfazOperacionService,
 			ModelMapperUtils modelMapper) {
 		this.tipoSubsistemasRepository = tipoSubsistemasRepository;
-		this.tiposSistemasService = tiposSistemasService;
-		this.tiposInterfazOperacionService = tiposInterfazOperacionService;
 		this.modelMapperUtils = modelMapper;
 	}
 	
@@ -46,9 +37,7 @@ public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 	public TipoSubsistemaDto create() {
 		log.info(LoggerConstants.LOG_CREATE);
 
-		return TipoSubsistemaDto.builder().tiposInterfazOperacion(this.modelMapperUtils.mapAll2List(tiposInterfazOperacionService.readAll(),TipoInterfazOperacionDto.class))
-										  .tiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class))
-										  .build();
+		return TipoSubsistemaDto.builder().build();
 
 	}
 
@@ -72,14 +61,9 @@ public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 	@Override
 	public List<TipoSubsistemaLiteDto> readAll() {
 
-		final List<TipoSubsistema> tiposSubsistemas = this.tipoSubsistemasRepository.findAll();
-		
-		final List<TipoSubsistemaLiteDto> tiposSubsistemasDto = new ArrayList<>(tiposSubsistemas.size());
-		tiposSubsistemas.forEach(tiposSubsistema -> tiposSubsistemasDto.add(this.modelMapperUtils.map(tiposSubsistema, TipoSubsistemaLiteDto.class)));
-		
 		log.info(LoggerConstants.LOG_READALL);
-
-		return tiposSubsistemasDto;
+		
+		return this.modelMapperUtils.mapAll2List(this.tipoSubsistemasRepository.findAll(), TipoSubsistemaLiteDto.class);		
 	}
 
 	/**
@@ -94,8 +78,6 @@ public class TipoSubsistemaServiceImpl implements TipoSubsistemaService {
 		log.info(LoggerConstants.LOG_READ);
 		
 		final TipoSubsistemaDto result = this.modelMapperUtils.map(tipoSubsistema, TipoSubsistemaDto.class);
-		result.setTiposInterfazOperacion(this.modelMapperUtils.mapAll2List(tiposInterfazOperacionService.readAll(),TipoInterfazOperacionDto.class));
-		result.setTiposSistemasDisponibles(this.modelMapperUtils.mapAll2List(tiposSistemasService.readAll(),TipoSistemaLiteDto.class));
 		
 		return result;
 	}

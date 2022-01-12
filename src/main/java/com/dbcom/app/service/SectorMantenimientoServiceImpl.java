@@ -1,6 +1,5 @@
 package com.dbcom.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 public class SectorMantenimientoServiceImpl implements SectorMantenimientoService {
 
 	private final SectorMantenimientoRepository sectorMantenimientoRepository;
-	private final RegionMantenimientoService regionMantenimientoService;
 	private final RegionMantenimientoRepository regionMantenimientoRepository;
 	private final ModelMapperUtils  modelMapperUtils;
 	
 	@Autowired
 	public SectorMantenimientoServiceImpl(SectorMantenimientoRepository sectorMantenimientoRepository,
-			RegionMantenimientoService regionMantenimientoService,
 			RegionMantenimientoRepository regionMantenimientoRepository,
 			ModelMapperUtils modelMapper) {
 		this.sectorMantenimientoRepository = sectorMantenimientoRepository;
-		this.regionMantenimientoService = regionMantenimientoService;
 		this.regionMantenimientoRepository = regionMantenimientoRepository;
 		this.modelMapperUtils = modelMapper;
 	}
@@ -56,7 +52,6 @@ public class SectorMantenimientoServiceImpl implements SectorMantenimientoServic
 		}
 		
 		return SectorMantenimientoDto.builder()
-				                     .regionesMantenimientoDisponibles(regionMantenimientoService.readAll())
 				                     .regionMantenimiento(this.modelMapperUtils.map(regionMantenimiento,RegionMantenimientoLiteDto.class))
 				                     .build();
 	}
@@ -81,14 +76,8 @@ public class SectorMantenimientoServiceImpl implements SectorMantenimientoServic
 	@Override
 	public List<SectorMantenimientoDto> readAll() {
 
-		final List<SectorMantenimiento> sectoresMantenimiento = this.sectorMantenimientoRepository.findAll();
+		return this.modelMapperUtils.mapAll2List(this.sectorMantenimientoRepository.findAll(), SectorMantenimientoDto.class);
 		
-		final List<SectorMantenimientoDto> sectoresMantenimientoDto = new ArrayList<>(sectoresMantenimiento.size());
-		sectoresMantenimiento.forEach(sectorMantenimiento -> sectoresMantenimientoDto.add(this.modelMapperUtils.map(sectorMantenimiento, SectorMantenimientoDto.class)));
-		
-		log.info(LoggerConstants.LOG_READALL);
-
-		return sectoresMantenimientoDto;
 	}
 
 	/**
@@ -103,7 +92,6 @@ public class SectorMantenimientoServiceImpl implements SectorMantenimientoServic
 		log.info(LoggerConstants.LOG_READ);
 		
 		final SectorMantenimientoDto result = this.modelMapperUtils.map(sectorMantenimiento, SectorMantenimientoDto.class);
-		result.setRegionesMantenimientoDisponibles(regionMantenimientoService.readAll());
 		
 		return result;
 	}

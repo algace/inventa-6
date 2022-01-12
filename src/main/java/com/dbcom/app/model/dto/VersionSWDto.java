@@ -1,15 +1,12 @@
 package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -18,8 +15,6 @@ import lombok.NoArgsConstructor;
  * @author jose.vallve
  */
 @Data
-// Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "aplicacionesSW")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,7 +32,4 @@ public final class VersionSWDto implements Serializable {
 	 
 	private String descripcion;
 
-	@Builder.Default
-	private List<AplicacionSWLiteDto> aplicacionesSW = new ArrayList<>();
-	
 }
