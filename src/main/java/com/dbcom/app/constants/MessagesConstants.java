@@ -38,6 +38,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_FRECUENCIA_PREGUNTA;
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA;
+	public static String POPUP_ELIMINAR_PROPIETARIO_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_PROPIETARIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_RECURSOPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_REGION_MANTENIMIENTO_NO_PERMITIDO_MENSAJE;
@@ -152,6 +153,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.funcionPasarela.pregunta}")
 	public void setMessagePopupEliminarFuncionPasarelaPregunta(final String texto) {
 		POPUP_ELIMINAR_FUNCIONPASARELA_PREGUNTA = texto;
+	}
+	
+	@Value("${html.label.eliminar.propietario.no.permitido.mensaje}")
+	public void setMessagePopupEliminarPropietarioNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_PROPIETARIO_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.propietario.pregunta}")
