@@ -1,8 +1,6 @@
 package com.dbcom.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,6 +16,8 @@ import com.dbcom.app.model.dto.AplicacionSWLiteDto;
 import com.dbcom.app.model.dto.EquipamientoLiteDto;
 import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.model.entity.AplicacionSW;
+import com.dbcom.app.model.entity.Equipamiento;
+import com.dbcom.app.model.entity.VersionSW;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -93,46 +93,113 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public AplicacionSWDto saveUpdate(final AplicacionSWDto aplicacionSWDto) {		
+	public AplicacionSWDto save(final AplicacionSWDto aplicacionSWDto) {
 		
-		aplicacionSWDto.setEquipamientos(filterListEquipamientos(aplicacionSWDto.getEquipamientos()));
-		aplicacionSWDto.setVersionesSW(filterListVersionesSW(aplicacionSWDto.getVersionesSW()));
-		AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);	
+		AplicacionSW aplicacionSW = this.modelMapperUtils.map(aplicacionSWDto, AplicacionSW.class);
 		
 		return this.modelMapperUtils.map(this.aplicacionSWRepository.save(aplicacionSW), AplicacionSWDto.class);
 	}
 	
-	/**
-	 * Procesa una lista de objetos VersionSWLiteDto proveniente del front y elimina de esta lista los 
-	 * objetos que tienen un id null
-     * @param lista de objetos VersionSWLiteDto provenientes del front 
-     * @return lista de objetos VersionSWLiteDto filtrada 
-	 */
-	private List<VersionSWLiteDto> filterListVersionesSW(List<VersionSWLiteDto> listVersiones) {
+	@Override
+	public AplicacionSWDto update(final AplicacionSWDto aplicacionSWDto) {
+		
+		AplicacionSW aplicacion = aplicacionSWRepository.findById(aplicacionSWDto.getId())
+		.map(aplicacionBD -> {
+			
+			aplicacionBD.setArchivo(aplicacionSWDto.getArchivo());
+			aplicacionBD.setFecha(aplicacionSWDto.getFecha());
+			aplicacionBD.setHora(aplicacionSWDto.getHora());
+			aplicacionBD.setNombre(aplicacionSWDto.getNombre());
+			
+			return aplicacionBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		
+		return this.modelMapperUtils.map(this.aplicacionSWRepository.save(aplicacion), AplicacionSWDto.class);
+	}
 	
-		return listVersiones.stream()
-                            .filter(version -> !Objects.isNull(version.getId()))
-                            .collect(Collectors.toList());
-	}
-
 	@Override
-	public List<VersionSWLiteDto> listVersionesSeleccionadas(List<VersionSWLiteDto> allVersiones,
-			List<VersionSWLiteDto> listVersion) {
+	public Long insertVersionSW(Long idAplicacionSW, Long idVersionSW) {
 		
-		List<VersionSWLiteDto> versiones = new ArrayList<>();
+		AplicacionSW aplicacion = aplicacionSWRepository.findById(idAplicacionSW)
+		.map(aplicacionBD -> {
+			
+			aplicacionBD.getVersionesSW().add(VersionSW.builder().id(idVersionSW).build());
+			
+			return aplicacionBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
 		
-		allVersiones.stream().forEach(version -> {
-			if(listVersion.stream().anyMatch(vSW -> version.getId() == vSW.getId())) {
-				versiones.add(version);
-			}
-		});
+		this.aplicacionSWRepository.save(aplicacion);
 		
-		return versiones;
+		return idVersionSW;
 	}
-
+	
 	@Override
-	public List<VersionSWLiteDto> listVersionesNoSeleccionadas(List<VersionSWLiteDto> allVersiones,
+	public Long deleteVersionSW(Long idAplicacionSW, Long idVersionSW) {
+		
+		AplicacionSW aplicacion = aplicacionSWRepository.findById(idAplicacionSW)
+		.map(aplicacionBD -> {
+			
+			aplicacionBD.setVersionesSW(aplicacionBD.getVersionesSW().stream().filter(versionSW -> versionSW.getId() != idVersionSW).collect(Collectors.toSet()));
+			
+			return aplicacionBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		this.aplicacionSWRepository.save(aplicacion);
+		
+		
+		return idVersionSW;
+	}
+	
+	@Override
+	public Long insertEquipamiento(Long idAplicacionSW, Long idEquipamiento) {
+		
+		AplicacionSW aplicacion = aplicacionSWRepository.findById(idAplicacionSW)
+		.map(aplicacionBD -> {
+			
+			aplicacionBD.getEquipamientos().add(Equipamiento.builder().id(idEquipamiento).build());
+			
+			return aplicacionBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		this.aplicacionSWRepository.save(aplicacion);
+		
+		return idEquipamiento;
+	}
+	
+	
+	@Override
+	public Long deleteEquipamiento(Long idAplicacionSW, Long idEquipamiento) {
+		
+		AplicacionSW aplicacion = aplicacionSWRepository.findById(idAplicacionSW)
+		.map(aplicacionBD -> {
+			
+			aplicacionBD.setEquipamientos(aplicacionBD.getEquipamientos().stream().filter(equipamiento -> equipamiento.getId() != idEquipamiento).collect(Collectors.toSet()));
+			
+			return aplicacionBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		this.aplicacionSWRepository.save(aplicacion);
+		
+		return idEquipamiento;
+	}
+	
+	@Override
+	public void setAllAttributesListEquipamientoDto(AplicacionSWDto aplicacionDto){
+		
+		AplicacionSWDto aplicacionSWDtoBd = read(aplicacionDto.getId());
+		aplicacionDto.setVersionesSW(aplicacionSWDtoBd.getVersionesSW());
+		aplicacionDto.setEquipamientos(aplicacionSWDtoBd.getEquipamientos());
+		
+	}
+	
+
+	private List<VersionSWLiteDto> listVersionesNoSeleccionadas(List<VersionSWLiteDto> allVersiones,
 			List<VersionSWLiteDto> versionesSeleccionadas) {
 		
 		versionesSeleccionadas.stream().forEach(version -> {
@@ -148,23 +215,7 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		return allVersiones;
 	}
 
-	@Override
-	public List<EquipamientoLiteDto> listEquipamientosSeleccionados(List<EquipamientoLiteDto> allEquipamientos,
-			List<EquipamientoLiteDto> listEquipamientos) {
-		
-		List<EquipamientoLiteDto> equipamientos = new ArrayList<>();
-		
-		allEquipamientos.stream().forEach(equipamiento -> {
-			if(listEquipamientos.stream().anyMatch(eQ -> equipamiento.getId() == eQ.getId())) {
-				equipamientos.add(equipamiento);
-			}
-		});
-		
-		return equipamientos;
-	}
-
-	@Override
-	public List<EquipamientoLiteDto> listEquipamientosNoSeleccionados(List<EquipamientoLiteDto> allEquipamientos,
+	private List<EquipamientoLiteDto> listEquipamientosNoSeleccionados(List<EquipamientoLiteDto> allEquipamientos,
 			List<EquipamientoLiteDto> equipamientosSeleccionados) {
 		
 		equipamientosSeleccionados.stream().forEach(equipamiento -> {
@@ -180,16 +231,4 @@ public final class AplicacionSWServiceImpl implements AplicacionSWService {
 		return allEquipamientos;
 	}
 	
-	/**
-	 * Procesa una lista de objetos EquipamientoLiteDto proveniente del front y elimina de esta lista los 
-	 * objetos que tienen un id null
-     * @param lista de objetos EquipamientoLiteDto provenientes del front 
-     * @return lista de objetos EquipamientoLiteDto filtrada 
-	 */
-	private List<EquipamientoLiteDto> filterListEquipamientos(List<EquipamientoLiteDto> listEquipamientos) {
-		
-		return listEquipamientos.stream()
-                            .filter(equipamiento -> !Objects.isNull(equipamiento.getId()))
-                            .collect(Collectors.toList());
-	}
 }

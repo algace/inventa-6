@@ -1,25 +1,26 @@
 package com.dbcom.app.controller;
 
-import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
 import com.dbcom.app.model.dto.AplicacionSWDto;
-import com.dbcom.app.model.dto.EquipamientoLiteDto;
-import com.dbcom.app.model.dto.VersionSWLiteDto;
 import com.dbcom.app.service.AplicacionSWService;
 import com.dbcom.app.service.EquipamientoService;
 import com.dbcom.app.service.VersionSWService;
@@ -55,17 +56,30 @@ public final class AplicacionSWController {
 	public static final String MAP_READ_APLICACION = ControllerConstants.MAP_ACTION_SLASH + VIEW_APLICACION;
 	public static final String MAP_READALL_APLICACIONES = ControllerConstants.MAP_ACTION_SLASH + VIEW_APLICACIONES;
 	
+	public static final String MAP_INSERT_VERSION = ControllerConstants.MAP_ACTION_SLASH + VIEW_APLICACION + 
+			ControllerConstants.MAP_ACTION_INSERTAR_VERSIONSW + ControllerConstants.MAP_ACTION_SLASH;
+	public static final String MAP_DELETE_VERSION = ControllerConstants.MAP_ACTION_SLASH + VIEW_APLICACION + 
+			ControllerConstants.MAP_ACTION_DELETE_VERSIONSW + ControllerConstants.MAP_ACTION_SLASH;
+	
+	public static final String MAP_INSERT_EQUIPAMIENTO = ControllerConstants.MAP_ACTION_SLASH + VIEW_APLICACION + 
+			ControllerConstants.MAP_ACTION_INSERT_EQUIPAMIENTO + ControllerConstants.MAP_ACTION_SLASH;
+	public static final String MAP_DELETE_EQUIPAMIENTO = ControllerConstants.MAP_ACTION_SLASH + VIEW_APLICACION + 
+			ControllerConstants.MAP_ACTION_DELETE_EQUIPAMIENTO + ControllerConstants.MAP_ACTION_SLASH;
+	
 	private final AplicacionSWService aplicacionService;
-	private final VersionSWService versionSWService;
 	private final EquipamientoService equipamientoService;
+	private final VersionSWService versionSWService;
+	private final HttpServletRequest request;
 	
 	@Autowired
 	public AplicacionSWController(AplicacionSWService aplicacionService, 
-									VersionSWService versionSWService, 
-									EquipamientoService equipamientoService) {
+								  EquipamientoService equipamientoService,
+								  VersionSWService versionSWService,
+								  HttpServletRequest request) {
 		this.aplicacionService = aplicacionService;
-		this.versionSWService = versionSWService;
 		this.equipamientoService = equipamientoService;
+		this.versionSWService = versionSWService;
+		this.request = request;
 	}
 	
 	/**
@@ -101,14 +115,12 @@ public final class AplicacionSWController {
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_APLICACION, this.aplicacionService.create());
 		
-		//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
-		obtenerListasObjetosDisponibles(model, null);
-		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.FALSE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_APLICACION);
@@ -138,27 +150,17 @@ public final class AplicacionSWController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.FALSE);
 			
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_APLICACION);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_APLICACIONES);
 			
-			//se recupera la lista de versiones tratando correctamente las que ya hayan sido seleccionadas
-			List<VersionSWLiteDto> allVersiones = versionSWService.readAllLite();
-			aplicacionDto.setVersionesSW(aplicacionService.listVersionesSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
-			
-			//se recupera la lista de equipamientos tratando correctamente los que ya hayan sido seleccionados
-			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAll();
-			aplicacionDto.setEquipamientos(aplicacionService.listEquipamientosSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
-			
-			//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
-			obtenerListasObjetosDisponibles(model, null);
-			
 			vista = VIEW_APLICACION;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.aplicacionService.saveUpdate(aplicacionDto);
+			this.aplicacionService.save(aplicacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_APLICACIONES);
 			log.info(LoggerConstants.LOG_SAVE, aplicacionDto.getId());
 		}
@@ -186,6 +188,7 @@ public final class AplicacionSWController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_APLICACIONES);
@@ -217,6 +220,11 @@ public final class AplicacionSWController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.URL_INSERT_VERSIONES_APLICACIONES, this.request.getContextPath() + MAP_INSERT_VERSION);
+		model.addAttribute(ControllerConstants.URL_DELETE_VERSIONES_APLICACIONES, this.request.getContextPath() + MAP_DELETE_VERSION);
+		model.addAttribute(ControllerConstants.URL_INSERT_EQUIPAMIENTOS_APLICACIONES, this.request.getContextPath() + MAP_INSERT_EQUIPAMIENTO);
+		model.addAttribute(ControllerConstants.URL_DELETE_EQUIPAMIENTOS_APLICACIONES, this.request.getContextPath() + MAP_DELETE_EQUIPAMIENTO);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_APLICACION);
@@ -247,18 +255,19 @@ public final class AplicacionSWController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+			model.addAttribute(ControllerConstants.URL_INSERT_VERSIONES_APLICACIONES, this.request.getContextPath() + MAP_INSERT_VERSION);
+			model.addAttribute(ControllerConstants.URL_DELETE_VERSIONES_APLICACIONES, this.request.getContextPath() + MAP_DELETE_VERSION);
+			model.addAttribute(ControllerConstants.URL_INSERT_EQUIPAMIENTOS_APLICACIONES, this.request.getContextPath() + MAP_INSERT_EQUIPAMIENTO);
+			model.addAttribute(ControllerConstants.URL_DELETE_EQUIPAMIENTOS_APLICACIONES, this.request.getContextPath() + MAP_DELETE_EQUIPAMIENTO);
 	
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_APLICACION);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_APLICACIONES);
 			
-			//se recupera la lista de versiones tratando correctamente las que ya hayan sido seleccionadas
-			List<VersionSWLiteDto> allVersiones = versionSWService.readAllLite();
-			aplicacionDto.setVersionesSW(aplicacionService.listVersionesSeleccionadas(allVersiones, aplicacionDto.getVersionesSW()));
-			
-			//se recupera la lista de equipamientos tratando correctamente los que ya hayan sido seleccionados
-			List<EquipamientoLiteDto> allEquipamientos = equipamientoService.readAll();
-			aplicacionDto.setEquipamientos(aplicacionService.listEquipamientosSeleccionados(allEquipamientos, aplicacionDto.getEquipamientos()));
+
+			aplicacionService.setAllAttributesListEquipamientoDto(aplicacionDto);
+
 			
 			//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación
 			obtenerListasObjetosDisponibles(model, aplicacionDto.getId());
@@ -266,7 +275,7 @@ public final class AplicacionSWController {
 			vista = VIEW_APLICACION;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		} else {
-			this.aplicacionService.saveUpdate(aplicacionDto);
+			this.aplicacionService.update(aplicacionDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_APLICACIONES);
 			log.info(LoggerConstants.LOG_UPDATE, aplicacionDto.getId());			
 		}
@@ -296,6 +305,11 @@ public final class AplicacionSWController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.URL_INSERT_VERSIONES_APLICACIONES, this.request.getContextPath() + MAP_INSERT_VERSION);
+		model.addAttribute(ControllerConstants.URL_DELETE_VERSIONES_APLICACIONES, this.request.getContextPath() + MAP_DELETE_VERSION);
+		model.addAttribute(ControllerConstants.URL_INSERT_EQUIPAMIENTOS_APLICACIONES, this.request.getContextPath() + MAP_INSERT_EQUIPAMIENTO);
+		model.addAttribute(ControllerConstants.URL_DELETE_EQUIPAMIENTOS_APLICACIONES, this.request.getContextPath() + MAP_DELETE_EQUIPAMIENTO);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_APLICACION
@@ -319,6 +333,36 @@ public final class AplicacionSWController {
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_APLICACIONES);		
 	}
 	
+
+	@ResponseBody
+	@PostMapping(value = MAP_INSERT_VERSION + "/{idAplicacionSW}/{idVersionSW}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> insertVersionSW(@PathVariable("idAplicacionSW") final Long idAplicacionSW, @PathVariable("idVersionSW") final Long idVersionSW) {
+		
+		return ResponseEntity.ok(this.aplicacionService.insertVersionSW(idAplicacionSW, idVersionSW));					
+	}
+	
+	@ResponseBody
+	@DeleteMapping(value = MAP_DELETE_VERSION+ "/{idAplicacionSW}/{idVersionSW}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> deleteVersionSW(@PathVariable("idAplicacionSW") final Long idAplicacionSW, @PathVariable("idVersionSW") final Long idVersionSW) {
+		
+		return ResponseEntity.ok(this.aplicacionService.deleteVersionSW(idAplicacionSW, idVersionSW));					
+	}
+	
+	@ResponseBody
+	@PostMapping(value = MAP_INSERT_EQUIPAMIENTO + "/{idAplicacionSW}/{idEquipamiento}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> insertEquipamiento(@PathVariable("idAplicacionSW") final Long idAplicacionSW, @PathVariable("idEquipamiento") final Long idEquipamiento) {
+		
+		return ResponseEntity.ok(this.aplicacionService.insertEquipamiento(idAplicacionSW, idEquipamiento));					
+	}
+	
+	@ResponseBody
+	@DeleteMapping(value = MAP_DELETE_EQUIPAMIENTO + "/{idAplicacionSW}/{idEquipamiento}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> deleteEquipamiento(@PathVariable("idAplicacionSW") final Long idAplicacionSW, @PathVariable("idEquipamiento") final Long idEquipamiento) {
+		
+		return ResponseEntity.ok(this.aplicacionService.deleteEquipamiento(idAplicacionSW, idEquipamiento));					
+	}
+	
+
 	/**
 	 * Obtiene las listas de tipos de unidades de frecuencia, tipos de bandas de frecuencia y tipos
 	 * de fuentes de información y las añade al modelo para que se muestren en las listas desplegables
@@ -341,4 +385,5 @@ public final class AplicacionSWController {
 		}
 
 	}
+
 }

@@ -47,9 +47,7 @@ public final class ControllerConstants {
 	public static final String ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO = "estaBotonAceptarActivo";
 	public static final String ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO = "estaBotonCancelarActivo";
 	public static final String ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO = "estaBotonEliminarActivo";
-	public static final String ATTRIBUTE_APLICACIONES_VISIBLE = "applicacionesVisible";
-	public static final String ATTRIBUTE_SECTORES_ATC_VISIBLE = "sectoresATCVisible";
-	public static final String ATTRIBUTE_TIPOS_SUBSISTEMAS_VISIBLE = "tiposSubsistemasVisible";
+	public static final String ATTRIBUTE_CARDS_VISIBLE = "cardsVisible";
 	
 	
 	// Acciones para mapas
@@ -58,6 +56,18 @@ public final class ControllerConstants {
 	public static final String MAP_ACTION_BORRAR = MAP_ACTION_SLASH + BORRAR;
 	public static final String MAP_ACTION_GUARDAR = MAP_ACTION_SLASH + "guardar";
 	public static final String MAP_ACTION_MODIFICAR = MAP_ACTION_SLASH + MODIFICAR;
+	
+	//Acciones para mapas AplicacionesSW
+	public static final String MAP_ACTION_INSERTAR_VERSIONSW = MAP_ACTION_SLASH + "insertVersion";
+	public static final String MAP_ACTION_DELETE_VERSIONSW = MAP_ACTION_SLASH + "deleteVersion";
+	public static final String MAP_ACTION_INSERT_EQUIPAMIENTO = MAP_ACTION_SLASH + "insertEquipamiento";
+	public static final String MAP_ACTION_DELETE_EQUIPAMIENTO = MAP_ACTION_SLASH + "deleteEquipamiento";
+	
+	// Constantes URL's relaciones AplicacionesSW
+	public static final String URL_INSERT_VERSIONES_APLICACIONES = "urlInsertVersion";
+	public static final String URL_DELETE_VERSIONES_APLICACIONES = "urlDeleteVersion";
+	public static final String URL_INSERT_EQUIPAMIENTOS_APLICACIONES = "urlInsertEquipamiento";
+	public static final String URL_DELETE_EQUIPAMIENTOS_APLICACIONES = "urlDeleteEquipamiento";
 	
 	// Rutas de las plantillas para mapas
 	public static final String MAP_PATH_MENU = "menu" + MAP_ACTION_SLASH;
