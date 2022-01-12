@@ -244,8 +244,6 @@ public class TipoSubsistemaController {
 			//Se debe recuperar de nuevo la lista de tipos de interfaz de operación y de tipos de sistemas disponibles
 			//Se debe poner a null el id de tipo de interfaz de operación y el id del sistema
 			obtenerListasTiposObjetos(model);
-			tipoSubsistemaDto.getTipoInterfazOperacion().setId(null);
-			tipoSubsistemaDto.getTipoSistema().setId(null);
 			model.addAttribute(ATTRIBUTE_TIPO_SUBSISTEMA, tipoSubsistemaDto);
 			
 			vista = VIEW_TIPO_SUBSISTEMA;
