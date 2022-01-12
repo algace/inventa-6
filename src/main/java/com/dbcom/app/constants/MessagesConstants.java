@@ -47,6 +47,7 @@ public final class MessagesConstants {
 	public static String POPUP_ELIMINAR_SECTOR_MANTENIMIENTO_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTOR_OACI_PREGUNTA;
 	public static String POPUP_ELIMINAR_SECTORATC_PREGUNTA;
+	public static String POPUP_ELIMINAR_SERVICIORADIO_NO_PERMITIDO_MENSAJE;
 	public static String POPUP_ELIMINAR_SERVICIORADIO_PREGUNTA;
 	public static String POPUP_ELIMINAR_TARJETAPASARELA_PREGUNTA;
 	public static String POPUP_ELIMINAR_TIPO_BANDAFRECUENCIA_NO_PERMITIDO_MENSAJE;
@@ -176,6 +177,11 @@ public final class MessagesConstants {
 	@Value("${html.label.eliminar.regionOperativa.no.permitido.mensaje}")
 	public void setMessagePopupEliminarRegionOperativaNoPermitidoMensaje(final String texto) {
 		POPUP_ELIMINAR_REGION_OPERATIVA_NO_PERMITIDO_MENSAJE = texto;
+	}
+	
+	@Value("${html.label.eliminar.servicioRadio.no.permitido.mensaje}")
+	public void setMessagePopupEliminarServicioRadioNoPermitidoMensaje(final String texto) {
+		POPUP_ELIMINAR_SERVICIORADIO_NO_PERMITIDO_MENSAJE = texto;
 	}
 	
 	@Value("${html.label.eliminar.servicioRadio.pregunta}")
