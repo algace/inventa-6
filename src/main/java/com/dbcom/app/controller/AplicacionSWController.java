@@ -266,7 +266,7 @@ public final class AplicacionSWController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_APLICACIONES);
 			
 
-			aplicacionService.setAllAttributesListEquipamientoDto(aplicacionDto);
+			this.aplicacionService.setAllAttributesListEquipamientoDto(aplicacionDto);
 
 			
 			//Obtenemos las listas de equipamientos y versiones disponibles que se pueden asociar a la aplicación

@@ -36,15 +36,19 @@ public interface SectorATCService {
 	 * @param sectorATCDto Sector ATC a persistir
 	 * @return Sector ATC persistido
 	 */
-	SectorATCDto saveUpdate(final SectorATCDto sectorATCDto);
+	SectorATCDto save(final SectorATCDto sectorATCDto);
 	
 	/**
-	 * métodos internos para tratar las listas de Airblocks de manera correcta según hayan sido seleccionados o no.
+	 * Persistimos el sector ATCpasada como parámetro
+	 * @param sectorATCDto Sector ATC a persistir
+	 * @return Sector ATC persistido
 	 */
-    List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> listAirblock);
-    
+	SectorATCDto update(SectorATCDto sectorATCDto);
+	
 	Long insertAirblock(Short idSectorATC, Long idAirblock);
 	
 	Long deleteAirblock(Short idSectorATC, Long idAirblock);
+	
+	void setAllAttributesListSectorATC(SectorATCDto sectorATCDto);
      
 }
