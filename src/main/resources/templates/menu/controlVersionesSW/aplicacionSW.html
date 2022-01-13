@@ -93,7 +93,8 @@
 								                <div class="input-group date" id="datetimepickerFecha" data-target-input="nearest">
 								                    <input type="text" data-target="#datetimepickerFecha" 
 								                    	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-								                    	th:field="*{fecha}" th:disabled="${esCampoSoloLectura} ? 'true'"/>
+								                    	th:field="*{fecha}" th:disabled="${esCampoSoloLectura} ? 'true'"
+								                    	onkeypress="return false"/>
 								                    <div class="input-group-append" data-target="#datetimepickerFecha" data-toggle="datetimepicker">
 								                        <div class="input-group-text"><i class="far fa-calendar"></i></div>
 								                    </div>
@@ -107,7 +108,8 @@
 								                <div class="input-group date" id="datetimepickerHora" data-target-input="nearest">
 								                    <input type="text" data-target="#datetimepickerHora" 
 								                    	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-								                    	th:field="*{hora}" th:disabled="${esCampoSoloLectura} ? 'true'"/>
+								                    	th:field="*{hora}" th:disabled="${esCampoSoloLectura} ? 'true'"
+								                    	onkeypress="return false"/>
 								                    <div class="input-group-append" data-target="#datetimepickerHora" data-toggle="datetimepicker">
 								                        <div class="input-group-text"><i class="far fa-clock"></i></div>
 								                    </div>

@@ -120,7 +120,8 @@
 								                <div class="input-group date" id="datetimepickerFecha" data-target-input="nearest">
 								                    <input type="text" data-target="#datetimepickerFecha" 
 								                    	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
-								                    	th:field="*{fechaPublicacion}" th:disabled="${esCampoSoloLectura} ? 'true'"/>
+								                    	th:field="*{fechaPublicacion}" th:disabled="${esCampoSoloLectura} ? 'true'"
+								                    	onkeypress="return false;"/>
 								                    <div class="input-group-append" data-target="#datetimepickerFecha" data-toggle="datetimepicker">
 								                        <div class="input-group-text"><i class="far fa-calendar"></i></div>
 								                    </div>
