@@ -143,9 +143,9 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.observaciones}"></div>
 									        <div class="col-sm-6">
-									            <input id="observaciones" type="text" 
+									            <textarea id="observaciones" rows="3" style="resize: none;"
 									            	class="form-control"
-									            	th:field="*{observaciones}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            	th:field="*{observaciones}" th:disabled="${esCampoSoloLectura} ? 'true'"> </textarea>
 									        </div>										        	
 		       							 </div>
 		       							 
