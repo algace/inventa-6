@@ -1,7 +1,5 @@
 package com.dbcom.app.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -23,7 +21,6 @@ import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
-import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.service.AirblockService;
 import com.dbcom.app.service.RegionOperativaService;
@@ -170,17 +167,13 @@ public class SectorATCController {
 			// y airblocks disponibles y se añaden al modelo
 			obtenerListasTiposObjetos(model, null);
 			
-			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
-			List<AirblockDto> allAirblocks = airblockService.readAll();
-			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
-			
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
 		} else {		
-			this.sectorATCService.saveUpdate(sectorATCDto);
+			this.sectorATCService.save(sectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_SAVE, sectorATCDto.getId());
 		}
@@ -289,9 +282,7 @@ public class SectorATCController {
 			// y airblocks disponibles y se añaden al modelo
 			obtenerListasTiposObjetos(model, sectorATCDto.getId());
 			
-			//se recupera la lista de airblocks tratando correctamente los que ya hayan sido seleccionados
-			List<AirblockDto> allAirblocks = airblockService.readAll();
-			sectorATCDto.setAirblocks(sectorATCService.listAirblocksSeleccionados(allAirblocks, sectorATCDto.getAirblocks()));
+			this.sectorATCService.setAllAttributesListSectorATC(sectorATCDto);
 		
 			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
 			
@@ -299,7 +290,7 @@ public class SectorATCController {
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		
 		} else {
-			this.sectorATCService.saveUpdate(sectorATCDto);
+			this.sectorATCService.update(sectorATCDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_TIPOS);
 			log.info(LoggerConstants.LOG_UPDATE, sectorATCDto.getId());			
 		}

@@ -2,7 +2,6 @@ package com.dbcom.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,12 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.SectorATCRepository;
-import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 import com.dbcom.app.model.entity.Airblock;
+import com.dbcom.app.model.entity.RegionOperativa;
 import com.dbcom.app.model.entity.SectorATC;
+import com.dbcom.app.model.entity.TipoFuenteInformacion;
+import com.dbcom.app.model.entity.TipoSectorATC;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -92,42 +93,35 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	}
 
 	@Override
-	public SectorATCDto saveUpdate(SectorATCDto sectorATCDto) {
-		
-		sectorATCDto.setAirblocks(filterListAirblock(sectorATCDto.getAirblocks()));
+	public SectorATCDto save(SectorATCDto sectorATCDto) {
 		
 		SectorATC sectorATC = this.modelMapperUtils.map(sectorATCDto, SectorATC.class);	
 		
 		return this.modelMapperUtils.map(this.sectorATCRepository.save(sectorATC), SectorATCDto.class);
 	}
-
+	
 	@Override
-	public List<AirblockDto> listAirblocksSeleccionados(List<AirblockDto> allAirblocks, List<AirblockDto> airblockSeleccionados){
-
-		List<AirblockDto> airblocks = new ArrayList<>();
-	
-		allAirblocks.stream().forEach(airblock -> {
-			if (airblockSeleccionados.stream().anyMatch(ab -> airblock.getId() == ab.getId())) {
-				airblocks.add(airblock);
-			}
-		});
-	
-		return airblocks;
+	public SectorATCDto update(SectorATCDto sectorATCDto) {
+		
+		SectorATC sectorATC = sectorATCRepository.findById(sectorATCDto.getId())
+		.map(sectorATCBD -> {
+			
+			sectorATCBD.setDescripcion(sectorATCDto.getDescripcion());
+			sectorATCBD.setFechaPublicacion(sectorATCDto.getFechaPublicacion());
+			sectorATCBD.setFlMax(sectorATCDto.getFlMax());
+			sectorATCBD.setFlMin(sectorATCDto.getFlMin());
+			sectorATCBD.setNombre(sectorATCDto.getNombre());
+			sectorATCBD.setRegionOperativa(this.modelMapperUtils.map(sectorATCDto.getRegionOperativa(), RegionOperativa.class));
+			sectorATCBD.setTipoFuenteInformacion(this.modelMapperUtils.map(sectorATCDto.getTipoFuenteInformacion(), TipoFuenteInformacion.class));
+			sectorATCBD.setTipoSectorATC(this.modelMapperUtils.map(sectorATCDto.getTipoSectorATC(), TipoSectorATC.class));
+			
+			return sectorATCBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		return this.modelMapperUtils.map(this.sectorATCRepository.save(sectorATC), SectorATCDto.class);
 	}
 
-	/**
-	 * Procesa una lista de objetos Airblock proveniente del front y elimina de esta lista los 
-	 * objetos que tienen un id null
-     * @param lista de objetos AirblockDto provenientes del front 
-     * @return lista de objetos AirblockDto filtrada 
-	 */
-	private List<AirblockDto> filterListAirblock(List<AirblockDto> listAirblocks) {
-	
-		return listAirblocks.stream()
-                            .filter(version -> !Objects.isNull(version.getId()))
-                            .collect(Collectors.toList());
-	}
-	
 	@Override
 	public Long insertAirblock(Short idSectorATC, Long idAirblock) {
 		
@@ -161,5 +155,13 @@ public final class SectorATCServiceImpl implements SectorATCService{
 		
 		
 		return idAirblock;
+	}
+	
+	@Override
+	public void setAllAttributesListSectorATC(SectorATCDto sectorATCDto) {
+		
+		SectorATCDto sectorATCDtoBd = read(sectorATCDto.getId());
+		sectorATCDto.setAirblockList(sectorATCDtoBd.getAirblockList());
+		
 	}
 }
