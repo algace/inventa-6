@@ -17,8 +17,9 @@ var tabla_checkboxTarjeta =  $(ID_CHECKBOX_TARJETA).DataTable({
         render: function(data, type, full, meta){
 		   if (type == "display"){
 			   cont++;
+			   var checkDisabled = esCampoSoloLectura == true ? 'disabled' : '';
 			   var checked = data == true ? 'checked' : '';
-	           return '<input type="checkbox" id="chasisPasarelas' + cont +'.isSeleccionado" name="chasisPasarelas['+ cont + '].isSeleccionado" ' + checked + '>' +
+	           return '<input type="checkbox" id="chasisPasarelas' + cont +'.isSeleccionado" name="chasisPasarelas['+ cont + '].isSeleccionado" ' + checked + ' ' + checkDisabled + '>' +
 	           		  '<input type="hidden" id="chasisPasarelas' + cont +'.id" name="chasisPasarelas['+ cont + '].id" value="' + full.id + '">';
            }else{
 			   return data;
