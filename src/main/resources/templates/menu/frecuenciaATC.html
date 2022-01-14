@@ -209,10 +209,11 @@
 																th:disabled="${esCampoSoloLectura} ? 'true'">
 														</td>
 														<td>
-															<input type="number" id="docOACIFL"
+															<input type="number" id="docOACIFL" onkeypress="return controlarValorEnteroPositivo(event);"
 																th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
 																th:field="*{docOACIFL}"
 																th:disabled="${esCampoSoloLectura} ? 'true'">
+															<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('docOACIFL')}" th:errors="*{docOACIFL}"></div>
 														</td>
 														<td>
 															<input type="text" id="docOACILatitud"
@@ -325,6 +326,7 @@
 	<script type="text/javascript" th:src="@{/webjars/datatables.net-select-bs4/js/select.bootstrap4.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/jquery-mask-plugin/1.14.15/dist/jquery.mask.js}"></script>
 	<script type="text/javascript" th:src="@{/js/frecuencia.js}"></script>
+	<script type="text/javascript" th:src="@{/js/controlValoresNumericos.js}"></script>
 
 	<!--/* INICIO - Apertura del menú */-->
 	<script th:inline="javascript">
