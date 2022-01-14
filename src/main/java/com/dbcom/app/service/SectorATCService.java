@@ -2,7 +2,6 @@ package com.dbcom.app.service;
 
 import java.util.List;
 
-import com.dbcom.app.model.dto.AirblockDto;
 import com.dbcom.app.model.dto.SectorATCDto;
 
 public interface SectorATCService {

@@ -224,7 +224,7 @@
 							<!--/* FIN - Información general */-->
 							
 							<!--/* INICIO - Fotografías */-->	
-							<div class="card">
+							<div class="card" th:if="${cardsVisible}">
 								<div id="headingFotografias" class="card-header">
 									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseFotografias" aria-expanded="false"
 										aria-controls="collapseFotografias">
@@ -241,6 +241,7 @@
 										<table id="tablaFotografias" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
 												<tr>
+													<th class="th-sm" th:text="'id'"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
 												</tr>
@@ -252,7 +253,7 @@
 							<!--/* FIN - Fotografías */-->	
 							
 							<!--/* INICIO - Documentos */-->	
-							<div class="card">
+							<div class="card" th:if="${cardsVisible}">
 								<div id="headingDocumentos" class="card-header">
 									<button type="button" class="btn collapsed" data-toggle="collapse" data-target="#collapseDocumentos" aria-expanded="false"
 										aria-controls="collapseDocumentos">
@@ -269,6 +270,7 @@
 										<table id="tablaDocumentos" class="table table-striped table-bordered no-margin-top" style="width: 100%">
 											<thead>
 												<tr>
+													<th class="th-sm" th:text="'id'"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.nombre}"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.descripcion}"></th>
 													<th class="th-sm" th:text="#{html.tabla.cabecera.tipoDocumento}"></th>
@@ -583,6 +585,10 @@
 			var fotografiasJson = JSON.stringify(fotografias);
 			var documentos = [[${equipamiento.documentos}]];
 			var documentosJson = JSON.stringify(documentos);
+			var urlInsertFotografia = [[${urlInsertFotografia}]];
+			var urlDeleteFotografia = [[${urlDeleteFotografia}]];
+			var urlInsertDocumento = [[${urlInsertDocumento}]];
+			var urlDeleteDocumento = [[${urlDeleteDocumento}]];
 			/*]]>*/
 			$('#collapseGestionBBDD').collapse('show', { "animation": false });
 		</script>

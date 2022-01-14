@@ -14,8 +14,6 @@ const ID_TABLA_FOTOGRAFIAS = '#tablaFotografias';
 const ID_MODAL_FOTOGRAFIA = '#popupSubirFotografia';
 const ID_INPUT_SEARCH_FOTOGRAFIAS = '#searchFotografias';
 
-var contfoto = fotografias.length;
-
 // INICIO - Configuración de la tabla fotografias
 var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	select: 'single',
@@ -24,26 +22,9 @@ var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	data: JSON.parse(fotografiasJson),
 	columnDefs: [{ 
 		targets: 0,
-        render: function(data, type, full, meta){
-	
-		   if (type == "display"){
-			   contfoto++;
-			   
-	           var result = data + '<input type="hidden" id="fotografias' + contfoto + '.nombre" name="fotografias[' + contfoto + '].nombre" value="' + full.nombre +'">' +
-	           '<input type="hidden" id="fotografias' + contfoto + '.contenido" name="fotografias[' + contfoto + '].contenido" value="' + full.contenido +'">' +
-	           '<input type="hidden" id="fotografias' + contfoto + '.descripcion" name="fotografias[' + contfoto + '].descripcion" value="' + full.descripcion +'">';
-	           
-	           if(full.id){
-			   		result = result + '<input type="hidden" id="fotografias' + contfoto + '.id" name="fotografias[' + contfoto + '].id" value="' + full.id +'">';
-			   }
-	           
-	           return result;
-           }else{
-			   return data;
-		   }
-        }
+		visible: false
     }],
-	columns: [
+	columns: [{data: "id", name: "id", title: "ID"},
 			  {data: "nombre", name: "nombre", title: "Nombre"}, 
 			  {data: "descripcion", name: "descripcion", title: "Descripción"}
 	],
@@ -83,6 +64,8 @@ var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
  })
  .on('click', 'tr', function() {
 	 rowNode = this;
+	 rowElement = tabla_fotografias.row(this).data();
+	 idElement = tabla_fotografias.row(this).data()[0];
 });
 
 // Campo para el filtro
@@ -101,15 +84,7 @@ $("#tablaFotografias tfoot input").on('keyup change', function() {
 
 // Botón Borrar Fotografias
 $(ID_BOTON_BORRAR_FOTOGRAFIA).on('click', function () {
-	
-	// 1. Eliminamos la fila de la tabla
-	$(ID_TABLA_FOTOGRAFIAS).DataTable()
-		.row(rowNode)
-		.remove()
-		.draw();
-		
-	// 2. Deshabilitamos el botón borrar
-	$(ID_BOTON_BORRAR_FOTOGRAFIA).attr('disabled', 'disabled');
+	deleteFotografia(rowElement.id);
 });
 
 //INICIO - Validaciones subir fotografia
@@ -161,19 +136,6 @@ function validarDescripcionFotografia() {
 	return resultado;
 }
 
-function insertFotografiaInTable(){
-	
-
-	$(ID_TABLA_FOTOGRAFIAS).DataTable()
-	.row
-	.add({
-		id: null,
-		contenido: fileByteArray, 
-		nombre: $(ID_FOTOGRAFIA_FOTO)[0].files[0].name, 
-		descripcion: $('#descripcionFotografia').val(),
-	}).draw();
-	
-}
 
 function validarPopupFotografia() {
 	var contador = 2;
@@ -194,12 +156,80 @@ function validarPopupFotografia() {
 	// Mostramos la barra de progreso
 	if (contador == 0) {
 		$(ID_BARRA_PROGRESO_FOTOGRAFIA).removeAttr("hidden");
-		insertFotografiaInTable();
+		insertFotografia($('#id').val());
 	} else {
 		$(ID_BARRA_PROGRESO_FOTOGRAFIA).attr("hidden", "hidden");
 	}
 		
 	return ((contador == 0) ? true : false);
+}
+
+function addFotografiaToEquipamientoTable(idFotografia){
+	
+	$(ID_TABLA_FOTOGRAFIAS).DataTable()
+	.row
+	.add({
+		id: idFotografia,
+		contenido: fileByteArray, 
+		nombre: $(ID_FOTOGRAFIA_FOTO)[0].files[0].name, 
+		descripcion: $('#descripcionFotografia').val(),
+	}).draw();
+}
+
+function insertFotografia(idEquipamiento){
+
+    $.ajax({
+        type: 'POST',
+        url: urlInsertFotografia + idEquipamiento,
+        data: JSON.stringify({
+			contenido: fileByteArray, 
+			nombre: $(ID_FOTOGRAFIA_FOTO)[0].files[0].name, 
+			descripcion: $('#descripcionFotografia').val(),
+		}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			addFotografiaToEquipamientoTable(response);   
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
+
+function deleteFotografiaToEquipamientoTable(){
+	
+	if (tabla_fotografias.rows('.selected').any()){
+		// 1. Eliminamos la fila de la tabla
+		$(ID_TABLA_FOTOGRAFIAS).DataTable()
+			.row(rowNode)
+			.remove()
+			.draw();
+			
+		// 2. Deshabilitamos el botón borrar
+		$(ID_BOTON_BORRAR_FOTOGRAFIA).attr('disabled', 'disabled');
+	}
+}
+
+function deleteFotografia(idFotografia){
+
+    $.ajax({
+        type: 'DELETE',
+        url: urlDeleteFotografia + idFotografia,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			deleteFotografiaToEquipamientoTable();     
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
 }
 
 // Reset de los campos del formulario del popup de subir fotografia

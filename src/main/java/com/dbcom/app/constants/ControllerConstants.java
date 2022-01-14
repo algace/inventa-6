@@ -67,6 +67,11 @@ public final class ControllerConstants {
 	public static final String MAP_ACTION_INSERTAR_AIRBLOCK = MAP_ACTION_SLASH + "insertAirblock";
 	public static final String MAP_ACTION_DELETE_AIRBLOCK = MAP_ACTION_SLASH + "deleteAirblock";
 	
+	//Acciones para mapas Equipamientos
+	public static final String MAP_ACTION_INSERTAR_DOCUMENTO = MAP_ACTION_SLASH + "insertDocumento";
+	public static final String MAP_ACTION_DELETE_DOCUMENTO = MAP_ACTION_SLASH + "deleteDocumento";
+	public static final String MAP_ACTION_INSERTAR_FOTOGRAFIA = MAP_ACTION_SLASH + "insertFotografia";
+	public static final String MAP_ACTION_DELETE_FOTOGRAFIA = MAP_ACTION_SLASH + "deleteFotografia";
 	
 	// Constantes URL's relaciones AplicacionesSW
 	public static final String URL_INSERT_VERSIONES_APLICACIONES = "urlInsertVersion";
@@ -77,6 +82,13 @@ public final class ControllerConstants {
 	// Constantes URL's relaciones Sectores ATC
 	public static final String URL_INSERT_AIRBLOCKS_SECTORES_ATC = "urlInsertAirblock";
 	public static final String URL_DELETE_AIRBLOCKS_SECTORES_ATC = "urlDeleteAirblock";
+	
+	
+	// Constantes URL's relaciones Sectores ATC
+	public static final String URL_INSERT_DOCUMENTOS_EQUIPAMIENTOS = "urlInsertDocumento";
+	public static final String URL_DELETE_DOCUMENTOS_EQUIPAMIENTOS = "urlDeleteDocumento";
+	public static final String URL_INSERT_FOTOGRAFIAS_EQUIPAMIENTOS = "urlInsertFotografia";
+	public static final String URL_DELETE_FOTOGRAFIAS_EQUIPAMIENTOS = "urlDeleteFotografia";
 	
 	// Rutas de las plantillas para mapas
 	public static final String MAP_PATH_MENU = "menu" + MAP_ACTION_SLASH;
