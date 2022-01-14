@@ -108,7 +108,7 @@
 		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
 									        <div class="col-sm-6">
-									            <input type="number" 
+									            <input type="number" onkeypress="return controlarValorEnteroPositivo(event);"
 									            	class="form-control"
 									            	th:field="*{flMin}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMin')}" th:errors="*{flMin}"></div>
@@ -117,7 +117,7 @@
 		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmax}"></div>
 									        <div class="col-sm-6">
-									            <input type="number"
+									            <input type="number" onkeypress="return controlarValorEnteroPositivo(event);"
 									            	class="form-control"
 									            	th:field="*{flMax}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMax')}" th:errors="*{flMax}"></div>
@@ -245,6 +245,7 @@
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
 		<script type="text/javascript" th:src="@{/js/sectorOACI.js}"></script>
+		<script type="text/javascript" th:src="@{/js/controlValoresNumericos.js}"></script>
 	
 	</body>
 </html>

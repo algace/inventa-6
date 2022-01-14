@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -50,8 +51,10 @@ public class SectorOACI implements Serializable {
 	@NotNull(message = "{validation.notNull}")
 	private RegionOperativa regionOperativa;
 	
+	@Max(999)
 	private Integer flMin;
 
+	@Max(999)
 	private Integer flMax;
 
 	private String descripcion;
