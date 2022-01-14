@@ -32,8 +32,8 @@ public final class ChasisPasarelaDto implements Serializable{
 	@Valid
 	private TipoChasisLiteDto tipoChasis;
 	
-	@Max(999)
 	@NotNull(message = "{validation.notNull}")
+	@Max(128)
 	private Integer indiceCargaLimite;
 
 }

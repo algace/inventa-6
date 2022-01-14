@@ -44,8 +44,8 @@ public class ChasisPasarela implements Serializable{
 	@NotNull(message = "{validation.notNull}")
 	private TipoChasis tipoChasis;
 	
-	@Max(999)
 	@NotNull(message = "{validation.notNull}")
+	@Max(128)
 	private Integer indiceCargaLimite;
 
 }
