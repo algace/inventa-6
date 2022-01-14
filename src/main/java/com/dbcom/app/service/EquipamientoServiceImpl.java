@@ -1,8 +1,7 @@
 package com.dbcom.app.service;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +10,19 @@ import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.exception.DaoException;
 import com.dbcom.app.model.dao.AplicacionSWRepository;
+import com.dbcom.app.model.dao.DocumentoRepository;
 import com.dbcom.app.model.dao.EquipamientoRepository;
+import com.dbcom.app.model.dao.FotografiaRepository;
 import com.dbcom.app.model.dto.DocumentoDto;
 import com.dbcom.app.model.dto.EquipamientoDto;
 import com.dbcom.app.model.dto.EquipamientoLiteDto;
 import com.dbcom.app.model.dto.FotografiaDto;
 import com.dbcom.app.model.entity.AplicacionSW;
+import com.dbcom.app.model.entity.Documento;
 import com.dbcom.app.model.entity.Equipamiento;
+import com.dbcom.app.model.entity.Fotografia;
+import com.dbcom.app.model.entity.TipoSistema;
+import com.dbcom.app.model.entity.TipoSubsistema;
 import com.dbcom.app.utils.ModelMapperUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,14 +39,20 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	private final AplicacionSWRepository aplicacionSWRepository;
 	private final EquipamientoRepository equipamientoRepository;
 	private final ModelMapperUtils  modelMapperUtils;
+	private final FotografiaRepository fotografiaRepository;
+	private final DocumentoRepository documentoRepository;
 
 	@Autowired
 	public EquipamientoServiceImpl(ModelMapperUtils modelMapper,
 			AplicacionSWRepository aplicacionSWRepository,
+			FotografiaRepository fotografiaRepository,
+			DocumentoRepository documentoRepository,
 			EquipamientoRepository equipamientoRepository) {
 		this.modelMapperUtils = modelMapper;
 		this.aplicacionSWRepository = aplicacionSWRepository;
 		this.equipamientoRepository = equipamientoRepository;
+		this.fotografiaRepository = fotografiaRepository;
+		this.documentoRepository = documentoRepository;
 	}
 	
 	/**
@@ -116,49 +127,109 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EquipamientoDto saveUpdate(final EquipamientoDto equipamientoDto) {	
-		
-		equipamientoDto.setDocumentos(filterListDocumentos(equipamientoDto.getDocumentos()));
-		equipamientoDto.setFotografias(filterListFotografias(equipamientoDto.getFotografias()));
+	public EquipamientoDto save(final EquipamientoDto equipamientoDto) {	
 		
 		Equipamiento equipamiento = this.modelMapperUtils.map(equipamientoDto, Equipamiento.class);
 		
 		return this.modelMapperUtils.map(this.equipamientoRepository.save(equipamiento), EquipamientoDto.class);
 	}
 	
-	/**
-	 * Procesa una lista de objetos DocumentosDto proveniente del front y elimina de esta lista los 
-	 * objetos que tienen un id null
-     * @param lista de objetos DocumentosDto provenientes del front 
-     * @return lista de objetos DocumentosDto filtrada 
-	 */
-	private List<DocumentoDto> filterListDocumentos(List<DocumentoDto> listDocumentos) {
+	@Override
+	public EquipamientoDto update(final EquipamientoDto equipamientoDto) {	
 		
-		return listDocumentos.stream()
-                            .filter(documento -> !Objects.isNull(documento.getNombre()))
-                            .collect(Collectors.toList());
+		
+		Equipamiento equipamiento = equipamientoRepository.findById(equipamientoDto.getId())
+				.map(equipamientoBD -> {
+					
+					equipamientoBD.setNombre(equipamientoDto.getNombre());
+					equipamientoBD.setApertura(equipamientoDto.getApertura());
+					equipamientoBD.setCaracteristicas(equipamientoDto.getCaracteristicas());
+					equipamientoBD.setDescripcion(equipamientoDto.getDescripcion());
+					equipamientoBD.setDiametro(equipamientoDto.getDiametro());
+					equipamientoBD.setEntradas(equipamientoDto.getEntradas());
+					equipamientoBD.setGanancia(equipamientoDto.getGanancia());
+					equipamientoBD.setMarca(equipamientoDto.getMarca());
+					equipamientoBD.setModelo(equipamientoDto.getModelo());
+					equipamientoBD.setNumeroPuertos(equipamientoDto.getNumeroPuertos());
+					equipamientoBD.setPerdida(equipamientoDto.getPerdida());
+					equipamientoBD.setSalidas(equipamientoDto.getSalidas());
+					equipamientoBD.setTipoSistema(this.modelMapperUtils.map(equipamientoDto.getTipoSistema(), TipoSistema.class));
+					equipamientoBD.setTipoSubsistema(this.modelMapperUtils.map(equipamientoDto.getTipoSubsistema(), TipoSubsistema.class));
+					
+					return equipamientoBD;
+					
+				}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		return this.modelMapperUtils.map(this.equipamientoRepository.save(equipamiento), EquipamientoDto.class);
 	}
 	
-	/**
-	 * Procesa una lista de objetos FotografiaDto proveniente del front y elimina de esta lista los 
-	 * objetos que tienen un id null
-     * @param lista de objetos FotografiaDto provenientes del front 
-     * @return lista de objetos FotografiaDto filtrada 
-	 */
-	private List<FotografiaDto> filterListFotografias(List<FotografiaDto> listFotografias) {
+	@Override
+	public Optional<Long> insertDocumento(Long idEquipamiento, DocumentoDto documentoDto) {
 		
-		return listFotografias.stream()
-                            .filter(fotografia -> !Objects.isNull(fotografia.getNombre()))
-                            .collect(Collectors.toList());
+		Equipamiento equipamiento = equipamientoRepository.findById(idEquipamiento)
+		.map(equipamientoBD -> {
+			
+			equipamientoBD.getDocumentos().add(this.modelMapperUtils.map(documentoDto, Documento.class));
+			
+			return equipamientoBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		equipamiento = this.equipamientoRepository.save(equipamiento);
+		
+		return equipamiento.getDocumentos()
+				   .stream()
+				   .filter(documento -> documento.getNombre().equals(documentoDto.getNombre()) && 
+						   					documento.getDescripcion().equals(documentoDto.getDescripcion()) && 
+						   						documento.getTipoDocumento().getId() == documentoDto.getTipoDocumento().getId())
+				   .findFirst()
+				   .map(documento -> documento.getId());
 	}
 
 	@Override
-	public EquipamientoDto setAllAttributesEquipamientoDto(EquipamientoDto equipamientoDto) {
+	public Long deleteDocumento(Long idDocumento) {
 		
-		equipamientoDto.setDocumentos(filterListDocumentos(equipamientoDto.getDocumentos()));
-		equipamientoDto.setFotografias(filterListFotografias(equipamientoDto.getFotografias()));
+		this.documentoRepository.deleteById(idDocumento);
 		
-		return equipamientoDto;
+		return idDocumento;
+	}
+
+	@Override
+	public Optional<Long> insertFotografia(Long idEquipamiento, FotografiaDto fotografiaDto) {
+		
+		Equipamiento equipamiento = equipamientoRepository.findById(idEquipamiento)
+		.map(equipamientoBD -> {
+			
+			equipamientoBD.getFotografias().add(this.modelMapperUtils.map(fotografiaDto, Fotografia.class));
+			
+			return equipamientoBD;
+			
+		}).orElseThrow(() -> new DaoException(ExceptionConstants.DAO_EXCEPTION));
+		
+		equipamiento = this.equipamientoRepository.save(equipamiento);
+		
+		return equipamiento.getFotografias()
+						   .stream()
+						   .filter(fotografia -> fotografia.getNombre().equals(fotografiaDto.getNombre()) && fotografia.getDescripcion().equals(fotografiaDto.getDescripcion()))
+						   .findFirst()
+						   .map(fotografia -> fotografia.getId());
+	}
+
+	@Override
+	public Long deleteFotografia(Long idFotografia) {
+
+		this.fotografiaRepository.deleteById(idFotografia);
+		
+		return idFotografia;
+	}
+
+	@Override
+	public void setAllAttributesEquipamientoDto(EquipamientoDto equipamientoDto) {
+		
+		EquipamientoDto equipamientoDtoBd = read(equipamientoDto.getId());
+		equipamientoDto.setDocumentos(equipamientoDtoBd.getDocumentos());
+		equipamientoDto.setFotografias(equipamientoDtoBd.getFotografias());
+		
 	}
 
 }

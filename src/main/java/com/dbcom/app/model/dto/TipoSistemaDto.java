@@ -38,14 +38,14 @@ public class TipoSistemaDto implements Serializable {
 	
 	@NotNull(message = "{validation.notNull}")
 	@Size(min = 1, message = "{validation.notNull}")
-	private String color;
+	@Builder.Default
+	private String color = "#ffffff";
 	
 	@NotNull(message = "{validation.notNull}")
 	@Size(min = 1, message = "{validation.notNull}")
 	private String colorTexto;
 	
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##")
 	private Double codigoFuncionRed;
 	
 }

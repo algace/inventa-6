@@ -143,6 +143,13 @@ var tabla_seleccionar_airblocks =  $(ID_TABLA_SELECCIONAR_AIRBLOCK).DataTable({
 	 idElement = tabla_seleccionar_airblocks.row(this).data()[0];
 });
 
+$(ID_INPUT_SEARCH_SELECCIONAR_AIRBLOCKS).on('keyup change', function() {
+    tabla_seleccionar_airblocks.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});
+
 // Botón Borrar
 $(ID_BOTON_BORRAR_AIRBLOCK).on('click', function () {
 	deleteAirblock($(ID_SECTOR_ATC).val(), rowElement.id);

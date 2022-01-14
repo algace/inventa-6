@@ -229,7 +229,10 @@ public class TipoSistemaController {
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_TIPO_SISTEMA);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_TIPOS_SISTEMAS);
-		
+			
+			//obtenemos los tipos de subsistemas
+			obtenerTiposSubsistemas(model, tipoSistemaDto.getId());
+			
 			vista = VIEW_TIPO_SISTEMA;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		

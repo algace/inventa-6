@@ -83,7 +83,7 @@
 									        <div class="col-sm-6">
 									            <input type="text" 
 									            	th:field="*{regionMantenimiento.nombre}" th:class="'form-control campo-disabled'" 
-									            	onkeypress="return false;">
+									            	readonly>
 									            <input type="hidden" th:field="*{regionMantenimiento.id}" >
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('regionMantenimiento.id')}" th:errors="*{regionMantenimiento.id}"></div>
 									        </div>
@@ -108,9 +108,9 @@
 		       							 <div class="row  align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.descripcion}"></div>
 									        <div class="col-sm-6">
-									            <input type="text"
+									            <textarea rows="3" style="resize: none;"
 									            	class="form-control"
-									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
+									            	th:field="*{descripcion}" th:disabled="${esCampoSoloLectura} ? 'true'"> </textarea>
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
 									        </div>										        	
 		       							 </div>
