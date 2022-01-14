@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -51,7 +50,6 @@ public class RecursoPasarela implements Serializable{
 	@NotNull(message = "{validation.notNull}")
 	private FuncionPasarela funcionPasarela;
 	
-	@Max(999)
 	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCarga;
 }

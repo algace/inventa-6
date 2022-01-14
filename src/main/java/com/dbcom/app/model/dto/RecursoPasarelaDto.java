@@ -3,7 +3,6 @@ package com.dbcom.app.model.dto;
 import java.io.Serializable;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -39,7 +38,6 @@ public final class RecursoPasarelaDto implements Serializable{
 	@Valid
 	private FuncionPasarelaLiteDto funcionPasarela;
 	
-	@Max(999)
 	@NotNull(message = "{validation.notNull}")
 	private Integer indiceCarga;
 

@@ -100,7 +100,7 @@
 									     <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.indiceCarga}"></div>
 									        <div class="col-sm-6">
-									            <input id="indiceCarga" type="number" 
+									            <input id="indiceCarga" type="number" onkeypress="return controlarValorEnteroPositivo(event);"
 									            	th:class="${esCampoSoloLectura} ? 'form-control form-control-sm' : 'form-control form-control-sm campo-obligatorio'"
 									            	th:field="*{indiceCarga}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('indiceCarga')}" th:errors="*{indiceCarga}"></div>
@@ -164,6 +164,7 @@
 		</script>
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
-	
+		<script type="text/javascript" th:src="@{/js/controlValoresNumericos.js}"></script>
+		
 	</body>
 </html>
