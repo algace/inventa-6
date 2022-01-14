@@ -8,6 +8,7 @@ const ID_BOTON_ACEPTAR_SELECCIONAR_REGION = '#botonAceptarSeleccionarRegion';
 const ID_MODAL_REGIONES = '#popupSeleccionarRegion';
 const ID_INPUT_HIDDEN_ID_REGION = 'regionMantenimiento.id';
 const ID_INPUT_NOMBRE_REGION = 'regionMantenimiento.nombre';
+const ID_INPUT_SEARCH_REGIONES_MANTENIMIENTO = '#searchRegiones';
 
 var rowElement = null;
 var idElement  = null;
@@ -17,7 +18,7 @@ var rowNode = null;
 var tabla_regiones_mantenimiento = $(ID_TABLA_REGIONES_MANTENIMIENTO).DataTable({ 
 	select: 'single',
 	dom: '<"top">rt<"bottom"ipl><"clear">',
-	searching:  false,
+	searching:  true,
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
@@ -82,3 +83,10 @@ $(ID_MODAL_REGIONES).on('show.bs.modal', function () {
 	$(ID_TABLA_REGIONES_MANTENIMIENTO).DataTable().rows().deselect();
 	$(ID_BOTON_ACEPTAR_SELECCIONAR_REGION).attr('disabled', 'disabled');
 })
+
+$(ID_INPUT_SEARCH_REGIONES_MANTENIMIENTO).on('keyup change', function() {
+    tabla_regiones_mantenimiento.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});

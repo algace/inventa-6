@@ -1,26 +1,15 @@
 /*!
  * Funciones propias de tipoSistema.html
  */
-document.getElementById("color").value = "#ffffff";
 
 const ID_TABLA_TIPOS_SUBSISTEMAS = '#tablaTiposSubsistemas';
 const ID_INPUT_SEARCH_SUBSISTEMA = '#searchSubsistemas';
+const ID_INPUT_COLOR= '#color';
+const ID_INPUT_COLOR_TEXTO= '#colorTexto';
+
 
 
 // INICIO - Máscara para campo numérico
-// Permite números positivos y negativos entre 1 y 7 dígitos enteros y 2 dígitos decimales
-$("#codigoFuncionRed").mask('S#.S#S#S#.S#S#S0,00', {
-	translation: {
-		'S': { 
-			pattern: /[-]/, 
-			optional: true
-		}
-	},
-	reverse: true, 
-	selectOnFocus: true, 
-	clearIfNotMatch: true
-});
-// FIN - Máscara para campo numérico
 
 // INICIO - Configuración de la tabla Aplicacion
 var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
@@ -61,5 +50,13 @@ var tabla_tipos_subsistemas = $(ID_TABLA_TIPOS_SUBSISTEMAS).DataTable({
     	.data()
     	.search(this.value)
         .draw();
+});
+
+$(ID_INPUT_COLOR).on('keyup change', function() {
+ 	$("#Ejemplo").css("background-color",$(ID_INPUT_COLOR).val());
+});
+
+$(ID_INPUT_COLOR_TEXTO).on('keyup change', function() {	
+ 	$("#Ejemplo").css("color",$(ID_INPUT_COLOR_TEXTO).val());
 });
 

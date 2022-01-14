@@ -280,11 +280,9 @@ public class SectorATCController {
 		
 			// Se obtiene la listas de tipos de sectores ATC, tipos de fuentes de información, regiones operativas
 			// y airblocks disponibles y se añaden al modelo
-			obtenerListasTiposObjetos(model, sectorATCDto.getId());
-			
 			this.sectorATCService.setAllAttributesListSectorATC(sectorATCDto);
-		
-			model.addAttribute(ATTRIBUTE_TIPO, sectorATCDto);
+			
+			obtenerListasTiposObjetos(model, sectorATCDto.getId());
 			
 			vista = VIEW_TIPO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		

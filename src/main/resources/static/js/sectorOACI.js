@@ -8,6 +8,7 @@ const ID_BOTON_ACEPTAR_SELECCIONAR_REGION = '#botonAceptarSeleccionarRegion';
 const ID_MODAL_REGIONES = '#popupSeleccionarRegion';
 const ID_INPUT_HIDDEN_ID_REGION = 'regionOperativa.id';
 const ID_INPUT_NOMBRE_REGION = 'regionOperativa.nombre';
+const ID_INPUT_SEARCH_REGIONES_OPERATIVAS = "#searchRegiones";
 
 var rowElement = null;
 var idElement  = null;
@@ -81,4 +82,11 @@ $(ID_BOTON_ACEPTAR_SELECCIONAR_REGION).on('click', function () {
 $(ID_MODAL_REGIONES).on('show.bs.modal', function () {
 	$(ID_TABLA_REGIONES_OPERATIVAS).DataTable().rows().deselect();
 	$(ID_BOTON_ACEPTAR_SELECCIONAR_REGION).attr('disabled', 'disabled');
-})
+});
+
+$(ID_INPUT_SEARCH_REGIONES_OPERATIVAS).on('keyup change', function() {
+    tabla_regiones_operativas.columns()
+    	.data()
+    	.search(this.value)
+        .draw();
+});

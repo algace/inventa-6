@@ -161,7 +161,7 @@ public final class SectorATCServiceImpl implements SectorATCService{
 	public void setAllAttributesListSectorATC(SectorATCDto sectorATCDto) {
 		
 		SectorATCDto sectorATCDtoBd = read(sectorATCDto.getId());
-		sectorATCDto.setAirblockList(sectorATCDtoBd.getAirblockList());
+		sectorATCDto.setAirblocks(sectorATCDtoBd.getAirblocks());
 		
 	}
 }
