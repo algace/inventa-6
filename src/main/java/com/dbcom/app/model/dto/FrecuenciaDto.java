@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,7 +40,6 @@ public final class FrecuenciaDto implements Serializable {
 	private TipoUnidadFrecuenciaLiteDto tipoUnidadFrecuencia;
 	
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##")
 	private Double valor;
 
 	@NotNull(message = "{validation.notNull}")
