@@ -35,8 +35,9 @@ $("#ganancia, #perdida, #apertura, #diametro").mask('S#.S#S#S#.S#S#S0,00', {
 });
 // FIN - Máscara para campos numéricos
 
-var rowNode;
-var contdoc = documentos.length;
+var rowElement = null;
+var idElement  = null;
+var rowNode = null;
 
 // INICIO - Configuración de la tabla documentos
 var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
@@ -46,28 +47,9 @@ var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
 	data: JSON.parse(documentosJson),
 	columnDefs: [{ 
 		targets: 0,
-        render: function(data, type, full, meta){
-			
-		   if (type == "display"){
-			
-			   contdoc++;
-			   
-			   var result = data + '<input type="hidden" id="documentos' + contdoc + '.nombre" name="documentos[' + contdoc + '].nombre" value="' + full.nombre +'">' +
-	           '<input type="hidden" id="documentos' + contdoc + '.contenido" name="documentos[' + contdoc + '].contenido" value="' + full.contenido +'">' +
-	           '<input type="hidden" id="documentos' + contdoc + '.tipoDocumento.id" name="documentos[' + contdoc + '].tipoDocumento.id" value="' + full.tipoDocumento.id +'">' +
-	           '<input type="hidden" id="documentos' + contdoc + '.descripcion" name="documentos[' + contdoc + '].descripcion" value="' + full.descripcion +'">';
-	           
-			   if(full.id){
-			   		result = result + '<input type="hidden" id="documentos' + contdoc + '.id" name="documentos[' + contdoc + '].id" value="' + full.id +'">';
-			   }
-	           
-	           return result;
-           }else{
-			   return data;
-		   }
-        }
+		visible: false
     }],
-	columns: [
+	columns: [{data: "id", name: "id", title: "ID"},
 			  {data: "nombre", name: "nombre", title: "Nombre"}, 
 			  {data: "tipoDocumento.nombre", name: "tipoDocumento", title: "Tipo Documento"}, 
 			  {data: "descripcion", name: "descripcion", title: "Descripción"}
@@ -108,6 +90,8 @@ var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
  })
  .on('click', 'tr', function() {
 	 rowNode = this;
+	 rowElement = tabla_documentos.row(this).data();
+	 idElement = tabla_documentos.row(this).data()[0];
 });
 
 // Campo para el filtro
@@ -127,14 +111,7 @@ $("#tablaDocumentos tfoot input").on('keyup change', function() {
 // Botón Borrar Documentos
 $(ID_BOTON_BORRAR_DOCUMENTO).on('click', function () {
 	
-	// 1. Eliminamos la fila de la tabla
-	$(ID_TABLA_DOCUMENTOS).DataTable()
-		.row(rowNode)
-		.remove()
-		.draw();
-		
-	// 2. Deshabilitamos el botón borrar
-	$(ID_BOTON_BORRAR_DOCUMENTO).attr('disabled', 'disabled');
+	deleteDocumento(rowElement.id);
 });
 
 //INICIO - Validaciones subir fichero
@@ -200,23 +177,6 @@ function validarDescripcion() {
 }
 
 
-function insertDocumentInTable(){
-	
-	$(ID_TABLA_DOCUMENTOS).DataTable()
-	.row
-	.add({
-		id: null,
-		contenido: fileByteArray, 
-		nombre: $(ID_FICHERO_DOC)[0].files[0].name, 
-		descripcion: $('#descripcionDocumento').val(),
-		tipoDocumento: {
-			id: $('#tipoDocumento option:selected').val(),
-			nombre: $('#tipoDocumento option:selected').text()
-		}
-	}).draw();
-	
-}
-
 function validarPopupDocumento() {
 	var contador = 3;
 	
@@ -240,12 +200,88 @@ function validarPopupDocumento() {
 	// Mostramos la barra de progreso
 	if (contador == 0) {
 		$(ID_BARRA_PROGRESO_DOC).removeAttr("hidden");
-		insertDocumentInTable();
+		insertDocumento($('#id').val());
 	} else {
 		$(ID_BARRA_PROGRESO_DOC).attr("hidden", "hidden");
 	}
 		
 	return ((contador == 0) ? true : false);
+}
+
+function addDocumentoToEquipamientoTable(idDocumento){
+	
+	$(ID_TABLA_DOCUMENTOS).DataTable()
+	.row
+	.add({
+		id: idDocumento,
+		contenido: fileByteArray, 
+		nombre: $(ID_FICHERO_DOC)[0].files[0].name, 
+		descripcion: $('#descripcionDocumento').val(),
+		tipoDocumento: {
+			id: $('#tipoDocumento option:selected').val(),
+			nombre: $('#tipoDocumento option:selected').text()
+		}
+	}).draw();
+}
+
+function insertDocumento(idEquipamiento){
+
+    $.ajax({
+        type: 'POST',
+        url: urlInsertDocumento + idEquipamiento,
+        data: JSON.stringify({
+			contenido: fileByteArray, 
+			nombre: $(ID_FICHERO_DOC)[0].files[0].name, 
+			descripcion: $('#descripcionDocumento').val(),
+			tipoDocumento: {
+				id: $('#tipoDocumento option:selected').val(),
+				nombre: $('#tipoDocumento option:selected').text()
+			}
+		}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			addDocumentoToEquipamientoTable(response);   
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
+
+function deleteDocumentoToEquipamientoTable(){
+	
+	if (tabla_documentos.rows('.selected').any()){
+		// 1. Eliminamos la fila de la tabla
+		$(ID_TABLA_DOCUMENTOS).DataTable()
+			.row(rowNode)
+			.remove()
+			.draw();
+			
+		// 2. Deshabilitamos el botón borrar
+		$(ID_BOTON_BORRAR_DOCUMENTO).attr('disabled', 'disabled');
+	}
+}
+
+function deleteDocumento(idDocumento){
+
+    $.ajax({
+        type: 'DELETE',
+        url: urlDeleteDocumento + idDocumento,
+        data: JSON.stringify({}),
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+        success: function(response) { 
+			deleteDocumentoToEquipamientoTable();     
+        },
+        error: function(e) {
+			alert(e); 
+        }
+    });
 }
 
 var reader = new FileReader();

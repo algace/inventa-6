@@ -1,9 +1,12 @@
 package com.dbcom.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.dbcom.app.model.dto.DocumentoDto;
 import com.dbcom.app.model.dto.EquipamientoDto;
 import com.dbcom.app.model.dto.EquipamientoLiteDto;
+import com.dbcom.app.model.dto.FotografiaDto;
 
 
 /**
@@ -46,17 +49,32 @@ public interface EquipamientoService {
 	List<EquipamientoLiteDto> readNotContains(final Long id);
 	
 	/**
-	 * Persistimos el equipamiento pasado como parámetro
-	 * @param equipamientoDto Equipamiento a persistir
-	 * @return Equipamiento persistido
-	 */
-	EquipamientoDto saveUpdate(final EquipamientoDto equipamientoDto);
-	
-	/**
 	 * Informa todas las listas y objetos para la recaraga de la vista
 	 * @param equipamientoDto Equipamiento a persistir
 	 * @return EquipamientoDto persistido
 	 */
-	EquipamientoDto setAllAttributesEquipamientoDto(final EquipamientoDto equipamientoDto);
+	void setAllAttributesEquipamientoDto(final EquipamientoDto equipamientoDto);
+	
+	/**
+	 * Persistimos el sector ATCpasada como parámetro
+	 * @param sectorATCDto Sector ATC a persistir
+	 * @return Sector ATC persistido
+	 */
+	EquipamientoDto save(final EquipamientoDto equipamientoDto);
+	
+	/**
+	 * Persistimos el sector ATCpasada como parámetro
+	 * @param sectorATCDto Sector ATC a persistir
+	 * @return Sector ATC persistido
+	 */
+	EquipamientoDto update(final EquipamientoDto equipamientoDto);
+	
+	Optional<Long> insertDocumento(Long idEquipamiento, DocumentoDto documentoDto);
+	
+	Long deleteDocumento(Long idDocumento);
+	
+	Optional<Long> insertFotografia(Long idEquipamiento, FotografiaDto fotografiaDto);
+	
+	Long deleteFotografia(Long idFotografia);
 		
 }
