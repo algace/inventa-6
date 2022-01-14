@@ -105,7 +105,7 @@
 											<div class="col-sm-2" th:text="#{html.label.fechaPublicacion}"></div>
 											<div class="col-sm-6">
 								                <div class="input-group date" id="datetimepickerFecha" data-target-input="nearest">
-								                    <input type="text" data-target="#datetimepickerFecha" 
+								                    <input type="text" data-target="#datetimepickerFecha" onkeypress="return false"
 								                    	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 								                    	th:field="*{fechaPublicacion}" th:disabled="${esCampoSoloLectura} ? 'true'"/>
 								                    <div class="input-group-append" data-target="#datetimepickerFecha" data-toggle="datetimepicker">
@@ -130,7 +130,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmin}"></div>
 									        <div class="col-sm-6">
-									            <input id="flMin" type="number" 
+									            <input id="flMin" type="number" onkeypress="return controlarValorEnteroPositivo(event);"
 									            	class="form-control"
 									            	th:field="*{flMin}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMin')}" th:errors="*{flMin}"></div>
@@ -140,7 +140,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.flmax}"></div>
 									        <div class="col-sm-6">
-									            <input id="flMax" type="number" 
+									            <input id="flMax" type="number" onkeypress="return controlarValorEnteroPositivo(event);"
 									            	class="form-control"
 									            	th:field="*{flMax}" th:disabled="${esCampoSoloLectura} ? 'true'"> 
 									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('flMax')}" th:errors="*{flMax}"></div>
@@ -303,5 +303,7 @@
 		<!--/* FIN - Apertura del menú */-->
 		<!--/* FIN - JS */-->
 		<script type="text/javascript" th:src="@{/js/sectorATC.js}"></script>
+		<script type="text/javascript" th:src="@{/js/controlValoresNumericos.js}"></script>
+		
 	</body>
 </html>

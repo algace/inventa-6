@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -48,8 +49,10 @@ public final class SectorATCDto implements Serializable{
 	@Valid
 	private TipoFuenteInformacionLiteDto tipoFuenteInformacion;
 	
+	@Max(999)
 	private Integer flMin;
 	
+	@Max(999)
 	private Integer flMax;
 	
 	private String descripcion;
