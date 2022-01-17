@@ -35,10 +35,6 @@ $("#ganancia, #perdida, #apertura, #diametro").mask('S#.S#S#S#.S#S#S0,00', {
 });
 // FIN - Máscara para campos numéricos
 
-var rowElement = null;
-var idElement  = null;
-var rowNode = null;
-
 // INICIO - Configuración de la tabla documentos
 var tabla_documentos = $(ID_TABLA_DOCUMENTOS).DataTable({
 	select: 'single',
@@ -320,26 +316,6 @@ function downloadDocumento(idDocumento){
         }
     });
 }
-
-var reader = new FileReader();
-var fileByteArray = [];
-
-// Seteamos el nombre del fichero en el input de selección del fichero
-$('input[type="file"]').on('change', function(e){
-	var nombre = e.target.files[0].name;    
-	$(this).next('.custom-file-label').html(nombre);
- 	fileByteArray = [];
-  	reader.readAsArrayBuffer(e.target.files[0]);
-  	reader.onloadend = (evt) => {
-    if (evt.target.readyState === FileReader.DONE) {
-      const arrayBuffer = evt.target.result,
-        array = new Uint8Array(arrayBuffer);
-      for (const a of array) {
-        fileByteArray.push(a);
-      }
-    }
-  }
-});
 
 // Reset de los campos del formulario del popup de subir documento
 function resetFormPopupSubirDocumento() {

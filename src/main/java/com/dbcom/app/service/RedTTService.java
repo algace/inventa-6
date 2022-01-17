@@ -1,7 +1,9 @@
 package com.dbcom.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.dbcom.app.model.dto.FotografiaDto;
 import com.dbcom.app.model.dto.RedTTDto;
 import com.dbcom.app.model.dto.RedTTLiteDto;
 
@@ -42,6 +44,16 @@ public interface RedTTService {
 	 * @param redTTDto Red T/T a persistir
 	 * @return Red T/T persistida
 	 */
-	RedTTDto saveUpdate(final RedTTDto redTTDto);
+	RedTTDto save(final RedTTDto redTTDto);
+	
+	RedTTDto update(final RedTTDto redTTDto);
+	
+	void setAllAttributesRedTTDto(final RedTTDto redTTDto);
+	
+	Optional<FotografiaDto> getFotografia(Long idFotografia);
+	
+	Optional<Long> insertFotografia(Long idRedTT, FotografiaDto fotografiaDto);
+	
+	Long deleteFotografia(Long idFotografia);
 	
 }

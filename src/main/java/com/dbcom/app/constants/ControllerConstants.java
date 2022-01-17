@@ -88,12 +88,12 @@ public final class ControllerConstants {
 	
 	// Constantes URL's relaciones Sectores ATC
 	
-	public static final String URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS = "urlDownloadDocumento";
-	public static final String URL_INSERT_DOCUMENTOS_EQUIPAMIENTOS = "urlInsertDocumento";
-	public static final String URL_DELETE_DOCUMENTOS_EQUIPAMIENTOS = "urlDeleteDocumento";
-	public static final String URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS = "urlDownloadFotografia";
-	public static final String URL_INSERT_FOTOGRAFIAS_EQUIPAMIENTOS = "urlInsertFotografia";
-	public static final String URL_DELETE_FOTOGRAFIAS_EQUIPAMIENTOS = "urlDeleteFotografia";
+	public static final String URL_DOWNLOAD_DOCUMENTOS = "urlDownloadDocumento";
+	public static final String URL_INSERT_DOCUMENTOS = "urlInsertDocumento";
+	public static final String URL_DELETE_DOCUMENTOS = "urlDeleteDocumento";
+	public static final String URL_DOWNLOAD_FOTOGRAFIAS = "urlDownloadFotografia";
+	public static final String URL_INSERT_FOTOGRAFIAS = "urlInsertFotografia";
+	public static final String URL_DELETE_FOTOGRAFIAS = "urlDeleteFotografia";
 	
 	// Rutas de las plantillas para mapas
 	public static final String MAP_PATH_MENU = "menu" + MAP_ACTION_SLASH;

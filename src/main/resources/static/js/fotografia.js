@@ -14,6 +14,10 @@ const ID_TABLA_FOTOGRAFIAS = '#tablaFotografias';
 const ID_MODAL_FOTOGRAFIA = '#popupSubirFotografia';
 const ID_INPUT_SEARCH_FOTOGRAFIAS = '#searchFotografias';
 
+var rowElement = null;
+var idElement  = null;
+var rowNode = null;
+
 // INICIO - Configuración de la tabla fotografias
 var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	select: 'single',
@@ -295,4 +299,24 @@ $(ID_INPUT_SEARCH_FOTOGRAFIAS).on('keyup change', function() {
     	.data()
     	.search(this.value)
         .draw();
+});
+
+var reader = new FileReader();
+var fileByteArray = [];
+
+// Seteamos el nombre del fichero en el input de selección del fichero
+$('input[type="file"]').on('change', function(e){
+	var nombre = e.target.files[0].name;    
+	$(this).next('.custom-file-label').html(nombre);
+ 	fileByteArray = [];
+  	reader.readAsArrayBuffer(e.target.files[0]);
+  	reader.onloadend = (evt) => {
+    if (evt.target.readyState === FileReader.DONE) {
+      const arrayBuffer = evt.target.result,
+        array = new Uint8Array(arrayBuffer);
+      for (const a of array) {
+        fileByteArray.push(a);
+      }
+    }
+  }
 });

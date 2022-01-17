@@ -133,7 +133,6 @@ public final class EquipamientoController {
 
 		// Creamos el registro
 		model.addAttribute(ATTRIBUTE_EQUIPAMIENTO, this.equipamientoService.create());
-		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
 		
 		//Obtenemos la lista de tipos de sistemas, subsistemas y documentos y las añadimos al modelo
 		obtenerListasTiposObjetos(model);
@@ -169,7 +168,7 @@ public final class EquipamientoController {
 		final String vista;
 		
 		if (bindingResult.hasErrors()) {
-
+			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
@@ -185,9 +184,6 @@ public final class EquipamientoController {
 			
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_EQUIPAMIENTOS);
 			
-			model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
-			model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
-		
 			vista = VIEW_EQUIPAMIENTO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
 		
@@ -220,8 +216,8 @@ public final class EquipamientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
 		
-		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
-		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_EQUIPAMIENTOS);
@@ -262,12 +258,12 @@ public final class EquipamientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 		
 		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
-		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
-		model.addAttribute(ControllerConstants.URL_INSERT_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_DOCUMENTO);
-		model.addAttribute(ControllerConstants.URL_DELETE_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_DOCUMENTO);
-		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
-		model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
-		model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_INSERT_DOCUMENTOS, this.request.getContextPath() + MAP_INSERT_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_DELETE_DOCUMENTOS, this.request.getContextPath() + MAP_DELETE_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
+		model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
+		model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_EQUIPAMIENTO);
@@ -308,12 +304,12 @@ public final class EquipamientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 			
 			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
-			model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
-			model.addAttribute(ControllerConstants.URL_INSERT_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_DOCUMENTO);
-			model.addAttribute(ControllerConstants.URL_DELETE_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_DOCUMENTO);
-			model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
-			model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
-			model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
+			model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
+			model.addAttribute(ControllerConstants.URL_INSERT_DOCUMENTOS, this.request.getContextPath() + MAP_INSERT_DOCUMENTO);
+			model.addAttribute(ControllerConstants.URL_DELETE_DOCUMENTOS, this.request.getContextPath() + MAP_DELETE_DOCUMENTO);
+			model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
+			model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
+			model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
 	
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_EQUIPAMIENTO);
@@ -362,9 +358,10 @@ public final class EquipamientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
 		
-		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
-		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_EQUIPAMIENTO
