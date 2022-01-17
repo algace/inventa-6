@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -33,7 +34,8 @@ public final class ChasisPasarelaDto implements Serializable{
 	private TipoChasisLiteDto tipoChasis;
 	
 	@NotNull(message = "{validation.notNull}")
+	@Min(0)
 	@Max(128)
-	private Integer indiceCargaLimite;
+	private Short indiceCargaLimite;
 
 }

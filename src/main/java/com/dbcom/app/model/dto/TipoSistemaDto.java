@@ -2,10 +2,10 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.NumberFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +46,8 @@ public class TipoSistemaDto implements Serializable {
 	private String colorTexto;
 	
 	@NotNull(message = "{validation.notNull}")
-	private Double codigoFuncionRed;
+	@Min(0)
+	@Max(250)
+	private Float codigoFuncionRed;
 	
 }

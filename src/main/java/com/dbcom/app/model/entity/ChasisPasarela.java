@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -45,7 +46,8 @@ public class ChasisPasarela implements Serializable{
 	private TipoChasis tipoChasis;
 	
 	@NotNull(message = "{validation.notNull}")
+	@Min(0)
 	@Max(128)
-	private Integer indiceCargaLimite;
+	private Short indiceCargaLimite;
 
 }

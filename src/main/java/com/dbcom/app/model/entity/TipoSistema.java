@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -55,7 +57,9 @@ public class TipoSistema implements Serializable {
 	private String colorTexto;
 	
 	@NotNull(message = "{validation.notNull}")
-	private Double codigoFuncionRed;
+	@Min(0)
+	@Max(250)
+	private Float codigoFuncionRed;
 	
 	@OneToMany(mappedBy="tipoSistema", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Set<TipoSubsistema> tiposSubsistemas;

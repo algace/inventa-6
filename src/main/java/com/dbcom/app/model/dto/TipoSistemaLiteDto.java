@@ -2,6 +2,8 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -36,5 +38,8 @@ public class TipoSistemaLiteDto implements Serializable {
 	
 	private String colorTexto;
 	
-	private Double codigoFuncionRed;
+	@NotNull(message = "{validation.notNull}")
+	@Min(0)
+	@Max(250)
+	private Float codigoFuncionRed;
 }

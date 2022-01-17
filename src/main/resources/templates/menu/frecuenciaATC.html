@@ -195,7 +195,7 @@
 														
 														<div class="col-sm-2" th:text="#{html.label.radio}"></div>
 														<div class="col-sm-4">
-															<input id="docOACIRadio" type="text"
+															<input id="docOACIRadio" type="text" onkeypress="return controlarValorEntero(event);"
 																th:class="form-control"
 																th:field="*{docOACIRadio}" th:disabled="${esCampoSoloLectura} ? 'true'">
 														</div>
@@ -207,12 +207,9 @@
 													<div class="row align-items-center">
 														<div class="col-sm-2" th:text="#{html.label.fl}"></div>
 														<div class="col-sm-10">
-															<input id="docOACIFL" type="number" onkeypress="return controlarValorEnteroPositivo(event);"
+															<input id="docOACIFL" type="text" onkeypress="return controlarValorEntero(event);"
 																th:class="form-control"
 																th:field="*{docOACIFL}" th:disabled="${esCampoSoloLectura} ? 'true'">
-															<div class="alert alert-danger" role="alert"
-																th:if="${#fields.hasErrors('docOACIFL')}" th:errors="*{docOACIFL}">
-															</div>
 														</div>
 													</div>
 												</div>
@@ -221,7 +218,7 @@
 													<div class="row align-items-center">
 														<div class="col-sm-2" th:text="#{html.label.latitud}"></div>
 														<div class="col-sm-10">
-															<input id="docOACILatitud" type="text"
+															<input id="docOACILatitud" type="number" step="any"
 																th:class="form-control"
 																th:field="*{docOACILatitud}" th:disabled="${esCampoSoloLectura} ? 'true'">
 														</div>
@@ -232,7 +229,7 @@
 													<div class="row align-items-center">
 														<div class="col-sm-2" th:text="#{html.label.longitud}"></div>
 														<div class="col-sm-10">
-															<input id="docOACIFL" type="text"
+															<input id="docOACILongitud" type="number" step="any"
 																th:class="form-control"
 																th:field="*{docOACILongitud}" th:disabled="${esCampoSoloLectura} ? 'true'">
 														</div>

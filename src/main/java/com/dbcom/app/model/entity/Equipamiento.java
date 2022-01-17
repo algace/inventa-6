@@ -14,11 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.NumberFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -65,35 +62,28 @@ public class Equipamiento implements Serializable {
 	private String descripcion;
 
 	@Builder.Default
-	@Max(999)
-	private Short entradas = 0;
+	private Integer entradas = 0;
 	
 	@Builder.Default
-	@Max(999)
-	private Short salidas = 0;
+	private Integer salidas = 0;
 
 	@Builder.Default
-	@Max(999)
-	private Short numeroPuertos = 0;
+	private Integer numeroPuertos = 0;
 	
 	@Builder.Default
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double ganancia = 0.0;
 
 	@Builder.Default
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double perdida = 0.0;
 
 	@Builder.Default
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double apertura = 0.0;
 
 	@Builder.Default
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double diametro = 0.0;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

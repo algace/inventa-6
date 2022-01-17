@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.NumberFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,29 +50,22 @@ public final class EquipamientoDto implements Serializable {
 	@Size(max = 250, message = "{validation.max250}")
 	private String descripcion;
 
-	@Max(999)
-	private Short entradas;
+	private Integer entradas;
 	
-	@Max(999)
-	private Short salidas;
+	private Integer salidas;
 
-	@Max(999)
-	private Short numeroPuertos;
+	private Integer numeroPuertos;
 	
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double ganancia;
 
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double perdida;
 
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double apertura;
 
 	@NotNull(message = "{validation.notNull}")
-	@NumberFormat(pattern = "###,###.##") 
 	private Double diametro;
 	
 	@NotNull(message = "{validation.notNull}")

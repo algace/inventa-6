@@ -156,21 +156,21 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.numeroEntradas}"></div> 
 									        <div class="col-sm-6">
-									            <input id="entradas" type="text" class="form-control" pattern="\d*" maxlength="3"
+									            <input id="entradas" type="text" class="form-control" onkeypress="return controlarValorEntero(event);"
 									            	th:field="*{entradas}" th:disabled="${esCampoSoloLectura} ? 'true'" >
 									        </div>	
 		       							 </div>
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.numeroSalidas}"></div> 
 									        <div class="col-sm-6">
-									            <input id="salidas" type="text" class="form-control" pattern="\d*" maxlength="3"
+									            <input id="salidas" type="text" class="form-control" onkeypress="return controlarValorEntero(event);"
 									            	th:field="*{salidas}" th:disabled="${esCampoSoloLectura} ? 'true'">
 									        </div>	
 		       							 </div>
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.ganancia}"></div> 
 									        <div class="col-sm-6">
-									            <input id="ganancia" type="text" maxlength="10"
+									            <input id="ganancia" type="number" step="any"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{ganancia}" th:disabled="${esCampoSoloLectura} ? 'true'">
   									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('ganancia')}" th:errors="*{ganancia}"></div>
@@ -179,7 +179,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.perdida}"></div> 
 									        <div class="col-sm-6">
-									            <input id="perdida" type="text" maxlength="10"
+									            <input id="perdida" type="number" step="any"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{perdida}" th:disabled="${esCampoSoloLectura} ? 'true'">
   									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('perdida')}" th:errors="*{perdida}"></div>
@@ -188,14 +188,14 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.numeroPuertos}"></div> 
 									        <div class="col-sm-6">
-									            <input id="numeroPuertos" type="text" class="form-control" pattern="\d*" maxlength="3"
+									            <input id="numeroPuertos" type="text" class="form-control" onkeypress="return controlarValorEntero(event);"
 									            	th:field="*{numeroPuertos}" th:disabled="${esCampoSoloLectura} ? 'true'">
 									        </div>	
 		       							 </div>
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.apertura}"></div> 
 									        <div class="col-sm-6">
-									            <input id="apertura" type="text" maxlength="10"
+									            <input id="apertura" type="number" step="any"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{apertura}" th:disabled="${esCampoSoloLectura} ? 'true'">
   									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('apertura')}" th:errors="*{apertura}"></div>
@@ -204,7 +204,7 @@
 		       							 <div class="row align-items-center">
 											<div class="col-sm-2" th:text="#{html.label.diametro}"></div> 
 									        <div class="col-sm-6">
-									            <input id="diametro" type="text" maxlength="10"
+									            <input id="diametro" type="number" step="any"
 									            	th:class="${esCampoSoloLectura} ? 'form-control' : 'form-control campo-obligatorio'"
 									            	th:field="*{diametro}" th:disabled="${esCampoSoloLectura} ? 'true'">
   									            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('diametro')}" th:errors="*{diametro}"></div>
@@ -596,6 +596,7 @@
 		<script type="text/javascript" th:src="@{/js/tipoSubsistemas.js}"></script>
 		<script type="text/javascript" th:src="@{/js/documento.js}"></script>
 		<script type="text/javascript" th:src="@{/js/fotografia.js}"></script>
+		<script type="text/javascript" th:src="@{/js/controlValoresNumericos.js}"></script>
 		<!--/* FIN - JS */-->
 	
 	</body>
