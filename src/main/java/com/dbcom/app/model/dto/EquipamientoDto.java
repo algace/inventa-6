@@ -77,12 +77,9 @@ public final class EquipamientoDto implements Serializable {
 	private TipoSubsistemaLiteDto tipoSubsistema;
 	
 	@Builder.Default
-	private List<AplicacionSWDto> aplicaciones = new ArrayList<>();
+	private List<DocumentoLiteDto> documentos = new ArrayList<>();
 	
 	@Builder.Default
-	private List<DocumentoDto> documentos = new ArrayList<>();
-	
-	@Builder.Default
-	private List<FotografiaDto> fotografias = new ArrayList<>();
+	private List<FotografiaLiteDto> fotografias = new ArrayList<>();
 	
 }

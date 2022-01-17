@@ -1,7 +1,10 @@
 package com.dbcom.app.model.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
@@ -26,7 +30,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 // Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "tipoTopologia")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,6 +53,7 @@ public class RedTT implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="tipoToplogia_id")
 	@NotNull(message = "{validation.notNull}")
+	@EqualsAndHashCode.Exclude
 	private TipoTopologia tipoTopologia;
 	
 	/*
@@ -60,4 +64,10 @@ public class RedTT implements Serializable {
 	@Builder.Default
 	private Set<EnlaceTT> enlacesTT = new HashSet<>();
 	 */
+	
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval=true)
+	@JoinColumn(name = "redtt_id", referencedColumnName = "id")
+	@Builder.Default
+	@EqualsAndHashCode.Exclude
+	private Set<Fotografia> fotografias = new HashSet<>();
 }

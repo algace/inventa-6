@@ -37,5 +37,4 @@ public class FotografiaDto implements Serializable {
 	@Lob
 	private byte[] contenido;
 	
-	private EquipamientoDto equipamiento;
 }

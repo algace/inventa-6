@@ -30,7 +30,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "documentos")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -99,11 +98,13 @@ public class Equipamiento implements Serializable {
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "equipamiento_id", referencedColumnName = "id")
 	@Builder.Default
+	@EqualsAndHashCode.Exclude
 	private Set<Documento> documentos = new HashSet<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "equipamiento_id", referencedColumnName = "id")
 	@Builder.Default
+	@EqualsAndHashCode.Exclude
 	private Set<Fotografia> fotografias = new HashSet<>();
 	
 }

@@ -14,6 +14,10 @@ const ID_TABLA_FOTOGRAFIAS = '#tablaFotografias';
 const ID_MODAL_FOTOGRAFIA = '#popupSubirFotografia';
 const ID_INPUT_SEARCH_FOTOGRAFIAS = '#searchFotografias';
 
+var rowElement = null;
+var idElement  = null;
+var rowNode = null;
+
 // INICIO - Configuración de la tabla fotografias
 var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	select: 'single',
@@ -23,6 +27,11 @@ var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
+    },{ 
+		targets: 1,
+		render: function(data, type, full){
+	       			return  '<a class="button-crud" onclick="downloadFotografia(' + full.id + ')"><span class="text-crud">' + data + '</span></a>';
+        		}
     }],
 	columns: [{data: "id", name: "id", title: "ID"},
 			  {data: "nombre", name: "nombre", title: "Nombre"}, 
@@ -232,6 +241,38 @@ function deleteFotografia(idFotografia){
     });
 }
 
+function downloadFotografia(idFotografia){
+	
+	$.ajax({
+        type: 'GET',
+        url: urlDownloadFotografia + idFotografia,
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+		success: function(documento) { 
+		  if (navigator.msSaveBlob) {
+		     // IE 10+
+		     navigator.msSaveBlob(blob, documento.nombre);
+		  }else {
+		     var link = document.createElement('a');
+		     // Browsers that support HTML5 download attribute
+		     if (link.download !== undefined) {
+		        link.setAttribute('href', 'data:application/octet-stream;base64,' + documento.contenido)
+		        link.setAttribute('download', documento.nombre);
+		        link.style.visibility = 'hidden';
+		        document.body.appendChild(link);
+		        link.click();
+		        document.body.removeChild(link);
+		     }
+		  }
+        },  
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
+
 // Reset de los campos del formulario del popup de subir fotografia
 function resetFormPopupSubirFotografia() {
 	$('.custom-file-label').html('');
@@ -258,4 +299,24 @@ $(ID_INPUT_SEARCH_FOTOGRAFIAS).on('keyup change', function() {
     	.data()
     	.search(this.value)
         .draw();
+});
+
+var reader = new FileReader();
+var fileByteArray = [];
+
+// Seteamos el nombre del fichero en el input de selección del fichero
+$('input[type="file"]').on('change', function(e){
+	var nombre = e.target.files[0].name;    
+	$(this).next('.custom-file-label').html(nombre);
+ 	fileByteArray = [];
+  	reader.readAsArrayBuffer(e.target.files[0]);
+  	reader.onloadend = (evt) => {
+    if (evt.target.readyState === FileReader.DONE) {
+      const arrayBuffer = evt.target.result,
+        array = new Uint8Array(arrayBuffer);
+      for (const a of array) {
+        fileByteArray.push(a);
+      }
+    }
+  }
 });

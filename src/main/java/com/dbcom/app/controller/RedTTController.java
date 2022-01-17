@@ -1,20 +1,28 @@
 package com.dbcom.app.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dbcom.app.constants.ControllerConstants;
 import com.dbcom.app.constants.ExceptionConstants;
 import com.dbcom.app.constants.LoggerConstants;
 import com.dbcom.app.constants.MessagesConstants;
+import com.dbcom.app.model.dto.FotografiaDto;
 import com.dbcom.app.model.dto.RedTTDto;
 import com.dbcom.app.service.RedTTService;
 import com.dbcom.app.service.TipoTopologiaService;
@@ -49,14 +57,24 @@ public class RedTTController {
 	public static final String MAP_READ_REDTT = ControllerConstants.MAP_ACTION_SLASH + VIEW_REDTT;
 	public static final String MAP_READALL_REDESTT = ControllerConstants.MAP_ACTION_SLASH + VIEW_REDESTT;
 	
+	public static final String MAP_DOWNLOAD_FOTOGRAFIA = ControllerConstants.MAP_ACTION_SLASH + VIEW_REDTT + 
+			ControllerConstants.MAP_ACTION_DOWNLOAD_FOTOGRAFIA + ControllerConstants.MAP_ACTION_SLASH;
+	public static final String MAP_INSERT_FOTOGRAFIA = ControllerConstants.MAP_ACTION_SLASH + VIEW_REDTT + 
+			ControllerConstants.MAP_ACTION_INSERTAR_FOTOGRAFIA + ControllerConstants.MAP_ACTION_SLASH;
+	public static final String MAP_DELETE_FOTOGRAFIA = ControllerConstants.MAP_ACTION_SLASH + VIEW_REDTT + 
+			ControllerConstants.MAP_ACTION_DELETE_FOTOGRAFIA + ControllerConstants.MAP_ACTION_SLASH;
+	
 	private final RedTTService redTTService;
 	private final TipoTopologiaService tipoTopologiaService;
+	private final HttpServletRequest request;
 	
 	@Autowired
 	public RedTTController(RedTTService redTTService,
-			TipoTopologiaService tipoTopologiaService) {
+			TipoTopologiaService tipoTopologiaService,
+			HttpServletRequest request) {
 		this.redTTService = redTTService;
 		this.tipoTopologiaService = tipoTopologiaService;
+		this.request = request;
 	}
 	
 	/**
@@ -102,6 +120,7 @@ public class RedTTController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.FALSE);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_REDTT);
@@ -125,12 +144,13 @@ public class RedTTController {
 		
 		final String vista;
 		if (bindingResult.hasErrors()) {
-
+			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.FALSE);
 			
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_SAVE_REDTT);
@@ -146,7 +166,7 @@ public class RedTTController {
 		
 			
 		} else {		
-			this.redTTService.saveUpdate(redTTDto);
+			this.redTTService.save(redTTDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REDESTT);
 			log.info(LoggerConstants.LOG_SAVE, redTTDto.getId());
 		}
@@ -169,11 +189,16 @@ public class RedTTController {
 		//Obtenemos la lista de tipos de topología y la añadimos al modelo
 		obtenerListasTiposObjetos(model);
 		
+		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
+		
 		// Activación de los botones necesarios
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_REDESTT);
@@ -197,6 +222,8 @@ public class RedTTController {
 		// Contenido
 		model.addAttribute(ATTRIBUTE_REDTT, this.redTTService.read(id));
 		
+		model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
+		
 		//Obtenemos la lista de tipos de topología y la añadimos al modelo
 		obtenerListasTiposObjetos(model);
 				
@@ -205,6 +232,11 @@ public class RedTTController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+		
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
+		model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
+		model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_REDTT);
@@ -230,23 +262,32 @@ public class RedTTController {
 		final String vista;
 		if (bindingResult.hasErrors()) {		
 			
+			model.addAttribute(ControllerConstants.FICHERO_TAMAGNO_MAX,ControllerConstants.FICHERO_TAMAGNO_MAX_NUM);
+			
 			// Activación de los botones necesarios
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ES_CAMPO_SOLO_LECTURA, Boolean.FALSE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.TRUE);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
+			
+			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+			model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
+			model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
+			model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
 	
 			// Botones
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_UPDATE_REDTT);
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_REDESTT);
-		
+			
 			//Obtenemos la lista de tipos de topología y la añadimos al modelo
 			obtenerListasTiposObjetos(model);
+			
+			this.redTTService.setAllAttributesRedTTDto(redTTDto);
 			
 			vista = VIEW_REDTT;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());		
 		} else {
-			this.redTTService.saveUpdate(redTTDto);
+			this.redTTService.update(redTTDto);
 			vista = ControllerConstants.REDIRECT.concat(MAP_READALL_REDESTT);
 			log.info(LoggerConstants.LOG_UPDATE, redTTDto.getId());			
 		}
@@ -276,6 +317,9 @@ public class RedTTController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
+		
+		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_REDTT
@@ -297,6 +341,33 @@ public class RedTTController {
 		this.redTTService.delete(id);					
 		log.info(LoggerConstants.LOG_DELETE);		
 		return ControllerConstants.REDIRECT.concat(MAP_READALL_REDESTT);		
+	}
+	
+	
+	@ResponseBody
+	@GetMapping(value = MAP_DOWNLOAD_FOTOGRAFIA + "/{idFotografia}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<FotografiaDto> downloadFotografia(@PathVariable("idFotografia") final Long idFotografia) {
+		
+		return this.redTTService.getFotografia(idFotografia)
+					.map(ResponseEntity::ok)
+					.orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());					
+	}
+	
+	@ResponseBody
+	@PostMapping(value = MAP_INSERT_FOTOGRAFIA + "/{idRedTT}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> insertFotografia(@PathVariable("idRedTT") final Long idRedTT, 
+			@RequestBody final FotografiaDto fotografiaDto) {
+		
+		return this.redTTService.insertFotografia(idRedTT, fotografiaDto)
+					.map(ResponseEntity::ok)
+					.orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+	}
+	
+	@ResponseBody
+	@DeleteMapping(value = MAP_DELETE_FOTOGRAFIA + "/{idFotografia}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<Long> deleteFotografia(@PathVariable("idFotografia") final Long idFotografia) {
+		
+		return ResponseEntity.ok(this.redTTService.deleteFotografia(idFotografia));					
 	}
 	
 	/**

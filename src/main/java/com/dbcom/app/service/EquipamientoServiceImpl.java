@@ -164,6 +164,11 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 	}
 	
 	@Override
+	public Optional<DocumentoDto> getDocumento(Long idDocumento){
+		return this.documentoRepository.findById(idDocumento).map(documento -> this.modelMapperUtils.map(documento, DocumentoDto.class));
+	}
+	
+	@Override
 	public Optional<Long> insertDocumento(Long idEquipamiento, DocumentoDto documentoDto) {
 		
 		Equipamiento equipamiento = equipamientoRepository.findById(idEquipamiento)
@@ -192,6 +197,11 @@ public class EquipamientoServiceImpl implements EquipamientoService {
 		this.documentoRepository.deleteById(idDocumento);
 		
 		return idDocumento;
+	}
+	
+	@Override
+	public Optional<FotografiaDto> getFotografia(Long idFotografia){
+		return this.fotografiaRepository.findById(idFotografia).map(fotografia -> this.modelMapperUtils.map(fotografia, FotografiaDto.class));
 	}
 
 	@Override

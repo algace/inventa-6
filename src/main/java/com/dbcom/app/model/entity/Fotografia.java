@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -23,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 //Evitamos referencias circulares
-@EqualsAndHashCode(exclude = "equipamiento")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
