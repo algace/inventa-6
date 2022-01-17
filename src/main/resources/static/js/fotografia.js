@@ -23,6 +23,11 @@ var tabla_fotografias = $(ID_TABLA_FOTOGRAFIAS).DataTable({
 	columnDefs: [{ 
 		targets: 0,
 		visible: false
+    },{ 
+		targets: 1,
+		render: function(data, type, full){
+	       			return  '<a class="button-crud" onclick="downloadFotografia(' + full.id + ')"><span class="text-crud">' + data + '</span></a>';
+        		}
     }],
 	columns: [{data: "id", name: "id", title: "ID"},
 			  {data: "nombre", name: "nombre", title: "Nombre"}, 
@@ -226,6 +231,38 @@ function deleteFotografia(idFotografia){
         success: function(response) { 
 			deleteFotografiaToEquipamientoTable();     
         },
+        error: function(e) {
+			alert(e); 
+        }
+    });
+}
+
+function downloadFotografia(idFotografia){
+	
+	$.ajax({
+        type: 'GET',
+        url: urlDownloadFotografia + idFotografia,
+        dataType: 'json',
+        contentType: 'application/json',
+        cache: false,
+        processData:false,
+		success: function(documento) { 
+		  if (navigator.msSaveBlob) {
+		     // IE 10+
+		     navigator.msSaveBlob(blob, documento.nombre);
+		  }else {
+		     var link = document.createElement('a');
+		     // Browsers that support HTML5 download attribute
+		     if (link.download !== undefined) {
+		        link.setAttribute('href', 'data:application/octet-stream;base64,' + documento.contenido)
+		        link.setAttribute('download', documento.nombre);
+		        link.style.visibility = 'hidden';
+		        document.body.appendChild(link);
+		        link.click();
+		        document.body.removeChild(link);
+		     }
+		  }
+        },  
         error: function(e) {
 			alert(e); 
         }

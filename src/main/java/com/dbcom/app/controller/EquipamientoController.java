@@ -66,10 +66,14 @@ public final class EquipamientoController {
 	public static final String MAP_READ_EQUIPAMIENTO =  ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTO;
 	public static final String MAP_READALL_EQUIPAMIENTOS = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTOS;
 	
+	public static final String MAP_DOWNLOAD_DOCUMENTO = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTO + 
+			ControllerConstants.MAP_ACTION_DOWNLOAD_DOCUMENTO + ControllerConstants.MAP_ACTION_SLASH;
 	public static final String MAP_INSERT_DOCUMENTO = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTO + 
 			ControllerConstants.MAP_ACTION_INSERTAR_DOCUMENTO + ControllerConstants.MAP_ACTION_SLASH;
 	public static final String MAP_DELETE_DOCUMENTO = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTO + 
 			ControllerConstants.MAP_ACTION_DELETE_DOCUMENTO + ControllerConstants.MAP_ACTION_SLASH;
+	public static final String MAP_DOWNLOAD_FOTOGRAFIA = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTO + 
+			ControllerConstants.MAP_ACTION_DOWNLOAD_FOTOGRAFIA + ControllerConstants.MAP_ACTION_SLASH;
 	public static final String MAP_INSERT_FOTOGRAFIA = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTO + 
 			ControllerConstants.MAP_ACTION_INSERTAR_FOTOGRAFIA + ControllerConstants.MAP_ACTION_SLASH;
 	public static final String MAP_DELETE_FOTOGRAFIA = ControllerConstants.MAP_ACTION_SLASH + VIEW_EQUIPAMIENTO + 
@@ -180,6 +184,9 @@ public final class EquipamientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_EQUIPAMIENTOS);
 			
 			model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_VOLVER, MAP_READALL_EQUIPAMIENTOS);
+			
+			model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
+			model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 		
 			vista = VIEW_EQUIPAMIENTO;
 			log.error(ExceptionConstants.VALIDATION_EXCEPTION, bindingResult.getFieldError().getDefaultMessage());	
@@ -212,6 +219,9 @@ public final class EquipamientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 		
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_BOTON_ELIMINAR, MAP_READALL_EQUIPAMIENTOS);
@@ -252,8 +262,10 @@ public final class EquipamientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 		
 		model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
 		model.addAttribute(ControllerConstants.URL_INSERT_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_DOCUMENTO);
 		model.addAttribute(ControllerConstants.URL_DELETE_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 		model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
 		model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
 				
@@ -296,8 +308,10 @@ public final class EquipamientoController {
 			model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.FALSE);
 			
 			model.addAttribute(ControllerConstants.ATTRIBUTE_CARDS_VISIBLE, Boolean.TRUE);
+			model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
 			model.addAttribute(ControllerConstants.URL_INSERT_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_DOCUMENTO);
 			model.addAttribute(ControllerConstants.URL_DELETE_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_DOCUMENTO);
+			model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 			model.addAttribute(ControllerConstants.URL_INSERT_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_INSERT_FOTOGRAFIA);
 			model.addAttribute(ControllerConstants.URL_DELETE_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DELETE_FOTOGRAFIA);
 	
@@ -348,6 +362,9 @@ public final class EquipamientoController {
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ACEPTAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_CANCELAR_ACTIVO, Boolean.FALSE);
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ESTA_BOTON_ELIMINAR_ACTIVO, Boolean.TRUE);
+		
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_DOCUMENTOS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_DOCUMENTO);
+		model.addAttribute(ControllerConstants.URL_DOWNLOAD_FOTOGRAFIAS_EQUIPAMIENTOS, this.request.getContextPath() + MAP_DOWNLOAD_FOTOGRAFIA);
 				
 		// Botones
 		model.addAttribute(ControllerConstants.ATTRIBUTE_ACTION, MAP_DELETE_EQUIPAMIENTO
@@ -372,6 +389,15 @@ public final class EquipamientoController {
 	}
 	
 	@ResponseBody
+	@GetMapping(value = MAP_DOWNLOAD_DOCUMENTO + "/{idDocumento}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<DocumentoDto> downloadDocumento(@PathVariable("idDocumento") final Long idDocumento) {
+		
+		return this.equipamientoService.getDocumento(idDocumento)
+					.map(ResponseEntity::ok)
+					.orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());					
+	}
+	
+	@ResponseBody
 	@PostMapping(value = MAP_INSERT_DOCUMENTO + "/{idEquipamiento}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
 	public ResponseEntity<Long> insertDocumento(@PathVariable("idEquipamiento") final Long idEquipamiento, 
 			@RequestBody final DocumentoDto documentoDto) {
@@ -386,6 +412,15 @@ public final class EquipamientoController {
 	public ResponseEntity<Long> deleteDocumento(@PathVariable("idDocumento") final Long idDocumento) {
 		
 		return ResponseEntity.ok(this.equipamientoService.deleteDocumento(idDocumento));					
+	}
+	
+	@ResponseBody
+	@GetMapping(value = MAP_DOWNLOAD_FOTOGRAFIA + "/{idFotografia}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<FotografiaDto> downloadFotografia(@PathVariable("idFotografia") final Long idFotografia) {
+		
+		return this.equipamientoService.getFotografia(idFotografia)
+					.map(ResponseEntity::ok)
+					.orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());					
 	}
 	
 	@ResponseBody

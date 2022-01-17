@@ -69,9 +69,14 @@ public interface EquipamientoService {
 	 */
 	EquipamientoDto update(final EquipamientoDto equipamientoDto);
 	
+	
+	Optional<DocumentoDto> getDocumento(Long idDocumento);
+	
 	Optional<Long> insertDocumento(Long idEquipamiento, DocumentoDto documentoDto);
 	
 	Long deleteDocumento(Long idDocumento);
+	
+	Optional<FotografiaDto> getFotografia(Long idFotografia);
 	
 	Optional<Long> insertFotografia(Long idEquipamiento, FotografiaDto fotografiaDto);
 	

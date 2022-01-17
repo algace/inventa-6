@@ -2,7 +2,6 @@ package com.dbcom.app.model.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.Lob;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -11,16 +10,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * DTO con el que evitamos exponer la entidad en la vista
- * 
- * @author jose.vallve
- */
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class DocumentoDto implements Serializable {
+public class DocumentoLiteDto implements Serializable {
 	
 	/**
 	 * 
@@ -35,13 +30,10 @@ public final class DocumentoDto implements Serializable {
 	@Size(max = 250, message = "{validation.max250}")
 	private String descripcion;
 	
-	@Lob
-	private byte[] contenido;
-	
 	@NotEmpty
 	private String tipo;
 	
 	@Builder.Default
 	private TipoDocumentoDto tipoDocumento = new TipoDocumentoDto();
-	
+
 }
