@@ -117,7 +117,7 @@
 		       							 <div class="row align-items-center">
 									        <div class="col-sm-2" th:text="#{html.label.interfazOperacion}"></div>
 									        <div class="col-sm-6">
-											    <select th:class="form-control" 
+											    <select th:class="'form-control form-control-sm'" 
 											    	th:disabled="${esCampoSoloLectura} ? 'true'" th:field="*{tipoInterfazOperacion.id}">
 											    	<option th:value="0"></option>
 											    	<option th:each="tipoInterfazOperacion : ${listaTiposInterfazOperacion}" th:value="${tipoInterfazOperacion.id}" th:text="${tipoInterfazOperacion.nombre}"></option>
